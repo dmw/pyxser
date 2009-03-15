@@ -1,0 +1,86 @@
+<!--
+    Copyright (c) 2009 Daniel Molina Wegener <dmw@coder.cl>
+
+    This file is part of pyxser.
+
+    pyxser is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as
+    published by the Free Software Foundation, either version 3 of
+    the License, or (at your option) any later version.
+
+    pyxser is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with pyxser.  If not, see <http://www.gnu.org/licenses/>.
+
+    <!DOCTYPE pyxs:object
+              PUBLIC '-//coder.cl//DTD pyxser 1.0//EN'
+              'http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd'>
+  -->
+
+<!ENTITY % xml.xmlns 'xmlns' >
+<!ENTITY % pyxser.prefix 'pyxs' >
+
+<!ENTITY % pyxser.ns '%xml.xmlns;:%pyxser.prefix;' >
+
+<!ENTITY % pyxser.object 'obj' >
+<!ENTITY % pyxser.item 'prop' >
+<!ENTITY % pyxser.collection 'col' >
+
+<!ENTITY % pyxser.element.object '%pyxser.prefix;:%pyxser.object;' >
+<!ENTITY % pyxser.element.item '%pyxser.prefix;:%pyxser.item;' >
+<!ENTITY % pyxser.element.collection '%pyxser.prefix;:%pyxser.collection;' >
+
+<!ENTITY % pyxser.attr.name 'name' >
+<!ENTITY % pyxser.attr.type 'type' >
+<!ENTITY % pyxser.attr.module 'module' >
+<!ENTITY % pyxser.attr.size 'size' >
+<!ENTITY % pyxser.attr.version 'version' >
+<!ENTITY % pyxser.attr.id 'id' >
+<!ENTITY % pyxser.attr.reference 'reference' >
+<!ENTITY % pyxser.attr.key 'key' >
+<!ENTITY % pyxser.attr.compress 'compress' >
+<!ENTITY % pyxser.attr.encoding 'encoding' >
+
+<!ELEMENT %pyxser.element.object;
+          (%pyxser.element.item;
+          | %pyxser.element.collection;
+          | %pyxser.element.object;)* >
+
+<!ATTLIST %pyxser.element.object;
+          %pyxser.ns;                   CDATA           #FIXED          'http://projects.coder.cl/pyxser/model/'
+          %pyxser.attr.version;         CDATA           #FIXED          '1.0'
+          %pyxser.attr.id;              ID              #IMPLIED
+          %pyxser.attr.reference;       IDREF           #IMPLIED
+          %pyxser.attr.type;            NMTOKEN         #IMPLIED
+          %pyxser.attr.name;            NMTOKEN         #IMPLIED
+          %pyxser.attr.module;          NMTOKEN         #IMPLIED
+          %pyxser.attr.size;            NMTOKEN         #IMPLIED
+          %pyxser.attr.key;             CDATA           #IMPLIED
+          >
+
+<!ELEMENT %pyxser.element.collection;
+          (%pyxser.element.object;
+          | %pyxser.element.item;)* >
+
+<!ATTLIST %pyxser.element.collection;
+          %pyxser.attr.type;            NMTOKEN         #REQUIRED
+          %pyxser.attr.name;            NMTOKEN         #REQUIRED
+          >
+
+<!ELEMENT %pyxser.element.item;
+          (#PCDATA)
+          >
+
+<!ATTLIST %pyxser.element.item;
+          %pyxser.attr.type;            NMTOKEN         #REQUIRED
+          %pyxser.attr.name;            NMTOKEN         #REQUIRED
+          %pyxser.attr.size;            NMTOKEN         #IMPLIED
+          %pyxser.attr.key;             CDATA           #IMPLIED
+          %pyxser.attr.compress;        (yes|no)        #IMPLIED
+          %pyxser.attr.encoding;        (ascii|base64)  #IMPLIED
+          >
+
