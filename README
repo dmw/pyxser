@@ -2,7 +2,7 @@
 pxyser --- python xml serialization (beta release 0.1).
 
 pyxser is a C written extension that serializes/deserializes
-python objects in XML format. uses a DTD to create a valid
+python objects in XML format. It uses a DTD to create a valid
 XML tree under UTF-8 encoding.
 
 the project web page is at:
