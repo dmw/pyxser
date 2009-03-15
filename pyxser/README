@@ -1,0 +1,23 @@
+
+pxyser --- python xml serialization (beta release 0.1).
+
+pyxser is a C written extension that serializes/deserializes
+python objects in XML format. uses a DTD to create a valid
+XML tree under UTF-8 encoding.
+
+the project web page is at:
+http://projects.coder.cl/pyxser/
+
+the project repository and download:
+https://sourceforge.net/projects/pyxser/
+
+to install, just get the tarball and:
+
+tar xzvf pyxser-1.0-beta.tar.gz
+cd pyxser
+python ./setup.py build --force
+python ./setup.py install
+
+best regards,
+dmw
+
