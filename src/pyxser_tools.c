@@ -142,9 +142,7 @@ static const char type_tuple[] = "tuple";
 static const char type_dict[] = "dict";
 static const char type_main[] = "__main__";
 
-static xmlDtdPtr pyxser_dtd_object = (xmlDtdPtr)NULL;
-static xmlDtdPtr pyxser_GetPyxserDTD();
-static int pyxser_ValidateDocument(xmlDocPtr doc);
+xmlDtdPtr pyxser_dtd_object = (xmlDtdPtr)NULL;
 
 const PythonTypeSerialize serxConcreteTypes[] = {
 	/* Numeric Types */
@@ -1411,7 +1409,7 @@ pyxser_AddAvailableObject(PyObject *dict, char *id, PyObject *o)
 }
 
 
-static xmlDtdPtr
+xmlDtdPtr
 pyxser_GetPyxserDTD()
 {
 	if (pyxser_dtd_object == (xmlDtdPtr)NULL) {
@@ -1421,7 +1419,7 @@ pyxser_GetPyxserDTD()
 	pyxser_dtd_object;
 }
 
-static int
+int
 pyxser_ValidateDocument(xmlDocPtr doc)
 {
 	xmlDtdPtr dtd = pyxser_GetPyxserDTD();
@@ -1429,14 +1427,12 @@ pyxser_ValidateDocument(xmlDocPtr doc)
 	if ((cvp = xmlNewValidCtxt()) == NULL) {
 		return 0;
 	}
-	cvp->userData = (void *)NULL;
-	cvp->error = (xmlValidityErrorFunc) NULL;
-	cvp->warning = (xmlValidityWarningFunc) NULL;
-	printf("OK.1\n");
+	cvp->userData = (void *) stderr;
+	cvp->error    = (xmlValidityErrorFunc) fprintf;
+	cvp->warning  = (xmlValidityWarningFunc) fprintf;
 	if (!xmlValidateDtd(cvp, doc, dtd)) {
 		return 0;
 	}
-	printf("OK.2\n");
 	xmlFreeValidCtxt(cvp);
 	return 1;
 }

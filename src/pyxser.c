@@ -68,97 +68,12 @@ const char pyxser_xml_encoding[] = "utf-8";
 const char pyxser_xml_version[] = "1.0";
 
 const char pyxser_xml_dtd_location[] = PYXSER_DTD_FILE;
-const char pyxser_xml_dtd[] = \
-	"<!--\n"
-	"    Copyright (c) 2009 Daniel Molina Wegener <dmw@coder.cl>\n"
-	"\n"
-	"    This file is part of pyxser.\n"
-	"\n"
-	"    pyxser is free software: you can redistribute it and/or modify\n"
-	"    it under the terms of the GNU Lesser General Public License as\n"
-	"    published by the Free Software Foundation, either version 3 of\n"
-	"    the License, or (at your option) any later version.\n"
-	"\n"
-	"    pyxser is distributed in the hope that it will be useful,\n"
-	"    but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-	"    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-	"    GNU General Public License for more details.\n"
-	"\n"
-	"    You should have received a copy of the GNU General Public License\n"
-	"    along with pyxser.  If not, see <http://www.gnu.org/licenses/>.\n"
-	"\n"
-	"    <!DOCTYPE pyxs:obj\n"
-	"              PUBLIC '-//coder.cl//DTD pyxser 1.0//EN'\n"
-	"              'http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd'>\n"
-	"  -->\n"
-	"\n"
-	"<!ENTITY % xml.xmlns 'xmlns' >\n"
-	"<!ENTITY % pyxser.prefix 'pyxs' >\n"
-	"\n"
-	"<!ENTITY % pyxser.ns '%xml.xmlns;:%pyxser.prefix;' >\n"
-	"\n"
-	"<!ENTITY % pyxser.object 'obj' >\n"
-	"<!ENTITY % pyxser.item 'prop' >\n"
-	"<!ENTITY % pyxser.collection 'col' >\n"
-	"\n"
-	"<!ENTITY % pyxser.element.object '%pyxser.prefix;:%pyxser.object;' >\n"
-	"<!ENTITY % pyxser.element.item '%pyxser.prefix;:%pyxser.item;' >\n"
-	"<!ENTITY % pyxser.element.collection '%pyxser.prefix;:%pyxser.collection;' >\n"
-	"\n"
-	"<!ENTITY % pyxser.attr.name 'name' >\n"
-	"<!ENTITY % pyxser.attr.type 'type' >\n"
-	"<!ENTITY % pyxser.attr.module 'module' >\n"
-	"<!ENTITY % pyxser.attr.size 'size' >\n"
-	"<!ENTITY % pyxser.attr.version 'version' >\n"
-	"<!ENTITY % pyxser.attr.id 'id' >\n"
-	"<!ENTITY % pyxser.attr.reference 'reference' >\n"
-	"<!ENTITY % pyxser.attr.key 'key' >\n"
-	"<!ENTITY % pyxser.attr.compress 'compress' >\n"
-	"<!ENTITY % pyxser.attr.encoding 'encoding' >\n"
-	"\n"
-	"<!ELEMENT %pyxser.element.object;\n"
-	"          (%pyxser.element.item;\n"
-	"          | %pyxser.element.collection;\n"
-	"          | %pyxser.element.object;)* >\n"
-	"\n"
-	"<!ATTLIST %pyxser.element.object;\n"
-	"          %pyxser.ns;                   CDATA           #FIXED          'http://projects.coder.cl/pyxser/model/'\n"
-	"          %pyxser.attr.version;         CDATA           #FIXED          '1.0'\n"
-	"          %pyxser.attr.id;              ID              #IMPLIED\n"
-	"          %pyxser.attr.reference;       IDREF           #IMPLIED\n"
-	"          %pyxser.attr.type;            NMTOKEN         #IMPLIED\n"
-	"          %pyxser.attr.name;            NMTOKEN         #IMPLIED\n"
-	"          %pyxser.attr.module;          NMTOKEN         #IMPLIED\n"
-	"          %pyxser.attr.size;            NMTOKEN         #IMPLIED\n"
-	"          %pyxser.attr.key;             CDATA           #IMPLIED\n"
-	"          >\n"
-	"\n"
-	"<!ELEMENT %pyxser.element.collection;\n"
-	"          (%pyxser.element.object;\n"
-	"          | %pyxser.element.item;)* >\n"
-	"\n"
-	"<!ATTLIST %pyxser.element.collection;\n"
-	"          %pyxser.attr.type;            NMTOKEN         #REQUIRED\n"
-	"          %pyxser.attr.name;            NMTOKEN         #REQUIRED\n"
-	"          >\n"
-	"\n"
-	"<!ELEMENT %pyxser.element.item;\n"
-	"          (#PCDATA)\n"
-	"          >\n"
-	"\n"
-	"<!ATTLIST %pyxser.element.item;\n"
-	"          %pyxser.attr.type;            NMTOKEN         #REQUIRED\n"
-	"          %pyxser.attr.name;            NMTOKEN         #REQUIRED\n"
-	"          %pyxser.attr.size;            NMTOKEN         #IMPLIED\n"
-	"          %pyxser.attr.key;             CDATA           #IMPLIED\n"
-	"          %pyxser.attr.compress;        (yes|no)        #IMPLIED\n"
-	"          %pyxser.attr.encoding;        (ascii|base64)  #IMPLIED\n"
-	"          >\n\n\n";
-
 
 static PyObject *pyxserxml(PyObject *self, PyObject *args);
 static PyObject *pyxunserxml(PyObject *self, PyObject *args);
+static PyObject *pyxvalidate(PyObject *self, PyObject *args);
 static PyObject *pyxgetdtd(PyObject *self, PyObject *args);
+
 
 void *dummy(PyObject *obj);
 
@@ -191,17 +106,19 @@ static const char deserialize_documentation[] = \
 	"serilized.\n\n"
 	"Every serilized object is validated against the pyxser DTD 1.0\n\n";
 
+static const char validate_documentation[] = \
+	"Validates the XML input string against the pyxser DTD 1.0 in your\n"
+	"local filesystem.\n\n";
+
 static const char getdtd_documentation[] = \
-	"The serialization model resides in the pyxser public identifier DTD:\n"
-	"    <!DOCTYPE pyxs:obj\n"
-    "              PUBLIC '-//coder.cl//DTD pyxser 1.0//EN'\n"
-    "              'http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd'>\n"
-	"This function returns the pyxser DTD as string\n\n";
+	"The serialization model resides in the pyxser public identifier DTD.\n"
+	"This function returns the pyxser DTD location in your system as string\n\n";
 
 
 static PyMethodDef serxMethods[] = {
     {"serialize", pyxserxml, METH_VARARGS, serialize_documentation},
     {"unserialize", pyxunserxml, METH_VARARGS, deserialize_documentation},
+    {"validate", pyxvalidate, METH_VARARGS, validate_documentation},
     {"getdtd", pyxgetdtd, METH_VARARGS, getdtd_documentation},
     {NULL, NULL, 0, NULL}
 };
@@ -309,8 +226,40 @@ static PyObject *
 pyxgetdtd(PyObject *self, PyObject *args)
 {
 	PyObject *res;
-	res = PyString_FromString((const char *)pyxser_xml_dtd);
+	res = PyString_FromString((const char *)pyxser_xml_dtd_location);
 	Py_INCREF(res);
+	return res;
+}
+
+static PyObject *
+pyxvalidate(PyObject *self, PyObject *args)
+{
+	xmlDocPtr docPtr = (xmlDocPtr)NULL;
+	PyObject *res = Py_False;
+	PyObject *input = (PyObject *)NULL;
+	char *docstr = (char *)NULL;
+
+	int ok = -1;
+	if (PYTHON_IS_NONE(args)) {
+		/* error! don't have arguments */
+		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		return res;
+	}
+	ok = PyArg_ParseTuple(args, "S", &input);
+	if (!ok) {
+		/* error! don't have arguments */
+		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		return res;
+	}
+
+	docstr = PyString_AS_STRING(input);
+	docPtr = xmlReadMemory(docstr, strlen(docstr), NULL,
+						   (const char *)pyxser_xml_encoding, 0);
+	if (docPtr != (xmlDocPtr)NULL) {
+		if ((pyxser_ValidateDocument(docPtr)) == 1) {
+			res = Py_True;
+		}
+	}
 	return res;
 }
 

@@ -41,7 +41,7 @@ extern "C" {
 
 extern const PythonTypeSerialize serxConcreteTypes[];
 extern const PythonTypeDeserialize unserxConcreteTypes[];
-
+extern xmlDtdPtr pyxser_dtd_object;
 
 char *pyxser_GetClassName(PyObject *obj);
 
@@ -85,6 +85,10 @@ char *pyxser_GetObjectIdentifier(xmlNodePtr node);
 PyObject *pyxser_CheckAvailableObject(PyObject *dict, char *id);
 
 void pyxser_AddAvailableObject(PyObject *dict, char *id, PyObject *o);
+
+xmlDtdPtr pyxser_GetPyxserDTD();
+
+int pyxser_ValidateDocument(xmlDocPtr doc);
 
 #ifdef __cplusplus
 };
