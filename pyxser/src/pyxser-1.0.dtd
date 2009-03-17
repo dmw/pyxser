@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with pyxser.  If not, see <http://www.gnu.org/licenses/>.
 
-    <!DOCTYPE pyxs:object
+    <!DOCTYPE pyxs:obj
               PUBLIC '-//coder.cl//DTD pyxser 1.0//EN'
               'http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd'>
   -->
@@ -40,7 +40,7 @@
 <!ENTITY % pyxser.attr.size 'size' >
 <!ENTITY % pyxser.attr.version 'version' >
 <!ENTITY % pyxser.attr.id 'id' >
-<!ENTITY % pyxser.attr.reference 'reference' >
+<!ENTITY % pyxser.attr.reference 'ref' >
 <!ENTITY % pyxser.attr.key 'key' >
 <!ENTITY % pyxser.attr.compress 'compress' >
 <!ENTITY % pyxser.attr.encoding 'encoding' >

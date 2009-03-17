@@ -19,7 +19,7 @@
     You should have received a copy of the GNU General Public License
     along with pyxser.  If not, see <http://www.gnu.org/licenses/>.
 
-    <!DOCTYPE pyxs:object
+    <!DOCTYPE pyxs:obj
               PUBLIC "-//coder.cl//DTD pyxser 1.0//EN"
               "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd">
  */
@@ -142,7 +142,9 @@ static const char type_tuple[] = "tuple";
 static const char type_dict[] = "dict";
 static const char type_main[] = "__main__";
 
-
+static xmlDtdPtr pyxser_dtd_object = (xmlDtdPtr)NULL;
+static xmlDtdPtr pyxser_GetPyxserDTD();
+static int pyxser_ValidateDocument(xmlDocPtr doc);
 
 const PythonTypeSerialize serxConcreteTypes[] = {
 	/* Numeric Types */
@@ -365,6 +367,7 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docPtr, xmlNodePtr *rootNode,
 			newSerializedNode = pyxser_AddReference(o, *currentNode);
 		}
 	}
+	xmlCleanupParser();
 	return *rootNode;
 }
 
@@ -537,31 +540,47 @@ pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj)
 			*docPtr = xmlReadMemory((const char *)strdoc, strlen(strdoc), NULL,
 									(const char *)pyxser_xml_encoding, 0);
 			if (*docPtr != (xmlDocPtr)NULL) {
-				*rootNode = xmlDocGetRootElement(*docPtr);
-				currentNode = rootNode;
-				*currentNode = *rootNode;
-				obj->currentNode = currentNode;
-				n_type = (char *)xmlGetProp(*currentNode, BAD_CAST pyxser_xml_attr_type);
-				n_module = (char *)xmlGetProp(*currentNode, BAD_CAST pyxser_xml_attr_module);
-				n_id = (char *)xmlGetProp(*currentNode, BAD_CAST pyxser_xml_attr_id);
-				if (*dups == (PyDictObject *)NULL) {
-					*dups = (PyDictObject *)PyDict_New();
-				}
-				if (*modules == (PyDictObject *)NULL) {
-					*modules = (PyDictObject *)PyDict_New();
-				}
-				if (n_type != (char *)NULL
-					&& n_module != (char *)NULL
-					&& n_id != (char *)NULL) {
-					if ((pyxser_ModuleNotMain(n_module)) == 1) {
-						cacheMod = pyxser_SearchModule(n_module);
-						cacheMod = cacheMod == (PyObject *)NULL ? PyImport_ImportModule(n_module) : cacheMod;
-						if (PYTHON_IS_NOT_NONE(cacheMod)) {
-							chkMod = pyxser_CacheModule((PyObject *)*modules, n_module);
-							if (!PYTHON_IS_NOT_NONE(chkMod)) {
-								PyDict_SetItemString((PyObject *)*modules, n_module, cacheMod);
+				if ((pyxser_ValidateDocument(*docPtr)) == 1) {
+					*rootNode = xmlDocGetRootElement(*docPtr);
+					currentNode = rootNode;
+					*currentNode = *rootNode;
+					obj->currentNode = currentNode;
+					n_type = (char *)xmlGetProp(*currentNode, BAD_CAST pyxser_xml_attr_type);
+					n_module = (char *)xmlGetProp(*currentNode, BAD_CAST pyxser_xml_attr_module);
+					n_id = (char *)xmlGetProp(*currentNode, BAD_CAST pyxser_xml_attr_id);
+					if (*dups == (PyDictObject *)NULL) {
+						*dups = (PyDictObject *)PyDict_New();
+					}
+					if (*modules == (PyDictObject *)NULL) {
+						*modules = (PyDictObject *)PyDict_New();
+					}
+					if (n_type != (char *)NULL
+						&& n_module != (char *)NULL
+						&& n_id != (char *)NULL) {
+						if ((pyxser_ModuleNotMain(n_module)) == 1) {
+							cacheMod = pyxser_SearchModule(n_module);
+							cacheMod = cacheMod == (PyObject *)NULL ? PyImport_ImportModule(n_module) : cacheMod;
+							if (PYTHON_IS_NOT_NONE(cacheMod)) {
+								chkMod = pyxser_CacheModule((PyObject *)*modules, n_module);
+								if (!PYTHON_IS_NOT_NONE(chkMod)) {
+									PyDict_SetItemString((PyObject *)*modules, n_module, cacheMod);
+								}
+								currentType = (PyObject *)pyxser_SearchModuleType(cacheMod, n_type);
+								if (PYTHON_IS_NOT_NONE(currentType)) {
+									if (*tree == (PyObject *)NULL) {
+										*tree = PyInstance_NewRaw(currentType, PyDict_New());
+										*current = *tree;
+										obj->current = current;
+										obj->tree = tree;
+										pyxser_UnserializeBlock(obj);
+										*(obj->current) = cacheCurrent;
+										*(obj->currentNode) = cacheCurrentNode;
+										obj->tree = tree;
+									}
+								}
 							}
-							currentType = (PyObject *)pyxser_SearchModuleType(cacheMod, n_type);
+						} else {
+							currentType = pyxser_SearchObjectInMain(n_type);
 							if (PYTHON_IS_NOT_NONE(currentType)) {
 								if (*tree == (PyObject *)NULL) {
 									*tree = PyInstance_NewRaw(currentType, PyDict_New());
@@ -571,21 +590,7 @@ pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj)
 									pyxser_UnserializeBlock(obj);
 									*(obj->current) = cacheCurrent;
 									*(obj->currentNode) = cacheCurrentNode;
-									obj->tree = tree;
 								}
-							}
-						}
-					} else {
-						currentType = pyxser_SearchObjectInMain(n_type);
-						if (PYTHON_IS_NOT_NONE(currentType)) {
-							if (*tree == (PyObject *)NULL) {
-								*tree = PyInstance_NewRaw(currentType, PyDict_New());
-								*current = *tree;
-								obj->current = current;
-								obj->tree = tree;
-								pyxser_UnserializeBlock(obj);
-								*(obj->current) = cacheCurrent;
-								*(obj->currentNode) = cacheCurrentNode;
 							}
 						}
 					}
@@ -596,6 +601,7 @@ pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj)
 	if (*docPtr != (xmlDocPtr)NULL) {
 		xmlFreeDoc(*docPtr);
 	}
+	xmlCleanupParser();
 	return *tree;
 }
 
@@ -1383,7 +1389,7 @@ pyxser_GetObjectIdentifier(xmlNodePtr node)
 	return (char *)NULL;
 }
 
-inline PyObject *
+PyObject *
 pyxser_CheckAvailableObject(PyObject *dict, char *id)
 {
 	PyObject *ret = (PyObject *)NULL;
@@ -1394,7 +1400,7 @@ pyxser_CheckAvailableObject(PyObject *dict, char *id)
 	return ret;
 }
 
-inline void
+void
 pyxser_AddAvailableObject(PyObject *dict, char *id, PyObject *o)
 {
 	if (dict != (PyObject *)NULL
@@ -1403,5 +1409,37 @@ pyxser_AddAvailableObject(PyObject *dict, char *id, PyObject *o)
 		PyDict_SetItemString(dict, id, o);
 	}
 }
+
+
+static xmlDtdPtr
+pyxser_GetPyxserDTD()
+{
+	if (pyxser_dtd_object == (xmlDtdPtr)NULL) {
+		pyxser_dtd_object = xmlParseDTD(BAD_CAST NULL,
+										BAD_CAST pyxser_xml_dtd_location);
+	}
+	pyxser_dtd_object;
+}
+
+static int
+pyxser_ValidateDocument(xmlDocPtr doc)
+{
+	xmlDtdPtr dtd = pyxser_GetPyxserDTD();
+	xmlValidCtxtPtr cvp;
+	if ((cvp = xmlNewValidCtxt()) == NULL) {
+		return 0;
+	}
+	cvp->userData = (void *)NULL;
+	cvp->error = (xmlValidityErrorFunc) NULL;
+	cvp->warning = (xmlValidityWarningFunc) NULL;
+	printf("OK.1\n");
+	if (!xmlValidateDtd(cvp, doc, dtd)) {
+		return 0;
+	}
+	printf("OK.2\n");
+	xmlFreeValidCtxt(cvp);
+	return 1;
+}
+
 
 /* pyserx_tools.h ends here */
