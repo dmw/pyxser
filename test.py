@@ -1,4 +1,4 @@
-#!/usr/bin/env python-static
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ##
 ##     Copyright (c) 2009 Daniel Molina Wegener <dmw@coder.cl>

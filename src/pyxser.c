@@ -19,7 +19,7 @@
     You should have received a copy of the GNU General Public License
     along with pyxser.  If not, see <http://www.gnu.org/licenses/>.
 
-    <!DOCTYPE pyxs:object
+    <!DOCTYPE pyxs:obj
               PUBLIC "-//coder.cl//DTD pyxser 1.0//EN"
               "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd">
  */
@@ -53,7 +53,7 @@ const char pyxser_xml_attr_id[] = "id";
 const char pyxser_xml_attr_item[] = "prop";
 const char pyxser_xml_attr_module[] = "module";
 const char pyxser_xml_attr_name[] = "name";
-const char pyxser_xml_attr_ns[] = "http://coder.cl/pyxser/model/";
+const char pyxser_xml_attr_ns[] = "http://projects.coder.cl/pyxser/model/";
 const char pyxser_xml_attr_ns_prefix[] = "pyxs";
 const char pyxser_xml_attr_ref[] = "ref";
 const char pyxser_xml_attr_size[] = "size";
@@ -67,14 +67,142 @@ const char pyxser_xml_element_item[] = "prop";
 const char pyxser_xml_encoding[] = "utf-8";
 const char pyxser_xml_version[] = "1.0";
 
+const char pyxser_xml_dtd_location[] = PYXSER_DTD_FILE;
+const char pyxser_xml_dtd[] = \
+	"<!--\n"
+	"    Copyright (c) 2009 Daniel Molina Wegener <dmw@coder.cl>\n"
+	"\n"
+	"    This file is part of pyxser.\n"
+	"\n"
+	"    pyxser is free software: you can redistribute it and/or modify\n"
+	"    it under the terms of the GNU Lesser General Public License as\n"
+	"    published by the Free Software Foundation, either version 3 of\n"
+	"    the License, or (at your option) any later version.\n"
+	"\n"
+	"    pyxser is distributed in the hope that it will be useful,\n"
+	"    but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+	"    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+	"    GNU General Public License for more details.\n"
+	"\n"
+	"    You should have received a copy of the GNU General Public License\n"
+	"    along with pyxser.  If not, see <http://www.gnu.org/licenses/>.\n"
+	"\n"
+	"    <!DOCTYPE pyxs:obj\n"
+	"              PUBLIC '-//coder.cl//DTD pyxser 1.0//EN'\n"
+	"              'http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd'>\n"
+	"  -->\n"
+	"\n"
+	"<!ENTITY % xml.xmlns 'xmlns' >\n"
+	"<!ENTITY % pyxser.prefix 'pyxs' >\n"
+	"\n"
+	"<!ENTITY % pyxser.ns '%xml.xmlns;:%pyxser.prefix;' >\n"
+	"\n"
+	"<!ENTITY % pyxser.object 'obj' >\n"
+	"<!ENTITY % pyxser.item 'prop' >\n"
+	"<!ENTITY % pyxser.collection 'col' >\n"
+	"\n"
+	"<!ENTITY % pyxser.element.object '%pyxser.prefix;:%pyxser.object;' >\n"
+	"<!ENTITY % pyxser.element.item '%pyxser.prefix;:%pyxser.item;' >\n"
+	"<!ENTITY % pyxser.element.collection '%pyxser.prefix;:%pyxser.collection;' >\n"
+	"\n"
+	"<!ENTITY % pyxser.attr.name 'name' >\n"
+	"<!ENTITY % pyxser.attr.type 'type' >\n"
+	"<!ENTITY % pyxser.attr.module 'module' >\n"
+	"<!ENTITY % pyxser.attr.size 'size' >\n"
+	"<!ENTITY % pyxser.attr.version 'version' >\n"
+	"<!ENTITY % pyxser.attr.id 'id' >\n"
+	"<!ENTITY % pyxser.attr.reference 'reference' >\n"
+	"<!ENTITY % pyxser.attr.key 'key' >\n"
+	"<!ENTITY % pyxser.attr.compress 'compress' >\n"
+	"<!ENTITY % pyxser.attr.encoding 'encoding' >\n"
+	"\n"
+	"<!ELEMENT %pyxser.element.object;\n"
+	"          (%pyxser.element.item;\n"
+	"          | %pyxser.element.collection;\n"
+	"          | %pyxser.element.object;)* >\n"
+	"\n"
+	"<!ATTLIST %pyxser.element.object;\n"
+	"          %pyxser.ns;                   CDATA           #FIXED          'http://projects.coder.cl/pyxser/model/'\n"
+	"          %pyxser.attr.version;         CDATA           #FIXED          '1.0'\n"
+	"          %pyxser.attr.id;              ID              #IMPLIED\n"
+	"          %pyxser.attr.reference;       IDREF           #IMPLIED\n"
+	"          %pyxser.attr.type;            NMTOKEN         #IMPLIED\n"
+	"          %pyxser.attr.name;            NMTOKEN         #IMPLIED\n"
+	"          %pyxser.attr.module;          NMTOKEN         #IMPLIED\n"
+	"          %pyxser.attr.size;            NMTOKEN         #IMPLIED\n"
+	"          %pyxser.attr.key;             CDATA           #IMPLIED\n"
+	"          >\n"
+	"\n"
+	"<!ELEMENT %pyxser.element.collection;\n"
+	"          (%pyxser.element.object;\n"
+	"          | %pyxser.element.item;)* >\n"
+	"\n"
+	"<!ATTLIST %pyxser.element.collection;\n"
+	"          %pyxser.attr.type;            NMTOKEN         #REQUIRED\n"
+	"          %pyxser.attr.name;            NMTOKEN         #REQUIRED\n"
+	"          >\n"
+	"\n"
+	"<!ELEMENT %pyxser.element.item;\n"
+	"          (#PCDATA)\n"
+	"          >\n"
+	"\n"
+	"<!ATTLIST %pyxser.element.item;\n"
+	"          %pyxser.attr.type;            NMTOKEN         #REQUIRED\n"
+	"          %pyxser.attr.name;            NMTOKEN         #REQUIRED\n"
+	"          %pyxser.attr.size;            NMTOKEN         #IMPLIED\n"
+	"          %pyxser.attr.key;             CDATA           #IMPLIED\n"
+	"          %pyxser.attr.compress;        (yes|no)        #IMPLIED\n"
+	"          %pyxser.attr.encoding;        (ascii|base64)  #IMPLIED\n"
+	"          >\n\n\n";
+
+
 static PyObject *pyxserxml(PyObject *self, PyObject *args);
 static PyObject *pyxunserxml(PyObject *self, PyObject *args);
+static PyObject *pyxgetdtd(PyObject *self, PyObject *args);
 
 void *dummy(PyObject *obj);
 
+static const char serialize_documentation[] = \
+	"Gets any object defined in a Python module as class as argument\n"
+	"and serializes it as XML. The serialization model is based on the\n"
+	"pyxser DTD 1.0. Objects are serialized as pyxs:obj element, collections\n"
+	"are serialized as pyxs:col element (tuples, lists and dictionaries)\n"
+	"and properties are serialized as pyxs:prop elements.\n\n"
+	"The serialization algorithm is a O(n) one, this means which the\n"
+	"serializer runs over the object tree just one time and cross\n"
+	"refernces are serialized as XML references through the IDREF\n"
+	"attribute pyxs:ref. Also this serialization method is supposed\n"
+	"to support C14N\n\n"
+	"The serialization model resides in the pyxser public identifier DTD:\n"
+	"    <!DOCTYPE pyxs:obj\n"
+    "              PUBLIC '-//coder.cl//DTD pyxser 1.0//EN'\n"
+    "              'http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd'>\n";
+
+static const char deserialize_documentation[] = \
+	"Takes an XML string as arguments to deserialize it and be converted\n"
+	"back to it's original Python object. The deserialization algorithm\n"
+	"supports automatic module loading, but searches for them in the module\n"
+	"dictionary first to reach the original object type. It needs that the\n"
+	"implied modules can be recheable by Python to get back the objects in\n"
+	"it's original form.\n\n"
+	"The deserialization algorithm is a O(n) one, this means that forward\n"
+	"references are not supported because the first ocurrence of any object\n"
+	"it's serialized once and then referenced, but not referenced and then\n"
+	"serilized.\n\n"
+	"Every serilized object is validated against the pyxser DTD 1.0\n\n";
+
+static const char getdtd_documentation[] = \
+	"The serialization model resides in the pyxser public identifier DTD:\n"
+	"    <!DOCTYPE pyxs:obj\n"
+    "              PUBLIC '-//coder.cl//DTD pyxser 1.0//EN'\n"
+    "              'http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd'>\n"
+	"This function returns the pyxser DTD as string\n\n";
+
+
 static PyMethodDef serxMethods[] = {
-    {"serialize", pyxserxml, METH_VARARGS, "Function to serialize an object as XML"},
-    {"unserialize", pyxunserxml, METH_VARARGS, "Function unserialize an object as XML"},
+    {"serialize", pyxserxml, METH_VARARGS, serialize_documentation},
+    {"unserialize", pyxunserxml, METH_VARARGS, deserialize_documentation},
+    {"getdtd", pyxgetdtd, METH_VARARGS, getdtd_documentation},
     {NULL, NULL, 0, NULL}
 };
 
@@ -175,6 +303,15 @@ pyxunserxml(PyObject *self, PyObject *args)
 		return res;
 	}
 	return Py_None;
+}
+
+static PyObject *
+pyxgetdtd(PyObject *self, PyObject *args)
+{
+	PyObject *res;
+	res = PyString_FromString((const char *)pyxser_xml_dtd);
+	Py_INCREF(res);
+	return res;
 }
 
 

@@ -19,7 +19,7 @@
     You should have received a copy of the GNU General Public License
     along with pyxser.  If not, see <http://www.gnu.org/licenses/>.
 
-    <!DOCTYPE pyxs:object
+    <!DOCTYPE pyxs:obj
               PUBLIC "-//coder.cl//DTD pyxser 1.0//EN"
               "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd">
  */
