@@ -52,6 +52,10 @@ xmlNodePtr pyxser_SerializePrimitiveType(PyObject *o, char *name,
 xmlNodePtr pyxser_SerializeXml(PyObject *o, xmlDocPtr *docPtr, xmlNodePtr *rootNode,
 							   xmlNodePtr *currentNode, PyListObject *dupSrcItems);
 
+xmlNodePtr pyxser_SerializeXmlNonStd(PyObject *o, xmlDocPtr *docPtr,
+									 xmlNodePtr *rootNode, xmlNodePtr *currentNode,
+									 PyListObject *dupSrcItems);
+
 PyObject *pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj);
 
 PyObject *pyxser_SearchModuleType(PyObject *mod, const char *name);
@@ -86,7 +90,7 @@ PyObject *pyxser_CheckAvailableObject(PyObject *dict, char *id);
 
 void pyxser_AddAvailableObject(PyObject *dict, char *id, PyObject *o);
 
-xmlDtdPtr pyxser_GetPyxserDTD();
+xmlDtdPtr pyxser_GetPyxserDTD(void);
 
 int pyxser_ValidateDocument(xmlDocPtr doc);
 

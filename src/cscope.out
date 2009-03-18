@@ -1,0 +1,22036 @@
+cscope 15 /work/dmw/c/pyxser/src               0000126353
+	@pyxser.c
+
+26 #iâdeà
+lšt
+
+
+27 cÚ¡ 
+	gId
+[] = "$Id$";
+
+30 
+	~<PythÚ.h
+>
+
+31 
+	~<d©‘ime.h
+>
+
+32 
+	~<libxml/·r£r.h
+>
+
+33 
+	~<libxml/Œ“.h
+>
+
+35 
+	~"šşude/pyx£r.h
+"
+
+37 cÚ¡ 
+	gmsg_nÚ_objeù
+[] = \
+
+39 cÚ¡ 
+	gmsg_nÚ_m‘hod
+[] = \
+
+41 cÚ¡ 
+	gxml_v”siÚ
+[] = \
+
+43 cÚ¡ 
+	gxml_’codšg
+[] = \
+
+46 cÚ¡ 
+	gpyx£r_©Œ_şass
+[] = "__class__";
+
+47 cÚ¡ 
+	gpyx£r_©Œ_diù
+[] = "__dict__";
+
+48 cÚ¡ 
+	gpyx£r_©Œ_moduË
+[] = "__module__";
+
+49 cÚ¡ 
+	gpyx£r_©Œ_Çme
+[] = "__name__";
+
+50 cÚ¡ 
+	gpyx£r_©Œ_®l
+[] = "__all__";
+
+51 cÚ¡ 
+	gpyx£r_v”siÚ
+[] = 
+PYXSER_VERSION
+;
+
+52 cÚ¡ 
+	gpyx£r_xml_©Œ_id
+[] = "id";
+
+53 cÚ¡ 
+	gpyx£r_xml_©Œ_™em
+[] = "prop";
+
+54 cÚ¡ 
+	gpyx£r_xml_©Œ_moduË
+[] = "module";
+
+55 cÚ¡ 
+	gpyx£r_xml_©Œ_Çme
+[] = "name";
+
+56 cÚ¡ 
+	gpyx£r_xml_©Œ_ns
+[] = "http://projects.coder.cl/pyxser/model/";
+
+57 cÚ¡ 
+	gpyx£r_xml_©Œ_ns_´efix
+[] = "pyxs";
+
+58 cÚ¡ 
+	gpyx£r_xml_©Œ_»f
+[] = "ref";
+
+59 cÚ¡ 
+	gpyx£r_xml_©Œ_size
+[] = "size";
+
+60 cÚ¡ 
+	gpyx£r_xml_©Œ_ty³
+[] = "type";
+
+61 cÚ¡ 
+	gpyx£r_xml_©Œ_v”siÚ
+[] = "version";
+
+62 cÚ¡ 
+	gpyx£r_xml_©Œ_key
+[] = "key";
+
+63 cÚ¡ 
+	gpyx£r_xml_©Œ_xml_ns
+[] = "xmlns:pyxs";
+
+64 cÚ¡ 
+	gpyx£r_xml_–em’t_cŞËùiÚ
+[] = "col";
+
+65 cÚ¡ 
+	gpyx£r_xml_–em’t_objeù
+[] = "obj";
+
+66 cÚ¡ 
+	gpyx£r_xml_–em’t_™em
+[] = "prop";
+
+67 cÚ¡ 
+	gpyx£r_xml_’codšg
+[] = "utf-8";
+
+68 cÚ¡ 
+	gpyx£r_xml_v”siÚ
+[] = "1.0";
+
+70 cÚ¡ 
+	gpyx£r_xml_dtd_loÿtiÚ
+[] = 
+PYXSER_DTD_FILE
+;
+
+72 
+PyObjeù
+ *
+pyx£rxml
+(PyObjeù *
+£lf
+, PyObjeù *
+¬gs
+);
+
+73 
+PyObjeù
+ *
+pyx£rxmÊÚ¡d
+(PyObjeù *
+£lf
+, PyObjeù *
+¬gs
+);
+
+74 
+PyObjeù
+ *
+pyxun£rxml
+(PyObjeù *
+£lf
+, PyObjeù *
+¬gs
+);
+
+75 
+PyObjeù
+ *
+pyxv®id©e
+(PyObjeù *
+£lf
+, PyObjeù *
+¬gs
+);
+
+76 
+PyObjeù
+ *
+pyxg‘dtd
+(PyObjeù *
+£lf
+, PyObjeù *
+¬gs
+);
+
+79 *
+dummy
+(
+PyObjeù
+ *
+obj
+);
+
+81 cÚ¡ 
+	g£rŸlize_docum’tiÚ
+[] = \
+
+97 cÚ¡ 
+	g£rŸlize_nÚ¡d_docum’tiÚ
+[] = \
+
+102 cÚ¡ 
+	gde£rŸlize_docum’tiÚ
+[] = \
+
+115 cÚ¡ 
+	gv®id©e_docum’tiÚ
+[] = \
+
+119 cÚ¡ 
+	gg‘dtd_docum’tiÚ
+[] = \
+
+124 
+PyM‘hodDef
+ 
+	g£rxM‘hods
+[] = {
+
+125 {"£rŸlize", 
+pyx£rxml
+, 
+METH_VARARGS
+, 
+£rŸlize_docum’tiÚ
+},
+
+126 {"£rŸlize_nÚ¡d", 
+pyx£rxmÊÚ¡d
+, 
+METH_VARARGS
+, 
+£rŸlize_nÚ¡d_docum’tiÚ
+},
+
+127 {"un£rŸlize", 
+pyxun£rxml
+, 
+METH_VARARGS
+, 
+de£rŸlize_docum’tiÚ
+},
+
+128 {"v®id©e", 
+pyxv®id©e
+, 
+METH_VARARGS
+, 
+v®id©e_docum’tiÚ
+},
+
+129 {"g‘dtd", 
+pyxg‘dtd
+, 
+METH_VARARGS
+, 
+g‘dtd_docum’tiÚ
+},
+
+130 {
+NULL
+, NULL, 0, NULL}
+
+134 
+PyMODINIT_FUNC
+
+
+135 
+	$š™pyx£r
+()
+
+137 
+PyObjeù
+ *
+m
+;
+
+138 
+m
+ = 
+	`Py_In™ModuË
+("pyx£r", 
+£rxM‘hods
+);
+
+139 ià(
+m
+ =ğ
+NULL
+)
+
+142 
+LIBXML_TEST_VERSION
+;
+
+143 
+	}
+}
+
+145 
+PyObjeù
+ *
+
+146 
+	$pyx£rxml
+(
+PyObjeù
+ *
+£lf
+, PyObjeù *
+¬gs
+)
+
+148 
+PyObjeù
+ *
+»s
+ = 
+Py_NÚe
+;
+
+149 
+PyObjeù
+ *
+šput
+ = (PyObjeù *)
+NULL
+;
+
+150 
+xmlNodePŒ
+ 
+£rXml
+ = (xmlNodePŒ)
+NULL
+;
+
+151 
+xmlNodePŒ
+ 
+roÙNode
+ = (xmlNodePŒ)
+NULL
+;
+
+152 
+xmlDocPŒ
+ 
+docXml
+ = (xmlDocPŒ)
+NULL
+;
+
+153 
+xmlCh¬
+ *
+xmlBuff
+ = (xmlCh¬ *)
+NULL
+;
+
+154 
+bufãrSize
+ = 0, 
+ok
+ = -1;
+
+155 
+PyLi¡Objeù
+ *
+dupI‹ms
+ = (PyLi¡Objeù *)
+NULL
+;
+
+156 ià(
+	`PYTHON_IS_NONE
+(
+¬gs
+)) {
+
+158 
+	`PyE¼_S‘SŒšg
+(
+PyExc_V®ueE¼Ü
+, 
+msg_nÚ_objeù
+);
+
+159  
+»s
+;
+
+161 
+ok
+ = 
+	`PyArg_P¬£Tu¶e
+(
+¬gs
+, "O", &
+šput
+);
+
+162 ià(!
+ok
+) {
+
+164 
+	`PyE¼_S‘SŒšg
+(
+PyExc_V®ueE¼Ü
+, 
+msg_nÚ_objeù
+);
+
+165  
+»s
+;
+
+167 
+dupI‹ms
+ = (
+PyLi¡Objeù
+ *)
+	`PyLi¡_New
+(0);
+
+168 
+£rXml
+ = 
+	`pyx£r_S”ŸlizeXml
+(
+šput
+, &
+docXml
+, &
+roÙNode
+,
+
+169 (
+xmlNodePŒ
+ *)
+NULL
+, 
+dupI‹ms
+);
+
+170 ià(
+dupI‹ms
+ !ğ(
+PyLi¡Objeù
+ *)
+NULL
+) {
+
+171 
+	`Py_DECREF
+(
+dupI‹ms
+);
+
+173 ià(
+£rXml
+ !ğ(
+xmlNodePŒ
+)
+NULL
+
+
+174 && 
+docXml
+ !ğ(
+xmlDocPŒ
+)
+NULL
+) {
+
+175 
+	`xmlDocDumpFÜm©MemÜyEnc
+(
+docXml
+, &
+xmlBuff
+, &
+bufãrSize
+,
+
+176 
+xml_’codšg
+, 1);
+
+177 ià(
+xmlBuff
+ !ğ
+BAD_CAST
+ 
+NULL
+) {
+
+178 
+	`xmlF»eDoc
+(
+docXml
+);
+
+179 
+»s
+ = 
+	`PySŒšg_FromSŒšg
+((cÚ¡ *)
+xmlBuff
+);
+
+180 
+	`Py_INCREF
+(
+»s
+);
+
+183  
+»s
+;
+
+185 
+	}
+}
+
+187 
+PyObjeù
+ *
+
+188 
+	$pyx£rxmÊÚ¡d
+(
+PyObjeù
+ *
+£lf
+, PyObjeù *
+¬gs
+)
+
+190 
+PyObjeù
+ *
+»s
+ = 
+Py_NÚe
+;
+
+191 
+PyObjeù
+ *
+šput
+ = (PyObjeù *)
+NULL
+;
+
+192 
+xmlNodePŒ
+ 
+£rXml
+ = (xmlNodePŒ)
+NULL
+;
+
+193 
+xmlNodePŒ
+ 
+roÙNode
+ = (xmlNodePŒ)
+NULL
+;
+
+194 
+xmlDocPŒ
+ 
+docXml
+ = (xmlDocPŒ)
+NULL
+;
+
+195 
+xmlCh¬
+ *
+xmlBuff
+ = (xmlCh¬ *)
+NULL
+;
+
+196 
+bufãrSize
+ = 0, 
+ok
+ = -1;
+
+197 
+PyLi¡Objeù
+ *
+dupI‹ms
+ = (PyLi¡Objeù *)
+NULL
+;
+
+198 ià(
+	`PYTHON_IS_NONE
+(
+¬gs
+)) {
+
+200 
+	`PyE¼_S‘SŒšg
+(
+PyExc_V®ueE¼Ü
+, 
+msg_nÚ_objeù
+);
+
+201  
+»s
+;
+
+203 
+ok
+ = 
+	`PyArg_P¬£Tu¶e
+(
+¬gs
+, "O", &
+šput
+);
+
+204 ià(!
+ok
+) {
+
+206 
+	`PyE¼_S‘SŒšg
+(
+PyExc_V®ueE¼Ü
+, 
+msg_nÚ_objeù
+);
+
+207  
+»s
+;
+
+209 
+dupI‹ms
+ = (
+PyLi¡Objeù
+ *)
+	`PyLi¡_New
+(0);
+
+210 
+£rXml
+ = 
+	`pyx£r_S”ŸlizeXmlNÚStd
+(
+šput
+, &
+docXml
+, &
+roÙNode
+,
+
+211 (
+xmlNodePŒ
+ *)
+NULL
+, 
+dupI‹ms
+);
+
+212 ià(
+dupI‹ms
+ !ğ(
+PyLi¡Objeù
+ *)
+NULL
+) {
+
+213 
+	`Py_DECREF
+(
+dupI‹ms
+);
+
+215 ià(
+£rXml
+ !ğ(
+xmlNodePŒ
+)
+NULL
+
+
+216 && 
+docXml
+ !ğ(
+xmlDocPŒ
+)
+NULL
+) {
+
+217 
+	`xmlDocDumpFÜm©MemÜyEnc
+(
+docXml
+, &
+xmlBuff
+, &
+bufãrSize
+,
+
+218 
+xml_’codšg
+, 1);
+
+219 ià(
+xmlBuff
+ !ğ
+BAD_CAST
+ 
+NULL
+) {
+
+220 
+	`xmlF»eDoc
+(
+docXml
+);
+
+221 
+»s
+ = 
+	`PySŒšg_FromSŒšg
+((cÚ¡ *)
+xmlBuff
+);
+
+222 
+	`Py_INCREF
+(
+»s
+);
+
+225  
+»s
+;
+
+227 
+	}
+}
+
+229 
+PyObjeù
+ *
+
+230 
+	$pyxun£rxml
+(
+PyObjeù
+ *
+£lf
+, PyObjeù *
+¬gs
+)
+
+232 
+PyObjeù
+ *
+»s
+ = 
+Py_NÚe
+;
+
+233 
+PyObjeù
+ *
+šput
+ = (PyObjeù *)
+NULL
+;
+
+234 
+PyObjeù
+ *
+Œ“
+ = (PyObjeù *)
+NULL
+;
+
+235 
+PyObjeù
+ *
+cu¼’t
+ = (PyObjeù *)
+NULL
+;
+
+236 
+PyDiùObjeù
+ *
+dupI‹ms
+ = (PyDiùObjeù *)
+NULL
+;
+
+237 
+PyDiùObjeù
+ *
+moduËs
+ = (PyDiùObjeù *)
+NULL
+;
+
+238 
+xmlNodePŒ
+ 
+roÙNode
+ = (xmlNodePŒ)
+NULL
+;
+
+239 
+xmlNodePŒ
+ 
+cu¼’tNode
+ = (xmlNodePŒ)
+NULL
+;
+
+240 
+xmlDocPŒ
+ 
+docXml
+ = (xmlDocPŒ)
+NULL
+;
+
+242 
+PythÚUn£rŸliz©iÚArgum’ts
+ 
+obj
+;
+
+244 
+ok
+ = -1;
+
+245 ià(
+	`PYTHON_IS_NONE
+(
+¬gs
+)) {
+
+247 
+	`PyE¼_S‘SŒšg
+(
+PyExc_V®ueE¼Ü
+, 
+msg_nÚ_objeù
+);
+
+248  
+»s
+;
+
+250 
+ok
+ = 
+	`PyArg_P¬£Tu¶e
+(
+¬gs
+, "S", &
+šput
+);
+
+251 ià(!
+ok
+) {
+
+253 
+	`PyE¼_S‘SŒšg
+(
+PyExc_V®ueE¼Ü
+, 
+msg_nÚ_objeù
+);
+
+254  
+»s
+;
+
+256 
+dupI‹ms
+ = (
+PyDiùObjeù
+ *)
+	`PyDiù_New
+();
+
+258 
+obj
+.
+doc
+ = &
+šput
+;
+
+259 
+obj
+.
+cu¼’t
+ = &current;
+
+260 
+obj
+.
+Œ“
+ = &tree;
+
+261 
+obj
+.
+dups
+ = &
+dupI‹ms
+;
+
+262 
+obj
+.
+moduËs
+ = &modules;
+
+263 
+obj
+.
+docPŒ
+ = &
+docXml
+;
+
+264 
+obj
+.
+roÙNode
+ = &rootNode;
+
+265 
+obj
+.
+cu¼’tNode
+ = &currentNode;
+
+267 
+»s
+ = 
+	`pyx£r_Un£rŸlizeXml
+(&
+obj
+);
+
+268 ià(
+	`PYTHON_IS_NOT_NONE
+(
+»s
+)) {
+
+269  
+»s
+;
+
+271  
+Py_NÚe
+;
+
+272 
+	}
+}
+
+274 
+PyObjeù
+ *
+
+275 
+	$pyxg‘dtd
+(
+PyObjeù
+ *
+£lf
+, PyObjeù *
+¬gs
+)
+
+277 
+PyObjeù
+ *
+»s
+;
+
+278 
+»s
+ = 
+	`PySŒšg_FromSŒšg
+((cÚ¡ *)
+pyx£r_xml_dtd_loÿtiÚ
+);
+
+279 
+	`Py_INCREF
+(
+»s
+);
+
+280  
+»s
+;
+
+281 
+	}
+}
+
+283 
+PyObjeù
+ *
+
+284 
+	$pyxv®id©e
+(
+PyObjeù
+ *
+£lf
+, PyObjeù *
+¬gs
+)
+
+286 
+xmlDocPŒ
+ 
+docPŒ
+ = (xmlDocPŒ)
+NULL
+;
+
+287 
+PyObjeù
+ *
+»s
+ = 
+Py_F®£
+;
+
+288 
+PyObjeù
+ *
+šput
+ = (PyObjeù *)
+NULL
+;
+
+289 *
+doc¡r
+ = (*)
+NULL
+;
+
+291 
+ok
+ = -1;
+
+292 ià(
+	`PYTHON_IS_NONE
+(
+¬gs
+)) {
+
+294 
+	`PyE¼_S‘SŒšg
+(
+PyExc_V®ueE¼Ü
+, 
+msg_nÚ_objeù
+);
+
+295  
+»s
+;
+
+297 
+ok
+ = 
+	`PyArg_P¬£Tu¶e
+(
+¬gs
+, "S", &
+šput
+);
+
+298 ià(!
+ok
+) {
+
+300 
+	`PyE¼_S‘SŒšg
+(
+PyExc_V®ueE¼Ü
+, 
+msg_nÚ_objeù
+);
+
+301  
+»s
+;
+
+304 
+doc¡r
+ = 
+	`PySŒšg_AS_STRING
+(
+šput
+);
+
+305 
+docPŒ
+ = 
+	`xmlR—dMemÜy
+(
+doc¡r
+, 
+	`¡¾’
+(doc¡r), 
+NULL
+,
+
+306 (cÚ¡ *)
+pyx£r_xml_’codšg
+, 0);
+
+307 ià(
+docPŒ
+ !ğ(
+xmlDocPŒ
+)
+NULL
+) {
+
+308 ià((
+	`pyx£r_V®id©eDocum’t
+(
+docPŒ
+)) == 1) {
+
+309 
+»s
+ = 
+Py_True
+;
+
+312  
+»s
+;
+
+313 
+	}
+}
+
+	@pyxser_collections.c
+
+26 #iâdeà
+lšt
+
+
+27 cÚ¡ 
+	gId
+[] = "$Id$";
+
+30 #ifdeà
+HAVE_CONFIG_H
+
+
+31 
+	~"cÚfig.h
+"
+
+34 
+	~<PythÚ.h
+>
+
+36 
+	~<libxml/·r£r.h
+>
+
+37 
+	~<libxml/Œ“.h
+>
+
+39 
+	~"šşude/pyx£r.h
+"
+
+40 
+	~"šşude/pyx£r_toŞs.h
+"
+
+43 
+xmlNodePŒ
+ 
+pyx£r_Glob®Tu¶eS”Ÿliz©iÚ
+(
+PyObjeù
+ *
+o
+,
+
+44 *
+Çme
+,
+
+45 
+PyLi¡Objeù
+ *
+dupI‹ms
+,
+
+46 
+xmlDocPŒ
+ 
+docPŒ
+);
+
+48 
+xmlNodePŒ
+ 
+pyx£r_Glob®Li¡S”Ÿliz©iÚ
+(
+PyObjeù
+ *
+o
+,
+
+49 *
+Çme
+,
+
+50 
+PyLi¡Objeù
+ *
+dupI‹ms
+,
+
+51 
+xmlDocPŒ
+ 
+docPŒ
+);
+
+53 
+xmlNodePŒ
+ 
+pyx£r_Glob®DiùS”Ÿliz©iÚ
+(
+PyObjeù
+ *
+o
+,
+
+54 *
+Çme
+,
+
+55 
+PyLi¡Objeù
+ *
+dupI‹ms
+,
+
+56 
+xmlDocPŒ
+ 
+docPŒ
+);
+
+58 
+xmlNodePŒ
+ 
+pyx£r_Glob®Tu¶eS”Ÿliz©iÚNÚStd
+(
+PyObjeù
+ *
+o
+,
+
+59 *
+Çme
+,
+
+60 
+PyLi¡Objeù
+ *
+dupI‹ms
+,
+
+61 
+xmlDocPŒ
+ 
+docPŒ
+);
+
+63 
+xmlNodePŒ
+ 
+pyx£r_Glob®Li¡S”Ÿliz©iÚNÚStd
+(
+PyObjeù
+ *
+o
+,
+
+64 *
+Çme
+,
+
+65 
+PyLi¡Objeù
+ *
+dupI‹ms
+,
+
+66 
+xmlDocPŒ
+ 
+docPŒ
+);
+
+68 
+xmlNodePŒ
+ 
+pyx£r_Glob®DiùS”Ÿliz©iÚNÚStd
+(
+PyObjeù
+ *
+o
+,
+
+69 *
+Çme
+,
+
+70 
+PyLi¡Objeù
+ *
+dupI‹ms
+,
+
+71 
+xmlDocPŒ
+ 
+docPŒ
+);
+
+74 
+xmlNodePŒ
+
+
+75 
+	$pyx£r_S”ŸlizeTu¶e
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+76 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+)
+
+78  
+	`pyx£r_Glob®Tu¶eS”Ÿliz©iÚ
+(
+o
+, 
+Çme
+, 
+dupI‹ms
+, 
+docPŒ
+);
+
+79 
+	}
+}
+
+81 
+xmlNodePŒ
+
+
+82 
+	$pyx£r_S”ŸlizeExaùTu¶e
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+83 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+)
+
+85  
+	`pyx£r_Glob®Tu¶eS”Ÿliz©iÚ
+(
+o
+, 
+Çme
+, 
+dupI‹ms
+, 
+docPŒ
+);
+
+86 
+	}
+}
+
+89 
+xmlNodePŒ
+
+
+90 
+	$pyx£r_S”ŸlizeLi¡
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+91 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+)
+
+93  
+	`pyx£r_Glob®Li¡S”Ÿliz©iÚ
+(
+o
+, 
+Çme
+, 
+dupI‹ms
+, 
+docPŒ
+);
+
+94 
+	}
+}
+
+96 
+xmlNodePŒ
+
+
+97 
+	$pyx£r_S”ŸlizeExaùLi¡
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+98 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+)
+
+100  
+	`pyx£r_Glob®Li¡S”Ÿliz©iÚ
+(
+o
+, 
+Çme
+, 
+dupI‹ms
+, 
+docPŒ
+);
+
+101 
+	}
+}
+
+104 
+xmlNodePŒ
+
+
+105 
+	$pyx£r_S”ŸlizeDiù
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+106 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+)
+
+108  
+	`pyx£r_Glob®DiùS”Ÿliz©iÚ
+(
+o
+, 
+Çme
+, 
+dupI‹ms
+, 
+docPŒ
+);
+
+109 
+	}
+}
+
+111 
+xmlNodePŒ
+
+
+112 
+	$pyx£r_S”ŸlizeExaùDiù
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+113 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+)
+
+115  
+	`pyx£r_Glob®DiùS”Ÿliz©iÚ
+(
+o
+, 
+Çme
+, 
+dupI‹ms
+, 
+docPŒ
+);
+
+116 
+	}
+}
+
+119 
+xmlNodePŒ
+
+
+120 
+	$pyx£r_S”ŸlizeTu¶eNÚStd
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+121 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+)
+
+123  
+	`pyx£r_Glob®Tu¶eS”Ÿliz©iÚNÚStd
+(
+o
+, 
+Çme
+, 
+dupI‹ms
+, 
+docPŒ
+);
+
+124 
+	}
+}
+
+126 
+xmlNodePŒ
+
+
+127 
+	$pyx£r_S”ŸlizeExaùTu¶eNÚStd
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+128 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+)
+
+130  
+	`pyx£r_Glob®Tu¶eS”Ÿliz©iÚNÚStd
+(
+o
+, 
+Çme
+, 
+dupI‹ms
+, 
+docPŒ
+);
+
+131 
+	}
+}
+
+134 
+xmlNodePŒ
+
+
+135 
+	$pyx£r_S”ŸlizeLi¡NÚStd
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+136 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+)
+
+138  
+	`pyx£r_Glob®Li¡S”Ÿliz©iÚNÚStd
+(
+o
+, 
+Çme
+, 
+dupI‹ms
+, 
+docPŒ
+);
+
+139 
+	}
+}
+
+141 
+xmlNodePŒ
+
+
+142 
+	$pyx£r_S”ŸlizeExaùLi¡NÚStd
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+143 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+)
+
+145  
+	`pyx£r_Glob®Li¡S”Ÿliz©iÚNÚStd
+(
+o
+, 
+Çme
+, 
+dupI‹ms
+, 
+docPŒ
+);
+
+146 
+	}
+}
+
+149 
+xmlNodePŒ
+
+
+150 
+	$pyx£r_S”ŸlizeDiùNÚStd
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+151 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+)
+
+153  
+	`pyx£r_Glob®DiùS”Ÿliz©iÚNÚStd
+(
+o
+, 
+Çme
+, 
+dupI‹ms
+, 
+docPŒ
+);
+
+154 
+	}
+}
+
+156 
+xmlNodePŒ
+
+
+157 
+	$pyx£r_S”ŸlizeExaùDiùNÚStd
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+158 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+)
+
+160  
+	`pyx£r_Glob®DiùS”Ÿliz©iÚNÚStd
+(
+o
+, 
+Çme
+, 
+dupI‹ms
+, 
+docPŒ
+);
+
+161 
+	}
+}
+
+163 
+xmlNodePŒ
+
+
+164 
+	$pyx£r_Glob®Li¡S”Ÿliz©iÚ
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+165 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+)
+
+167 
+xmlNodePŒ
+ 
+ÃwEËm’tNode
+ = (xmlNodePŒ)
+NULL
+;
+
+168 
+xmlA‰rPŒ
+ 
+ty³A‰r
+ = (xmlA‰rPŒ)
+NULL
+;
+
+169 
+xmlA‰rPŒ
+ 
+ÇmePŒ
+ = (xmlA‰rPŒ)
+NULL
+;
+
+170 
+xmlNodePŒ
+ 
+ÃwS”ŸlizedNode
+ = (xmlNodePŒ)
+NULL
+;
+
+171 
+xmlNodePŒ
+ 
+cu¼’tSubNode
+ = (xmlNodePŒ)
+NULL
+;
+
+172 
+PyObjeù
+ *
+şassPŒ
+ = (PyObjeù *)
+NULL
+;
+
+173 
+PyObjeù
+ *
+şassName
+ = (PyObjeù *)
+NULL
+;
+
+174 
+PyObjeù
+ *
+™em
+ = (PyObjeù *)
+NULL
+;
+
+175 *
+objeùName
+ = (*)
+NULL
+;
+
+176 *
+ty³Name
+ = (*)
+NULL
+;
+
+177 
+PythÚTy³S”Ÿlize
+ 
+cu¼’tS”Ÿliz©iÚ
+;
+
+178 
+tu¶eSize
+ = 0;
+
+179 
+couÁ”
+ = 0, 
+d
+ = 0;
+
+180 
+£rŸlized
+ = 0;
+
+181 
+pha£
+;
+
+182 *
+ÅŒ
+ = (*)
+NULL
+;
+
+183 ià(
+	`PYTHON_IS_NONE
+(
+o
+)) {
+
+184  (
+xmlNodePŒ
+)
+NULL
+;
+
+186 
+şassPŒ
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+o
+, 
+pyx£r_©Œ_şass
+);
+
+187 ià(
+	`PYTHON_IS_NONE
+(
+şassPŒ
+)) {
+
+188  (
+xmlNodePŒ
+)
+NULL
+;
+
+190 
+şassName
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+şassPŒ
+, 
+pyx£r_©Œ_Çme
+);
+
+191 ià(
+	`PYTHON_IS_NONE
+(
+şassName
+)) {
+
+192  (
+xmlNodePŒ
+)
+NULL
+;
+
+194 
+ÅŒ
+ = 
+	`PySŒšg_AS_STRING
+(
+şassName
+);
+
+195 ià(
+ÅŒ
+ !ğ(*)
+NULL
+) {
+
+196 
+ÃwEËm’tNode
+ = 
+	`xmlNewDocNode
+(
+docPŒ
+, 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+197 
+BAD_CAST
+ 
+pyx£r_xml_–em’t_cŞËùiÚ
+,
+
+198 
+NULL
+);
+
+199 
+ty³A‰r
+ = 
+	`xmlNewPrİ
+(
+ÃwEËm’tNode
+,
+
+200 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+,
+
+201 
+BAD_CAST
+ 
+ÅŒ
+);
+
+202 
+ÇmePŒ
+ = 
+	`xmlNewPrİ
+(
+ÃwEËm’tNode
+,
+
+203 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_Çme
+,
+
+204 
+BAD_CAST
+ 
+Çme
+);
+
+205 
+tu¶eSize
+ = 
+	`PyLi¡_GET_SIZE
+(
+o
+);
+
+206 
+couÁ”
+ = 0; couÁ” < 
+tu¶eSize
+; counter++) {
+
+207 
+™em
+ = 
+	`PyLi¡_G‘I‹m
+(
+o
+, 
+couÁ”
+);
+
+208 ià(
+	`PYTHON_IS_NONE
+(
+™em
+)) {
+
+211 
+d
+ = 0;
+
+212 
+cu¼’tS”Ÿliz©iÚ
+ = 
+£rxCÚü‘eTy³s
+[
+d
+];
+
+213 
+pha£
+ = 
+PYTHON_SERX_PHASE_NONE
+;
+
+214 
+£rŸlized
+ = 0;
+
+215 
+cu¼’tS”Ÿliz©iÚ
+.
+avaabË
+ == 1
+
+216 && 
+pha£
+ =ğ
+PYTHON_SERX_PHASE_NONE
+) {
+
+217 ià(
+cu¼’tS”Ÿliz©iÚ
+.
+	`check”
+(
+™em
+)
+
+218 && 
+£rŸlized
+ == 0) {
+
+219 
+ÃwS”ŸlizedNode
+ = 
+cu¼’tS”Ÿliz©iÚ
+.
+	`£rŸliz”
+(
+
+220 
+™em
+,
+
+221 (*)
+pyx£r_xml_–em’t_™em
+,
+
+222 (
+PyLi¡Objeù
+ *)
+NULL
+,
+
+223 
+docPŒ
+);
+
+224 ià(
+ÃwS”ŸlizedNode
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+225 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+ÃwS”ŸlizedNode
+);
+
+226 
+pha£
+ = 
+PYTHON_SERX_PHASE_CONCRETE
+;
+
+227 
+£rŸlized
+ = 1;
+
+230 
+cu¼’tS”Ÿliz©iÚ
+ = 
+£rxCÚü‘eTy³s
+[++
+d
+];
+
+231 ià(
+cu¼’tS”Ÿliz©iÚ
+.
+avaabË
+ == 0
+
+232 && 
+pha£
+ =ğ
+PYTHON_SERX_PHASE_NONE
+
+
+233 && 
+£rŸlized
+ == 0) {
+
+234 ià((
+	`pyx£r_PyLi¡CÚšs
+(
+dupI‹ms
+, 
+™em
+)è=ğ
+PYXSER_FOUND
+) {
+
+235 
+ty³Name
+ = 
+	`pyx£r_G‘CÏssName
+(
+™em
+);
+
+236 ià(
+ty³Name
+ !ğ(*)
+NULL
+) {
+
+237 
+ÃwS”ŸlizedNode
+ = 
+	`xmlNewDocNode
+(
+docPŒ
+, 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+238 
+BAD_CAST
+ 
+pyx£r_xml_–em’t_objeù
+,
+
+239 
+NULL
+);
+
+240 
+ÇmePŒ
+ = 
+	`xmlNewPrİ
+(
+ÃwS”ŸlizedNode
+,
+
+241 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+,
+
+242 
+BAD_CAST
+ 
+ty³Name
+);
+
+243 
+	`pyx£r_AddReã»nû
+(
+™em
+, 
+ÃwS”ŸlizedNode
+);
+
+244 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+ÃwS”ŸlizedNode
+);
+
+247 
+pha£
+ = 
+PYTHON_SERX_PHASE_OBJECT
+;
+
+248 
+objeùName
+ = 
+	`pyx£r_G‘CÏssName
+(
+™em
+);
+
+249 
+cu¼’tSubNode
+ = 
+	`xmlNewDocNode
+(
+docPŒ
+, 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+250 
+BAD_CAST
+ 
+pyx£r_xml_–em’t_objeù
+,
+
+251 
+NULL
+);
+
+252 
+ÇmePŒ
+ = 
+	`xmlNewPrİ
+(
+cu¼’tSubNode
+,
+
+253 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+,
+
+254 
+BAD_CAST
+ 
+objeùName
+);
+
+255 
+	`pyx£r_AddModuËA‰r
+(
+™em
+, 
+cu¼’tSubNode
+);
+
+256 
+ÃwS”ŸlizedNode
+ = 
+	`pyx£r_S”ŸlizeXml
+(
+™em
+,
+
+257 &
+docPŒ
+,
+
+258 &
+cu¼’tSubNode
+,
+
+259 &
+cu¼’tSubNode
+,
+
+260 
+dupI‹ms
+);
+
+261 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+cu¼’tSubNode
+);
+
+264 
+pha£
+ = 
+PYTHON_SERX_PHASE_NONE
+;
+
+268 
+	`Py_DECREF
+(
+şassName
+);
+
+269 
+	`Py_DECREF
+(
+şassPŒ
+);
+
+270  
+ÃwEËm’tNode
+;
+
+271 
+	}
+}
+
+273 
+xmlNodePŒ
+
+
+274 
+	$pyx£r_Glob®Tu¶eS”Ÿliz©iÚ
+(
+PyObjeù
+ *
+o
+, *
+Çme
+, 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+)
+
+276 
+xmlNodePŒ
+ 
+ÃwEËm’tNode
+ = (xmlNodePŒ)
+NULL
+;
+
+277 
+xmlA‰rPŒ
+ 
+ty³A‰r
+ = (xmlA‰rPŒ)
+NULL
+;
+
+278 
+xmlA‰rPŒ
+ 
+ÇmePŒ
+ = (xmlA‰rPŒ)
+NULL
+;
+
+279 
+xmlNodePŒ
+ 
+ÃwS”ŸlizedNode
+ = (xmlNodePŒ)
+NULL
+;
+
+280 
+xmlNodePŒ
+ 
+cu¼’tSubNode
+ = (xmlNodePŒ)
+NULL
+;
+
+281 
+xmlA‰rPŒ
+ 
+pyx£rTy³
+ = (xmlA‰rPŒ)
+NULL
+;
+
+282 
+PyObjeù
+ *
+şassPŒ
+ = (PyObjeù *)
+NULL
+;
+
+283 
+PyObjeù
+ *
+şassName
+ = (PyObjeù *)
+NULL
+;
+
+284 
+PyObjeù
+ *
+™em
+ = (PyObjeù *)
+NULL
+;
+
+285 *
+objeùName
+ = (*)
+NULL
+;
+
+286 *
+ty³Name
+ = (*)
+NULL
+;
+
+287 
+PythÚTy³S”Ÿlize
+ 
+cu¼’tS”Ÿliz©iÚ
+;
+
+288 
+tu¶eSize
+ = 0;
+
+289 
+couÁ”
+ = 0, 
+d
+ = 0;
+
+290 
+£rŸlized
+ = 0;
+
+291 
+pha£
+;
+
+292 *
+ÅŒ
+ = (*)
+NULL
+;
+
+293 ià(
+	`PYTHON_IS_NONE
+(
+o
+)) {
+
+294  (
+xmlNodePŒ
+)
+NULL
+;
+
+296 
+şassPŒ
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+o
+, 
+pyx£r_©Œ_şass
+);
+
+297 ià(
+	`PYTHON_IS_NONE
+(
+şassPŒ
+)) {
+
+298  (
+xmlNodePŒ
+)
+NULL
+;
+
+300 
+şassName
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+şassPŒ
+, 
+pyx£r_©Œ_Çme
+);
+
+301 ià(
+	`PYTHON_IS_NONE
+(
+şassName
+)) {
+
+302  (
+xmlNodePŒ
+)
+NULL
+;
+
+304 
+ÅŒ
+ = 
+	`PySŒšg_AS_STRING
+(
+şassName
+);
+
+305 ià(
+ÅŒ
+ !ğ(*)
+NULL
+) {
+
+306 
+ÃwEËm’tNode
+ = 
+	`xmlNewDocNode
+(
+docPŒ
+, 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+307 
+BAD_CAST
+ 
+pyx£r_xml_–em’t_cŞËùiÚ
+,
+
+308 
+NULL
+);
+
+309 
+ty³A‰r
+ = 
+	`xmlNewPrİ
+(
+ÃwEËm’tNode
+,
+
+310 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+,
+
+311 
+BAD_CAST
+ 
+ÅŒ
+);
+
+312 
+ÇmePŒ
+ = 
+	`xmlNewPrİ
+(
+ÃwEËm’tNode
+,
+
+313 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_Çme
+,
+
+314 
+BAD_CAST
+ 
+Çme
+);
+
+315 
+tu¶eSize
+ = 
+	`PyTu¶e_GET_SIZE
+(
+o
+);
+
+316 
+couÁ”
+ = 0; couÁ” < 
+tu¶eSize
+; counter++) {
+
+317 
+™em
+ = 
+	`PyTu¶e_G‘I‹m
+(
+o
+, 
+couÁ”
+);
+
+318 ià(
+	`PYTHON_IS_NONE
+(
+™em
+)) {
+
+321 
+d
+ = 0;
+
+322 
+cu¼’tS”Ÿliz©iÚ
+ = 
+£rxCÚü‘eTy³s
+[
+d
+];
+
+323 
+pha£
+ = 
+PYTHON_SERX_PHASE_NONE
+;
+
+324 
+£rŸlized
+ = 0;
+
+325 
+cu¼’tS”Ÿliz©iÚ
+.
+avaabË
+ == 1
+
+326 && 
+pha£
+ =ğ
+PYTHON_SERX_PHASE_NONE
+) {
+
+327 ià(
+cu¼’tS”Ÿliz©iÚ
+.
+	`check”
+(
+™em
+)
+
+328 && 
+£rŸlized
+ == 0) {
+
+329 
+ÃwS”ŸlizedNode
+ = 
+cu¼’tS”Ÿliz©iÚ
+.
+	`£rŸliz”
+(
+
+330 
+™em
+,
+
+331 (*)
+pyx£r_xml_–em’t_™em
+,
+
+332 (
+PyLi¡Objeù
+ *)
+NULL
+, 
+docPŒ
+);
+
+333 ià(
+ÃwS”ŸlizedNode
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+334 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+ÃwS”ŸlizedNode
+);
+
+335 
+pha£
+ = 
+PYTHON_SERX_PHASE_CONCRETE
+;
+
+336 
+£rŸlized
+ = 1;
+
+339 
+cu¼’tS”Ÿliz©iÚ
+ = 
+£rxCÚü‘eTy³s
+[++
+d
+];
+
+340 ià(
+cu¼’tS”Ÿliz©iÚ
+.
+avaabË
+ == 0
+
+341 && 
+pha£
+ =ğ
+PYTHON_SERX_PHASE_NONE
+
+
+342 && 
+£rŸlized
+ == 0) {
+
+343 ià((
+	`pyx£r_PyLi¡CÚšs
+(
+dupI‹ms
+, 
+™em
+)è=ğ
+PYXSER_FOUND
+) {
+
+344 
+ty³Name
+ = 
+	`pyx£r_G‘CÏssName
+(
+™em
+);
+
+345 ià(
+ty³Name
+ !ğ(*)
+NULL
+) {
+
+346 
+ÃwS”ŸlizedNode
+ = 
+	`xmlNewDocNode
+(
+docPŒ
+, 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+347 
+BAD_CAST
+ 
+pyx£r_xml_–em’t_objeù
+,
+
+348 
+NULL
+);
+
+349 
+ÇmePŒ
+ = 
+	`xmlNewPrİ
+(
+ÃwS”ŸlizedNode
+,
+
+350 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+,
+
+351 
+BAD_CAST
+ 
+ty³Name
+);
+
+352 
+	`pyx£r_AddReã»nû
+(
+™em
+, 
+ÃwS”ŸlizedNode
+);
+
+353 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+ÃwS”ŸlizedNode
+);
+
+356 
+pha£
+ = 
+PYTHON_SERX_PHASE_OBJECT
+;
+
+357 
+objeùName
+ = 
+	`pyx£r_G‘CÏssName
+(
+™em
+);
+
+358 
+cu¼’tSubNode
+ = 
+	`xmlNewDocNode
+(
+docPŒ
+, 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+359 
+BAD_CAST
+ 
+pyx£r_xml_–em’t_objeù
+,
+
+360 
+NULL
+);
+
+361 
+pyx£rTy³
+ = 
+	`xmlNewPrİ
+(
+cu¼’tSubNode
+,
+
+362 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+,
+
+363 
+BAD_CAST
+ 
+objeùName
+);
+
+364 
+	`pyx£r_AddModuËA‰r
+(
+™em
+, 
+cu¼’tSubNode
+);
+
+365 
+ÃwS”ŸlizedNode
+ = 
+	`pyx£r_S”ŸlizeXml
+(
+™em
+,
+
+366 &
+docPŒ
+,
+
+367 &
+cu¼’tSubNode
+,
+
+368 &
+cu¼’tSubNode
+,
+
+369 
+dupI‹ms
+);
+
+370 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+cu¼’tSubNode
+);
+
+373 
+pha£
+ = 
+PYTHON_SERX_PHASE_NONE
+;
+
+377 
+	`Py_DECREF
+(
+şassName
+);
+
+378 
+	`Py_DECREF
+(
+şassPŒ
+);
+
+379  
+ÃwEËm’tNode
+;
+
+380 
+	}
+}
+
+382 
+xmlNodePŒ
+
+
+383 
+	$pyx£r_Glob®DiùS”Ÿliz©iÚ
+(
+PyObjeù
+ *
+o
+, *
+Çme
+, 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+)
+
+385 
+xmlNodePŒ
+ 
+ÃwEËm’tNode
+ = (xmlNodePŒ)
+NULL
+;
+
+386 
+xmlA‰rPŒ
+ 
+ty³A‰r
+ = (xmlA‰rPŒ)
+NULL
+;
+
+387 
+xmlA‰rPŒ
+ 
+ÇmePŒ
+ = (xmlA‰rPŒ)
+NULL
+;
+
+388 
+xmlA‰rPŒ
+ 
+keyA‰r
+ = (xmlA‰rPŒ)
+NULL
+;
+
+389 
+xmlNodePŒ
+ 
+ÃwS”ŸlizedNode
+ = (xmlNodePŒ)
+NULL
+;
+
+390 
+xmlNodePŒ
+ 
+cu¼’tSubNode
+ = (xmlNodePŒ)
+NULL
+;
+
+391 
+xmlA‰rPŒ
+ 
+pyx£rTy³
+ = (xmlA‰rPŒ)
+NULL
+;
+
+392 
+PyObjeù
+ *
+şassPŒ
+ = (PyObjeù *)
+NULL
+;
+
+393 
+PyObjeù
+ *
+şassName
+ = (PyObjeù *)
+NULL
+;
+
+394 
+PyObjeù
+ *
+™em
+ = (PyObjeù *)
+NULL
+;
+
+395 
+PyObjeù
+ *
+keySŒšg
+ = (PyObjeù *)
+NULL
+;
+
+396 
+PyObjeù
+ *
+diùKeys
+ = (PyObjeù *)
+NULL
+;
+
+397 
+PyObjeù
+ *
+cu¼’tKey
+ = (PyObjeù *)
+NULL
+;
+
+398 *
+keyCh¬p
+ = (*)
+NULL
+;
+
+399 *
+objeùName
+ = (*)
+NULL
+;
+
+400 *
+ty³Name
+ = (*)
+NULL
+;
+
+401 
+PythÚTy³S”Ÿlize
+ 
+cu¼’tS”Ÿliz©iÚ
+;
+
+402 
+tu¶eSize
+ = 0;
+
+403 
+couÁ”
+ = 0, 
+d
+ = 0;
+
+404 
+£rŸlized
+ = 0;
+
+405 
+pha£
+;
+
+406 *
+ÅŒ
+ = (*)
+NULL
+;
+
+407 ià(
+	`PYTHON_IS_NONE
+(
+o
+)) {
+
+408  (
+xmlNodePŒ
+)
+NULL
+;
+
+410 
+şassPŒ
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+o
+, 
+pyx£r_©Œ_şass
+);
+
+411 ià(
+	`PYTHON_IS_NONE
+(
+şassPŒ
+)) {
+
+412  (
+xmlNodePŒ
+)
+NULL
+;
+
+414 
+şassName
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+şassPŒ
+, 
+pyx£r_©Œ_Çme
+);
+
+415 ià(
+	`PYTHON_IS_NONE
+(
+şassName
+)) {
+
+416  (
+xmlNodePŒ
+)
+NULL
+;
+
+418 
+ÅŒ
+ = 
+	`PySŒšg_AS_STRING
+(
+şassName
+);
+
+419 ià(
+ÅŒ
+ !ğ(*)
+NULL
+) {
+
+420 
+ÃwEËm’tNode
+ = 
+	`xmlNewDocNode
+(
+docPŒ
+, 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+421 
+BAD_CAST
+ 
+pyx£r_xml_–em’t_cŞËùiÚ
+,
+
+422 
+NULL
+);
+
+423 
+ty³A‰r
+ = 
+	`xmlNewPrİ
+(
+ÃwEËm’tNode
+,
+
+424 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+,
+
+425 
+BAD_CAST
+ 
+ÅŒ
+);
+
+426 
+ÇmePŒ
+ = 
+	`xmlNewPrİ
+(
+ÃwEËm’tNode
+,
+
+427 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_Çme
+,
+
+428 
+BAD_CAST
+ 
+Çme
+);
+
+429 
+tu¶eSize
+ = 
+	`PyDiù_Size
+(
+o
+);
+
+430 
+diùKeys
+ = 
+	`PyDiù_Keys
+(
+o
+);
+
+431 ià(
+	`PYTHON_IS_NOT_NONE
+(
+diùKeys
+)) {
+
+432 
+couÁ”
+ = 0; couÁ” < 
+tu¶eSize
+; counter++) {
+
+433 
+cu¼’tKey
+ = 
+	`PyLi¡_G‘I‹m
+(
+diùKeys
+, 
+couÁ”
+);
+
+434 
+™em
+ = 
+	`PyDiù_G‘I‹m
+(
+o
+, 
+cu¼’tKey
+);
+
+435 ià(
+	`PYTHON_IS_NONE
+(
+™em
+)) {
+
+438 
+d
+ = 0;
+
+439 
+cu¼’tS”Ÿliz©iÚ
+ = 
+£rxCÚü‘eTy³s
+[
+d
+];
+
+440 
+pha£
+ = 
+PYTHON_SERX_PHASE_NONE
+;
+
+441 
+£rŸlized
+ = 0;
+
+442 
+cu¼’tS”Ÿliz©iÚ
+.
+avaabË
+ == 1
+
+443 && 
+pha£
+ =ğ
+PYTHON_SERX_PHASE_NONE
+) {
+
+444 ià(
+cu¼’tS”Ÿliz©iÚ
+.
+	`check”
+(
+™em
+)
+
+445 && 
+£rŸlized
+ == 0) {
+
+446 
+ÃwS”ŸlizedNode
+ = 
+cu¼’tS”Ÿliz©iÚ
+.
+	`£rŸliz”
+(
+
+447 
+™em
+,
+
+448 (*)
+pyx£r_xml_–em’t_™em
+,
+
+449 (
+PyLi¡Objeù
+ *)
+NULL
+,
+
+450 
+docPŒ
+);
+
+451 ià(
+ÃwS”ŸlizedNode
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+452 
+keySŒšg
+ = 
+	`PyLi¡_G‘I‹m
+(
+diùKeys
+, 
+couÁ”
+);
+
+453 
+keyCh¬p
+ = 
+	`PySŒšg_AS_STRING
+(
+keySŒšg
+);
+
+454 
+keyA‰r
+ = 
+	`xmlNewPrİ
+(
+ÃwS”ŸlizedNode
+,
+
+455 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_key
+,
+
+456 
+BAD_CAST
+ 
+keyCh¬p
+);
+
+457 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+ÃwS”ŸlizedNode
+);
+
+458 
+pha£
+ = 
+PYTHON_SERX_PHASE_CONCRETE
+;
+
+459 
+£rŸlized
+ = 1;
+
+462 
+cu¼’tS”Ÿliz©iÚ
+ = 
+£rxCÚü‘eTy³s
+[++
+d
+];
+
+463 ià(
+cu¼’tS”Ÿliz©iÚ
+.
+avaabË
+ == 0
+
+464 && 
+pha£
+ =ğ
+PYTHON_SERX_PHASE_NONE
+
+
+465 && 
+£rŸlized
+ == 0) {
+
+466 ià((
+	`pyx£r_PyLi¡CÚšs
+(
+dupI‹ms
+, 
+™em
+)è=ğ
+PYXSER_FOUND
+) {
+
+467 
+ty³Name
+ = 
+	`pyx£r_G‘CÏssName
+(
+™em
+);
+
+468 ià(
+ty³Name
+ !ğ(*)
+NULL
+) {
+
+469 
+ÃwS”ŸlizedNode
+ = 
+	`xmlNewDocNode
+(
+docPŒ
+, 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+470 
+BAD_CAST
+ 
+pyx£r_xml_–em’t_objeù
+,
+
+471 
+NULL
+);
+
+472 
+	`pyx£r_AddReã»nû
+(
+™em
+, 
+ÃwS”ŸlizedNode
+);
+
+473 
+keySŒšg
+ = 
+	`PyLi¡_G‘I‹m
+(
+diùKeys
+, 
+couÁ”
+);
+
+474 
+keyCh¬p
+ = 
+	`PySŒšg_AS_STRING
+(
+keySŒšg
+);
+
+475 
+keyA‰r
+ = 
+	`xmlNewPrİ
+(
+ÃwS”ŸlizedNode
+,
+
+476 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_key
+,
+
+477 
+BAD_CAST
+ 
+keyCh¬p
+);
+
+478 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+ÃwS”ŸlizedNode
+);
+
+481 
+pha£
+ = 
+PYTHON_SERX_PHASE_OBJECT
+;
+
+482 
+objeùName
+ = 
+	`pyx£r_G‘CÏssName
+(
+™em
+);
+
+483 
+cu¼’tSubNode
+ = 
+	`xmlNewDocNode
+(
+docPŒ
+, 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+484 
+BAD_CAST
+ 
+pyx£r_xml_–em’t_objeù
+,
+
+485 
+NULL
+);
+
+486 
+	`pyx£r_AddModuËA‰r
+(
+™em
+, 
+cu¼’tSubNode
+);
+
+487 
+ÃwS”ŸlizedNode
+ = 
+	`pyx£r_S”ŸlizeXml
+(
+™em
+,
+
+488 &
+docPŒ
+,
+
+489 &
+cu¼’tSubNode
+,
+
+490 &
+cu¼’tSubNode
+,
+
+491 
+dupI‹ms
+);
+
+492 
+keySŒšg
+ = 
+	`PyLi¡_G‘I‹m
+(
+diùKeys
+, 
+couÁ”
+);
+
+493 
+keyCh¬p
+ = 
+	`PySŒšg_AS_STRING
+(
+keySŒšg
+);
+
+494 
+keyA‰r
+ = 
+	`xmlNewPrİ
+(
+cu¼’tSubNode
+,
+
+495 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_key
+,
+
+496 
+BAD_CAST
+ 
+keyCh¬p
+);
+
+497 
+pyx£rTy³
+ = 
+	`xmlNewPrİ
+(
+cu¼’tSubNode
+,
+
+498 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+,
+
+499 
+BAD_CAST
+ 
+objeùName
+);
+
+500 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+cu¼’tSubNode
+);
+
+503 
+pha£
+ = 
+PYTHON_SERX_PHASE_NONE
+;
+
+506 
+	`Py_DECREF
+(
+diùKeys
+);
+
+509 
+	`Py_DECREF
+(
+şassName
+);
+
+510 
+	`Py_DECREF
+(
+şassPŒ
+);
+
+511  
+ÃwEËm’tNode
+;
+
+512 
+	}
+}
+
+514 
+xmlNodePŒ
+
+
+515 
+	$pyx£r_Glob®Li¡S”Ÿliz©iÚNÚStd
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+516 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+)
+
+518 
+xmlNodePŒ
+ 
+ÃwEËm’tNode
+ = (xmlNodePŒ)
+NULL
+;
+
+519 
+xmlA‰rPŒ
+ 
+ty³A‰r
+ = (xmlA‰rPŒ)
+NULL
+;
+
+520 
+xmlA‰rPŒ
+ 
+ÇmePŒ
+ = (xmlA‰rPŒ)
+NULL
+;
+
+521 
+xmlNodePŒ
+ 
+ÃwS”ŸlizedNode
+ = (xmlNodePŒ)
+NULL
+;
+
+522 
+xmlNodePŒ
+ 
+cu¼’tSubNode
+ = (xmlNodePŒ)
+NULL
+;
+
+523 
+PyObjeù
+ *
+şassPŒ
+ = (PyObjeù *)
+NULL
+;
+
+524 
+PyObjeù
+ *
+şassName
+ = (PyObjeù *)
+NULL
+;
+
+525 
+PyObjeù
+ *
+™em
+ = (PyObjeù *)
+NULL
+;
+
+526 *
+objeùName
+ = (*)
+NULL
+;
+
+527 *
+ty³Name
+ = (*)
+NULL
+;
+
+528 
+PythÚTy³S”Ÿlize
+ 
+cu¼’tS”Ÿliz©iÚ
+;
+
+529 
+tu¶eSize
+ = 0;
+
+530 
+couÁ”
+ = 0, 
+d
+ = 0;
+
+531 
+£rŸlized
+ = 0;
+
+532 
+pha£
+;
+
+533 *
+ÅŒ
+ = (*)
+NULL
+;
+
+534 ià(
+	`PYTHON_IS_NONE
+(
+o
+)) {
+
+535  (
+xmlNodePŒ
+)
+NULL
+;
+
+537 
+şassPŒ
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+o
+, 
+pyx£r_©Œ_şass
+);
+
+538 ià(
+	`PYTHON_IS_NONE
+(
+şassPŒ
+)) {
+
+539  (
+xmlNodePŒ
+)
+NULL
+;
+
+541 
+şassName
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+şassPŒ
+, 
+pyx£r_©Œ_Çme
+);
+
+542 ià(
+	`PYTHON_IS_NONE
+(
+şassName
+)) {
+
+543  (
+xmlNodePŒ
+)
+NULL
+;
+
+545 
+ÅŒ
+ = 
+	`PySŒšg_AS_STRING
+(
+şassName
+);
+
+546 ià(
+ÅŒ
+ !ğ(*)
+NULL
+) {
+
+547 
+ÃwEËm’tNode
+ = 
+	`xmlNewDocNode
+(
+docPŒ
+, 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+548 
+BAD_CAST
+ 
+pyx£r_xml_–em’t_cŞËùiÚ
+,
+
+549 
+NULL
+);
+
+550 
+ty³A‰r
+ = 
+	`xmlNewPrİ
+(
+ÃwEËm’tNode
+,
+
+551 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+,
+
+552 
+BAD_CAST
+ 
+ÅŒ
+);
+
+553 
+ÇmePŒ
+ = 
+	`xmlNewPrİ
+(
+ÃwEËm’tNode
+,
+
+554 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_Çme
+,
+
+555 
+BAD_CAST
+ 
+Çme
+);
+
+556 
+tu¶eSize
+ = 
+	`PyLi¡_GET_SIZE
+(
+o
+);
+
+557 
+couÁ”
+ = 0; couÁ” < 
+tu¶eSize
+; counter++) {
+
+558 
+™em
+ = 
+	`PyLi¡_G‘I‹m
+(
+o
+, 
+couÁ”
+);
+
+559 ià(
+	`PYTHON_IS_NONE
+(
+™em
+)) {
+
+562 
+d
+ = 0;
+
+563 
+cu¼’tS”Ÿliz©iÚ
+ = 
+£rxCÚü‘eTy³s
+[
+d
+];
+
+564 
+pha£
+ = 
+PYTHON_SERX_PHASE_NONE
+;
+
+565 
+£rŸlized
+ = 0;
+
+566 
+cu¼’tS”Ÿliz©iÚ
+.
+avaabË
+ == 1
+
+567 && 
+pha£
+ =ğ
+PYTHON_SERX_PHASE_NONE
+) {
+
+568 ià(
+cu¼’tS”Ÿliz©iÚ
+.
+	`check”
+(
+™em
+)
+
+569 && 
+£rŸlized
+ == 0) {
+
+570 
+ÃwS”ŸlizedNode
+ = 
+cu¼’tS”Ÿliz©iÚ
+.
+	`£rŸliz”
+(
+
+571 
+™em
+,
+
+572 (*)
+pyx£r_xml_–em’t_™em
+,
+
+573 (
+PyLi¡Objeù
+ *)
+NULL
+,
+
+574 
+docPŒ
+);
+
+575 ià(
+ÃwS”ŸlizedNode
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+576 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+ÃwS”ŸlizedNode
+);
+
+577 
+pha£
+ = 
+PYTHON_SERX_PHASE_CONCRETE
+;
+
+578 
+£rŸlized
+ = 1;
+
+581 
+cu¼’tS”Ÿliz©iÚ
+ = 
+£rxCÚü‘eTy³s
+[++
+d
+];
+
+582 ià(
+cu¼’tS”Ÿliz©iÚ
+.
+avaabË
+ == 0
+
+583 && 
+pha£
+ =ğ
+PYTHON_SERX_PHASE_NONE
+
+
+584 && 
+£rŸlized
+ == 0) {
+
+585 ià((
+	`pyx£r_PyLi¡CÚšs
+(
+dupI‹ms
+, 
+™em
+)è=ğ
+PYXSER_FOUND
+) {
+
+586 
+ty³Name
+ = 
+	`pyx£r_G‘CÏssName
+(
+™em
+);
+
+587 ià(
+ty³Name
+ !ğ(*)
+NULL
+) {
+
+588 
+ÃwS”ŸlizedNode
+ = 
+	`xmlNewDocNode
+(
+docPŒ
+, 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+589 
+BAD_CAST
+ 
+ty³Name
+,
+
+590 
+NULL
+);
+
+591 
+	`pyx£r_AddReã»nû
+(
+™em
+, 
+ÃwS”ŸlizedNode
+);
+
+592 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+ÃwS”ŸlizedNode
+);
+
+595 
+pha£
+ = 
+PYTHON_SERX_PHASE_OBJECT
+;
+
+596 
+objeùName
+ = 
+	`pyx£r_G‘CÏssName
+(
+™em
+);
+
+597 
+cu¼’tSubNode
+ = 
+	`xmlNewDocNode
+(
+docPŒ
+, 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+598 
+BAD_CAST
+ 
+objeùName
+,
+
+599 
+NULL
+);
+
+600 
+	`pyx£r_AddModuËA‰r
+(
+™em
+, 
+cu¼’tSubNode
+);
+
+601 
+ÃwS”ŸlizedNode
+ = 
+	`pyx£r_S”ŸlizeXml
+(
+™em
+,
+
+602 &
+docPŒ
+,
+
+603 &
+cu¼’tSubNode
+,
+
+604 &
+cu¼’tSubNode
+,
+
+605 
+dupI‹ms
+);
+
+606 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+cu¼’tSubNode
+);
+
+609 
+pha£
+ = 
+PYTHON_SERX_PHASE_NONE
+;
+
+613 
+	`Py_DECREF
+(
+şassName
+);
+
+614 
+	`Py_DECREF
+(
+şassPŒ
+);
+
+615  
+ÃwEËm’tNode
+;
+
+616 
+	}
+}
+
+618 
+xmlNodePŒ
+
+
+619 
+	$pyx£r_Glob®Tu¶eS”Ÿliz©iÚ
+(
+PyObjeù
+ *
+o
+, *
+Çme
+, 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+)
+
+621 
+xmlNodePŒ
+ 
+ÃwEËm’tNode
+ = (xmlNodePŒ)
+NULL
+;
+
+622 
+xmlA‰rPŒ
+ 
+ty³A‰r
+ = (xmlA‰rPŒ)
+NULL
+;
+
+623 
+xmlA‰rPŒ
+ 
+ÇmePŒ
+ = (xmlA‰rPŒ)
+NULL
+;
+
+624 
+xmlNodePŒ
+ 
+ÃwS”ŸlizedNode
+ = (xmlNodePŒ)
+NULL
+;
+
+625 
+xmlNodePŒ
+ 
+cu¼’tSubNode
+ = (xmlNodePŒ)
+NULL
+;
+
+626 
+xmlA‰rPŒ
+ 
+pyx£rTy³
+ = (xmlA‰rPŒ)
+NULL
+;
+
+627 
+PyObjeù
+ *
+şassPŒ
+ = (PyObjeù *)
+NULL
+;
+
+628 
+PyObjeù
+ *
+şassName
+ = (PyObjeù *)
+NULL
+;
+
+629 
+PyObjeù
+ *
+™em
+ = (PyObjeù *)
+NULL
+;
+
+630 *
+objeùName
+ = (*)
+NULL
+;
+
+631 *
+ty³Name
+ = (*)
+NULL
+;
+
+632 
+PythÚTy³S”Ÿlize
+ 
+cu¼’tS”Ÿliz©iÚ
+;
+
+633 
+tu¶eSize
+ = 0;
+
+634 
+couÁ”
+ = 0, 
+d
+ = 0;
+
+635 
+£rŸlized
+ = 0;
+
+636 
+pha£
+;
+
+637 *
+ÅŒ
+ = (*)
+NULL
+;
+
+638 ià(
+	`PYTHON_IS_NONE
+(
+o
+)) {
+
+639  (
+xmlNodePŒ
+)
+NULL
+;
+
+641 
+şassPŒ
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+o
+, 
+pyx£r_©Œ_şass
+);
+
+642 ià(
+	`PYTHON_IS_NONE
+(
+şassPŒ
+)) {
+
+643  (
+xmlNodePŒ
+)
+NULL
+;
+
+645 
+şassName
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+şassPŒ
+, 
+pyx£r_©Œ_Çme
+);
+
+646 ià(
+	`PYTHON_IS_NONE
+(
+şassName
+)) {
+
+647  (
+xmlNodePŒ
+)
+NULL
+;
+
+649 
+ÅŒ
+ = 
+	`PySŒšg_AS_STRING
+(
+şassName
+);
+
+650 ià(
+ÅŒ
+ !ğ(*)
+NULL
+) {
+
+651 
+ÃwEËm’tNode
+ = 
+	`xmlNewDocNode
+(
+docPŒ
+, 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+652 
+BAD_CAST
+ 
+pyx£r_xml_–em’t_cŞËùiÚ
+,
+
+653 
+NULL
+);
+
+654 
+ty³A‰r
+ = 
+	`xmlNewPrİ
+(
+ÃwEËm’tNode
+,
+
+655 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+,
+
+656 
+BAD_CAST
+ 
+ÅŒ
+);
+
+657 
+ÇmePŒ
+ = 
+	`xmlNewPrİ
+(
+ÃwEËm’tNode
+,
+
+658 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_Çme
+,
+
+659 
+BAD_CAST
+ 
+Çme
+);
+
+660 
+tu¶eSize
+ = 
+	`PyTu¶e_GET_SIZE
+(
+o
+);
+
+661 
+couÁ”
+ = 0; couÁ” < 
+tu¶eSize
+; counter++) {
+
+662 
+™em
+ = 
+	`PyTu¶e_G‘I‹m
+(
+o
+, 
+couÁ”
+);
+
+663 ià(
+	`PYTHON_IS_NONE
+(
+™em
+)) {
+
+666 
+d
+ = 0;
+
+667 
+cu¼’tS”Ÿliz©iÚ
+ = 
+£rxCÚü‘eTy³s
+[
+d
+];
+
+668 
+pha£
+ = 
+PYTHON_SERX_PHASE_NONE
+;
+
+669 
+£rŸlized
+ = 0;
+
+670 
+cu¼’tS”Ÿliz©iÚ
+.
+avaabË
+ == 1
+
+671 && 
+pha£
+ =ğ
+PYTHON_SERX_PHASE_NONE
+) {
+
+672 ià(
+cu¼’tS”Ÿliz©iÚ
+.
+	`check”
+(
+™em
+)
+
+673 && 
+£rŸlized
+ == 0) {
+
+674 
+ÃwS”ŸlizedNode
+ = 
+cu¼’tS”Ÿliz©iÚ
+.
+	`£rŸliz”
+(
+
+675 
+™em
+,
+
+676 (*)
+pyx£r_xml_–em’t_™em
+,
+
+677 (
+PyLi¡Objeù
+ *)
+NULL
+, 
+docPŒ
+);
+
+678 ià(
+ÃwS”ŸlizedNode
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+679 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+ÃwS”ŸlizedNode
+);
+
+680 
+pha£
+ = 
+PYTHON_SERX_PHASE_CONCRETE
+;
+
+681 
+£rŸlized
+ = 1;
+
+684 
+cu¼’tS”Ÿliz©iÚ
+ = 
+£rxCÚü‘eTy³s
+[++
+d
+];
+
+685 ià(
+cu¼’tS”Ÿliz©iÚ
+.
+avaabË
+ == 0
+
+686 && 
+pha£
+ =ğ
+PYTHON_SERX_PHASE_NONE
+
+
+687 && 
+£rŸlized
+ == 0) {
+
+688 ià((
+	`pyx£r_PyLi¡CÚšs
+(
+dupI‹ms
+, 
+™em
+)è=ğ
+PYXSER_FOUND
+) {
+
+689 
+ty³Name
+ = 
+	`pyx£r_G‘CÏssName
+(
+™em
+);
+
+690 ià(
+ty³Name
+ !ğ(*)
+NULL
+) {
+
+691 
+ÃwS”ŸlizedNode
+ = 
+	`xmlNewDocNode
+(
+docPŒ
+, 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+692 
+BAD_CAST
+ 
+pyx£r_xml_–em’t_objeù
+,
+
+693 
+NULL
+);
+
+694 
+ÇmePŒ
+ = 
+	`xmlNewPrİ
+(
+ÃwS”ŸlizedNode
+,
+
+695 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+,
+
+696 
+BAD_CAST
+ 
+ty³Name
+);
+
+697 
+	`pyx£r_AddReã»nû
+(
+™em
+, 
+ÃwS”ŸlizedNode
+);
+
+698 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+ÃwS”ŸlizedNode
+);
+
+701 
+pha£
+ = 
+PYTHON_SERX_PHASE_OBJECT
+;
+
+702 
+objeùName
+ = 
+	`pyx£r_G‘CÏssName
+(
+™em
+);
+
+703 
+cu¼’tSubNode
+ = 
+	`xmlNewDocNode
+(
+docPŒ
+, 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+704 
+BAD_CAST
+ 
+pyx£r_xml_–em’t_objeù
+,
+
+705 
+NULL
+);
+
+706 
+pyx£rTy³
+ = 
+	`xmlNewPrİ
+(
+cu¼’tSubNode
+,
+
+707 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+,
+
+708 
+BAD_CAST
+ 
+objeùName
+);
+
+709 
+	`pyx£r_AddModuËA‰r
+(
+™em
+, 
+cu¼’tSubNode
+);
+
+710 
+ÃwS”ŸlizedNode
+ = 
+	`pyx£r_S”ŸlizeXml
+(
+™em
+,
+
+711 &
+docPŒ
+,
+
+712 &
+cu¼’tSubNode
+,
+
+713 &
+cu¼’tSubNode
+,
+
+714 
+dupI‹ms
+);
+
+715 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+cu¼’tSubNode
+);
+
+718 
+pha£
+ = 
+PYTHON_SERX_PHASE_NONE
+;
+
+722 
+	`Py_DECREF
+(
+şassName
+);
+
+723 
+	`Py_DECREF
+(
+şassPŒ
+);
+
+724  
+ÃwEËm’tNode
+;
+
+725 
+	}
+}
+
+727 
+xmlNodePŒ
+
+
+728 
+	$pyx£r_Glob®DiùS”Ÿliz©iÚ
+(
+PyObjeù
+ *
+o
+, *
+Çme
+, 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+)
+
+730 
+xmlNodePŒ
+ 
+ÃwEËm’tNode
+ = (xmlNodePŒ)
+NULL
+;
+
+731 
+xmlA‰rPŒ
+ 
+ty³A‰r
+ = (xmlA‰rPŒ)
+NULL
+;
+
+732 
+xmlA‰rPŒ
+ 
+ÇmePŒ
+ = (xmlA‰rPŒ)
+NULL
+;
+
+733 
+xmlA‰rPŒ
+ 
+keyA‰r
+ = (xmlA‰rPŒ)
+NULL
+;
+
+734 
+xmlNodePŒ
+ 
+ÃwS”ŸlizedNode
+ = (xmlNodePŒ)
+NULL
+;
+
+735 
+xmlNodePŒ
+ 
+cu¼’tSubNode
+ = (xmlNodePŒ)
+NULL
+;
+
+736 
+xmlA‰rPŒ
+ 
+pyx£rTy³
+ = (xmlA‰rPŒ)
+NULL
+;
+
+737 
+PyObjeù
+ *
+şassPŒ
+ = (PyObjeù *)
+NULL
+;
+
+738 
+PyObjeù
+ *
+şassName
+ = (PyObjeù *)
+NULL
+;
+
+739 
+PyObjeù
+ *
+™em
+ = (PyObjeù *)
+NULL
+;
+
+740 
+PyObjeù
+ *
+keySŒšg
+ = (PyObjeù *)
+NULL
+;
+
+741 
+PyObjeù
+ *
+diùKeys
+ = (PyObjeù *)
+NULL
+;
+
+742 
+PyObjeù
+ *
+cu¼’tKey
+ = (PyObjeù *)
+NULL
+;
+
+743 *
+keyCh¬p
+ = (*)
+NULL
+;
+
+744 *
+objeùName
+ = (*)
+NULL
+;
+
+745 *
+ty³Name
+ = (*)
+NULL
+;
+
+746 
+PythÚTy³S”Ÿlize
+ 
+cu¼’tS”Ÿliz©iÚ
+;
+
+747 
+tu¶eSize
+ = 0;
+
+748 
+couÁ”
+ = 0, 
+d
+ = 0;
+
+749 
+£rŸlized
+ = 0;
+
+750 
+pha£
+;
+
+751 *
+ÅŒ
+ = (*)
+NULL
+;
+
+752 ià(
+	`PYTHON_IS_NONE
+(
+o
+)) {
+
+753  (
+xmlNodePŒ
+)
+NULL
+;
+
+755 
+şassPŒ
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+o
+, 
+pyx£r_©Œ_şass
+);
+
+756 ià(
+	`PYTHON_IS_NONE
+(
+şassPŒ
+)) {
+
+757  (
+xmlNodePŒ
+)
+NULL
+;
+
+759 
+şassName
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+şassPŒ
+, 
+pyx£r_©Œ_Çme
+);
+
+760 ià(
+	`PYTHON_IS_NONE
+(
+şassName
+)) {
+
+761  (
+xmlNodePŒ
+)
+NULL
+;
+
+763 
+ÅŒ
+ = 
+	`PySŒšg_AS_STRING
+(
+şassName
+);
+
+764 ià(
+ÅŒ
+ !ğ(*)
+NULL
+) {
+
+765 
+ÃwEËm’tNode
+ = 
+	`xmlNewDocNode
+(
+docPŒ
+, 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+766 
+BAD_CAST
+ 
+pyx£r_xml_–em’t_cŞËùiÚ
+,
+
+767 
+NULL
+);
+
+768 
+ty³A‰r
+ = 
+	`xmlNewPrİ
+(
+ÃwEËm’tNode
+,
+
+769 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+,
+
+770 
+BAD_CAST
+ 
+ÅŒ
+);
+
+771 
+ÇmePŒ
+ = 
+	`xmlNewPrİ
+(
+ÃwEËm’tNode
+,
+
+772 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_Çme
+,
+
+773 
+BAD_CAST
+ 
+Çme
+);
+
+774 
+tu¶eSize
+ = 
+	`PyDiù_Size
+(
+o
+);
+
+775 
+diùKeys
+ = 
+	`PyDiù_Keys
+(
+o
+);
+
+776 ià(
+	`PYTHON_IS_NOT_NONE
+(
+diùKeys
+)) {
+
+777 
+couÁ”
+ = 0; couÁ” < 
+tu¶eSize
+; counter++) {
+
+778 
+cu¼’tKey
+ = 
+	`PyLi¡_G‘I‹m
+(
+diùKeys
+, 
+couÁ”
+);
+
+779 
+™em
+ = 
+	`PyDiù_G‘I‹m
+(
+o
+, 
+cu¼’tKey
+);
+
+780 ià(
+	`PYTHON_IS_NONE
+(
+™em
+)) {
+
+783 
+d
+ = 0;
+
+784 
+cu¼’tS”Ÿliz©iÚ
+ = 
+£rxCÚü‘eTy³s
+[
+d
+];
+
+785 
+pha£
+ = 
+PYTHON_SERX_PHASE_NONE
+;
+
+786 
+£rŸlized
+ = 0;
+
+787 
+cu¼’tS”Ÿliz©iÚ
+.
+avaabË
+ == 1
+
+788 && 
+pha£
+ =ğ
+PYTHON_SERX_PHASE_NONE
+) {
+
+789 ià(
+cu¼’tS”Ÿliz©iÚ
+.
+	`check”
+(
+™em
+)
+
+790 && 
+£rŸlized
+ == 0) {
+
+791 
+ÃwS”ŸlizedNode
+ = 
+cu¼’tS”Ÿliz©iÚ
+.
+	`£rŸliz”
+(
+
+792 
+™em
+,
+
+793 (*)
+pyx£r_xml_–em’t_™em
+,
+
+794 (
+PyLi¡Objeù
+ *)
+NULL
+,
+
+795 
+docPŒ
+);
+
+796 ià(
+ÃwS”ŸlizedNode
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+797 
+keySŒšg
+ = 
+	`PyLi¡_G‘I‹m
+(
+diùKeys
+, 
+couÁ”
+);
+
+798 
+keyCh¬p
+ = 
+	`PySŒšg_AS_STRING
+(
+keySŒšg
+);
+
+799 
+keyA‰r
+ = 
+	`xmlNewPrİ
+(
+ÃwS”ŸlizedNode
+,
+
+800 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_key
+,
+
+801 
+BAD_CAST
+ 
+keyCh¬p
+);
+
+802 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+ÃwS”ŸlizedNode
+);
+
+803 
+pha£
+ = 
+PYTHON_SERX_PHASE_CONCRETE
+;
+
+804 
+£rŸlized
+ = 1;
+
+807 
+cu¼’tS”Ÿliz©iÚ
+ = 
+£rxCÚü‘eTy³s
+[++
+d
+];
+
+808 ià(
+cu¼’tS”Ÿliz©iÚ
+.
+avaabË
+ == 0
+
+809 && 
+pha£
+ =ğ
+PYTHON_SERX_PHASE_NONE
+
+
+810 && 
+£rŸlized
+ == 0) {
+
+811 ià((
+	`pyx£r_PyLi¡CÚšs
+(
+dupI‹ms
+, 
+™em
+)è=ğ
+PYXSER_FOUND
+) {
+
+812 
+ty³Name
+ = 
+	`pyx£r_G‘CÏssName
+(
+™em
+);
+
+813 ià(
+ty³Name
+ !ğ(*)
+NULL
+) {
+
+814 
+ÃwS”ŸlizedNode
+ = 
+	`xmlNewDocNode
+(
+docPŒ
+, 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+815 
+BAD_CAST
+ 
+pyx£r_xml_–em’t_objeù
+,
+
+816 
+NULL
+);
+
+817 
+	`pyx£r_AddReã»nû
+(
+™em
+, 
+ÃwS”ŸlizedNode
+);
+
+818 
+keySŒšg
+ = 
+	`PyLi¡_G‘I‹m
+(
+diùKeys
+, 
+couÁ”
+);
+
+819 
+keyCh¬p
+ = 
+	`PySŒšg_AS_STRING
+(
+keySŒšg
+);
+
+820 
+keyA‰r
+ = 
+	`xmlNewPrİ
+(
+ÃwS”ŸlizedNode
+,
+
+821 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_key
+,
+
+822 
+BAD_CAST
+ 
+keyCh¬p
+);
+
+823 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+ÃwS”ŸlizedNode
+);
+
+826 
+pha£
+ = 
+PYTHON_SERX_PHASE_OBJECT
+;
+
+827 
+objeùName
+ = 
+	`pyx£r_G‘CÏssName
+(
+™em
+);
+
+828 
+cu¼’tSubNode
+ = 
+	`xmlNewDocNode
+(
+docPŒ
+, 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+829 
+BAD_CAST
+ 
+pyx£r_xml_–em’t_objeù
+,
+
+830 
+NULL
+);
+
+831 
+	`pyx£r_AddModuËA‰r
+(
+™em
+, 
+cu¼’tSubNode
+);
+
+832 
+ÃwS”ŸlizedNode
+ = 
+	`pyx£r_S”ŸlizeXml
+(
+™em
+,
+
+833 &
+docPŒ
+,
+
+834 &
+cu¼’tSubNode
+,
+
+835 &
+cu¼’tSubNode
+,
+
+836 
+dupI‹ms
+);
+
+837 
+keySŒšg
+ = 
+	`PyLi¡_G‘I‹m
+(
+diùKeys
+, 
+couÁ”
+);
+
+838 
+keyCh¬p
+ = 
+	`PySŒšg_AS_STRING
+(
+keySŒšg
+);
+
+839 
+keyA‰r
+ = 
+	`xmlNewPrİ
+(
+cu¼’tSubNode
+,
+
+840 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_key
+,
+
+841 
+BAD_CAST
+ 
+keyCh¬p
+);
+
+842 
+pyx£rTy³
+ = 
+	`xmlNewPrİ
+(
+cu¼’tSubNode
+,
+
+843 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+,
+
+844 
+BAD_CAST
+ 
+objeùName
+);
+
+845 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+cu¼’tSubNode
+);
+
+848 
+pha£
+ = 
+PYTHON_SERX_PHASE_NONE
+;
+
+851 
+	`Py_DECREF
+(
+diùKeys
+);
+
+854 
+	`Py_DECREF
+(
+şassName
+);
+
+855 
+	`Py_DECREF
+(
+şassPŒ
+);
+
+856  
+ÃwEËm’tNode
+;
+
+857 
+	}
+}
+
+859 
+PyObjeù
+ *
+
+860 
+	$pyxun£r_S”ŸlizeTu¶e
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+)
+
+862 
+xmlNodePŒ
+ 
+node
+ = *(
+obj
+->
+cu¼’tNode
+);
+
+864 
+PyDiùObjeù
+ **
+dups
+ = 
+obj
+->dups;
+
+865 
+PyDiùObjeù
+ **
+moduËs
+ = 
+obj
+->modules;
+
+866 *
+n_ty³
+ = (*)
+NULL
+;
+
+867 *
+n_moduË
+ = (*)
+NULL
+;
+
+868 *
+n_id
+ = (*)
+NULL
+;
+
+869 *
+n_»f
+ = (*)
+NULL
+;
+
+870 
+PyObjeù
+ *
+ÿcheMod
+ = (PyObjeù *)
+NULL
+;
+
+871 
+PyObjeù
+ *
+cu¼’tTy³
+ = (PyObjeù *)
+NULL
+;
+
+872 
+PythÚTy³De£rŸlize
+ *
+machše
+ = (PythÚTy³De£rŸliz*)
+un£rxCÚü‘eTy³s
+;
+
+873 
+PyObjeù
+ *
+tu¶e
+ = (PyObjeù *)
+NULL
+;
+
+874 
+PyObjeù
+ *
+un£r
+ = (PyObjeù *)
+NULL
+;
+
+875 
+PyObjeù
+ *
+ÿcheCu¼’t
+ = (PyObjeù *)
+NULL
+;
+
+876 
+PyObjeù
+ *
+chkMod
+ = (PyObjeù *)
+NULL
+;
+
+877 
+Py_ssize_t
+ 
+tsz
+ = 0;
+
+878 
+xmlNodePŒ
+ 
+rÚ
+ = (xmlNodePŒ)
+NULL
+;
+
+879 
+xmlNodePŒ
+ 
+ÿcheNode
+ = (xmlNodePŒ)
+NULL
+;
+
+880 
+xmlNodePŒ
+ 
+ÿcheCu¼’tNode
+ = (xmlNodePŒ)
+NULL
+;
+
+881 
+c
+ = 0, 
+£rŸlized
+ = 0;
+
+882 
+ËnI‹m
+ = 
+	`¡¾’
+((*)
+pyx£r_xml_–em’t_™em
+);
+
+883 
+ËnObjeù
+ = 
+	`¡¾’
+((*)
+pyx£r_xml_–em’t_objeù
+);
+
+885 ià(
+node
+ =ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+886  
+Py_NÚe
+;
+
+889 
+tu¶e
+ = 
+	`PyTu¶e_New
+(0);
+
+890 
+rÚ
+ = 
+node
+->
+chd»n
+;
+
+891 
+rÚ
+;
+
+892 
+rÚ
+ =„Ú->
+Ãxt
+) {
+
+893 *(
+obj
+->
+cu¼’tNode
+èğ
+rÚ
+;
+
+894 ià(
+rÚ
+->
+ty³
+ =ğ
+XML_ELEMENT_NODE
+) {
+
+895 ià((
+	`¡ºcmp
+((*)
+rÚ
+->
+Çme
+,
+
+896 (*)
+pyx£r_xml_–em’t_™em
+,
+
+897 
+ËnI‹m
+)) == 0) {
+
+898 
+c
+ = 0;
+
+899 
+£rŸlized
+ = 0;
+
+900 
+machše
+[
+c
+].
+avaabË
+ == 1
+
+901 && 
+£rŸlized
+ == 0) {
+
+902 ià((
+machše
+[
+c
+].
+	`check
+(
+rÚ
+)) == 1) {
+
+903 
+un£r
+ = 
+machše
+[
+c
+].
+	`de£rŸliz”
+(
+obj
+);
+
+904 ià(
+	`PYTHON_IS_NOT_NONE
+(
+un£r
+)) {
+
+905 ++
+tsz
+;
+
+906 
+	`_PyTu¶e_Resize
+(&
+tu¶e
+, 
+tsz
+);
+
+907 
+	`PyTu¶e_SET_ITEM
+(
+tu¶e
+, (
+tsz
+ - 1), 
+un£r
+);
+
+908 
+£rŸlized
+ = 1;
+
+911 
+c
+++;
+
+913 } ià((
+	`¡ºcmp
+((*)
+rÚ
+->
+Çme
+,
+
+914 (*)
+pyx£r_xml_–em’t_objeù
+,
+
+915 
+ËnObjeù
+)) == 0) {
+
+916 
+ÿcheNode
+ = 
+rÚ
+;
+
+917 
+n_ty³
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+918 
+n_moduË
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_moduË
+);
+
+919 
+n_id
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_id
+);
+
+920 
+n_»f
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_»f
+);
+
+921 
+un£r
+ = 
+	`pyx£r_CheckAvaabËObjeù
+((
+PyObjeù
+ *)*
+dups
+, (*)
+n_»f
+);
+
+922 ià(
+n_ty³
+ !ğ(*)
+NULL
+
+
+923 && 
+n_moduË
+ !ğ(*)
+NULL
+
+
+924 && 
+n_id
+ !ğ(*)
+NULL
+
+
+925 && 
+un£r
+ =ğ(
+PyObjeù
+ *)
+NULL
+) {
+
+926 ià((
+	`pyx£r_ModuËNÙMaš
+(
+n_moduË
+)) == 1) {
+
+927 
+ÿcheMod
+ = 
+	`pyx£r_S—rchModuË
+(
+n_moduË
+);
+
+928 
+ÿcheMod
+ = cacheMod =ğ(
+PyObjeù
+ *)
+NULL
+ ? 
+	`PyImpÜt_ImpÜtModuË
+(
+n_moduË
+) : cacheMod;
+
+929 ià(
+	`PYTHON_IS_NOT_NONE
+(
+ÿcheMod
+)) {
+
+930 
+chkMod
+ = 
+	`pyx£r_CacheModuË
+((
+PyObjeù
+ *)*
+moduËs
+, 
+n_moduË
+);
+
+931 ià(!
+	`PYTHON_IS_NOT_NONE
+(
+chkMod
+)) {
+
+932 
+	`PyDiù_S‘I‹mSŒšg
+((
+PyObjeù
+ *)*
+moduËs
+, 
+n_moduË
+, 
+ÿcheMod
+);
+
+934 
+cu¼’tTy³
+ = (
+PyObjeù
+ *)
+	`pyx£r_S—rchModuËTy³
+(
+ÿcheMod
+, 
+n_ty³
+);
+
+935 ià(
+	`PYTHON_IS_NOT_NONE
+(
+cu¼’tTy³
+)) {
+
+936 
+un£r
+ = 
+	`PyIn¡ªû_NewRaw
+(
+cu¼’tTy³
+, 
+	`PyDiù_New
+());
+
+937 ià(
+	`PYTHON_IS_NOT_NONE
+(
+un£r
+)) {
+
+938 ++
+tsz
+;
+
+939 
+	`_PyTu¶e_Resize
+(&
+tu¶e
+, 
+tsz
+);
+
+940 
+	`PyTu¶e_SET_ITEM
+(
+tu¶e
+, (
+tsz
+ - 1), 
+un£r
+);
+
+941 
+	`pyx£r_AddAvaabËObjeù
+((
+PyObjeù
+ *)*
+dups
+, (*)
+n_id
+, 
+un£r
+);
+
+942 
+ÿcheCu¼’t
+ = *(
+obj
+->
+cu¼’t
+);
+
+943 
+ÿcheCu¼’tNode
+ = 
+rÚ
+;
+
+944 *(
+obj
+->
+cu¼’t
+èğ
+un£r
+;
+
+945 *(
+obj
+->
+cu¼’tNode
+èğ
+rÚ
+;
+
+946 
+un£r
+ = 
+	`pyx£r_Un£rŸlizeBlock
+(
+obj
+);
+
+947 *(
+obj
+->
+cu¼’t
+èğ
+ÿcheCu¼’t
+;
+
+948 *(
+obj
+->
+cu¼’tNode
+èğ
+ÿcheCu¼’tNode
+;
+
+949 
+rÚ
+ = 
+ÿcheCu¼’tNode
+;
+
+954 
+cu¼’tTy³
+ = 
+	`pyx£r_S—rchObjeùInMaš
+(
+n_ty³
+);
+
+955 ià(
+	`PYTHON_IS_NOT_NONE
+(
+cu¼’tTy³
+)) {
+
+956 
+un£r
+ = 
+	`PyIn¡ªû_NewRaw
+(
+cu¼’tTy³
+, 
+	`PyDiù_New
+());
+
+957 ià(
+	`PYTHON_IS_NOT_NONE
+(
+un£r
+)) {
+
+958 
+un£r
+ = 
+	`PyIn¡ªû_NewRaw
+(
+cu¼’tTy³
+, 
+	`PyDiù_New
+());
+
+959 ià(
+	`PYTHON_IS_NOT_NONE
+(
+un£r
+)) {
+
+960 ++
+tsz
+;
+
+961 
+	`_PyTu¶e_Resize
+(&
+tu¶e
+, 
+tsz
+);
+
+962 
+	`PyTu¶e_SET_ITEM
+(
+tu¶e
+, (
+tsz
+ - 1), 
+un£r
+);
+
+963 
+	`pyx£r_AddAvaabËObjeù
+((
+PyObjeù
+ *)*
+dups
+, (*)
+n_id
+, 
+un£r
+);
+
+964 
+ÿcheCu¼’t
+ = *(
+obj
+->
+cu¼’t
+);
+
+965 
+ÿcheCu¼’tNode
+ = 
+rÚ
+;
+
+966 *(
+obj
+->
+cu¼’t
+èğ
+un£r
+;
+
+967 *(
+obj
+->
+cu¼’tNode
+èğ
+rÚ
+;
+
+968 
+un£r
+ = 
+	`pyx£r_Un£rŸlizeBlock
+(
+obj
+);
+
+969 *(
+obj
+->
+cu¼’t
+èğ
+ÿcheCu¼’t
+;
+
+970 *(
+obj
+->
+cu¼’tNode
+èğ
+ÿcheCu¼’tNode
+;
+
+971 
+rÚ
+ = 
+ÿcheCu¼’tNode
+;
+
+977 ++
+tsz
+;
+
+978 
+	`_PyTu¶e_Resize
+(&
+tu¶e
+, 
+tsz
+);
+
+979 
+	`PyTu¶e_SET_ITEM
+(
+tu¶e
+, (
+tsz
+ - 1), 
+un£r
+);
+
+984  
+tu¶e
+;
+
+985 
+	}
+}
+
+987 
+PyObjeù
+ *
+
+988 
+	$pyxun£r_S”ŸlizeLi¡
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+)
+
+990 
+xmlNodePŒ
+ 
+node
+ = *(
+obj
+->
+cu¼’tNode
+);
+
+992 
+PyDiùObjeù
+ **
+dups
+ = 
+obj
+->dups;
+
+993 
+PyDiùObjeù
+ **
+moduËs
+ = 
+obj
+->modules;
+
+994 *
+n_ty³
+ = (*)
+NULL
+;
+
+995 *
+n_moduË
+ = (*)
+NULL
+;
+
+996 *
+n_id
+ = (*)
+NULL
+;
+
+997 *
+n_»f
+ = (*)
+NULL
+;
+
+998 
+PyObjeù
+ *
+ÿcheMod
+ = (PyObjeù *)
+NULL
+;
+
+999 
+PyObjeù
+ *
+cu¼’tTy³
+ = (PyObjeù *)
+NULL
+;
+
+1000 
+PythÚTy³De£rŸlize
+ *
+machše
+ = (PythÚTy³De£rŸliz*)
+un£rxCÚü‘eTy³s
+;
+
+1001 
+PyObjeù
+ *
+un£r
+ = (PyObjeù *)
+NULL
+;
+
+1002 
+PyObjeù
+ *
+ÿcheCu¼’t
+ = (PyObjeù *)
+NULL
+;
+
+1003 
+PyObjeù
+ *
+chkMod
+ = (PyObjeù *)
+NULL
+;
+
+1004 
+xmlNodePŒ
+ 
+rÚ
+ = (xmlNodePŒ)
+NULL
+;
+
+1005 
+xmlNodePŒ
+ 
+ÿcheCu¼’tNode
+ = (xmlNodePŒ)
+NULL
+;
+
+1006 
+c
+ = 0, 
+£rŸlized
+ = 0;
+
+1007 
+PyObjeù
+ *
+li¡
+ = (PyObjeù *)
+NULL
+;
+
+1008 
+ËnObjeù
+ = 
+	`¡¾’
+((*)
+pyx£r_xml_–em’t_objeù
+);
+
+1010 ià(
+node
+ =ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+1011  
+Py_NÚe
+;
+
+1014 
+li¡
+ = 
+	`PyLi¡_New
+(0);
+
+1015 
+rÚ
+ = 
+node
+->
+chd»n
+;
+
+1016 
+rÚ
+;
+
+1017 
+rÚ
+ =„Ú->
+Ãxt
+) {
+
+1018 *(
+obj
+->
+cu¼’tNode
+èğ
+rÚ
+;
+
+1019 ià(
+rÚ
+->
+ty³
+ =ğ
+XML_ELEMENT_NODE
+) {
+
+1020 ià((
+	`¡ºcmp
+((*)
+rÚ
+->
+Çme
+,
+
+1021 (*)
+pyx£r_xml_–em’t_™em
+,
+
+1022 
+	`¡¾’
+((*)
+pyx£r_xml_–em’t_™em
+))) == 0) {
+
+1023 
+c
+ = 0;
+
+1024 
+£rŸlized
+ = 0;
+
+1025 
+machše
+[
+c
+].
+avaabË
+ == 1
+
+1026 && 
+£rŸlized
+ == 0) {
+
+1027 ià((
+machše
+[
+c
+].
+	`check
+(
+rÚ
+)) == 1) {
+
+1028 
+un£r
+ = 
+machše
+[
+c
+].
+	`de£rŸliz”
+(
+obj
+);
+
+1029 ià(
+	`PYTHON_IS_NOT_NONE
+(
+un£r
+)) {
+
+1030 
+	`PyLi¡_Aµ’d
+(
+li¡
+, 
+un£r
+);
+
+1031 
+£rŸlized
+ = 1;
+
+1034 
+c
+++;
+
+1036 } ià((
+	`¡ºcmp
+((*)
+rÚ
+->
+Çme
+,
+
+1037 (*)
+pyx£r_xml_–em’t_objeù
+,
+
+1038 
+ËnObjeù
+)) == 0) {
+
+1039 
+n_ty³
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+1040 
+n_moduË
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_moduË
+);
+
+1041 
+n_id
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_id
+);
+
+1042 
+n_»f
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_»f
+);
+
+1043 
+un£r
+ = 
+	`pyx£r_CheckAvaabËObjeù
+((
+PyObjeù
+ *)*
+dups
+, (*)
+n_»f
+);
+
+1044 ià(
+n_ty³
+ !ğ(*)
+NULL
+
+
+1045 && 
+n_moduË
+ !ğ(*)
+NULL
+
+
+1046 && 
+n_id
+ !ğ(*)
+NULL
+
+
+1047 && 
+un£r
+ =ğ(
+PyObjeù
+ *)
+NULL
+) {
+
+1048 ià((
+	`pyx£r_ModuËNÙMaš
+(
+n_moduË
+)) == 1) {
+
+1049 
+ÿcheMod
+ = 
+	`pyx£r_S—rchModuË
+(
+n_moduË
+);
+
+1050 
+ÿcheMod
+ = cacheMod =ğ(
+PyObjeù
+ *)
+NULL
+ ? 
+	`PyImpÜt_ImpÜtModuË
+(
+n_moduË
+) : cacheMod;
+
+1051 ià(
+	`PYTHON_IS_NOT_NONE
+(
+ÿcheMod
+)) {
+
+1052 
+chkMod
+ = 
+	`pyx£r_CacheModuË
+((
+PyObjeù
+ *)*
+moduËs
+, 
+n_moduË
+);
+
+1053 ià(!
+	`PYTHON_IS_NOT_NONE
+(
+chkMod
+)) {
+
+1054 
+	`PyDiù_S‘I‹mSŒšg
+((
+PyObjeù
+ *)*
+moduËs
+, 
+n_moduË
+, 
+ÿcheMod
+);
+
+1056 
+cu¼’tTy³
+ = (
+PyObjeù
+ *)
+	`pyx£r_S—rchModuËTy³
+(
+ÿcheMod
+, 
+n_ty³
+);
+
+1057 ià(
+	`PYTHON_IS_NOT_NONE
+(
+cu¼’tTy³
+)) {
+
+1058 
+un£r
+ = 
+	`PyIn¡ªû_NewRaw
+(
+cu¼’tTy³
+, 
+	`PyDiù_New
+());
+
+1059 ià(
+	`PYTHON_IS_NOT_NONE
+(
+un£r
+)) {
+
+1060 
+	`PyLi¡_Aµ’d
+(
+li¡
+, 
+un£r
+);
+
+1061 
+	`pyx£r_AddAvaabËObjeù
+((
+PyObjeù
+ *)*
+dups
+, (*)
+n_id
+, 
+un£r
+);
+
+1062 
+ÿcheCu¼’t
+ = *(
+obj
+->
+cu¼’t
+);
+
+1063 
+ÿcheCu¼’tNode
+ = 
+rÚ
+;
+
+1064 *(
+obj
+->
+cu¼’t
+èğ
+un£r
+;
+
+1065 *(
+obj
+->
+cu¼’tNode
+èğ
+rÚ
+;
+
+1066 
+un£r
+ = 
+	`pyx£r_Un£rŸlizeBlock
+(
+obj
+);
+
+1067 *(
+obj
+->
+cu¼’t
+èğ
+ÿcheCu¼’t
+;
+
+1068 *(
+obj
+->
+cu¼’tNode
+èğ
+ÿcheCu¼’tNode
+;
+
+1069 
+rÚ
+ = 
+ÿcheCu¼’tNode
+;
+
+1074 
+cu¼’tTy³
+ = 
+	`pyx£r_S—rchObjeùInMaš
+(
+n_ty³
+);
+
+1075 ià(
+	`PYTHON_IS_NOT_NONE
+(
+cu¼’tTy³
+)) {
+
+1076 
+un£r
+ = 
+	`PyIn¡ªû_NewRaw
+(
+cu¼’tTy³
+, 
+	`PyDiù_New
+());
+
+1077 ià(
+	`PYTHON_IS_NOT_NONE
+(
+un£r
+)) {
+
+1078 
+un£r
+ = 
+	`PyIn¡ªû_NewRaw
+(
+cu¼’tTy³
+, 
+	`PyDiù_New
+());
+
+1079 ià(
+	`PYTHON_IS_NOT_NONE
+(
+un£r
+)) {
+
+1080 
+	`PyLi¡_Aµ’d
+(
+li¡
+, 
+un£r
+);
+
+1081 
+	`pyx£r_AddAvaabËObjeù
+((
+PyObjeù
+ *)*
+dups
+, (*)
+n_id
+, 
+un£r
+);
+
+1082 
+ÿcheCu¼’t
+ = *(
+obj
+->
+cu¼’t
+);
+
+1083 
+ÿcheCu¼’tNode
+ = 
+rÚ
+;
+
+1084 *(
+obj
+->
+cu¼’t
+èğ
+un£r
+;
+
+1085 *(
+obj
+->
+cu¼’tNode
+èğ
+rÚ
+;
+
+1086 
+un£r
+ = 
+	`pyx£r_Un£rŸlizeBlock
+(
+obj
+);
+
+1087 *(
+obj
+->
+cu¼’t
+èğ
+ÿcheCu¼’t
+;
+
+1088 *(
+obj
+->
+cu¼’tNode
+èğ
+ÿcheCu¼’tNode
+;
+
+1089 
+rÚ
+ = 
+ÿcheCu¼’tNode
+;
+
+1095 
+	`PyLi¡_Aµ’d
+(
+li¡
+, 
+un£r
+);
+
+1100  
+li¡
+;
+
+1101 
+	}
+}
+
+1103 
+PyObjeù
+ *
+
+1104 
+	$pyxun£r_S”ŸlizeDiù
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+)
+
+1106 
+xmlNodePŒ
+ 
+node
+ = *(
+obj
+->
+cu¼’tNode
+);
+
+1108 
+PyDiùObjeù
+ **
+dups
+ = 
+obj
+->dups;
+
+1109 
+PyDiùObjeù
+ **
+moduËs
+ = 
+obj
+->modules;
+
+1110 *
+n_ty³
+ = (*)
+NULL
+;
+
+1111 *
+n_moduË
+ = (*)
+NULL
+;
+
+1112 *
+n_id
+ = (*)
+NULL
+;
+
+1113 *
+n_»f
+ = (*)
+NULL
+;
+
+1114 
+PyObjeù
+ *
+ÿcheMod
+ = (PyObjeù *)
+NULL
+;
+
+1115 
+PyObjeù
+ *
+cu¼’tTy³
+ = (PyObjeù *)
+NULL
+;
+
+1116 
+PythÚTy³De£rŸlize
+ *
+machše
+ = (PythÚTy³De£rŸliz*)
+un£rxCÚü‘eTy³s
+;
+
+1117 
+PyObjeù
+ *
+un£r
+ = (PyObjeù *)
+NULL
+;
+
+1118 
+PyObjeù
+ *
+ÿcheCu¼’t
+ = (PyObjeù *)
+NULL
+;
+
+1119 
+PyObjeù
+ *
+chkMod
+ = (PyObjeù *)
+NULL
+;
+
+1120 
+xmlNodePŒ
+ 
+rÚ
+ = (xmlNodePŒ)
+NULL
+;
+
+1121 
+xmlNodePŒ
+ 
+ÿcheCu¼’tNode
+ = (xmlNodePŒ)
+NULL
+;
+
+1122 
+c
+ = 0, 
+£rŸlized
+ = 0;
+
+1123 
+PyObjeù
+ *
+diù
+ = (PyObjeù *)
+NULL
+;
+
+1124 *
+key
+ = (*)
+NULL
+;
+
+1125 
+ËnObjeù
+ = 
+	`¡¾’
+((*)
+pyx£r_xml_–em’t_objeù
+);
+
+1127 ià(
+node
+ =ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+1128  
+Py_NÚe
+;
+
+1131 
+diù
+ = 
+	`PyDiù_New
+();
+
+1132 
+rÚ
+ = 
+node
+->
+chd»n
+;
+
+1133 
+rÚ
+;
+
+1134 
+rÚ
+ =„Ú->
+Ãxt
+) {
+
+1135 *(
+obj
+->
+cu¼’tNode
+èğ
+rÚ
+;
+
+1136 ià(
+rÚ
+->
+ty³
+ =ğ
+XML_ELEMENT_NODE
+) {
+
+1137 ià((
+	`¡ºcmp
+((*)
+rÚ
+->
+Çme
+,
+
+1138 (*)
+pyx£r_xml_–em’t_™em
+,
+
+1139 
+	`¡¾’
+((*)
+pyx£r_xml_–em’t_™em
+))) == 0) {
+
+1140 
+c
+ = 0;
+
+1141 
+£rŸlized
+ = 0;
+
+1142 
+machše
+[
+c
+].
+avaabË
+ == 1
+
+1143 && 
+£rŸlized
+ == 0) {
+
+1144 ià((
+machše
+[
+c
+].
+	`check
+(
+rÚ
+)) == 1) {
+
+1145 
+un£r
+ = 
+machše
+[
+c
+].
+	`de£rŸliz”
+(
+obj
+);
+
+1146 ià(
+	`PYTHON_IS_NOT_NONE
+(
+un£r
+)) {
+
+1147 
+key
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_key
+);
+
+1148 
+	`PyDiù_S‘I‹mSŒšg
+(
+diù
+, 
+key
+, 
+un£r
+);
+
+1149 
+£rŸlized
+ = 1;
+
+1152 
+c
+++;
+
+1154 } ià((
+	`¡ºcmp
+((*)
+rÚ
+->
+Çme
+,
+
+1155 (*)
+pyx£r_xml_–em’t_objeù
+,
+
+1156 
+ËnObjeù
+)) == 0) {
+
+1157 
+n_ty³
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+1158 
+n_moduË
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_moduË
+);
+
+1159 
+n_id
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_id
+);
+
+1160 
+n_»f
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_»f
+);
+
+1161 
+un£r
+ = 
+	`pyx£r_CheckAvaabËObjeù
+((
+PyObjeù
+ *)*
+dups
+, (*)
+n_»f
+);
+
+1162 ià(
+n_ty³
+ !ğ(*)
+NULL
+
+
+1163 && 
+n_moduË
+ !ğ(*)
+NULL
+
+
+1164 && 
+n_id
+ !ğ(*)
+NULL
+
+
+1165 && 
+un£r
+ =ğ(
+PyObjeù
+ *)
+NULL
+) {
+
+1166 ià((
+	`pyx£r_ModuËNÙMaš
+(
+n_moduË
+)) == 1) {
+
+1167 
+ÿcheMod
+ = 
+	`pyx£r_S—rchModuË
+(
+n_moduË
+);
+
+1168 
+ÿcheMod
+ = cacheMod =ğ(
+PyObjeù
+ *)
+NULL
+ ? 
+	`PyImpÜt_ImpÜtModuË
+(
+n_moduË
+) : cacheMod;
+
+1169 ià(
+	`PYTHON_IS_NOT_NONE
+(
+ÿcheMod
+)) {
+
+1170 
+chkMod
+ = 
+	`pyx£r_CacheModuË
+((
+PyObjeù
+ *)*
+moduËs
+, 
+n_moduË
+);
+
+1171 ià(!
+	`PYTHON_IS_NOT_NONE
+(
+chkMod
+)) {
+
+1172 
+	`PyDiù_S‘I‹mSŒšg
+((
+PyObjeù
+ *)*
+moduËs
+, 
+n_moduË
+, 
+ÿcheMod
+);
+
+1174 
+cu¼’tTy³
+ = (
+PyObjeù
+ *)
+	`pyx£r_S—rchModuËTy³
+(
+ÿcheMod
+, 
+n_ty³
+);
+
+1175 ià(
+	`PYTHON_IS_NOT_NONE
+(
+cu¼’tTy³
+)) {
+
+1176 
+un£r
+ = 
+	`PyIn¡ªû_NewRaw
+(
+cu¼’tTy³
+, 
+	`PyDiù_New
+());
+
+1177 ià(
+	`PYTHON_IS_NOT_NONE
+(
+un£r
+)) {
+
+1178 
+key
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_key
+);
+
+1179 
+	`PyDiù_S‘I‹mSŒšg
+(
+diù
+, 
+key
+, 
+un£r
+);
+
+1180 
+	`pyx£r_AddAvaabËObjeù
+((
+PyObjeù
+ *)*
+dups
+, (*)
+n_id
+, 
+un£r
+);
+
+1181 
+ÿcheCu¼’t
+ = *(
+obj
+->
+cu¼’t
+);
+
+1182 
+ÿcheCu¼’tNode
+ = 
+rÚ
+;
+
+1183 *(
+obj
+->
+cu¼’t
+èğ
+un£r
+;
+
+1184 *(
+obj
+->
+cu¼’tNode
+èğ
+rÚ
+;
+
+1185 
+un£r
+ = 
+	`pyx£r_Un£rŸlizeBlock
+(
+obj
+);
+
+1186 *(
+obj
+->
+cu¼’t
+èğ
+ÿcheCu¼’t
+;
+
+1187 *(
+obj
+->
+cu¼’tNode
+èğ
+ÿcheCu¼’tNode
+;
+
+1188 
+rÚ
+ = 
+ÿcheCu¼’tNode
+;
+
+1193 
+cu¼’tTy³
+ = 
+	`pyx£r_S—rchObjeùInMaš
+(
+n_ty³
+);
+
+1194 ià(
+	`PYTHON_IS_NOT_NONE
+(
+cu¼’tTy³
+)) {
+
+1195 
+un£r
+ = 
+	`PyIn¡ªû_NewRaw
+(
+cu¼’tTy³
+, 
+	`PyDiù_New
+());
+
+1196 ià(
+	`PYTHON_IS_NOT_NONE
+(
+un£r
+)) {
+
+1197 
+un£r
+ = 
+	`PyIn¡ªû_NewRaw
+(
+cu¼’tTy³
+, 
+	`PyDiù_New
+());
+
+1198 ià(
+	`PYTHON_IS_NOT_NONE
+(
+un£r
+)) {
+
+1199 
+key
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_key
+);
+
+1200 
+	`PyDiù_S‘I‹mSŒšg
+(
+diù
+, 
+key
+, 
+un£r
+);
+
+1201 
+	`pyx£r_AddAvaabËObjeù
+((
+PyObjeù
+ *)*
+dups
+, (*)
+n_id
+, 
+un£r
+);
+
+1202 
+ÿcheCu¼’t
+ = *(
+obj
+->
+cu¼’t
+);
+
+1203 
+ÿcheCu¼’tNode
+ = 
+rÚ
+;
+
+1204 *(
+obj
+->
+cu¼’t
+èğ
+un£r
+;
+
+1205 *(
+obj
+->
+cu¼’tNode
+èğ
+rÚ
+;
+
+1206 
+un£r
+ = 
+	`pyx£r_Un£rŸlizeBlock
+(
+obj
+);
+
+1207 *(
+obj
+->
+cu¼’t
+èğ
+ÿcheCu¼’t
+;
+
+1208 *(
+obj
+->
+cu¼’tNode
+èğ
+ÿcheCu¼’tNode
+;
+
+1209 
+rÚ
+ = 
+ÿcheCu¼’tNode
+;
+
+1215 
+key
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_key
+);
+
+1216 
+	`PyDiù_S‘I‹mSŒšg
+(
+diù
+, 
+key
+, 
+un£r
+);
+
+1221  
+diù
+;
+
+1222 
+	}
+}
+
+	@pyxser_numbers.c
+
+26 #iâdeà
+lšt
+
+
+27 cÚ¡ 
+	gId
+[] = "$Id$";
+
+30 #ifdeà
+HAVE_CONFIG_H
+
+
+31 
+	~"cÚfig.h
+"
+
+34 
+	~<PythÚ.h
+>
+
+36 
+	~<libxml/·r£r.h
+>
+
+37 
+	~<libxml/Œ“.h
+>
+
+39 
+	~"šşude/pyx£r.h
+"
+
+40 
+	~"šşude/pyx£r_toŞs.h
+"
+
+42 cÚ¡ 
+	gpyx£r_Œue_ch¬_v®ue
+[] = "True";
+
+43 cÚ¡ 
+	gpyx£r_çl£_ch¬_v®ue
+[] = "False";
+
+45 
+xmlNodePŒ
+
+
+46 
+	$pyx£r_S”ŸlizeIÁ
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+47 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+)
+
+49  
+	`pyx£r_S”ŸlizePrim™iveTy³
+(
+o
+, 
+Çme
+,
+
+50 
+dupI‹ms
+, 
+doc
+);
+
+51 
+	}
+}
+
+53 
+xmlNodePŒ
+
+
+54 
+	$pyx£r_S”ŸlizeExaùIÁ
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+55 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+)
+
+57  
+	`pyx£r_S”ŸlizePrim™iveTy³
+(
+o
+, 
+Çme
+,
+
+58 
+dupI‹ms
+, 
+doc
+);
+
+59 
+	}
+}
+
+61 
+xmlNodePŒ
+
+
+62 
+	$pyx£r_S”ŸlizeBoŞ—n
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+63 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+)
+
+65  
+	`pyx£r_S”ŸlizePrim™iveTy³
+(
+o
+, 
+Çme
+,
+
+66 
+dupI‹ms
+, 
+doc
+);
+
+67 
+	}
+}
+
+69 
+xmlNodePŒ
+
+
+70 
+	$pyx£r_S”ŸlizeLÚg
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+71 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+)
+
+73  
+	`pyx£r_S”ŸlizePrim™iveTy³
+(
+o
+, 
+Çme
+,
+
+74 
+dupI‹ms
+, 
+doc
+);
+
+75 
+	}
+}
+
+77 
+xmlNodePŒ
+
+
+78 
+	$pyx£r_S”ŸlizeFlßt
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+79 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+)
+
+81  
+	`pyx£r_S”ŸlizePrim™iveTy³
+(
+o
+, 
+Çme
+,
+
+82 
+dupI‹ms
+, 
+doc
+);
+
+83 
+	}
+}
+
+85 
+xmlNodePŒ
+
+
+86 
+	$pyx£r_S”ŸlizeExaùFlßt
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+87 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+)
+
+89  
+	`pyx£r_S”ŸlizePrim™iveTy³
+(
+o
+, 
+Çme
+,
+
+90 
+dupI‹ms
+, 
+doc
+);
+
+91 
+	}
+}
+
+93 
+xmlNodePŒ
+
+
+94 
+	$pyx£r_S”ŸlizeCom¶ex
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+95 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+)
+
+97  
+	`pyx£r_S”ŸlizePrim™iveTy³
+(
+o
+, 
+Çme
+,
+
+98 
+dupI‹ms
+, 
+doc
+);
+
+99 
+	}
+}
+
+101 
+xmlNodePŒ
+
+
+102 
+	$pyx£r_S”ŸlizeExaùCom¶ex
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+103 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+)
+
+105  
+	`pyx£r_S”ŸlizePrim™iveTy³
+(
+o
+, 
+Çme
+,
+
+106 
+dupI‹ms
+, 
+doc
+);
+
+107 
+	}
+}
+
+109 
+PyObjeù
+ *
+
+110 
+	$pyxun£r_S”ŸlizeIÁ
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+)
+
+112 
+xmlNodePŒ
+ 
+node
+ = *(
+obj
+->
+cu¼’tNode
+);
+
+113 
+xmlNodePŒ
+ 
+runOv”Node
+;
+
+114 
+PyObjeù
+ *
+»s
+ = 
+Py_NÚe
+;
+
+115 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+116 
+runOv”Node
+ = 
+node
+->
+chd»n
+;
+
+117 
+runOv”Node
+;
+
+118 
+runOv”Node
+ =„unOv”Node->
+Ãxt
+) {
+
+119 ià(
+runOv”Node
+->
+ty³
+ =ğ
+XML_TEXT_NODE
+) {
+
+120 
+»s
+ = 
+	`PyIÁ_FromSŒšg
+((*)
+runOv”Node
+->
+cÚ‹Á
+, 
+NULL
+, 10);
+
+124  
+»s
+;
+
+125 
+	}
+}
+
+127 
+PyObjeù
+ *
+
+128 
+	$pyxun£r_S”ŸlizeExaùIÁ
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+)
+
+130 
+xmlNodePŒ
+ 
+node
+ = *(
+obj
+->
+cu¼’tNode
+);
+
+131 
+xmlNodePŒ
+ 
+runOv”Node
+;
+
+132 
+PyObjeù
+ *
+»s
+ = 
+Py_NÚe
+;
+
+133 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+134 
+runOv”Node
+ = 
+node
+->
+chd»n
+;
+
+135 
+runOv”Node
+;
+
+136 
+runOv”Node
+ =„unOv”Node->
+Ãxt
+) {
+
+137 ià(
+runOv”Node
+->
+ty³
+ =ğ
+XML_TEXT_NODE
+) {
+
+138 
+»s
+ = 
+	`PyIÁ_FromSŒšg
+((*)
+runOv”Node
+->
+cÚ‹Á
+, 
+NULL
+, 10);
+
+142  
+»s
+;
+
+143 
+	}
+}
+
+145 
+PyObjeù
+ *
+
+146 
+	$pyxun£r_S”ŸlizeBoŞ—n
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+)
+
+148 
+xmlNodePŒ
+ 
+node
+ = *(
+obj
+->
+cu¼’tNode
+);
+
+149 
+xmlNodePŒ
+ 
+runOv”Node
+;
+
+150 
+PyObjeù
+ *
+»s
+ = 
+Py_NÚe
+;
+
+151 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+152 
+runOv”Node
+ = 
+node
+->
+chd»n
+;
+
+153 
+runOv”Node
+;
+
+154 
+runOv”Node
+ =„unOv”Node->
+Ãxt
+) {
+
+155 ià(
+runOv”Node
+->
+ty³
+ =ğ
+XML_TEXT_NODE
+) {
+
+156 ià(
+	`¡ºcmp
+((*)
+runOv”Node
+->
+cÚ‹Á
+,
+
+157 
+pyx£r_Œue_ch¬_v®ue
+,
+
+158 
+	`¡¾’
+(
+pyx£r_Œue_ch¬_v®ue
+)) == 0) {
+
+159 
+	`Py_INCREF
+(
+Py_True
+);
+
+160  
+Py_True
+;
+
+161 } ià(
+	`¡ºcmp
+((*)
+runOv”Node
+->
+cÚ‹Á
+,
+
+162 
+pyx£r_çl£_ch¬_v®ue
+,
+
+163 
+	`¡¾’
+(
+pyx£r_çl£_ch¬_v®ue
+)) == 0) {
+
+164 
+	`Py_INCREF
+(
+Py_F®£
+);
+
+165  
+Py_F®£
+;
+
+170  
+»s
+;
+
+171 
+	}
+}
+
+173 
+PyObjeù
+ *
+
+174 
+	$pyxun£r_S”ŸlizeLÚg
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+)
+
+176 
+xmlNodePŒ
+ 
+node
+ = *(
+obj
+->
+cu¼’tNode
+);
+
+177 
+xmlNodePŒ
+ 
+runOv”Node
+;
+
+178 
+PyObjeù
+ *
+»s
+ = 
+Py_NÚe
+;
+
+179 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+180 
+runOv”Node
+ = 
+node
+->
+chd»n
+;
+
+181 
+runOv”Node
+;
+
+182 
+runOv”Node
+ =„unOv”Node->
+Ãxt
+) {
+
+183 ià(
+runOv”Node
+->
+ty³
+ =ğ
+XML_TEXT_NODE
+) {
+
+184 
+»s
+ = 
+	`PyIÁ_FromSŒšg
+((*)
+runOv”Node
+->
+cÚ‹Á
+, 
+NULL
+, 10);
+
+188  
+»s
+;
+
+189 
+	}
+}
+
+191 
+PyObjeù
+ *
+
+192 
+	$pyxun£r_S”ŸlizeFlßt
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+)
+
+194 
+xmlNodePŒ
+ 
+node
+ = *(
+obj
+->
+cu¼’tNode
+);
+
+195 
+xmlNodePŒ
+ 
+runOv”Node
+;
+
+196 
+PyObjeù
+ *
+¡r
+ = 
+Py_NÚe
+;
+
+197 
+PyObjeù
+ *
+»s
+ = 
+Py_NÚe
+;
+
+198 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+199 
+runOv”Node
+ = 
+node
+->
+chd»n
+;
+
+200 
+runOv”Node
+;
+
+201 
+runOv”Node
+ =„unOv”Node->
+Ãxt
+) {
+
+202 ià(
+runOv”Node
+->
+ty³
+ =ğ
+XML_TEXT_NODE
+) {
+
+203 
+¡r
+ = 
+	`PySŒšg_FromSŒšg
+((*)
+runOv”Node
+->
+cÚ‹Á
+);
+
+204 ià(
+	`PYTHON_IS_NOT_NONE
+(
+¡r
+)) {
+
+205 
+»s
+ = 
+	`PyFlßt_FromSŒšg
+(
+¡r
+, 
+NULL
+);
+
+210  
+»s
+;
+
+211 
+	}
+}
+
+213 
+PyObjeù
+ *
+
+214 
+	$pyxun£r_S”ŸlizeExaùFlßt
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+)
+
+216 
+xmlNodePŒ
+ 
+node
+ = *(
+obj
+->
+cu¼’tNode
+);
+
+217 
+xmlNodePŒ
+ 
+runOv”Node
+;
+
+218 
+PyObjeù
+ *
+¡r
+ = 
+Py_NÚe
+;
+
+219 
+PyObjeù
+ *
+»s
+ = 
+Py_NÚe
+;
+
+220 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+221 
+runOv”Node
+ = 
+node
+->
+chd»n
+;
+
+222 
+runOv”Node
+;
+
+223 
+runOv”Node
+ =„unOv”Node->
+Ãxt
+) {
+
+224 ià(
+runOv”Node
+->
+ty³
+ =ğ
+XML_TEXT_NODE
+) {
+
+225 
+¡r
+ = 
+	`PySŒšg_FromSŒšg
+((*)
+runOv”Node
+->
+cÚ‹Á
+);
+
+226 ià(
+	`PYTHON_IS_NOT_NONE
+(
+¡r
+)) {
+
+227 
+»s
+ = 
+	`PyFlßt_FromSŒšg
+(
+¡r
+, 
+NULL
+);
+
+232  
+»s
+;
+
+233 
+	}
+}
+
+235 
+PyObjeù
+ *
+
+236 
+	$pyxun£r_S”ŸlizeCom¶ex
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+)
+
+238 
+xmlNodePŒ
+ 
+node
+ = *(
+obj
+->
+cu¼’tNode
+);
+
+239 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+240  
+Py_NÚe
+;
+
+242  
+Py_NÚe
+;
+
+243 
+	}
+}
+
+245 
+PyObjeù
+ *
+
+246 
+	$pyxun£r_S”ŸlizeExaùCom¶ex
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+)
+
+248 
+xmlNodePŒ
+ 
+node
+ = *(
+obj
+->
+cu¼’tNode
+);
+
+249 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+250  
+Py_NÚe
+;
+
+252  
+Py_NÚe
+;
+
+253 
+	}
+}
+
+	@pyxser_strings.c
+
+26 #iâdeà
+lšt
+
+
+27 cÚ¡ 
+	gId
+[] = "$Id$";
+
+30 #ifdeà
+HAVE_CONFIG_H
+
+
+31 
+	~"cÚfig.h
+"
+
+34 
+	~<¡ršg.h
+>
+
+36 
+	~<PythÚ.h
+>
+
+38 
+	~<libxml/·r£r.h
+>
+
+39 
+	~<libxml/Œ“.h
+>
+
+40 
+	~"šşude/pyx£r_toŞs.h
+"
+
+43 
+xmlNodePŒ
+
+
+44 
+	$pyx£r_S”ŸlizeUnicode
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+45 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+)
+
+47 
+xmlNodePŒ
+ 
+ÃwEËm’tNode
+ = (xmlNodePŒ)
+NULL
+;
+
+48 #ià
+	`defšed
+(
+LIBXML_UNICODE_ENABLED
+)
+
+49 
+xmlNodePŒ
+ 
+ÃwTextNode
+ = (xmlNodePŒ)
+NULL
+;
+
+50 
+xmlA‰rPŒ
+ 
+ty³A‰r
+ = (xmlA‰rPŒ)
+NULL
+;
+
+51 
+xmlA‰rPŒ
+ 
+ÇmeA‰r
+ = (xmlA‰rPŒ)
+NULL
+;
+
+52 
+PyObjeù
+ *
+şassPŒ
+ = (PyObjeù *)
+NULL
+;
+
+53 
+PyObjeù
+ *
+şassName
+ = (PyObjeù *)
+NULL
+;
+
+54 
+PyObjeù
+ *
+unic
+ = (PyObjeù *)
+NULL
+;
+
+55 
+size_t
+ 
+d©a_size
+ = 0;
+
+56 *
+¥Œ
+ = (*)
+NULL
+;
+
+57 *
+ÅŒ
+ = (*)
+NULL
+;
+
+58 
+sz_©Œ
+[30];
+
+59 ià(
+	`PYTHON_IS_NOT_NONE
+(
+o
+)) {
+
+60 
+şassPŒ
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+o
+, 
+pyx£r_©Œ_şass
+);
+
+61 ià(
+	`PYTHON_IS_NOT_NONE
+(
+şassPŒ
+)) {
+
+62 
+şassName
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+şassPŒ
+,
+
+63 
+pyx£r_©Œ_Çme
+);
+
+64 ià(
+	`PYTHON_IS_NOT_NONE
+(
+şassName
+)) {
+
+65 
+d©a_size
+ = 
+	`PyUnicode_GET_SIZE
+(
+o
+);
+
+66 
+unic
+ = 
+	`PyUnicode_AsUnicodeEsÿ³SŒšg
+(
+o
+);
+
+67 ià(
+	`PYTHON_IS_NOT_NONE
+(
+unic
+)) {
+
+68 
+ÅŒ
+ = 
+	`PySŒšg_AS_STRING
+(
+şassName
+);
+
+69 
+¥Œ
+ = 
+	`PySŒšg_AS_STRING
+(
+unic
+);
+
+70 ià(
+¥Œ
+ !ğ(*)
+NULL
+
+
+71 && 
+ÅŒ
+ !ğ(*)
+NULL
+) {
+
+72 
+ÃwEËm’tNode
+ = 
+	`xmlNewDocNode
+(
+doc
+,
+
+73 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+74 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_™em
+,
+
+75 
+NULL
+);
+
+76 
+ÃwTextNode
+ = 
+	`xmlNewDocText
+(
+doc
+, 
+BAD_CAST
+ 
+¥Œ
+);
+
+77 
+ty³A‰r
+ = 
+	`xmlNewPrİ
+(
+ÃwEËm’tNode
+,
+
+78 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+,
+
+79 
+BAD_CAST
+ 
+ÅŒ
+);
+
+80 
+ÇmeA‰r
+ = 
+	`xmlNewPrİ
+(
+ÃwEËm’tNode
+,
+
+81 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_Çme
+,
+
+82 
+BAD_CAST
+ 
+Çme
+);
+
+83 
+	`mem£t
+(
+sz_©Œ
+, 0, 30);
+
+84 
+	`¥rštf
+(
+sz_©Œ
+, "%ld", ()
+d©a_size
+);
+
+85 
+ty³A‰r
+ = 
+	`xmlNewPrİ
+(
+ÃwEËm’tNode
+,
+
+86 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_size
+,
+
+87 
+BAD_CAST
+ 
+sz_©Œ
+);
+
+88 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+ÃwTextNode
+);
+
+90 
+	`Py_DECREF
+(
+unic
+);
+
+93 
+	`Py_DECREF
+(
+şassName
+);
+
+95 
+	`Py_DECREF
+(
+şassPŒ
+);
+
+98 #”rÜ 
+We
+ 
+Ãed
+ 
+unicode
+ 
+’abËd
+ 
+libxml2
+
+
+100  
+ÃwEËm’tNode
+;
+
+101 
+	}
+}
+
+103 
+xmlNodePŒ
+
+
+104 
+	$pyx£r_S”ŸlizeExaùUnicode
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+105 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+)
+
+107  
+	`pyx£r_S”ŸlizeUnicode
+(
+o
+, 
+Çme
+, (
+PyLi¡Objeù
+ *)
+NULL
+, 
+doc
+);
+
+108 
+	}
+}
+
+110 
+xmlNodePŒ
+
+
+111 
+	$pyx£r_S”ŸlizeSŒšg
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+112 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+)
+
+114 
+xmlNodePŒ
+ 
+ÃwEËm’tNode
+ = (xmlNodePŒ)
+NULL
+;
+
+115 
+xmlNodePŒ
+ 
+ÃwTextNode
+ = (xmlNodePŒ)
+NULL
+;
+
+116 
+xmlA‰rPŒ
+ 
+ty³A‰r
+ = (xmlA‰rPŒ)
+NULL
+;
+
+117 
+xmlA‰rPŒ
+ 
+ÇmeA‰r
+ = (xmlA‰rPŒ)
+NULL
+;
+
+118 
+PyObjeù
+ *
+şassPŒ
+ = (PyObjeù *)
+NULL
+;
+
+119 
+PyObjeù
+ *
+şassName
+ = (PyObjeù *)
+NULL
+;
+
+120 *
+¥Œ
+ = (*)
+NULL
+;
+
+121 *
+ÅŒ
+ = (*)
+NULL
+;
+
+122 ià(
+	`PYTHON_IS_NOT_NONE
+(
+o
+)) {
+
+123 
+¥Œ
+ = 
+	`PySŒšg_AsSŒšg
+(
+o
+);
+
+124 
+şassPŒ
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+o
+, 
+pyx£r_©Œ_şass
+);
+
+125 ià(
+	`PYTHON_IS_NOT_NONE
+(
+şassPŒ
+)
+
+126 && 
+¥Œ
+ !ğ(*)
+NULL
+) {
+
+127 
+şassName
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+şassPŒ
+,
+
+128 
+pyx£r_©Œ_Çme
+);
+
+129 ià(
+	`PYTHON_IS_NOT_NONE
+(
+şassName
+)) {
+
+130 
+ÅŒ
+ = 
+	`PySŒšg_AS_STRING
+(
+şassName
+);
+
+131 ià(
+¥Œ
+ !ğ(*)
+NULL
+
+
+132 && 
+ÅŒ
+ !ğ(*)
+NULL
+) {
+
+133 
+ÃwEËm’tNode
+ = 
+	`xmlNewDocNode
+(
+doc
+,
+
+134 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+135 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_™em
+,
+
+136 
+NULL
+);
+
+137 
+ÃwTextNode
+ = 
+	`xmlNewDocText
+(
+doc
+, 
+BAD_CAST
+ 
+¥Œ
+);
+
+138 
+ty³A‰r
+ = 
+	`xmlNewPrİ
+(
+ÃwEËm’tNode
+,
+
+139 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+,
+
+140 
+BAD_CAST
+ 
+ÅŒ
+);
+
+141 
+ÇmeA‰r
+ = 
+	`xmlNewPrİ
+(
+ÃwEËm’tNode
+,
+
+142 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_Çme
+,
+
+143 
+BAD_CAST
+ 
+Çme
+);
+
+144 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+ÃwTextNode
+);
+
+146 
+	`Py_DECREF
+(
+şassName
+);
+
+148 
+	`Py_DECREF
+(
+şassPŒ
+);
+
+151  
+ÃwEËm’tNode
+;
+
+152 
+	}
+}
+
+154 
+xmlNodePŒ
+
+
+155 
+	$pyx£r_S”ŸlizeExaùSŒšg
+(
+PyObjeù
+ *
+o
+, *
+Çme
+, 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+)
+
+157  
+	`pyx£r_S”ŸlizeSŒšg
+(
+o
+, 
+Çme
+, (
+PyLi¡Objeù
+ *)
+NULL
+, 
+doc
+);
+
+158 
+	}
+}
+
+160 
+xmlNodePŒ
+
+
+161 
+	$pyx£r_S”ŸlizeBufãr
+(
+PyObjeù
+ *
+o
+, *
+Çme
+, 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+)
+
+163  
+	`pyx£r_S”ŸlizePrim™iveTy³
+(
+o
+, 
+Çme
+, (
+PyLi¡Objeù
+ *)
+NULL
+, 
+doc
+);
+
+164 
+	}
+}
+
+167 
+PyObjeù
+ *
+
+168 
+	$pyxun£r_S”ŸlizeSŒšg
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+)
+
+170 
+xmlNodePŒ
+ 
+node
+ = *(
+obj
+->
+cu¼’tNode
+);
+
+171 
+xmlNodePŒ
+ 
+runOv”Node
+;
+
+172 
+PyObjeù
+ *
+¡r
+ = 
+Py_NÚe
+;
+
+173 
+PyObjeù
+ *
+»s
+ = 
+Py_NÚe
+;
+
+174 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+175 
+runOv”Node
+ = 
+node
+->
+chd»n
+;
+
+176 
+runOv”Node
+;
+
+177 
+runOv”Node
+ =„unOv”Node->
+Ãxt
+) {
+
+178 ià(
+runOv”Node
+->
+ty³
+ =ğ
+XML_TEXT_NODE
+
+
+179 && 
+runOv”Node
+->
+cÚ‹Á
+ !ğ
+BAD_CAST
+ 
+NULL
+) {
+
+180 
+¡r
+ = 
+	`PySŒšg_FromSŒšg
+((*)
+runOv”Node
+->
+cÚ‹Á
+);
+
+181 
+»s
+ = 
+¡r
+;
+
+185  
+»s
+;
+
+186 
+	}
+}
+
+188 
+PyObjeù
+ *
+
+189 
+	$pyxun£r_S”ŸlizeExaùSŒšg
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+)
+
+191  
+	`pyxun£r_S”ŸlizeSŒšg
+(
+obj
+);
+
+192 
+	}
+}
+
+194 
+	#PYXSER_MAX_LENGTH
+ 8192
+
+	)
+
+195 
+PyObjeù
+ *
+
+196 
+	$pyxun£r_S”ŸlizeUnicode
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+)
+
+198 
+xmlNodePŒ
+ 
+node
+ = *(
+obj
+->
+cu¼’tNode
+);
+
+199 
+xmlNodePŒ
+ 
+runOv”Node
+;
+
+200 
+xmlCh¬
+ *
+´İSize
+ = (xmlCh¬ *)
+NULL
+;
+
+201 
+PyObjeù
+ *
+unic
+ = 
+Py_NÚe
+;
+
+202 
+PyObjeù
+ *
+»s
+ = 
+Py_NÚe
+;
+
+203 
+Py_ssize_t
+ 
+tsz
+ = 0;
+
+204 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+205 
+´İSize
+ = 
+	`xmlG‘Prİ
+(
+node
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_size
+);
+
+206 ià(
+´İSize
+ !ğ(
+xmlCh¬
+ *)
+NULL
+) {
+
+207 
+runOv”Node
+ = 
+node
+->
+chd»n
+;
+
+208 
+runOv”Node
+;
+
+209 
+runOv”Node
+ =„unOv”Node->
+Ãxt
+) {
+
+210 
+tsz
+ = (
+Py_ssize_t
+)
+	`¡¹Ş
+((cÚ¡ *)
+´İSize
+, (**)
+NULL
+, 10);
+
+211 ià(
+runOv”Node
+->
+ty³
+ =ğ
+XML_TEXT_NODE
+) {
+
+212 
+unic
+ = 
+	`PyUnicode_DecodeUnicodeEsÿ³
+((cÚ¡ *)
+runOv”Node
+->
+cÚ‹Á
+,
+
+213 (
+	`¡¾’
+((cÚ¡ *)
+runOv”Node
+->
+cÚ‹Á
+)),
+
+215 
+»s
+ = 
+unic
+;
+
+220  
+»s
+;
+
+221 
+	}
+}
+
+223 
+PyObjeù
+ *
+
+224 
+	$pyxun£r_S”ŸlizeExaùUnicode
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+)
+
+226  
+	`pyxun£r_S”ŸlizeUnicode
+(
+obj
+);
+
+227 
+	}
+}
+
+229 
+PyObjeù
+ *
+
+230 
+	$pyxun£r_S”ŸlizeBufãr
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+)
+
+232 ià(
+obj
+ !ğ
+NULL
+) {
+
+234  
+Py_NÚe
+;
+
+236  
+Py_NÚe
+;
+
+237 
+	}
+}
+
+	@pyxser_tools.c
+
+26 #iâdeà
+lšt
+
+
+27 cÚ¡ 
+	gId
+[] = "$Id$";
+
+30 
+	~"šşude/pyx£r.h
+"
+
+32 
+xmlNsPŒ
+ 
+	gpyx£r_deçuÉ_ns
+;
+
+35 
+pyx£rIÁ_Check
+(
+PyObjeù
+ *
+o
+);
+
+36 
+pyx£rIÁ_CheckExaù
+(
+PyObjeù
+ *
+o
+);
+
+37 
+pyx£rBoŞ_Check
+(
+PyObjeù
+ *
+o
+);
+
+38 
+pyx£rLÚg_CheckExaù
+(
+PyObjeù
+ *
+o
+);
+
+39 
+pyx£rFlßt_Check
+(
+PyObjeù
+ *
+o
+);
+
+40 
+pyx£rFlßt_CheckExaù
+(
+PyObjeù
+ *
+o
+);
+
+41 
+pyx£rCom¶ex_Check
+(
+PyObjeù
+ *
+o
+);
+
+42 
+pyx£rCom¶ex_CheckExaù
+(
+PyObjeù
+ *
+o
+);
+
+45 
+pyx£rSŒšg_Check
+(
+PyObjeù
+ *
+o
+);
+
+46 
+pyx£rSŒšg_CheckExaù
+(
+PyObjeù
+ *
+o
+);
+
+47 
+pyx£rUnicode_Check
+(
+PyObjeù
+ *
+o
+);
+
+48 
+pyx£rUnicodeExaù_CheckExaù
+(
+PyObjeù
+ *
+o
+);
+
+49 
+pyx£rBufãr_Check
+(
+PyObjeù
+ *
+o
+);
+
+52 
+pyx£rTu¶e_Check
+(
+PyObjeù
+ *
+o
+);
+
+53 
+pyx£rTu¶e_CheckExaù
+(
+PyObjeù
+ *
+o
+);
+
+56 
+pyx£rLi¡_Check
+(
+PyObjeù
+ *
+o
+);
+
+57 
+pyx£rLi¡_CheckExaù
+(
+PyObjeù
+ *
+o
+);
+
+60 
+pyx£rDiù_Check
+(
+PyObjeù
+ *
+o
+);
+
+61 
+pyx£rDiù_CheckExaù
+(
+PyObjeù
+ *
+o
+);
+
+64 
+pyx£rFe_Check
+(
+PyObjeù
+ *
+o
+);
+
+65 
+pyx£rFe_CheckExaù
+(
+PyObjeù
+ *
+o
+);
+
+68 
+pyx£rIn¡ªû_Check
+(
+PyObjeù
+ *
+o
+);
+
+69 
+pyx£rFunùiÚ_Check
+(
+PyObjeù
+ *
+o
+);
+
+70 
+pyx£rM‘hod_Check
+(
+PyObjeù
+ *
+o
+);
+
+71 
+pyx£rModuË_Check
+(
+PyObjeù
+ *
+o
+);
+
+72 
+pyx£rModuË_CheckExaù
+(
+PyObjeù
+ *
+o
+);
+
+73 
+pyx£rSeqI‹r_Check
+(
+PyObjeù
+ *
+o
+);
+
+74 
+pyx£rSliû_Check
+(
+PyObjeù
+ *
+o
+);
+
+75 
+pyx£rC–l_Check
+(
+PyObjeù
+ *
+o
+);
+
+76 
+pyx£rG’_Check
+(
+PyObjeù
+ *
+o
+);
+
+77 
+pyx£rD©e_CheckExaù
+(
+PyObjeù
+ *
+o
+);
+
+78 
+pyx£rAnyS‘_Check
+(
+PyObjeù
+ *
+o
+);
+
+79 
+pyx£rAnyS‘_CheckExaù
+(
+PyObjeù
+ *
+o
+);
+
+80 
+pyx£rFroz’S‘_CheckExaù
+(
+PyObjeù
+ *
+o
+);
+
+83 
+pyxun£rIÁ_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+84 
+pyxun£rIÁ_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+);
+
+85 
+pyxun£rBoŞ_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+86 
+pyxun£rLÚg_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+);
+
+87 
+pyxun£rFlßt_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+88 
+pyxun£rFlßt_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+);
+
+89 
+pyxun£rCom¶ex_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+90 
+pyxun£rCom¶ex_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+);
+
+93 
+pyxun£rSŒšg_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+94 
+pyxun£rSŒšg_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+);
+
+95 
+pyxun£rUnicode_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+96 
+pyxun£rUnicodeExaù_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+);
+
+97 
+pyxun£rBufãr_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+100 
+pyxun£rTu¶e_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+101 
+pyxun£rTu¶e_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+);
+
+104 
+pyxun£rLi¡_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+105 
+pyxun£rLi¡_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+);
+
+108 
+pyxun£rDiù_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+109 
+pyxun£rDiù_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+);
+
+112 
+pyxun£rFe_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+113 
+pyxun£rFe_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+);
+
+116 
+pyxun£rIn¡ªû_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+117 
+pyxun£rFunùiÚ_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+118 
+pyxun£rM‘hod_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+119 
+pyxun£rModuË_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+120 
+pyxun£rModuË_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+);
+
+121 
+pyxun£rSeqI‹r_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+122 
+pyxun£rSliû_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+123 
+pyxun£rC–l_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+124 
+pyxun£rG’_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+125 
+pyxun£rD©e_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+);
+
+126 
+pyxun£rAnyS‘_Check
+(
+xmlNodePŒ
+ 
+node
+);
+
+127 
+pyxun£rAnyS‘_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+);
+
+128 
+pyxun£rFroz’S‘_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+);
+
+131 cÚ¡ 
+	gty³_št
+[] = "int";
+
+132 cÚ¡ 
+	gty³_lÚg
+[] = "long";
+
+133 cÚ¡ 
+	gty³_boŞ
+[] = "bool";
+
+134 cÚ¡ 
+	gty³_¡r
+[] = "str";
+
+135 cÚ¡ 
+	gty³_unicode
+[] = "unicode";
+
+136 cÚ¡ 
+	gty³_æßt
+[] = "float";
+
+137 cÚ¡ 
+	gty³_doubË
+[] = "double";
+
+138 cÚ¡ 
+	gty³_com¶ex
+[] = "complex";
+
+139 cÚ¡ 
+	gty³_bufãr
+[] = "buffer";
+
+140 cÚ¡ 
+	gty³_li¡
+[] = "list";
+
+141 cÚ¡ 
+	gty³_tu¶e
+[] = "tuple";
+
+142 cÚ¡ 
+	gty³_diù
+[] = "dict";
+
+143 cÚ¡ 
+	gty³_maš
+[] = "__main__";
+
+145 
+xmlDtdPŒ
+ 
+	gpyx£r_dtd_objeù
+ = (xmlDtdPŒ)
+NULL
+;
+
+147 cÚ¡ 
+PythÚTy³S”Ÿlize
+ 
+	g£rxCÚü‘eTy³s
+[] = {
+
+149 {1, 
+pyx£rIÁ_Check
+, 
+pyx£r_S”ŸlizeIÁ
+},
+
+150 {1, 
+pyx£rIÁ_CheckExaù
+, 
+pyx£r_S”ŸlizeExaùIÁ
+},
+
+151 {1, 
+pyx£rBoŞ_Check
+, 
+pyx£r_S”ŸlizeBoŞ—n
+},
+
+152 {1, 
+pyx£rLÚg_CheckExaù
+, 
+pyx£r_S”ŸlizeLÚg
+},
+
+153 {1, 
+pyx£rFlßt_Check
+, 
+pyx£r_S”ŸlizeFlßt
+},
+
+154 {1, 
+pyx£rFlßt_CheckExaù
+, 
+pyx£r_S”ŸlizeExaùFlßt
+},
+
+155 {1, 
+pyx£rCom¶ex_Check
+, 
+pyx£r_S”ŸlizeCom¶ex
+},
+
+156 {1, 
+pyx£rCom¶ex_CheckExaù
+, 
+pyx£r_S”ŸlizeExaùCom¶ex
+},
+
+158 {1, 
+pyx£rSŒšg_Check
+, 
+pyx£r_S”ŸlizeSŒšg
+},
+
+159 {1, 
+pyx£rSŒšg_CheckExaù
+, 
+pyx£r_S”ŸlizeExaùSŒšg
+},
+
+160 {1, 
+pyx£rUnicode_Check
+, 
+pyx£r_S”ŸlizeUnicode
+},
+
+161 {1, 
+pyx£rUnicodeExaù_CheckExaù
+, 
+pyx£r_S”ŸlizeExaùUnicode
+},
+
+162 {1, 
+pyx£rBufãr_Check
+, 
+pyx£r_S”ŸlizeBufãr
+},
+
+164 {1, 
+pyx£rTu¶e_Check
+, 
+pyx£r_S”ŸlizeTu¶e
+},
+
+166 {1, 
+pyx£rLi¡_Check
+, 
+pyx£r_S”ŸlizeLi¡
+},
+
+168 {1, 
+pyx£rDiù_Check
+, 
+pyx£r_S”ŸlizeDiù
+},
+
+172 {1, 
+pyx£rFe_Check
+, 
+pyx£r_S”ŸlizeFe
+},
+
+173 {1, 
+pyx£rFe_CheckExaù
+, 
+pyx£r_S”ŸlizeExaùFe
+},
+
+175 {1, 
+pyx£rIn¡ªû_Check
+, 
+pyx£r_S”ŸlizeIn¡ªû
+},
+
+176 {1, 
+pyx£rFunùiÚ_Check
+, 
+pyx£r_S”ŸlizeFunùiÚ
+},
+
+177 {1, 
+pyx£rM‘hod_Check
+, 
+pyx£r_S”ŸlizeM‘hod
+},
+
+178 {1, 
+pyx£rModuË_Check
+, 
+pyx£r_S”ŸlizeModuË
+},
+
+179 {1, 
+pyx£rModuË_CheckExaù
+, 
+pyx£r_S”ŸlizeExaùModuË
+},
+
+180 {1, 
+pyx£rSeqI‹r_Check
+, 
+pyx£r_S”ŸlizeI‹¿tÜ
+},
+
+181 {1, 
+pyx£rSliû_Check
+, 
+pyx£r_S”ŸlizeSliû
+},
+
+182 {1, 
+pyx£rC–l_Check
+, 
+pyx£r_S”ŸlizeC–l
+},
+
+183 {1, 
+pyx£rG’_Check
+, 
+pyx£r_S”ŸlizeG’”©Ü
+},
+
+184 {1, 
+pyx£rD©e_CheckExaù
+, 
+pyx£r_S”ŸlizeG’”©Ü
+},
+
+185 {1, 
+pyx£rAnyS‘_Check
+, 
+pyx£r_S”ŸlizeS‘
+},
+
+186 {1, 
+pyx£rAnyS‘_CheckExaù
+, 
+pyx£r_S”ŸlizeExaùS‘
+},
+
+187 {1, 
+pyx£rFroz’S‘_CheckExaù
+, 
+pyx£r_S”ŸlizeFroz’S‘
+},
+
+189 {0, 
+NULL
+, NULL}
+
+193 cÚ¡ 
+PythÚTy³De£rŸlize
+ 
+	gun£rxCÚü‘eTy³s
+[] = {
+
+195 {1, 
+pyxun£rIÁ_Check
+, 
+pyxun£r_S”ŸlizeIÁ
+},
+
+196 {1, 
+pyxun£rIÁ_CheckExaù
+, 
+pyxun£r_S”ŸlizeExaùIÁ
+},
+
+197 {1, 
+pyxun£rBoŞ_Check
+, 
+pyxun£r_S”ŸlizeBoŞ—n
+},
+
+198 {1, 
+pyxun£rLÚg_CheckExaù
+, 
+pyxun£r_S”ŸlizeLÚg
+},
+
+199 {1, 
+pyxun£rFlßt_Check
+, 
+pyxun£r_S”ŸlizeFlßt
+},
+
+200 {1, 
+pyxun£rFlßt_CheckExaù
+, 
+pyxun£r_S”ŸlizeExaùFlßt
+},
+
+201 {1, 
+pyxun£rCom¶ex_Check
+, 
+pyxun£r_S”ŸlizeCom¶ex
+},
+
+202 {1, 
+pyxun£rCom¶ex_CheckExaù
+, 
+pyxun£r_S”ŸlizeExaùCom¶ex
+},
+
+204 {1, 
+pyxun£rSŒšg_Check
+, 
+pyxun£r_S”ŸlizeSŒšg
+},
+
+205 {1, 
+pyxun£rSŒšg_CheckExaù
+, 
+pyxun£r_S”ŸlizeExaùSŒšg
+},
+
+206 {1, 
+pyxun£rUnicode_Check
+, 
+pyxun£r_S”ŸlizeUnicode
+},
+
+207 {1, 
+pyxun£rUnicodeExaù_CheckExaù
+, 
+pyxun£r_S”ŸlizeExaùUnicode
+},
+
+209 {1, 
+pyxun£rDiù_Check
+, 
+pyxun£r_S”ŸlizeDiù
+},
+
+211 {1, 
+pyxun£rLi¡_Check
+, 
+pyxun£r_S”ŸlizeLi¡
+},
+
+213 {1, 
+pyxun£rTu¶e_Check
+, 
+pyxun£r_S”ŸlizeTu¶e
+},
+
+216 {1, 
+pyxun£rBufãr_Check
+, 
+pyxun£r_S”ŸlizeBufãr
+},
+
+218 {1, 
+pyxun£rFe_Check
+, 
+pyxun£r_S”ŸlizeFe
+},
+
+219 {1, 
+pyxun£rFe_CheckExaù
+, 
+pyxun£r_S”ŸlizeExaùFe
+},
+
+221 {1, 
+pyxun£rIn¡ªû_Check
+, 
+pyxun£r_S”ŸlizeIn¡ªû
+},
+
+222 {1, 
+pyxun£rFunùiÚ_Check
+, 
+pyxun£r_S”ŸlizeFunùiÚ
+},
+
+223 {1, 
+pyxun£rM‘hod_Check
+, 
+pyxun£r_S”ŸlizeM‘hod
+},
+
+224 {1, 
+pyxun£rModuË_Check
+, 
+pyxun£r_S”ŸlizeModuË
+},
+
+225 {1, 
+pyxun£rModuË_CheckExaù
+, 
+pyxun£r_S”ŸlizeExaùModuË
+},
+
+226 {1, 
+pyxun£rSeqI‹r_Check
+, 
+pyxun£r_S”ŸlizeI‹¿tÜ
+},
+
+227 {1, 
+pyxun£rSliû_Check
+, 
+pyxun£r_S”ŸlizeSliû
+},
+
+228 {1, 
+pyxun£rC–l_Check
+, 
+pyxun£r_S”ŸlizeC–l
+},
+
+229 {1, 
+pyxun£rG’_Check
+, 
+pyxun£r_S”ŸlizeG’”©Ü
+},
+
+230 {1, 
+pyxun£rD©e_CheckExaù
+, 
+pyxun£r_S”ŸlizeG’”©Ü
+},
+
+231 {1, 
+pyxun£rAnyS‘_Check
+, 
+pyxun£r_S”ŸlizeS‘
+},
+
+232 {1, 
+pyxun£rAnyS‘_CheckExaù
+, 
+pyxun£r_S”ŸlizeExaùS‘
+},
+
+233 {1, 
+pyxun£rFroz’S‘_CheckExaù
+, 
+pyxun£r_S”ŸlizeFroz’S‘
+},
+
+235 {0, 
+NULL
+, NULL}
+
+239 
+xmlNodePŒ
+
+
+240 
+	$pyx£r_S”ŸlizeXml
+(
+PyObjeù
+ *
+o
+, 
+xmlDocPŒ
+ *
+docPŒ
+, 
+xmlNodePŒ
+ *
+roÙNode
+,
+
+241 
+xmlNodePŒ
+ *
+cu¼’tNode
+, 
+PyLi¡Objeù
+ *
+dupSrcI‹ms
+)
+
+243 *
+objeùName
+ = (*)
+NULL
+;
+
+244 
+pha£
+ = 
+PYTHON_SERX_PHASE_NONE
+;
+
+245 
+c
+ = 0;
+
+246 
+£rŸlized
+ = 0;
+
+247 
+li¡I‹¿tÜ
+ = 0;
+
+248 
+li¡Size
+ = 0;
+
+249 
+xmlDocPŒ
+ 
+doc
+ = (xmlDocPŒ)
+NULL
+;
+
+250 
+xmlNodePŒ
+ 
+ÃwS”ŸlizedNode
+ = (xmlNodePŒ)
+NULL
+;
+
+251 
+xmlNodePŒ
+ *
+xmlRoÙNode
+ = (xmlNodePŒ *)
+NULL
+;
+
+252 
+xmlNodePŒ
+ 
+cu¼’tSubNode
+ = (xmlNodePŒ)
+NULL
+;
+
+253 
+xmlA‰rPŒ
+ 
+pyx£rNs
+ = (xmlA‰rPŒ)
+NULL
+;
+
+254 
+xmlA‰rPŒ
+ 
+pyx£rV”siÚ
+ = (xmlA‰rPŒ)
+NULL
+;
+
+255 
+xmlA‰rPŒ
+ 
+pyx£rTy³
+ = (xmlA‰rPŒ)
+NULL
+;
+
+256 
+xmlA‰rPŒ
+ 
+pyx£rName
+ = (xmlA‰rPŒ)
+NULL
+;
+
+257 
+PythÚTy³S”Ÿlize
+ 
+cu¼’tS”Ÿliz©iÚ
+;
+
+258 
+PyLi¡Objeù
+ *
+dupI‹ms
+ = 
+dupSrcI‹ms
+;
+
+259 
+PyObjeù
+ *
+l¡I‹ms
+ = (PyObjeù *)
+NULL
+;
+
+260 
+PyObjeù
+ *
+™em
+ = (PyObjeù *)
+o
+;
+
+261 
+PyObjeù
+ *
+objKeys
+ = 
+Py_NÚe
+;
+
+262 
+PyObjeù
+ *
+cu¼’tKey
+ = 
+Py_NÚe
+;
+
+263 ià(
+	`PYTHON_IS_NONE
+(
+dupI‹ms
+)) {
+
+264 
+dupI‹ms
+ = (
+PyLi¡Objeù
+ *)
+	`PyLi¡_New
+(0);
+
+266 ià(
+	`PYTHON_IS_NONE
+(
+o
+)) {
+
+267  (
+xmlNodePŒ
+)
+NULL
+;
+
+269 ià((
+	`pyx£r_PyLi¡CÚšs
+(
+dupI‹ms
+, 
+o
+)è=ğ
+PYXSER_NOT_FOUND
+) {
+
+270 
+	`PyLi¡_Aµ’d
+((
+PyObjeù
+ *)
+dupI‹ms
+, 
+o
+);
+
+271 
+objeùName
+ = 
+	`pyx£r_G‘CÏssName
+(
+o
+);
+
+272 ià(
+objeùName
+ =ğ(*)
+NULL
+) {
+
+273  (
+xmlNodePŒ
+)
+NULL
+;
+
+275 ià(
+docPŒ
+ !ğ(
+xmlDocPŒ
+ *)
+NULL
+ &&
+
+276 *
+docPŒ
+ =ğ(
+xmlDocPŒ
+)
+NULL
+
+
+277 && 
+roÙNode
+ !ğ(
+xmlNodePŒ
+ *)
+NULL
+
+
+278 && *
+roÙNode
+ =ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+279 
+doc
+ = 
+	`xmlNewDoc
+(
+BAD_CAST
+ 
+pyx£r_xml_v”siÚ
+);
+
+280 
+doc
+->
+’codšg
+ = (
+BAD_CAST
+ 
+	`xmlSŒdup
+(
+
+281 
+BAD_CAST
+ 
+pyx£r_xml_’codšg
+));
+
+282 
+doc
+->
+ch¬£t
+ = 
+XML_CHAR_ENCODING_UTF8
+;
+
+283 *
+docPŒ
+ = 
+doc
+;
+
+284 *
+roÙNode
+ = 
+	`xmlNewDocNode
+(
+doc
+,
+
+285 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+286 
+BAD_CAST
+ 
+pyx£r_xml_–em’t_objeù
+,
+
+287 
+NULL
+);
+
+288 
+pyx£rNs
+ = 
+	`xmlNewPrİ
+(*
+roÙNode
+,
+
+289 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_xml_ns
+,
+
+290 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ns
+);
+
+291 
+pyx£rV”siÚ
+ = 
+	`xmlNewPrİ
+(*
+roÙNode
+,
+
+292 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_v”siÚ
+,
+
+293 
+BAD_CAST
+ 
+pyx£r_xml_v”siÚ
+);
+
+294 
+pyx£rTy³
+ = 
+	`xmlNewPrİ
+(*
+roÙNode
+,
+
+295 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+,
+
+296 
+BAD_CAST
+ 
+objeùName
+);
+
+297 
+	`pyx£r_AddModuËA‰r
+(
+o
+, *
+roÙNode
+);
+
+298 
+cu¼’tNode
+ = 
+roÙNode
+;
+
+299 
+xmlRoÙNode
+ = 
+roÙNode
+;
+
+300 
+	`xmlDocS‘RoÙEËm’t
+(
+doc
+, *
+xmlRoÙNode
+);
+
+302 
+	`pyx£r_AddId’tif›r
+(
+o
+, *
+cu¼’tNode
+);
+
+303 
+l¡I‹ms
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+o
+, 
+pyx£r_©Œ_diù
+);
+
+304 ià(
+	`PYTHON_IS_NONE
+(
+l¡I‹ms
+)
+
+305 || (
+	`PYTHON_IS_NOT_NONE
+(
+l¡I‹ms
+)
+
+306 && ()(
+	`PyDiù_Size
+((
+PyObjeù
+ *)
+l¡I‹ms
+)) <= 0)) {
+
+307 ià(
+l¡I‹ms
+ !ğ
+Py_NÚe
+) {
+
+308 
+	`Py_DECREF
+(
+l¡I‹ms
+);
+
+310  (
+xmlNodePŒ
+)
+NULL
+;
+
+312 
+objKeys
+ = 
+	`PyDiù_Keys
+(
+l¡I‹ms
+);
+
+313 ià(
+	`PYTHON_IS_NONE
+(
+objKeys
+)
+
+314 || (
+	`PYTHON_IS_NOT_NONE
+(
+objKeys
+)
+
+315 && ()(
+	`PyLi¡_Size
+((
+PyObjeù
+ *)
+objKeys
+)) <= 0)) {
+
+316 ià(
+l¡I‹ms
+ !ğ
+Py_NÚe
+) {
+
+317 
+	`Py_DECREF
+(
+l¡I‹ms
+);
+
+319 ià(
+objKeys
+ !ğ
+Py_NÚe
+) {
+
+320 
+	`Py_DECREF
+(
+objKeys
+);
+
+322  (
+xmlNodePŒ
+)
+NULL
+;
+
+324 
+li¡I‹¿tÜ
+ = 0;
+
+325 
+li¡Size
+ = ()(
+	`PyLi¡_Size
+((
+PyObjeù
+ *)
+objKeys
+));
+
+326 
+li¡I‹¿tÜ
+ < 
+li¡Size
+) {
+
+327 
+cu¼’tKey
+ = 
+	`PyLi¡_G‘I‹m
+(
+objKeys
+, 
+li¡I‹¿tÜ
+);
+
+328 
+pha£
+ = 
+PYTHON_SERX_PHASE_NONE
+;
+
+329 
+™em
+ = 
+	`PyDiù_G‘I‹m
+(
+l¡I‹ms
+, 
+cu¼’tKey
+);
+
+330 
+£rŸlized
+ = 0;
+
+331 
+c
+ = 0;
+
+332 
+cu¼’tS”Ÿliz©iÚ
+ = 
+£rxCÚü‘eTy³s
+[
+c
+];
+
+333 
+cu¼’tS”Ÿliz©iÚ
+.
+avaabË
+ == 1
+
+334 && 
+pha£
+ =ğ
+PYTHON_SERX_PHASE_NONE
+
+
+335 && 
+£rŸlized
+ == 0) {
+
+336 ià(
+cu¼’tS”Ÿliz©iÚ
+.
+	`check”
+(
+™em
+)
+
+337 && 
+£rŸlized
+ == 0) {
+
+338 
+ÃwS”ŸlizedNode
+ = 
+cu¼’tS”Ÿliz©iÚ
+.
+	`£rŸliz”
+(
+
+339 
+™em
+,
+
+340 
+	`PySŒšg_AS_STRING
+(
+cu¼’tKey
+),
+
+341 
+dupI‹ms
+,
+
+342 *
+docPŒ
+);
+
+343 ià(
+ÃwS”ŸlizedNode
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+344 
+	`xmlAddChd
+(*
+cu¼’tNode
+, 
+ÃwS”ŸlizedNode
+);
+
+345 
+pha£
+ = 
+PYTHON_SERX_PHASE_CONCRETE
+;
+
+346 
+£rŸlized
+ = 1;
+
+349 
+cu¼’tS”Ÿliz©iÚ
+ = 
+£rxCÚü‘eTy³s
+[++
+c
+];
+
+350 ià(
+cu¼’tS”Ÿliz©iÚ
+.
+avaabË
+ == 0
+
+351 && 
+pha£
+ =ğ
+PYTHON_SERX_PHASE_NONE
+
+
+352 && 
+£rŸlized
+ == 0) {
+
+353 
+objeùName
+ = 
+	`pyx£r_G‘CÏssName
+(
+™em
+);
+
+354 
+pha£
+ = 
+PYTHON_SERX_PHASE_OBJECT
+;
+
+355 
+cu¼’tSubNode
+ = 
+	`xmlNewDocNode
+(*
+docPŒ
+,
+
+356 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+357 
+BAD_CAST
+ 
+pyx£r_xml_–em’t_objeù
+,
+
+358 
+NULL
+);
+
+359 
+	`pyx£r_AddModuËA‰r
+(
+o
+, 
+cu¼’tSubNode
+);
+
+360 
+pyx£rTy³
+ = 
+	`xmlNewPrİ
+(
+cu¼’tSubNode
+,
+
+361 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+,
+
+362 
+BAD_CAST
+ 
+objeùName
+);
+
+363 
+pyx£rName
+ = 
+	`xmlNewPrİ
+(
+cu¼’tSubNode
+,
+
+364 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_Çme
+,
+
+365 
+BAD_CAST
+ 
+	`PySŒšg_AS_STRING
+(
+cu¼’tKey
+));
+
+366 
+	`xmlAddChd
+(*
+cu¼’tNode
+, 
+cu¼’tSubNode
+);
+
+367 
+ÃwS”ŸlizedNode
+ = 
+	`pyx£r_S”ŸlizeXml
+(
+™em
+, 
+docPŒ
+,
+
+368 
+roÙNode
+,
+
+369 &
+cu¼’tSubNode
+,
+
+370 
+dupI‹ms
+);
+
+371 
+£rŸlized
+ = 1;
+
+372 
+c
+ = 0;
+
+375 
+li¡I‹¿tÜ
+++;
+
+377 
+	`Py_DECREF
+(
+objKeys
+);
+
+378 
+	`Py_DECREF
+(
+l¡I‹ms
+);
+
+380 
+ÃwS”ŸlizedNode
+ = 
+	`pyx£r_AddReã»nû
+(
+o
+, *
+cu¼’tNode
+);
+
+382  *
+roÙNode
+;
+
+383 
+	}
+}
+
+385 
+xmlNodePŒ
+
+
+386 
+	$pyx£r_S”ŸlizeXmlNÚStd
+(
+PyObjeù
+ *
+o
+, 
+xmlDocPŒ
+ *
+docPŒ
+, 
+xmlNodePŒ
+ *
+roÙNode
+,
+
+387 
+xmlNodePŒ
+ *
+cu¼’tNode
+, 
+PyLi¡Objeù
+ *
+dupSrcI‹ms
+)
+
+389 *
+objeùName
+ = (*)
+NULL
+;
+
+390 
+pha£
+ = 
+PYTHON_SERX_PHASE_NONE
+;
+
+391 
+c
+ = 0;
+
+392 
+£rŸlized
+ = 0;
+
+393 
+li¡I‹¿tÜ
+ = 0;
+
+394 
+li¡Size
+ = 0;
+
+395 
+xmlDocPŒ
+ 
+doc
+ = (xmlDocPŒ)
+NULL
+;
+
+396 
+xmlNodePŒ
+ 
+ÃwS”ŸlizedNode
+ = (xmlNodePŒ)
+NULL
+;
+
+397 
+xmlNodePŒ
+ *
+xmlRoÙNode
+ = (xmlNodePŒ *)
+NULL
+;
+
+398 
+xmlNodePŒ
+ 
+cu¼’tSubNode
+ = (xmlNodePŒ)
+NULL
+;
+
+399 
+xmlA‰rPŒ
+ 
+pyx£rNs
+ = (xmlA‰rPŒ)
+NULL
+;
+
+400 
+xmlA‰rPŒ
+ 
+pyx£rV”siÚ
+ = (xmlA‰rPŒ)
+NULL
+;
+
+401 
+xmlA‰rPŒ
+ 
+pyx£rName
+ = (xmlA‰rPŒ)
+NULL
+;
+
+402 
+PythÚTy³S”Ÿlize
+ 
+cu¼’tS”Ÿliz©iÚ
+;
+
+403 
+PyLi¡Objeù
+ *
+dupI‹ms
+ = 
+dupSrcI‹ms
+;
+
+404 
+PyObjeù
+ *
+l¡I‹ms
+ = (PyObjeù *)
+NULL
+;
+
+405 
+PyObjeù
+ *
+™em
+ = (PyObjeù *)
+o
+;
+
+406 
+PyObjeù
+ *
+objKeys
+ = 
+Py_NÚe
+;
+
+407 
+PyObjeù
+ *
+cu¼’tKey
+ = 
+Py_NÚe
+;
+
+408 ià(
+	`PYTHON_IS_NONE
+(
+dupI‹ms
+)) {
+
+409 
+dupI‹ms
+ = (
+PyLi¡Objeù
+ *)
+	`PyLi¡_New
+(0);
+
+411 ià(
+	`PYTHON_IS_NONE
+(
+o
+)) {
+
+412  (
+xmlNodePŒ
+)
+NULL
+;
+
+414 ià((
+	`pyx£r_PyLi¡CÚšs
+(
+dupI‹ms
+, 
+o
+)è=ğ
+PYXSER_NOT_FOUND
+) {
+
+415 
+	`PyLi¡_Aµ’d
+((
+PyObjeù
+ *)
+dupI‹ms
+, 
+o
+);
+
+416 
+objeùName
+ = 
+	`pyx£r_G‘CÏssName
+(
+o
+);
+
+417 ià(
+objeùName
+ =ğ(*)
+NULL
+) {
+
+418  (
+xmlNodePŒ
+)
+NULL
+;
+
+420 ià(
+docPŒ
+ !ğ(
+xmlDocPŒ
+ *)
+NULL
+ &&
+
+421 *
+docPŒ
+ =ğ(
+xmlDocPŒ
+)
+NULL
+
+
+422 && 
+roÙNode
+ !ğ(
+xmlNodePŒ
+ *)
+NULL
+
+
+423 && *
+roÙNode
+ =ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+424 
+doc
+ = 
+	`xmlNewDoc
+(
+BAD_CAST
+ 
+pyx£r_xml_v”siÚ
+);
+
+425 
+doc
+->
+’codšg
+ = (
+BAD_CAST
+ 
+	`xmlSŒdup
+(
+
+426 
+BAD_CAST
+ 
+pyx£r_xml_’codšg
+));
+
+427 
+doc
+->
+ch¬£t
+ = 
+XML_CHAR_ENCODING_UTF8
+;
+
+428 *
+docPŒ
+ = 
+doc
+;
+
+429 *
+roÙNode
+ = 
+	`xmlNewDocNode
+(
+doc
+,
+
+430 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+431 
+BAD_CAST
+ 
+objeùName
+,
+
+432 
+NULL
+);
+
+433 
+pyx£rNs
+ = 
+	`xmlNewPrİ
+(*
+roÙNode
+,
+
+434 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_xml_ns
+,
+
+435 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ns
+);
+
+436 
+pyx£rV”siÚ
+ = 
+	`xmlNewPrİ
+(*
+roÙNode
+,
+
+437 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_v”siÚ
+,
+
+438 
+BAD_CAST
+ 
+pyx£r_xml_v”siÚ
+);
+
+439 
+	`pyx£r_AddModuËA‰r
+(
+o
+, *
+roÙNode
+);
+
+440 
+cu¼’tNode
+ = 
+roÙNode
+;
+
+441 
+xmlRoÙNode
+ = 
+roÙNode
+;
+
+442 
+	`xmlDocS‘RoÙEËm’t
+(
+doc
+, *
+xmlRoÙNode
+);
+
+444 
+	`pyx£r_AddId’tif›r
+(
+o
+, *
+cu¼’tNode
+);
+
+445 
+l¡I‹ms
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+o
+, 
+pyx£r_©Œ_diù
+);
+
+446 ià(
+	`PYTHON_IS_NONE
+(
+l¡I‹ms
+)
+
+447 || (
+	`PYTHON_IS_NOT_NONE
+(
+l¡I‹ms
+)
+
+448 && ()(
+	`PyDiù_Size
+((
+PyObjeù
+ *)
+l¡I‹ms
+)) <= 0)) {
+
+449 ià(
+l¡I‹ms
+ !ğ
+Py_NÚe
+) {
+
+450 
+	`Py_DECREF
+(
+l¡I‹ms
+);
+
+452  (
+xmlNodePŒ
+)
+NULL
+;
+
+454 
+objKeys
+ = 
+	`PyDiù_Keys
+(
+l¡I‹ms
+);
+
+455 ià(
+	`PYTHON_IS_NONE
+(
+objKeys
+)
+
+456 || (
+	`PYTHON_IS_NOT_NONE
+(
+objKeys
+)
+
+457 && ()(
+	`PyLi¡_Size
+((
+PyObjeù
+ *)
+objKeys
+)) <= 0)) {
+
+458 ià(
+l¡I‹ms
+ !ğ
+Py_NÚe
+) {
+
+459 
+	`Py_DECREF
+(
+l¡I‹ms
+);
+
+461 ià(
+objKeys
+ !ğ
+Py_NÚe
+) {
+
+462 
+	`Py_DECREF
+(
+objKeys
+);
+
+464  (
+xmlNodePŒ
+)
+NULL
+;
+
+466 
+li¡I‹¿tÜ
+ = 0;
+
+467 
+li¡Size
+ = ()(
+	`PyLi¡_Size
+((
+PyObjeù
+ *)
+objKeys
+));
+
+468 
+li¡I‹¿tÜ
+ < 
+li¡Size
+) {
+
+469 
+cu¼’tKey
+ = 
+	`PyLi¡_G‘I‹m
+(
+objKeys
+, 
+li¡I‹¿tÜ
+);
+
+470 
+pha£
+ = 
+PYTHON_SERX_PHASE_NONE
+;
+
+471 
+™em
+ = 
+	`PyDiù_G‘I‹m
+(
+l¡I‹ms
+, 
+cu¼’tKey
+);
+
+472 
+£rŸlized
+ = 0;
+
+473 
+c
+ = 0;
+
+474 
+cu¼’tS”Ÿliz©iÚ
+ = 
+£rxCÚü‘eTy³s
+[
+c
+];
+
+475 
+cu¼’tS”Ÿliz©iÚ
+.
+avaabË
+ == 1
+
+476 && 
+pha£
+ =ğ
+PYTHON_SERX_PHASE_NONE
+
+
+477 && 
+£rŸlized
+ == 0) {
+
+478 ià(
+cu¼’tS”Ÿliz©iÚ
+.
+	`check”
+(
+™em
+)
+
+479 && 
+£rŸlized
+ == 0) {
+
+480 
+ÃwS”ŸlizedNode
+ = 
+cu¼’tS”Ÿliz©iÚ
+.
+	`£rŸliz”
+(
+
+481 
+™em
+,
+
+482 
+	`PySŒšg_AS_STRING
+(
+cu¼’tKey
+),
+
+483 
+dupI‹ms
+,
+
+484 *
+docPŒ
+);
+
+485 ià(
+ÃwS”ŸlizedNode
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+486 
+	`xmlAddChd
+(*
+cu¼’tNode
+, 
+ÃwS”ŸlizedNode
+);
+
+487 
+pha£
+ = 
+PYTHON_SERX_PHASE_CONCRETE
+;
+
+488 
+£rŸlized
+ = 1;
+
+491 
+cu¼’tS”Ÿliz©iÚ
+ = 
+£rxCÚü‘eTy³s
+[++
+c
+];
+
+492 ià(
+cu¼’tS”Ÿliz©iÚ
+.
+avaabË
+ == 0
+
+493 && 
+pha£
+ =ğ
+PYTHON_SERX_PHASE_NONE
+
+
+494 && 
+£rŸlized
+ == 0) {
+
+495 
+objeùName
+ = 
+	`pyx£r_G‘CÏssName
+(
+™em
+);
+
+496 
+pha£
+ = 
+PYTHON_SERX_PHASE_OBJECT
+;
+
+497 
+cu¼’tSubNode
+ = 
+	`xmlNewDocNode
+(*
+docPŒ
+,
+
+498 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+499 
+BAD_CAST
+ 
+objeùName
+,
+
+500 
+NULL
+);
+
+501 
+	`pyx£r_AddModuËA‰r
+(
+o
+, 
+cu¼’tSubNode
+);
+
+502 
+pyx£rName
+ = 
+	`xmlNewPrİ
+(
+cu¼’tSubNode
+,
+
+503 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_Çme
+,
+
+504 
+BAD_CAST
+ 
+	`PySŒšg_AS_STRING
+(
+cu¼’tKey
+));
+
+505 
+	`xmlAddChd
+(*
+cu¼’tNode
+, 
+cu¼’tSubNode
+);
+
+506 
+ÃwS”ŸlizedNode
+ = 
+	`pyx£r_S”ŸlizeXml
+(
+™em
+, 
+docPŒ
+,
+
+507 
+roÙNode
+,
+
+508 &
+cu¼’tSubNode
+,
+
+509 
+dupI‹ms
+);
+
+510 
+£rŸlized
+ = 1;
+
+511 
+c
+ = 0;
+
+514 
+li¡I‹¿tÜ
+++;
+
+516 
+	`Py_DECREF
+(
+objKeys
+);
+
+517 
+	`Py_DECREF
+(
+l¡I‹ms
+);
+
+519 
+ÃwS”ŸlizedNode
+ = 
+	`pyx£r_AddReã»nû
+(
+o
+, *
+cu¼’tNode
+);
+
+521  *
+roÙNode
+;
+
+522 
+	}
+}
+
+525 
+	$pyx£r_ModuËNÙMaš
+(cÚ¡ *
+mod
+)
+
+527 ià(
+	`¡ºcmp
+(
+ty³_maš
+, 
+mod
+, 
+	`¡¾’
+(type_main)) == 0) {
+
+531 
+	}
+}
+
+534 
+PyObjeù
+ *
+
+535 
+	$pyx£r_Un£rŸlizeBlock
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+)
+
+538 
+PyObjeù
+ **
+cu¼’t
+ = 
+obj
+->current;
+
+539 
+xmlNodePŒ
+ *
+cu¼’tNode
+ = 
+obj
+->currentNode;
+
+540 
+PyDiùObjeù
+ **
+dups
+ = 
+obj
+->dups;
+
+541 
+PyDiùObjeù
+ **
+moduËs
+ = 
+obj
+->modules;
+
+543 *
+©Œ_Çme
+ = (*)
+NULL
+;
+
+544 
+c
+ = 0, 
+ù¾
+ = 0, 
+£rŸlized
+ = 0;
+
+545 *
+n_ty³
+ = (*)
+NULL
+;
+
+546 *
+n_moduË
+ = (*)
+NULL
+;
+
+547 *
+n_id
+ = (*)
+NULL
+;
+
+548 *
+n_»f
+ = (*)
+NULL
+;
+
+549 
+PyObjeù
+ *
+ÿcheMod
+ = (PyObjeù *)
+NULL
+;
+
+550 
+PyObjeù
+ *
+cu¼’tTy³
+ = (PyObjeù *)
+NULL
+;
+
+551 
+PyObjeù
+ *
+un£r
+ = (PyObjeù *)
+NULL
+;
+
+552 
+PythÚTy³De£rŸlize
+ *
+machše
+ = (PythÚTy³De£rŸliz*)
+un£rxCÚü‘eTy³s
+;
+
+553 
+xmlNodePŒ
+ 
+rÚ
+ = (xmlNodePŒ)
+NULL
+;
+
+554 
+xmlNodePŒ
+ 
+ÿcheCu¼’tNode
+ = (xmlNodePŒ)
+NULL
+;
+
+555 
+PyObjeù
+ *
+ÿcheCu¼’t
+ = (PyObjeù *)
+NULL
+;
+
+556 
+PyObjeù
+ *
+chkMod
+ = (PyObjeù *)
+NULL
+;
+
+557 
+ËnEËm’t
+ = 
+	`¡¾’
+((*)
+pyx£r_xml_–em’t_™em
+);
+
+558 
+ËnCŞËùiÚ
+ = 
+	`¡¾’
+((*)
+pyx£r_xml_–em’t_cŞËùiÚ
+);
+
+559 
+ËnObjeù
+ = 
+	`¡¾’
+((*)
+pyx£r_xml_–em’t_objeù
+);
+
+561 
+rÚ
+ = (*
+cu¼’tNode
+)->
+chd»n
+;
+
+562 
+rÚ
+ !ğ(
+xmlNodePŒ
+)
+NULL
+;
+
+563 
+rÚ
+ =„Ú->
+Ãxt
+) {
+
+564 *
+cu¼’tNode
+ = 
+rÚ
+;
+
+565 ià(
+rÚ
+->
+ty³
+ =ğ
+XML_ELEMENT_NODE
+) {
+
+566 ià((
+	`¡ºcmp
+((*)
+rÚ
+->
+Çme
+,
+
+567 (*)
+pyx£r_xml_–em’t_™em
+,
+
+568 
+ËnEËm’t
+)) == 0
+
+569 || (
+	`¡ºcmp
+((*)
+rÚ
+->
+Çme
+,
+
+570 (*)
+pyx£r_xml_–em’t_cŞËùiÚ
+,
+
+571 
+ËnCŞËùiÚ
+)) == 0) {
+
+572 
+c
+ = 0;
+
+573 
+£rŸlized
+ = 0;
+
+574 
+machše
+[
+c
+].
+avaabË
+ == 1
+
+575 && 
+rÚ
+ !ğ(
+xmlNodePŒ
+)
+NULL
+
+
+576 && 
+£rŸlized
+ == 0) {
+
+577 ià((
+machše
+[
+c
+].
+	`check
+(
+rÚ
+)) == 1) {
+
+578 
+un£r
+ = 
+machše
+[
+c
+].
+	`de£rŸliz”
+(
+obj
+);
+
+579 ià(
+	`PYTHON_IS_NOT_NONE
+(
+un£r
+)) {
+
+580 
+©Œ_Çme
+ = 
+	`pyx£r_ExŒaùPrİ”tyName
+(
+
+581 
+pyx£r_xml_©Œ_Çme
+,
+
+582 
+rÚ
+);
+
+583 ià(
+©Œ_Çme
+ !ğ(*)
+NULL
+) {
+
+584 
+ù¾
+ = 
+	`PyObjeù_S‘A‰rSŒšg
+(*
+cu¼’t
+,
+
+585 
+©Œ_Çme
+, 
+un£r
+);
+
+586 
+£rŸlized
+ = 1;
+
+590 
+c
+++;
+
+592 } ià((
+	`¡ºcmp
+((*)
+rÚ
+->
+Çme
+,
+
+593 (*)
+pyx£r_xml_–em’t_objeù
+,
+
+594 
+ËnObjeù
+)) == 0) {
+
+595 
+n_ty³
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+,
+
+596 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+597 
+n_moduË
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+,
+
+598 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_moduË
+);
+
+599 
+n_id
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+,
+
+600 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_id
+);
+
+601 
+n_»f
+ = (*)
+	`xmlG‘Prİ
+(
+rÚ
+,
+
+602 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_»f
+);
+
+603 
+un£r
+ = 
+	`pyx£r_CheckAvaabËObjeù
+((
+PyObjeù
+ *)*
+dups
+,
+
+604 (*)
+n_»f
+);
+
+605 ià(
+n_ty³
+ !ğ(*)
+NULL
+
+
+606 && 
+n_moduË
+ !ğ(*)
+NULL
+
+
+607 && 
+n_id
+ !ğ(*)
+NULL
+
+
+608 && 
+un£r
+ =ğ(
+PyObjeù
+ *)
+NULL
+) {
+
+609 ià((
+	`pyx£r_ModuËNÙMaš
+(
+n_moduË
+)) == 0) {
+
+612 
+ÿcheMod
+ = 
+	`pyx£r_S—rchModuË
+(
+n_moduË
+);
+
+613 
+ÿcheMod
+ = cacheMod =ğ(
+PyObjeù
+ *)
+NULL
+ ?
+
+614 
+	`PyImpÜt_ImpÜtModuË
+(
+n_moduË
+è: 
+ÿcheMod
+;
+
+615 ià(
+	`PYTHON_IS_NONE
+(
+ÿcheMod
+)) {
+
+618 
+chkMod
+ = 
+	`pyx£r_CacheModuË
+((
+PyObjeù
+ *)*
+moduËs
+,
+
+619 
+n_moduË
+);
+
+620 ià(!
+	`PYTHON_IS_NOT_NONE
+(
+chkMod
+)) {
+
+621 
+	`PyDiù_S‘I‹mSŒšg
+((
+PyObjeù
+ *)*
+moduËs
+,
+
+622 
+n_moduË
+, 
+ÿcheMod
+);
+
+624 
+cu¼’tTy³
+ = (
+PyObjeù
+ *)
+	`pyx£r_S—rchModuËTy³
+(
+ÿcheMod
+,
+
+625 
+n_ty³
+);
+
+626 ià(
+	`PYTHON_IS_NOT_NONE
+(
+cu¼’tTy³
+)) {
+
+627 
+un£r
+ = 
+	`PyIn¡ªû_NewRaw
+(
+cu¼’tTy³
+, 
+	`PyDiù_New
+());
+
+628 
+©Œ_Çme
+ = 
+	`pyx£r_ExŒaùPrİ”tyName
+(
+pyx£r_xml_©Œ_Çme
+,
+
+629 
+rÚ
+);
+
+630 ià(
+	`PYTHON_IS_NOT_NONE
+(
+un£r
+)) {
+
+631 ià(
+©Œ_Çme
+ !ğ(*)
+NULL
+) {
+
+632 
+ù¾
+ = 
+	`PyObjeù_S‘A‰rSŒšg
+(*
+cu¼’t
+,
+
+633 
+©Œ_Çme
+, 
+un£r
+);
+
+635 
+	`pyx£r_AddAvaabËObjeù
+((
+PyObjeù
+ *)*
+dups
+,
+
+636 (*)
+n_id
+, 
+un£r
+);
+
+637 
+ÿcheCu¼’t
+ = *(
+obj
+->
+cu¼’t
+);
+
+638 
+ÿcheCu¼’tNode
+ = 
+rÚ
+;
+
+639 *(
+obj
+->
+cu¼’t
+èğ
+un£r
+;
+
+640 *(
+obj
+->
+cu¼’tNode
+èğ
+rÚ
+;
+
+641 
+un£r
+ = 
+	`pyx£r_Un£rŸlizeBlock
+(
+obj
+);
+
+642 *(
+obj
+->
+cu¼’t
+èğ
+ÿcheCu¼’t
+;
+
+643 *(
+obj
+->
+cu¼’tNode
+èğ
+ÿcheCu¼’tNode
+;
+
+644 
+rÚ
+ = 
+ÿcheCu¼’tNode
+;
+
+647 
+cu¼’tTy³
+ = 
+	`pyx£r_S—rchObjeùInMaš
+(
+n_ty³
+);
+
+648 ià(
+	`PYTHON_IS_NOT_NONE
+(
+cu¼’tTy³
+)) {
+
+649 
+un£r
+ = 
+	`PyIn¡ªû_NewRaw
+(
+cu¼’tTy³
+, 
+	`PyDiù_New
+());
+
+650 
+©Œ_Çme
+ = 
+	`pyx£r_ExŒaùPrİ”tyName
+(
+pyx£r_xml_©Œ_Çme
+,
+
+651 
+rÚ
+);
+
+652 ià(
+©Œ_Çme
+ !ğ(*)
+NULL
+
+
+653 && 
+	`PYTHON_IS_NOT_NONE
+(
+un£r
+)) {
+
+654 
+ù¾
+ = 
+	`PyObjeù_S‘A‰rSŒšg
+(*
+cu¼’t
+,
+
+655 
+©Œ_Çme
+, 
+un£r
+);
+
+656 
+	`pyx£r_AddAvaabËObjeù
+((
+PyObjeù
+ *)*
+dups
+,
+
+657 (*)
+n_id
+, 
+un£r
+);
+
+658 ià(
+ù¾
+ == 0) {
+
+659 
+ÿcheCu¼’t
+ = *(
+obj
+->
+cu¼’t
+);
+
+660 
+ÿcheCu¼’tNode
+ = 
+rÚ
+;
+
+661 *(
+obj
+->
+cu¼’t
+èğ
+un£r
+;
+
+662 *(
+obj
+->
+cu¼’tNode
+èğ
+rÚ
+;
+
+663 
+un£r
+ = 
+	`pyx£r_Un£rŸlizeBlock
+(
+obj
+);
+
+664 *(
+obj
+->
+cu¼’t
+èğ
+ÿcheCu¼’t
+;
+
+665 *(
+obj
+->
+cu¼’tNode
+èğ
+ÿcheCu¼’tNode
+;
+
+666 
+rÚ
+ = 
+ÿcheCu¼’tNode
+;
+
+672 
+©Œ_Çme
+ = 
+	`pyx£r_ExŒaùPrİ”tyName
+(
+pyx£r_xml_©Œ_Çme
+, 
+rÚ
+);
+
+673 ià(
+©Œ_Çme
+ !ğ(*)
+NULL
+
+
+674 && 
+	`PYTHON_IS_NOT_NONE
+(
+un£r
+)) {
+
+675 
+ù¾
+ = 
+	`PyObjeù_S‘A‰rSŒšg
+(*
+cu¼’t
+, 
+©Œ_Çme
+, 
+un£r
+);
+
+681  *(
+obj
+->
+cu¼’t
+);
+
+682 
+	}
+}
+
+685 
+PyObjeù
+ *
+
+686 
+	$pyx£r_Un£rŸlizeXml
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+)
+
+688 
+PyObjeù
+ **
+doc
+ = 
+obj
+->doc;
+
+689 
+PyObjeù
+ **
+cu¼’t
+ = 
+obj
+->current;
+
+690 
+PyObjeù
+ **
+Œ“
+ = 
+obj
+->tree;
+
+691 
+PyDiùObjeù
+ **
+dups
+ = 
+obj
+->dups;
+
+692 
+PyDiùObjeù
+ **
+moduËs
+ = 
+obj
+->modules;
+
+693 
+PyObjeù
+ *
+chkMod
+ = (PyObjeù *)
+NULL
+;
+
+694 
+xmlDocPŒ
+ *
+docPŒ
+ = 
+obj
+->docPtr;
+
+695 
+xmlNodePŒ
+ *
+roÙNode
+ = 
+obj
+->rootNode;
+
+696 
+xmlNodePŒ
+ *
+cu¼’tNode
+ = 
+obj
+->currentNode;
+
+698 
+xmlNodePŒ
+ 
+ÿcheCu¼’tNode
+ = (xmlNodePŒ)
+NULL
+;
+
+699 
+PyObjeù
+ *
+ÿcheCu¼’t
+ = (PyObjeù *)
+NULL
+;
+
+701 
+PyObjeù
+ *
+ÿcheMod
+ = (PyObjeù *)
+NULL
+;
+
+702 
+PyObjeù
+ *
+cu¼’tTy³
+ = (PyObjeù *)
+NULL
+;
+
+703 *
+n_ty³
+ = (*)
+NULL
+;
+
+704 *
+n_moduË
+ = (*)
+NULL
+;
+
+705 *
+n_id
+ = (*)
+NULL
+;
+
+706 *
+¡rdoc
+ = (*)
+NULL
+;
+
+707 ià(
+	`PYTHON_IS_NONE
+(
+doc
+)) {
+
+708  
+Py_NÚe
+;
+
+710 
+¡rdoc
+ = 
+	`PySŒšg_AS_STRING
+(*
+doc
+);
+
+711 ià(
+¡rdoc
+ =ğ(*)
+NULL
+) {
+
+712  
+Py_NÚe
+;
+
+714 *
+docPŒ
+ = 
+	`xmlR—dMemÜy
+((cÚ¡ *)
+¡rdoc
+, 
+	`¡¾’
+(¡rdoc), 
+NULL
+,
+
+715 (cÚ¡ *)
+pyx£r_xml_’codšg
+, 0);
+
+716 ià(*
+docPŒ
+ !ğ(
+xmlDocPŒ
+)
+NULL
+) {
+
+717 ià((
+	`pyx£r_V®id©eDocum’t
+(*
+docPŒ
+)) == 1) {
+
+718 *
+roÙNode
+ = 
+	`xmlDocG‘RoÙEËm’t
+(*
+docPŒ
+);
+
+719 
+cu¼’tNode
+ = 
+roÙNode
+;
+
+720 *
+cu¼’tNode
+ = *
+roÙNode
+;
+
+721 
+obj
+->
+cu¼’tNode
+ = currentNode;
+
+722 
+n_ty³
+ = (*)
+	`xmlG‘Prİ
+(*
+cu¼’tNode
+,
+
+723 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+724 
+n_moduË
+ = (*)
+	`xmlG‘Prİ
+(*
+cu¼’tNode
+,
+
+725 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_moduË
+);
+
+726 
+n_id
+ = (*)
+	`xmlG‘Prİ
+(*
+cu¼’tNode
+,
+
+727 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_id
+);
+
+728 ià(*
+dups
+ =ğ(
+PyDiùObjeù
+ *)
+NULL
+) {
+
+729 *
+dups
+ = (
+PyDiùObjeù
+ *)
+	`PyDiù_New
+();
+
+731 ià(*
+moduËs
+ =ğ(
+PyDiùObjeù
+ *)
+NULL
+) {
+
+732 *
+moduËs
+ = (
+PyDiùObjeù
+ *)
+	`PyDiù_New
+();
+
+734 ià(
+n_ty³
+ !ğ(*)
+NULL
+
+
+735 && 
+n_moduË
+ !ğ(*)
+NULL
+
+
+736 && 
+n_id
+ !ğ(*)
+NULL
+) {
+
+737 ià((
+	`pyx£r_ModuËNÙMaš
+(
+n_moduË
+)) == 1) {
+
+738 
+ÿcheMod
+ = 
+	`pyx£r_S—rchModuË
+(
+n_moduË
+);
+
+739 
+ÿcheMod
+ = cacheMod =ğ(
+PyObjeù
+ *)
+NULL
+ ?
+
+740 
+	`PyImpÜt_ImpÜtModuË
+(
+n_moduË
+è: 
+ÿcheMod
+;
+
+741 ià(
+	`PYTHON_IS_NOT_NONE
+(
+ÿcheMod
+)) {
+
+742 
+chkMod
+ = 
+	`pyx£r_CacheModuË
+((
+PyObjeù
+ *)*
+moduËs
+,
+
+743 
+n_moduË
+);
+
+744 ià(!
+	`PYTHON_IS_NOT_NONE
+(
+chkMod
+)) {
+
+745 
+	`PyDiù_S‘I‹mSŒšg
+((
+PyObjeù
+ *)*
+moduËs
+,
+
+746 
+n_moduË
+, 
+ÿcheMod
+);
+
+748 
+cu¼’tTy³
+ = (
+PyObjeù
+ *)
+	`pyx£r_S—rchModuËTy³
+(
+ÿcheMod
+, 
+n_ty³
+);
+
+749 ià(
+	`PYTHON_IS_NOT_NONE
+(
+cu¼’tTy³
+)) {
+
+750 ià(*
+Œ“
+ =ğ(
+PyObjeù
+ *)
+NULL
+) {
+
+751 *
+Œ“
+ = 
+	`PyIn¡ªû_NewRaw
+(
+cu¼’tTy³
+, 
+	`PyDiù_New
+());
+
+752 *
+cu¼’t
+ = *
+Œ“
+;
+
+753 
+obj
+->
+cu¼’t
+ = current;
+
+754 
+obj
+->
+Œ“
+ =ree;
+
+755 
+	`pyx£r_Un£rŸlizeBlock
+(
+obj
+);
+
+756 *(
+obj
+->
+cu¼’t
+èğ
+ÿcheCu¼’t
+;
+
+757 *(
+obj
+->
+cu¼’tNode
+èğ
+ÿcheCu¼’tNode
+;
+
+758 
+obj
+->
+Œ“
+ =ree;
+
+763 
+cu¼’tTy³
+ = 
+	`pyx£r_S—rchObjeùInMaš
+(
+n_ty³
+);
+
+764 ià(
+	`PYTHON_IS_NOT_NONE
+(
+cu¼’tTy³
+)) {
+
+765 ià(*
+Œ“
+ =ğ(
+PyObjeù
+ *)
+NULL
+) {
+
+766 *
+Œ“
+ = 
+	`PyIn¡ªû_NewRaw
+(
+cu¼’tTy³
+, 
+	`PyDiù_New
+());
+
+767 *
+cu¼’t
+ = *
+Œ“
+;
+
+768 
+obj
+->
+cu¼’t
+ = current;
+
+769 
+obj
+->
+Œ“
+ =ree;
+
+770 
+	`pyx£r_Un£rŸlizeBlock
+(
+obj
+);
+
+771 *(
+obj
+->
+cu¼’t
+èğ
+ÿcheCu¼’t
+;
+
+772 *(
+obj
+->
+cu¼’tNode
+èğ
+ÿcheCu¼’tNode
+;
+
+779 ià(*
+docPŒ
+ !ğ(
+xmlDocPŒ
+)
+NULL
+) {
+
+780 
+	`xmlF»eDoc
+(*
+docPŒ
+);
+
+782 
+	`Py_DECREF
+(*
+moduËs
+);
+
+783 
+	`Py_DECREF
+(*
+dups
+);
+
+784  *
+Œ“
+;
+
+785 
+	}
+}
+
+788 
+PyObjeù
+ *
+
+789 
+	$pyx£r_S—rchModuËTy³
+(
+PyObjeù
+ *
+mod
+, cÚ¡ *
+Çme
+)
+
+791 
+PyObjeù
+ *
+diù
+ = (PyObjeù *)
+NULL
+;
+
+792 
+PyObjeù
+ *
+™em
+ = (PyObjeù *)
+NULL
+;
+
+793 
+PyObjeù
+ *
+objKeys
+ = (PyObjeù *)
+NULL
+;
+
+794 
+PyObjeù
+ *
+cu¼’tKey
+ = (PyObjeù *)
+NULL
+;
+
+795 
+li¡I‹¿tÜ
+ = 0;
+
+796 
+li¡Size
+ = 0;
+
+797 *
+keyName
+ = (*)
+NULL
+;
+
+798 ià(
+	`PYTHON_IS_NOT_NONE
+(
+mod
+)
+
+799 && 
+Çme
+ !ğ(cÚ¡ *)
+NULL
+) {
+
+800 
+objKeys
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+mod
+, 
+pyx£r_©Œ_®l
+);
+
+801 
+diù
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+mod
+, 
+pyx£r_©Œ_diù
+);
+
+802 ià(
+	`PYTHON_IS_NOT_NONE
+(
+objKeys
+)
+
+803 && ()(
+	`PyLi¡_Size
+((
+PyObjeù
+ *)
+objKeys
+)) > 0
+
+804 && 
+	`PYTHON_IS_NOT_NONE
+(
+diù
+)) {
+
+805 
+li¡I‹¿tÜ
+ = 0;
+
+806 
+li¡Size
+ = ()(
+	`PyLi¡_Size
+((
+PyObjeù
+ *)
+objKeys
+));
+
+807 
+li¡I‹¿tÜ
+ < 
+li¡Size
+) {
+
+808 
+cu¼’tKey
+ = 
+	`PyLi¡_G‘I‹m
+(
+objKeys
+, 
+li¡I‹¿tÜ
+);
+
+809 
+keyName
+ = 
+	`PySŒšg_AS_STRING
+(
+cu¼’tKey
+);
+
+810 ià((
+	`¡ºcmp
+(
+keyName
+, 
+Çme
+, 
+	`¡¾’
+(keyName))) == 0) {
+
+811 
+™em
+ = 
+	`PyDiù_G‘I‹m
+(
+diù
+, 
+cu¼’tKey
+);
+
+814 
+li¡I‹¿tÜ
+++;
+
+818  
+™em
+;
+
+819 
+	}
+}
+
+823 
+	$pyx£r_G‘CÏssName
+(
+PyObjeù
+ *
+obj
+)
+
+825 *
+ú
+ = (*)
+NULL
+;
+
+826 
+PyObjeù
+ *
+kÏss
+ = 
+Py_NÚe
+;
+
+827 
+PyObjeù
+ *
+úame
+ = 
+Py_NÚe
+;
+
+828 ià(
+	`PYTHON_IS_NOT_NONE
+(
+obj
+)) {
+
+829 
+kÏss
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+obj
+, 
+pyx£r_©Œ_şass
+);
+
+830 ià(
+	`PYTHON_IS_NONE
+(
+kÏss
+)) {
+
+831  
+ú
+;
+
+833 
+úame
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+kÏss
+, 
+pyx£r_©Œ_Çme
+);
+
+834 ià(
+	`PYTHON_IS_NONE
+(
+úame
+)) {
+
+835 
+	`Py_DECREF
+(
+kÏss
+);
+
+836  
+ú
+;
+
+838 ià(!
+	`PySŒšg_Check
+(
+úame
+)) {
+
+839 
+	`Py_DECREF
+(
+kÏss
+);
+
+840 
+	`Py_DECREF
+(
+úame
+);
+
+842 
+ú
+ = 
+	`PySŒšg_AS_STRING
+(
+úame
+);
+
+843 
+	`Py_DECREF
+(
+kÏss
+);
+
+844 
+	`Py_DECREF
+(
+úame
+);
+
+846  
+ú
+;
+
+847 
+	}
+}
+
+850 
+xmlNodePŒ
+
+
+851 
+	$pyx£r_S”ŸlizePrim™iveTy³
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+852 
+PyLi¡Objeù
+ *
+dupI‹ms
+,
+
+853 
+xmlDocPŒ
+ 
+doc
+)
+
+855 
+xmlNodePŒ
+ 
+ÃwEËm’tNode
+ = (xmlNodePŒ)
+NULL
+;
+
+856 
+xmlNodePŒ
+ 
+ÃwTextNode
+ = (xmlNodePŒ)
+NULL
+;
+
+857 
+xmlA‰rPŒ
+ 
+ty³A‰r
+ = (xmlA‰rPŒ)
+NULL
+;
+
+858 
+xmlA‰rPŒ
+ 
+ÇmeA‰r
+ = (xmlA‰rPŒ)
+NULL
+;
+
+859 
+PyObjeù
+ *
+¡r
+ = (PyObjeù *)
+NULL
+;
+
+860 
+PyObjeù
+ *
+şassPŒ
+ = (PyObjeù *)
+NULL
+;
+
+861 
+PyObjeù
+ *
+şassName
+ = (PyObjeù *)
+NULL
+;
+
+862 *
+¥Œ
+ = (*)
+NULL
+;
+
+863 *
+ÅŒ
+ = (*)
+NULL
+;
+
+864 ià(
+	`PYTHON_IS_NOT_NONE
+(
+o
+)) {
+
+865 
+¡r
+ = 
+	`PyObjeù_SŒ
+(
+o
+);
+
+866 ià(
+	`PYTHON_IS_NOT_NONE
+(
+¡r
+)) {
+
+867 
+¥Œ
+ = 
+	`PySŒšg_AS_STRING
+(
+¡r
+);
+
+868 
+şassPŒ
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+o
+, 
+pyx£r_©Œ_şass
+);
+
+869 ià(
+	`PYTHON_IS_NOT_NONE
+(
+şassPŒ
+)
+
+870 && 
+¥Œ
+ !ğ(*)
+NULL
+) {
+
+871 
+şassName
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+şassPŒ
+, 
+pyx£r_©Œ_Çme
+);
+
+872 ià(
+	`PYTHON_IS_NOT_NONE
+(
+şassName
+)) {
+
+873 
+ÅŒ
+ = 
+	`PySŒšg_AS_STRING
+(
+şassName
+);
+
+874 ià(
+¥Œ
+ !ğ(*)
+NULL
+
+
+875 && 
+ÅŒ
+ !ğ(*)
+NULL
+) {
+
+876 
+ÃwEËm’tNode
+ = 
+	`xmlNewDocNode
+(
+doc
+, 
+	`pyx£r_G‘DeçuÉNs
+(),
+
+877 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_™em
+,
+
+878 
+NULL
+);
+
+879 
+ÃwTextNode
+ = 
+	`xmlNewDocText
+(
+doc
+, 
+BAD_CAST
+ 
+¥Œ
+);
+
+880 
+ty³A‰r
+ = 
+	`xmlNewPrİ
+(
+ÃwEËm’tNode
+,
+
+881 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+,
+
+882 
+BAD_CAST
+ 
+ÅŒ
+);
+
+883 
+ÇmeA‰r
+ = 
+	`xmlNewPrİ
+(
+ÃwEËm’tNode
+,
+
+884 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_Çme
+,
+
+885 
+BAD_CAST
+ 
+Çme
+);
+
+886 
+	`xmlAddChd
+(
+ÃwEËm’tNode
+, 
+ÃwTextNode
+);
+
+888 
+	`Py_DECREF
+(
+şassName
+);
+
+890 
+	`Py_DECREF
+(
+şassPŒ
+);
+
+894  
+ÃwEËm’tNode
+;
+
+895 
+	}
+}
+
+898 
+xmlNodePŒ
+
+
+899 
+	$pyx£r_AddReã»nû
+(
+PyObjeù
+ *
+o
+, 
+xmlNodePŒ
+ 
+cu¼’tNode
+)
+
+901 
+PyObjeù
+ *
+lÚgId’tif›r
+ = (PyObjeù *)
+NULL
+;
+
+902 
+PyObjeù
+ *
+¡ršgR•r
+ = (PyObjeù *)
+NULL
+;
+
+903 *
+ch¬pR•r
+ = (*)
+NULL
+;
+
+904 
+ÃwRef
+[33] = "id-";
+
+905 
+xmlA‰rPŒ
+ 
+»fA‰r
+ = (xmlA‰rPŒ)
+NULL
+;
+
+906 
+xmlNodePŒ
+ 
+»fNode
+ = (xmlNodePŒ)
+NULL
+;
+
+907 
+hash
+ = -1;
+
+908 ià(
+	`PYTHON_IS_NOT_NONE
+(
+o
+)
+
+909 && 
+cu¼’tNode
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+910 
+hash
+ = 
+	`PyObjeù_Hash
+(
+o
+);
+
+911 ià(
+hash
+ != -1) {
+
+912 
+lÚgId’tif›r
+ = 
+	`PyLÚg_FromLÚg
+(
+hash
+);
+
+913 
+¡ršgR•r
+ = 
+	`PyObjeù_SŒ
+(
+lÚgId’tif›r
+);
+
+914 
+ch¬pR•r
+ = 
+	`PySŒšg_AS_STRING
+(
+¡ršgR•r
+);
+
+915 ià(
+ch¬pR•r
+ !ğ(*)
+NULL
+) {
+
+916 
+	`¡ºÿt
+(
+ÃwRef
+, 
+ch¬pR•r
+, 32);
+
+917 
+»fA‰r
+ = 
+	`xmlNewPrİ
+(
+cu¼’tNode
+,
+
+918 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_»f
+,
+
+919 
+BAD_CAST
+ 
+ÃwRef
+);
+
+921 
+	`Py_DECREF
+(
+lÚgId’tif›r
+);
+
+922 
+	`Py_DECREF
+(
+¡ršgR•r
+);
+
+925  
+»fNode
+;
+
+926 
+	}
+}
+
+930 
+	$pyx£r_AddId’tif›r
+(
+PyObjeù
+ *
+o
+, 
+xmlNodePŒ
+ 
+cu¼’tNode
+)
+
+932 
+PyObjeù
+ *
+lÚgId’tif›r
+ = (PyObjeù *)
+NULL
+;
+
+933 
+PyObjeù
+ *
+¡ršgR•r
+ = (PyObjeù *)
+NULL
+;
+
+934 *
+ch¬pR•r
+ = (*)
+NULL
+;
+
+935 
+ÃwRef
+[33] = "id-";
+
+936 
+xmlA‰rPŒ
+ 
+idA‰r
+ = (xmlA‰rPŒ)
+NULL
+;
+
+937 
+hash
+ = -1;
+
+938 ià(
+	`PYTHON_IS_NOT_NONE
+(
+o
+)
+
+939 && 
+cu¼’tNode
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+940 
+hash
+ = 
+	`PyObjeù_Hash
+(
+o
+);
+
+941 ià(
+hash
+ != -1) {
+
+942 
+lÚgId’tif›r
+ = 
+	`PyLÚg_FromLÚg
+(
+hash
+);
+
+943 
+¡ršgR•r
+ = 
+	`PyObjeù_SŒ
+(
+lÚgId’tif›r
+);
+
+944 
+ch¬pR•r
+ = 
+	`PySŒšg_AS_STRING
+(
+¡ršgR•r
+);
+
+945 
+	`¡ºÿt
+(
+ÃwRef
+, 
+ch¬pR•r
+, 32);
+
+946 
+idA‰r
+ = 
+	`xmlNewPrİ
+(
+cu¼’tNode
+,
+
+947 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_id
+,
+
+948 
+BAD_CAST
+ 
+ÃwRef
+);
+
+949 
+	`Py_DECREF
+(
+¡ršgR•r
+);
+
+950 
+	`Py_DECREF
+(
+lÚgId’tif›r
+);
+
+953 
+	}
+}
+
+957 
+	$pyx£r_AddModuËA‰r
+(
+PyObjeù
+ *
+o
+, 
+xmlNodePŒ
+ 
+cu¼’tNode
+)
+
+959 *
+ú
+ = (*)
+NULL
+;
+
+960 
+PyObjeù
+ *
+kÏss
+ = 
+Py_NÚe
+;
+
+961 
+PyObjeù
+ *
+mÇme
+ = 
+Py_NÚe
+;
+
+962 
+xmlA‰rPŒ
+ 
+moduËA‰r
+ = (xmlA‰rPŒ)
+NULL
+;
+
+963 ià(
+	`PYTHON_IS_NOT_NONE
+(
+o
+)
+
+964 && 
+cu¼’tNode
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+965 
+kÏss
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+o
+, 
+pyx£r_©Œ_şass
+);
+
+966 ià(
+	`PYTHON_IS_NONE
+(
+kÏss
+)) {
+
+969 
+mÇme
+ = 
+	`PyObjeù_G‘A‰rSŒšg
+(
+kÏss
+, 
+pyx£r_©Œ_moduË
+);
+
+970 ià(
+	`PYTHON_IS_NONE
+(
+mÇme
+)) {
+
+971 
+	`Py_DECREF
+(
+kÏss
+);
+
+974 ià(!
+	`PySŒšg_Check
+(
+mÇme
+)) {
+
+975 
+	`Py_DECREF
+(
+kÏss
+);
+
+976 
+	`Py_DECREF
+(
+mÇme
+);
+
+978 
+ú
+ = 
+	`PySŒšg_AS_STRING
+(
+mÇme
+);
+
+979 
+	`Py_DECREF
+(
+kÏss
+);
+
+980 
+	`Py_DECREF
+(
+mÇme
+);
+
+981 
+moduËA‰r
+ = 
+	`xmlNewPrİ
+(
+cu¼’tNode
+,
+
+982 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_moduË
+,
+
+983 
+BAD_CAST
+ 
+ú
+);
+
+985 
+	}
+}
+
+989 
+	$pyx£r_PyLi¡CÚšs
+(
+PyLi¡Objeù
+ *
+l¡
+, 
+PyObjeù
+ *
+o
+)
+
+991 
+PyObjeù
+ *
+™”L¡
+ = (PyObjeù *)
+NULL
+;
+
+992 
+PyObjeù
+ *
+™em
+ = (PyObjeù *)
+NULL
+;
+
+993 ià(
+	`PYTHON_IS_NOT_NONE
+(
+l¡
+)
+
+994 && 
+	`PYTHON_IS_NOT_NONE
+(
+o
+)) {
+
+995 
+™”L¡
+ = 
+	`PyObjeù_G‘I‹r
+((
+PyObjeù
+ *)
+l¡
+);
+
+996 ià(
+	`PYTHON_IS_NOT_NONE
+(
+™”L¡
+)) {
+
+997 (
+™em
+ = 
+	`PyI‹r_Next
+(
+™”L¡
+)è!ğ(
+PyObjeù
+ *)
+NULL
+) {
+
+998 ià(
+™em
+ =ğ
+o
+) {
+
+999 
+	`Py_DECREF
+(
+™”L¡
+);
+
+1000  
+PYXSER_FOUND
+;
+
+1003 
+	`Py_DECREF
+(
+™”L¡
+);
+
+1004  
+PYXSER_NOT_FOUND
+;
+
+1007  
+PYXSER_INVALID_ARGUMENT
+;
+
+1008 
+	}
+}
+
+1013 
+	$pyx£rIÁ_Check
+(
+PyObjeù
+ *
+o
+)
+
+1015  
+	`PyIÁ_Check
+(
+o
+);
+
+1016 
+	}
+}
+
+1019 
+	$pyx£rIÁ_CheckExaù
+(
+PyObjeù
+ *
+o
+)
+
+1021  
+	`PyIÁ_CheckExaù
+(
+o
+);
+
+1022 
+	}
+}
+
+1025 
+	$pyx£rBoŞ_Check
+(
+PyObjeù
+ *
+o
+)
+
+1027  
+	`PyBoŞ_Check
+(
+o
+);
+
+1028 
+	}
+}
+
+1031 
+	$pyx£rLÚg_CheckExaù
+(
+PyObjeù
+ *
+o
+)
+
+1033  
+	`PyLÚg_CheckExaù
+(
+o
+);
+
+1034 
+	}
+}
+
+1037 
+	$pyx£rFlßt_Check
+(
+PyObjeù
+ *
+o
+)
+
+1039  
+	`PyFlßt_Check
+(
+o
+);
+
+1040 
+	}
+}
+
+1043 
+	$pyx£rFlßt_CheckExaù
+(
+PyObjeù
+ *
+o
+)
+
+1045  
+	`PyFlßt_CheckExaù
+(
+o
+);
+
+1046 
+	}
+}
+
+1049 
+	$pyx£rCom¶ex_Check
+(
+PyObjeù
+ *
+o
+)
+
+1051  
+	`PyCom¶ex_Check
+(
+o
+);
+
+1052 
+	}
+}
+
+1055 
+	$pyx£rCom¶ex_CheckExaù
+(
+PyObjeù
+ *
+o
+)
+
+1057  
+	`PyCom¶ex_CheckExaù
+(
+o
+);
+
+1058 
+	}
+}
+
+1062 
+	$pyx£rSŒšg_Check
+(
+PyObjeù
+ *
+o
+)
+
+1064  
+	`PySŒšg_Check
+(
+o
+);
+
+1065 
+	}
+}
+
+1068 
+	$pyx£rSŒšg_CheckExaù
+(
+PyObjeù
+ *
+o
+)
+
+1070  
+	`PySŒšg_CheckExaù
+(
+o
+);
+
+1071 
+	}
+}
+
+1074 
+	$pyx£rUnicode_Check
+(
+PyObjeù
+ *
+o
+)
+
+1076  
+	`PyUnicode_Check
+(
+o
+);
+
+1077 
+	}
+}
+
+1080 
+	$pyx£rUnicodeExaù_CheckExaù
+(
+PyObjeù
+ *
+o
+)
+
+1082  
+	`PyUnicode_CheckExaù
+(
+o
+);
+
+1083 
+	}
+}
+
+1086 
+	$pyx£rBufãr_Check
+(
+PyObjeù
+ *
+o
+)
+
+1088  
+	`PyBufãr_Check
+(
+o
+);
+
+1089 
+	}
+}
+
+1093 
+	$pyx£rTu¶e_Check
+(
+PyObjeù
+ *
+o
+)
+
+1095  
+	`PyTu¶e_Check
+(
+o
+);
+
+1096 
+	}
+}
+
+1099 
+	$pyx£rTu¶e_CheckExaù
+(
+PyObjeù
+ *
+o
+)
+
+1101  
+	`PyTu¶e_CheckExaù
+(
+o
+);
+
+1102 
+	}
+}
+
+1106 
+	$pyx£rLi¡_Check
+(
+PyObjeù
+ *
+o
+)
+
+1108  
+	`PyLi¡_Check
+(
+o
+);
+
+1109 
+	}
+}
+
+1112 
+	$pyx£rLi¡_CheckExaù
+(
+PyObjeù
+ *
+o
+)
+
+1114  
+	`PyLi¡_CheckExaù
+(
+o
+);
+
+1115 
+	}
+}
+
+1118 
+	$pyx£rDiù_Check
+(
+PyObjeù
+ *
+o
+)
+
+1120  
+	`PyDiù_Check
+(
+o
+);
+
+1121 
+	}
+}
+
+1124 
+	$pyx£rDiù_CheckExaù
+(
+PyObjeù
+ *
+o
+)
+
+1126  
+	`PyDiù_CheckExaù
+(
+o
+);
+
+1127 
+	}
+}
+
+1131 
+	$pyx£rFe_Check
+(
+PyObjeù
+ *
+o
+)
+
+1133  
+	`PyFe_Check
+(
+o
+);
+
+1134 
+	}
+}
+
+1136 
+	$pyx£rFe_CheckExaù
+(
+PyObjeù
+ *
+o
+)
+
+1138  
+	`PyFe_CheckExaù
+(
+o
+);
+
+1139 
+	}
+}
+
+1143 
+	$pyx£rIn¡ªû_Check
+(
+PyObjeù
+ *
+o
+)
+
+1145  
+	`PyIn¡ªû_Check
+(
+o
+);
+
+1146 
+	}
+}
+
+1149 
+	$pyx£rFunùiÚ_Check
+(
+PyObjeù
+ *
+o
+)
+
+1151  
+	`PyFunùiÚ_Check
+(
+o
+);
+
+1152 
+	}
+}
+
+1155 
+	$pyx£rM‘hod_Check
+(
+PyObjeù
+ *
+o
+)
+
+1157  
+	`PyM‘hod_Check
+(
+o
+);
+
+1158 
+	}
+}
+
+1161 
+	$pyx£rModuË_Check
+(
+PyObjeù
+ *
+o
+)
+
+1163  
+	`PyModuË_Check
+(
+o
+);
+
+1164 
+	}
+}
+
+1167 
+	$pyx£rModuË_CheckExaù
+(
+PyObjeù
+ *
+o
+)
+
+1169  
+	`PyModuË_CheckExaù
+(
+o
+);
+
+1170 
+	}
+}
+
+1173 
+	$pyx£rSeqI‹r_Check
+(
+PyObjeù
+ *
+o
+)
+
+1175  
+	`PySeqI‹r_Check
+(
+o
+);
+
+1176 
+	}
+}
+
+1179 
+	$pyx£rSliû_Check
+(
+PyObjeù
+ *
+o
+)
+
+1181  
+	`PySliû_Check
+(
+o
+);
+
+1182 
+	}
+}
+
+1185 
+	$pyx£rC–l_Check
+(
+PyObjeù
+ *
+o
+)
+
+1187  
+	`PyC–l_Check
+(
+o
+);
+
+1188 
+	}
+}
+
+1191 
+	$pyx£rG’_Check
+(
+PyObjeù
+ *
+o
+)
+
+1193  
+	`PyG’_Check
+(
+o
+);
+
+1194 
+	}
+}
+
+1197 
+	$pyx£rD©e_CheckExaù
+(
+PyObjeù
+ *
+o
+)
+
+1199 
+PyD©eTime_IMPORT
+;
+
+1200  
+	`PyD©e_Check
+(
+o
+);
+
+1201 
+	}
+}
+
+1204 
+	$pyx£rAnyS‘_Check
+(
+PyObjeù
+ *
+o
+)
+
+1206  
+	`PyAnyS‘_Check
+(
+o
+);
+
+1207 
+	}
+}
+
+1210 
+	$pyx£rAnyS‘_CheckExaù
+(
+PyObjeù
+ *
+o
+)
+
+1212  
+	`PyAnyS‘_CheckExaù
+(
+o
+);
+
+1213 
+	}
+}
+
+1216 
+	$pyx£rFroz’S‘_CheckExaù
+(
+PyObjeù
+ *
+o
+)
+
+1218  
+	`PyFroz’S‘_CheckExaù
+(
+o
+);
+
+1219 
+	}
+}
+
+1223 
+	$pyxun£rIÁ_Check
+(
+xmlNodePŒ
+ 
+node
+)
+
+1225 *
+´İ
+;
+
+1226 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+1227 
+´İ
+ = (*)
+	`xmlG‘Prİ
+(
+node
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+1228 ià(
+´İ
+ !ğ(*)
+NULL
+) {
+
+1229 ià((
+	`¡ºcmp
+(
+´İ
+, 
+ty³_št
+, 
+	`¡¾’
+(type_int))) == 0) {
+
+1235 
+	}
+}
+
+1238 
+	$pyxun£rIÁ_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+)
+
+1240  
+	`pyxun£rIÁ_Check
+(
+node
+);
+
+1241 
+	}
+}
+
+1245 
+	$pyxun£rBoŞ_Check
+(
+xmlNodePŒ
+ 
+node
+)
+
+1247 *
+´İ
+;
+
+1248 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+1249 
+´İ
+ = (*)
+	`xmlG‘Prİ
+(
+node
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+1250 ià(
+´İ
+ !ğ(*)
+NULL
+) {
+
+1251 ià((
+	`¡ºcmp
+(
+´İ
+, 
+ty³_boŞ
+, 
+	`¡¾’
+(type_bool))) == 0) {
+
+1257 
+	}
+}
+
+1260 
+	$pyxun£rLÚg_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+)
+
+1262 *
+´İ
+;
+
+1263 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+1264 
+´İ
+ = (*)
+	`xmlG‘Prİ
+(
+node
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+1265 ià(
+´İ
+ !ğ(*)
+NULL
+) {
+
+1266 ià((
+	`¡ºcmp
+(
+´İ
+, 
+ty³_lÚg
+, 
+	`¡¾’
+(type_long))) == 0) {
+
+1272 
+	}
+}
+
+1275 
+	$pyxun£rFlßt_Check
+(
+xmlNodePŒ
+ 
+node
+)
+
+1277 *
+´İ
+;
+
+1278 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+1279 
+´İ
+ = (*)
+	`xmlG‘Prİ
+(
+node
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+1280 ià(
+´İ
+ !ğ(*)
+NULL
+) {
+
+1281 ià((
+	`¡ºcmp
+(
+´İ
+, 
+ty³_æßt
+, 
+	`¡¾’
+(type_float))) == 0) {
+
+1287 
+	}
+}
+
+1290 
+	$pyxun£rFlßt_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+)
+
+1292 *
+´İ
+;
+
+1293 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+1294 
+´İ
+ = (*)
+	`xmlG‘Prİ
+(
+node
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+1295 ià(
+´İ
+ !ğ(*)
+NULL
+) {
+
+1296 ià((
+	`¡ºcmp
+(
+´İ
+, 
+ty³_æßt
+, 
+	`¡¾’
+(type_float))) == 0) {
+
+1302 
+	}
+}
+
+1305 
+	$pyxun£rCom¶ex_Check
+(
+xmlNodePŒ
+ 
+node
+)
+
+1307 *
+´İ
+;
+
+1308 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+1309 
+´İ
+ = (*)
+	`xmlG‘Prİ
+(
+node
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+1310 ià(
+´İ
+ !ğ(*)
+NULL
+) {
+
+1311 ià((
+	`¡ºcmp
+(
+´İ
+, 
+ty³_com¶ex
+, 
+	`¡¾’
+(type_complex))) == 0) {
+
+1317 
+	}
+}
+
+1320 
+	$pyxun£rCom¶ex_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+)
+
+1322 *
+´İ
+;
+
+1323 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+1324 
+´İ
+ = (*)
+	`xmlG‘Prİ
+(
+node
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+1325 ià(
+´İ
+ !ğ(*)
+NULL
+) {
+
+1326 ià((
+	`¡ºcmp
+(
+´İ
+, 
+ty³_com¶ex
+, 
+	`¡¾’
+(type_complex))) == 0) {
+
+1332 
+	}
+}
+
+1335 
+	$pyxun£rSŒšg_Check
+(
+xmlNodePŒ
+ 
+node
+)
+
+1337 *
+´İ
+;
+
+1338 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+1339 
+´İ
+ = (*)
+	`xmlG‘Prİ
+(
+node
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+1340 ià(
+´İ
+ !ğ(*)
+NULL
+) {
+
+1341 ià((
+	`¡ºcmp
+(
+´İ
+, 
+ty³_¡r
+, 
+	`¡¾’
+(type_str))) == 0) {
+
+1347 
+	}
+}
+
+1350 
+	$pyxun£rSŒšg_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+)
+
+1352 *
+´İ
+;
+
+1353 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+1354 
+´İ
+ = (*)
+	`xmlG‘Prİ
+(
+node
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+1355 ià(
+´İ
+ !ğ(*)
+NULL
+) {
+
+1356 ià((
+	`¡ºcmp
+(
+´İ
+, 
+ty³_¡r
+, 
+	`¡¾’
+(type_str))) == 0) {
+
+1362 
+	}
+}
+
+1365 
+	$pyxun£rUnicode_Check
+(
+xmlNodePŒ
+ 
+node
+)
+
+1367 *
+´İ
+;
+
+1368 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+1369 
+´İ
+ = (*)
+	`xmlG‘Prİ
+(
+node
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+1370 ià(
+´İ
+ !ğ(*)
+NULL
+) {
+
+1371 ià((
+	`¡ºcmp
+(
+´İ
+, 
+ty³_unicode
+, 
+	`¡¾’
+(type_unicode))) == 0) {
+
+1377 
+	}
+}
+
+1380 
+	$pyxun£rUnicodeExaù_CheckExaù
+(
+xmlNodePŒ
+ 
+node
+)
+
+1382 *
+´İ
+;
+
+1383 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+1384 
+´İ
+ = (*)
+	`xmlG‘Prİ
+(
+node
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+1385 ià(
+´İ
+ !ğ(*)
+NULL
+) {
+
+1386 ià((
+	`¡ºcmp
+(
+´İ
+, 
+ty³_unicode
+, 
+	`¡¾’
+(type_unicode))) == 0) {
+
+1392 
+	}
+}
+
+1395 
+	$pyxun£rBufãr_Check
+(
+xmlNodePŒ
+ 
+node
+)
+
+1397 *
+´İ
+;
+
+1398 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+1399 
+´İ
+ = (*)
+	`xmlG‘Prİ
+(
+node
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+1400 ià(
+´İ
+ !ğ(*)
+NULL
+) {
+
+1401 ià((
+	`¡ºcmp
+(
+´İ
+, 
+ty³_bufãr
+, 
+	`¡¾’
+(type_buffer))) == 0) {
+
+1407 
+	}
+}
+
+1410 
+	$pyxun£rTu¶e_Check
+(
+xmlNodePŒ
+ 
+node
+)
+
+1412 *
+´İ
+;
+
+1413 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+1414 
+´İ
+ = (*)
+	`xmlG‘Prİ
+(
+node
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+1415 ià(
+´İ
+ !ğ(*)
+NULL
+) {
+
+1416 ià((
+	`¡ºcmp
+(
+´İ
+, 
+ty³_tu¶e
+, 
+	`¡¾’
+(type_tuple))) == 0) {
+
+1422 
+	}
+}
+
+1425 
+	$pyxun£rLi¡_Check
+(
+xmlNodePŒ
+ 
+node
+)
+
+1427 *
+´İ
+;
+
+1428 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+1429 
+´İ
+ = (*)
+	`xmlG‘Prİ
+(
+node
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+1430 ià(
+´İ
+ !ğ(*)
+NULL
+) {
+
+1431 ià((
+	`¡ºcmp
+(
+´İ
+, 
+ty³_li¡
+, 
+	`¡¾’
+(type_list))) == 0) {
+
+1437 
+	}
+}
+
+1440 
+	$pyxun£rDiù_Check
+(
+xmlNodePŒ
+ 
+node
+)
+
+1442 *
+´İ
+;
+
+1443 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+1444 
+´İ
+ = (*)
+	`xmlG‘Prİ
+(
+node
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ty³
+);
+
+1445 ià(
+´İ
+ !ğ(*)
+NULL
+) {
+
+1446 ià((
+	`¡ºcmp
+(
+´İ
+, 
+ty³_diù
+, 
+	`¡¾’
+(type_dict))) == 0) {
+
+1452 
+	}
+}
+
+1454 
+xmlNsPŒ
+
+
+1455 
+	$pyx£r_G‘DeçuÉNs
+()
+
+1457 ià(
+pyx£r_deçuÉ_ns
+ !ğ(
+xmlNsPŒ
+)
+NULL
+) {
+
+1458  
+pyx£r_deçuÉ_ns
+;
+
+1460 
+pyx£r_deçuÉ_ns
+ = 
+	`xmlNewNs
+(
+NULL
+,
+
+1461 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ns
+,
+
+1462 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_ns_´efix
+);
+
+1463  
+pyx£r_deçuÉ_ns
+;
+
+1465 
+	}
+}
+
+1469 
+	$pyx£r_ExŒaùPrİ”tyName
+(cÚ¡ *
+Çme
+, 
+xmlNodePŒ
+ 
+node
+)
+
+1471 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+ && 
+Çme
+ != (*)NULL) {
+
+1472  (*)
+	`xmlG‘Prİ
+(
+node
+, 
+BAD_CAST
+ 
+Çme
+);
+
+1474  (*)
+NULL
+;
+
+1475 
+	}
+}
+
+1478 
+PyObjeù
+ *
+
+1479 
+	$pyx£r_S—rchObjeùInMaš
+(cÚ¡ *
+Çme
+)
+
+1481 
+PyObjeù
+ *
+diùMod
+ = 
+	`PyImpÜt_G‘ModuËDiù
+();
+
+1482 
+PyObjeù
+ *
+™em
+ = (PyObjeù *)
+NULL
+;
+
+1483 
+PyObjeù
+ *
+cu¼’tKey
+ = (PyObjeù *)
+NULL
+;
+
+1484 
+PyObjeù
+ *
+diùKeys
+ = (PyObjeù *)
+NULL
+;
+
+1485 
+PyObjeù
+ *
+cu¼’tTy³
+ = (PyObjeù *)
+NULL
+;
+
+1486 
+couÁ”
+ = 0;
+
+1487 
+tu¶eSize
+ = 0;
+
+1488 ià(
+	`PYTHON_IS_NOT_NONE
+(
+diùMod
+)) {
+
+1489 
+diùKeys
+ = 
+	`PyDiù_Keys
+(
+diùMod
+);
+
+1490 
+tu¶eSize
+ = 
+	`PyDiù_Size
+(
+diùMod
+);
+
+1491 ià(
+	`PYTHON_IS_NOT_NONE
+(
+diùKeys
+)) {
+
+1492 
+couÁ”
+ = 0; couÁ” < 
+tu¶eSize
+; counter++) {
+
+1493 
+cu¼’tKey
+ = 
+	`PyLi¡_G‘I‹m
+(
+diùKeys
+, 
+couÁ”
+);
+
+1494 ià((
+	`¡ºcmp
+(
+	`PySŒšg_AS_STRING
+(
+cu¼’tKey
+),
+
+1495 
+ty³_maš
+,
+
+1496 
+	`¡¾’
+(
+ty³_maš
+))) == 0) {
+
+1497 
+™em
+ = 
+	`PyDiù_G‘I‹m
+(
+diùMod
+, 
+cu¼’tKey
+);
+
+1498 ià(
+	`PYTHON_IS_NOT_NONE
+(
+™em
+)) {
+
+1499 
+cu¼’tTy³
+ = (
+PyObjeù
+ *)
+	`pyx£r_S—rchModuËTy³
+(
+™em
+, 
+Çme
+);
+
+1505  
+cu¼’tTy³
+;
+
+1506 
+	}
+}
+
+1508 
+PyObjeù
+ *
+
+1509 
+	$pyx£r_S—rchModuË
+(cÚ¡ *
+Çme
+)
+
+1511 
+PyObjeù
+ *
+diùMod
+ = 
+	`PyImpÜt_G‘ModuËDiù
+();
+
+1512 
+PyObjeù
+ *
+™em
+ = (PyObjeù *)
+NULL
+;
+
+1513 
+PyObjeù
+ *
+cu¼’tKey
+ = (PyObjeù *)
+NULL
+;
+
+1514 
+PyObjeù
+ *
+diùKeys
+ = (PyObjeù *)
+NULL
+;
+
+1515 
+couÁ”
+ = 0;
+
+1516 
+tu¶eSize
+ = 0;
+
+1517 ià(
+	`PYTHON_IS_NOT_NONE
+(
+diùMod
+)) {
+
+1518 
+diùKeys
+ = 
+	`PyDiù_Keys
+(
+diùMod
+);
+
+1519 
+tu¶eSize
+ = 
+	`PyDiù_Size
+(
+diùMod
+);
+
+1520 ià(
+	`PYTHON_IS_NOT_NONE
+(
+diùKeys
+)) {
+
+1521 
+couÁ”
+ = 0; couÁ” < 
+tu¶eSize
+; counter++) {
+
+1522 
+cu¼’tKey
+ = 
+	`PyLi¡_G‘I‹m
+(
+diùKeys
+, 
+couÁ”
+);
+
+1523 ià((
+	`¡ºcmp
+(
+	`PySŒšg_AS_STRING
+(
+cu¼’tKey
+),
+
+1524 
+Çme
+,
+
+1525 
+	`¡¾’
+(
+ty³_maš
+))) == 0) {
+
+1526 
+™em
+ = 
+	`PyDiù_G‘I‹m
+(
+diùMod
+, 
+cu¼’tKey
+);
+
+1531  
+™em
+;
+
+1532 
+	}
+}
+
+1534 
+PyObjeù
+ *
+
+1535 
+	$pyx£r_CacheModuË
+(
+PyObjeù
+ *
+d
+, cÚ¡ *
+Çme
+)
+
+1537 
+PyObjeù
+ *
+diùMod
+ = 
+d
+;
+
+1538 
+PyObjeù
+ *
+™em
+ = (PyObjeù *)
+NULL
+;
+
+1539 
+PyObjeù
+ *
+cu¼’tKey
+ = (PyObjeù *)
+NULL
+;
+
+1540 
+PyObjeù
+ *
+diùKeys
+ = (PyObjeù *)
+NULL
+;
+
+1541 
+couÁ”
+ = 0;
+
+1542 
+tu¶eSize
+ = 0;
+
+1543 ià(
+	`PYTHON_IS_NOT_NONE
+(
+diùMod
+)) {
+
+1544 
+tu¶eSize
+ = 
+	`PyDiù_Size
+(
+diùMod
+);
+
+1545 ià(
+tu¶eSize
+ > 0) {
+
+1546 
+diùKeys
+ = 
+	`PyDiù_Keys
+(
+diùMod
+);
+
+1547 ià(
+	`PYTHON_IS_NOT_NONE
+(
+diùKeys
+)) {
+
+1548 
+couÁ”
+ = 0; couÁ” < 
+tu¶eSize
+; counter++) {
+
+1549 
+cu¼’tKey
+ = 
+	`PyLi¡_G‘I‹m
+(
+diùKeys
+, 
+couÁ”
+);
+
+1550 ià((
+	`¡ºcmp
+(
+	`PySŒšg_AS_STRING
+(
+cu¼’tKey
+),
+
+1551 
+Çme
+,
+
+1552 
+	`¡¾’
+(
+ty³_maš
+))) == 0) {
+
+1553 
+™em
+ = 
+	`PyDiù_G‘I‹m
+(
+diùMod
+, 
+cu¼’tKey
+);
+
+1559  
+™em
+;
+
+1560 
+	}
+}
+
+1562 
+šlše
+ *
+
+1563 
+	$pyx£r_G‘ObjeùId’tif›r
+(
+xmlNodePŒ
+ 
+node
+)
+
+1565 ià(
+node
+ !ğ(
+xmlNodePŒ
+)
+NULL
+) {
+
+1566  (*)
+	`xmlG‘Prİ
+(
+node
+, 
+BAD_CAST
+ 
+pyx£r_xml_©Œ_id
+);
+
+1568  (*)
+NULL
+;
+
+1569 
+	}
+}
+
+1571 
+PyObjeù
+ *
+
+1572 
+	$pyx£r_CheckAvaabËObjeù
+(
+PyObjeù
+ *
+diù
+, *
+id
+)
+
+1574 
+PyObjeù
+ *
+»t
+ = (PyObjeù *)
+NULL
+;
+
+1575 ià(
+diù
+ !ğ(
+PyObjeù
+ *)
+NULL
+
+
+1576 && 
+id
+ !ğ(*)
+NULL
+) {
+
+1577 
+»t
+ = 
+	`PyDiù_G‘I‹mSŒšg
+(
+diù
+, 
+id
+);
+
+1579  
+»t
+;
+
+1580 
+	}
+}
+
+1583 
+	$pyx£r_AddAvaabËObjeù
+(
+PyObjeù
+ *
+diù
+, *
+id
+, PyObjeù *
+o
+)
+
+1585 ià(
+diù
+ !ğ(
+PyObjeù
+ *)
+NULL
+
+
+1586 && 
+id
+ !ğ(*)
+NULL
+
+
+1587 && 
+o
+ !ğ(
+PyObjeù
+ *)
+NULL
+) {
+
+1588 
+	`PyDiù_S‘I‹mSŒšg
+(
+diù
+, 
+id
+, 
+o
+);
+
+1590 
+	}
+}
+
+1593 
+xmlDtdPŒ
+
+
+1594 
+	$pyx£r_G‘Pyx£rDTD
+()
+
+1596 ià(
+pyx£r_dtd_objeù
+ =ğ(
+xmlDtdPŒ
+)
+NULL
+) {
+
+1597 
+pyx£r_dtd_objeù
+ = 
+	`xmlP¬£DTD
+(
+BAD_CAST
+ 
+NULL
+,
+
+1598 
+BAD_CAST
+ 
+pyx£r_xml_dtd_loÿtiÚ
+);
+
+1600  
+pyx£r_dtd_objeù
+;
+
+1601 
+	}
+}
+
+1604 
+	$pyx£r_V®id©eDocum’t
+(
+xmlDocPŒ
+ 
+doc
+)
+
+1606 
+xmlDtdPŒ
+ 
+dtd
+ = 
+	`pyx£r_G‘Pyx£rDTD
+();
+
+1607 
+xmlV®idCtxtPŒ
+ 
+cvp
+;
+
+1608 ià((
+cvp
+ = 
+	`xmlNewV®idCtxt
+()è=ğ
+NULL
+) {
+
+1611 
+cvp
+->
+u£rD©a
+ = (*è
+¡d”r
+;
+
+1612 
+cvp
+->
+”rÜ
+ = (
+xmlV®id™yE¼ÜFunc
+è
+årštf
+;
+
+1613 
+cvp
+->
+w¬nšg
+ = (
+xmlV®id™yW¬nšgFunc
+è
+årštf
+;
+
+1614 ià(!
+	`xmlV®id©eDtd
+(
+cvp
+, 
+doc
+, 
+dtd
+)) {
+
+1617 
+	`xmlF»eV®idCtxt
+(
+cvp
+);
+
+1619 
+	}
+}
+
+	@/usr/include/string.h
+
+37 #iâdeà
+_STRING_H_
+
+
+38 
+	#_STRING_H_
+
+
+	)
+
+40 
+	~<sys/cdefs.h
+>
+
+41 
+	~<sys/_nuÎ.h
+>
+
+42 
+	~<sys/_ty³s.h
+>
+
+48 #ià
+__BSD_VISIBLE
+
+
+49 
+	~<¡ršgs.h
+>
+
+52 #iâdeà
+_SIZE_T_DECLARED
+
+
+53 
+__size_t
+ 
+	tsize_t
+;
+
+54 
+	#_SIZE_T_DECLARED
+
+
+	)
+
+57 
+	g__BEGIN_DECLS
+
+
+58 #ià
+__POSIX_VISIBLE
+ >ğ200112 || 
+__XSI_VISIBLE
+
+
+59 *
+memcıy
+(* 
+__»¡riù
+, cÚ¡ * __»¡riù, , 
+size_t
+);
+
+61 *
+	$memchr
+(cÚ¡ *, , 
+size_t
+è
+__pu»
+;
+
+62 *
+	$memrchr
+(cÚ¡ *, , 
+size_t
+è
+__pu»
+;
+
+63 
+	$memcmp
+(cÚ¡ *, cÚ¡ *, 
+size_t
+è
+__pu»
+;
+
+64 *
+	`memıy
+(* 
+__»¡riù
+, cÚ¡ * __»¡riù, 
+size_t
+);
+
+65 #ià
+__BSD_VISIBLE
+
+
+66 *
+	`memmem
+(cÚ¡ *, 
+size_t
+, const *, size_t);
+
+68 *
+	`memmove
+(*, cÚ¡ *, 
+size_t
+);
+
+69 *
+	`mem£t
+(*, , 
+size_t
+);
+
+70 #ià
+__BSD_VISIBLE
+
+
+71 *
+	`¡pıy
+(*, const *);
+
+72 *
+	$¡rÿ£¡r
+(cÚ¡ *, cÚ¡ *è
+__pu»
+;
+
+74 *
+	`¡rÿt
+(* 
+__»¡riù
+, const * __restrict);
+
+75 *
+	$¡rchr
+(cÚ¡ *, è
+__pu»
+;
+
+76 
+	$¡rcmp
+(cÚ¡ *, cÚ¡ *è
+__pu»
+;
+
+77 
+	`¡rcŞl
+(const *, const *);
+
+78 *
+	`¡rıy
+(* 
+__»¡riù
+, const * __restrict);
+
+79 
+size_t
+ 
+	$¡rc¥n
+(cÚ¡ *, cÚ¡ *è
+__pu»
+;
+
+80 #ià
+__POSIX_VISIBLE
+ >ğ200112 || 
+__XSI_VISIBLE
+
+
+81 *
+	`¡rdup
+(const *);
+
+83 *
+	`¡»¼Ü
+();
+
+84 #ià
+__POSIX_VISIBLE
+ >= 200112
+
+85 
+	`¡»¼Ü_r
+(, *, 
+size_t
+);
+
+87 #ià
+__BSD_VISIBLE
+
+
+88 
+size_t
+ 
+	`¡¾ÿt
+(*, const *, size_t);
+
+89 
+size_t
+ 
+	`¡¾ıy
+(*, const *, size_t);
+
+91 
+size_t
+ 
+	$¡¾’
+(cÚ¡ *è
+__pu»
+;
+
+92 #ià
+__BSD_VISIBLE
+
+
+93 
+	`¡rmode
+(, *);
+
+95 *
+	`¡ºÿt
+(* 
+__»¡riù
+, cÚ¡ * __»¡riù, 
+size_t
+);
+
+96 
+	$¡ºcmp
+(cÚ¡ *, cÚ¡ *, 
+size_t
+è
+__pu»
+;
+
+97 *
+	`¡ºıy
+(* 
+__»¡riù
+, cÚ¡ * __»¡riù, 
+size_t
+);
+
+98 #ià
+__BSD_VISIBLE
+
+
+99 *
+	$¡º¡r
+(cÚ¡ *, cÚ¡ *, 
+size_t
+è
+__pu»
+;
+
+101 *
+	$¡½brk
+(cÚ¡ *, cÚ¡ *è
+__pu»
+;
+
+102 *
+	$¡¼chr
+(cÚ¡ *, è
+__pu»
+;
+
+103 #ià
+__BSD_VISIBLE
+
+
+104 *
+	`¡r£p
+(**, const *);
+
+105 *
+	`¡rsigÇl
+();
+
+107 
+size_t
+ 
+	$¡r¥n
+(cÚ¡ *, cÚ¡ *è
+__pu»
+;
+
+108 *
+	$¡r¡r
+(cÚ¡ *, cÚ¡ *è
+__pu»
+;
+
+109 *
+	`¡¹ok
+(* 
+__»¡riù
+, const * __restrict);
+
+110 #ià
+__POSIX_VISIBLE
+ >ğ199506 || 
+__XSI_VISIBLE
+ >= 500
+
+111 *
+	`¡¹ok_r
+(*, const *, **);
+
+113 
+size_t
+ 
+	`¡rxäm
+(* 
+__»¡riù
+, const * __restrict, size_t);
+
+114 #ià
+__BSD_VISIBLE
+
+
+116 #iâdeà
+_SWAB_DECLARED
+
+
+117 
+	#_SWAB_DECLARED
+
+
+	)
+
+119 #iâdeà
+_SSIZE_T_DECLARED
+
+
+120 
+__ssize_t
+ 
+	tssize_t
+;
+
+121 
+	#_SSIZE_T_DECLARED
+
+
+	)
+
+124 
+	`swab
+(cÚ¡ * 
+__»¡riù
+, * __»¡riù, 
+ssize_t
+);
+
+128 
+__END_DECLS
+
+
+	@include/pyxser.h
+
+27 #iâdeà
+PYXSER_H
+
+
+28 
+	#PYXSER_H
+ 1
+
+	)
+
+30 
+	~<PythÚ.h
+>
+
+31 
+	~<d©‘ime.h
+>
+
+32 
+	~<libxml/·r£r.h
+>
+
+33 
+	~<libxml/Œ“.h
+>
+
+35 #ifdeà
+__ılu¥lus
+
+
+39 
+	#PYXSER_VERSION
+ "0.1"
+
+	)
+
+41 
+	#PYTHON_IS_NOT_NONE
+(
+o
+) \
+
+42 (((
+PyObjeù
+ *)
+o
+ !ğ
+Py_NÚe
+) && \
+
+43 ((
+PyObjeù
+ *)
+o
+ !ğ(PyObjeù *)
+NULL
+))
+
+	)
+
+45 
+	#PYTHON_IS_NONE
+(
+o
+) \
+
+46 (((
+PyObjeù
+ *)
+o
+ =ğ
+Py_NÚe
+) || \
+
+47 ((
+PyObjeù
+ *)
+o
+ =ğ(PyObjeù *)
+NULL
+))
+
+	)
+
+50 
+	#PYTHON_HAZ_KLASS
+(
+o
+) \
+
+51 (
+	`PyObjeù_HasA‰rSŒšg
+(
+o
+, 
+PYTHON_CLASS_ATTR
+è=ğ1)
+
+	)
+
+53 
+	#PYTHON_SERX_PHASE_NONE
+ 0
+
+	)
+
+54 
+	#PYTHON_SERX_PHASE_CONCRETE
+ 1
+
+	)
+
+55 
+	#PYTHON_SERX_PHASE_OBJECT
+ 2
+
+	)
+
+57 
+	#PYXSER_INVALID_ARGUMENT
+ -1
+
+	)
+
+58 
+	#PYXSER_NOT_FOUND
+ 0
+
+	)
+
+59 
+	#PYXSER_FOUND
+ 1
+
+	)
+
+61 
+	spythÚUn£rŸliz©iÚArgum’ts_
+ {
+
+62 
+PyObjeù
+ **
+doc
+;
+
+63 
+PyObjeù
+ **
+cu¼’t
+;
+
+64 
+PyObjeù
+ **
+Œ“
+;
+
+65 
+PyDiùObjeù
+ **
+dups
+;
+
+66 
+PyDiùObjeù
+ **
+moduËs
+;
+
+67 
+xmlDocPŒ
+ *
+docPŒ
+;
+
+68 
+xmlNodePŒ
+ *
+roÙNode
+;
+
+69 
+xmlNodePŒ
+ *
+cu¼’tNode
+;
+
+70 } 
+	tPythÚUn£rŸliz©iÚArgum’ts
+;
+
+72 
+PythÚUn£rŸliz©iÚArgum’ts
+ *
+	tPythÚUn£rŸliz©iÚArgum’tsPŒ
+;
+
+74 
+	spythÚTy³S”Ÿlize_
+ {
+
+75 
+avaabË
+;
+
+76 (*
+check”
+)(
+PyObjeù
+ *
+o
+);
+
+77 
+xmlNodePŒ
+ (*
+£rŸliz”
+)(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+78 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+);
+
+79 } 
+	tPythÚTy³S”Ÿlize
+;
+
+81 
+	spythÚTy³De£rŸlize_
+ {
+
+82 
+avaabË
+;
+
+83 (*
+check
+)(
+xmlNodePŒ
+ 
+node
+);
+
+84 
+PyObjeù
+ *(*
+de£rŸliz”
+)(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+);
+
+85 } 
+	tPythÚTy³De£rŸlize
+;
+
+87 
+	~"šşude/pyx£r_numb”s.h
+"
+
+88 
+	~"šşude/pyx£r_¡ršgs.h
+"
+
+89 
+	~"šşude/pyx£r_cŞËùiÚs.h
+"
+
+90 
+	~"šşude/pyx£r_toŞs.h
+"
+
+92 cÚ¡ 
+pyx£r_©Œ_şass
+[];
+
+93 cÚ¡ 
+pyx£r_©Œ_diù
+[];
+
+94 cÚ¡ 
+pyx£r_©Œ_moduË
+[];
+
+95 cÚ¡ 
+pyx£r_©Œ_Çme
+[];
+
+96 cÚ¡ 
+pyx£r_©Œ_®l
+[];
+
+97 cÚ¡ 
+pyx£r_v”siÚ
+[];
+
+98 cÚ¡ 
+pyx£r_xml_©Œ_id
+[];
+
+99 cÚ¡ 
+pyx£r_xml_©Œ_™em
+[];
+
+100 cÚ¡ 
+pyx£r_xml_©Œ_moduË
+[];
+
+101 cÚ¡ 
+pyx£r_xml_©Œ_Çme
+[];
+
+102 cÚ¡ 
+pyx£r_xml_©Œ_ns
+[];
+
+103 cÚ¡ 
+pyx£r_xml_©Œ_ns_´efix
+[];
+
+104 cÚ¡ 
+pyx£r_xml_©Œ_»f
+[];
+
+105 cÚ¡ 
+pyx£r_xml_©Œ_size
+[];
+
+106 cÚ¡ 
+pyx£r_xml_©Œ_ty³
+[];
+
+107 cÚ¡ 
+pyx£r_xml_©Œ_v”siÚ
+[];
+
+108 cÚ¡ 
+pyx£r_xml_©Œ_key
+[];
+
+109 cÚ¡ 
+pyx£r_xml_©Œ_xml_ns
+[];
+
+110 cÚ¡ 
+pyx£r_xml_–em’t_cŞËùiÚ
+[];
+
+111 cÚ¡ 
+pyx£r_xml_–em’t_objeù
+[];
+
+112 cÚ¡ 
+pyx£r_xml_–em’t_™em
+[];
+
+113 cÚ¡ 
+pyx£r_xml_’codšg
+[];
+
+114 cÚ¡ 
+pyx£r_xml_v”siÚ
+[];
+
+115 cÚ¡ 
+pyx£r_xml_dtd_loÿtiÚ
+[];
+
+116 cÚ¡ 
+pyx£r_xml_dtd
+[];
+
+118 #ifdeà
+__ılu¥lus
+
+
+	@include/pyxser_tools.h
+
+27 #iâdeà
+PYXSER_TOOLS_H
+
+
+28 
+	#PYXSER_TOOLS_H
+ 1
+
+	)
+
+30 
+	~<PythÚ.h
+>
+
+31 
+	~<d©‘ime.h
+>
+
+32 
+	~<libxml/·r£r.h
+>
+
+33 
+	~<libxml/Œ“.h
+>
+
+35 
+	~"šşude/pyx£r.h
+"
+
+37 #ifdeà
+__ılu¥lus
+
+
+42 cÚ¡ 
+PythÚTy³S”Ÿlize
+ 
+£rxCÚü‘eTy³s
+[];
+
+43 cÚ¡ 
+PythÚTy³De£rŸlize
+ 
+un£rxCÚü‘eTy³s
+[];
+
+44 
+xmlDtdPŒ
+ 
+pyx£r_dtd_objeù
+;
+
+46 *
+pyx£r_G‘CÏssName
+(
+PyObjeù
+ *
+obj
+);
+
+48 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizePrim™iveTy³
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+49 
+PyLi¡Objeù
+ *
+dupI‹ms
+,
+
+50 
+xmlDocPŒ
+ 
+doc
+);
+
+52 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeXml
+(
+PyObjeù
+ *
+o
+, 
+xmlDocPŒ
+ *
+docPŒ
+, xmlNodePŒ *
+roÙNode
+,
+
+53 
+xmlNodePŒ
+ *
+cu¼’tNode
+, 
+PyLi¡Objeù
+ *
+dupSrcI‹ms
+);
+
+55 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeXmlNÚStd
+(
+PyObjeù
+ *
+o
+, 
+xmlDocPŒ
+ *
+docPŒ
+,
+
+56 
+xmlNodePŒ
+ *
+roÙNode
+, xmlNodePŒ *
+cu¼’tNode
+,
+
+57 
+PyLi¡Objeù
+ *
+dupSrcI‹ms
+);
+
+59 
+PyObjeù
+ *
+pyx£r_Un£rŸlizeXml
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+);
+
+61 
+PyObjeù
+ *
+pyx£r_S—rchModuËTy³
+(PyObjeù *
+mod
+, cÚ¡ *
+Çme
+);
+
+63 
+PyObjeù
+ *
+pyx£r_G‘NÚC®ÏbËA‰ribu‹s
+(PyObjeù *
+obj
+);
+
+65 
+pyx£r_PyLi¡CÚšs
+(
+PyLi¡Objeù
+ *
+l¡
+, 
+PyObjeù
+ *
+o
+);
+
+67 
+xmlNodePŒ
+ 
+pyx£r_AddReã»nû
+(
+PyObjeù
+ *
+o
+, xmlNodePŒ 
+cu¼’tNode
+);
+
+69 
+pyx£r_AddId’tif›r
+(
+PyObjeù
+ *
+o
+, 
+xmlNodePŒ
+ 
+cu¼’tNode
+);
+
+71 
+pyx£r_AddModuËA‰r
+(
+PyObjeù
+ *
+o
+, 
+xmlNodePŒ
+ 
+cu¼’tNode
+);
+
+73 
+xmlNsPŒ
+ 
+pyx£r_G‘DeçuÉNs
+();
+
+75 *
+pyx£r_ExŒaùPrİ”tyName
+(cÚ¡ *
+Çme
+, 
+xmlNodePŒ
+ 
+node
+);
+
+77 
+PyObjeù
+ *
+pyx£r_Un£rŸlizeBlock
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+);
+
+79 
+pyx£r_ModuËNÙMaš
+(cÚ¡ *
+mod
+);
+
+81 
+PyObjeù
+ *
+pyx£r_S—rchModuË
+(cÚ¡ *
+Çme
+);
+
+83 
+PyObjeù
+ *
+pyx£r_CacheModuË
+(PyObjeù *
+d
+, cÚ¡ *
+Çme
+);
+
+85 
+PyObjeù
+ *
+pyx£r_S—rchObjeùInMaš
+(cÚ¡ *
+Çme
+);
+
+87 *
+pyx£r_G‘ObjeùId’tif›r
+(
+xmlNodePŒ
+ 
+node
+);
+
+89 
+PyObjeù
+ *
+pyx£r_CheckAvaabËObjeù
+(PyObjeù *
+diù
+, *
+id
+);
+
+91 
+pyx£r_AddAvaabËObjeù
+(
+PyObjeù
+ *
+diù
+, *
+id
+, PyObjeù *
+o
+);
+
+93 
+xmlDtdPŒ
+ 
+pyx£r_G‘Pyx£rDTD
+();
+
+95 
+pyx£r_V®id©eDocum’t
+(
+xmlDocPŒ
+ 
+doc
+);
+
+97 #ifdeà
+__ılu¥lus
+
+
+	@/usr/include/strings.h
+
+29 #iâdeà
+_STRINGS_H_
+
+
+30 
+	#_STRINGS_H_
+
+
+	)
+
+32 
+	~<sys/cdefs.h
+>
+
+33 
+	~<sys/_ty³s.h
+>
+
+35 #iâdeà
+_SIZE_T_DECLARED
+
+
+36 
+__size_t
+ 
+	tsize_t
+;
+
+37 
+	#_SIZE_T_DECLARED
+
+
+	)
+
+40 
+__BEGIN_DECLS
+
+
+41 
+	$bcmp
+(cÚ¡ *, cÚ¡ *, 
+size_t
+è
+__pu»
+;
+
+42 
+	`bcİy
+(cÚ¡ *, *, 
+size_t
+);
+
+43 
+	`bz”o
+(*, 
+size_t
+);
+
+44 
+	$ffs
+(è
+__pu»2
+;
+
+45 #ifdeà
+__BSD_VISIBLE
+
+
+46 
+	$ff¦
+(è
+__pu»2
+;
+
+47 
+	$æs
+(è
+__pu»2
+;
+
+48 
+	$æ¦
+(è
+__pu»2
+;
+
+50 *
+	$šdex
+(cÚ¡ *, è
+__pu»
+;
+
+51 *
+	$ršdex
+(cÚ¡ *, è
+__pu»
+;
+
+52 
+	$¡rÿ£cmp
+(cÚ¡ *, cÚ¡ *è
+__pu»
+;
+
+53 
+	$¡ºÿ£cmp
+(cÚ¡ *, cÚ¡ *, 
+size_t
+è
+__pu»
+;
+
+54 
+__END_DECLS
+
+
+	@/usr/include/sys/_null.h
+
+29 #iâdeà
+NULL
+
+
+31 #ià
+defšed
+(
+_KERNEL
+è|| !defšed(
+__ılu¥lus
+)
+
+32 
+	#NULL
+ ((*)0)
+
+	)
+
+34 #ià
+defšed
+(
+__LP64__
+)
+
+35 
+	#NULL
+ (0L)
+
+	)
+
+37 
+	#NULL
+ 0
+
+	)
+
+	@/usr/include/sys/_types.h
+
+29 #iâdeà
+_SYS__TYPES_H_
+
+
+30 
+	#_SYS__TYPES_H_
+
+
+	)
+
+32 
+	~<sys/cdefs.h
+>
+
+33 
+	~<machše/_ty³s.h
+>
+
+38 
+__ušt32_t
+ 
+	t__blksize_t
+;
+
+39 
+__št64_t
+ 
+	t__blkút_t
+;
+
+40 
+__št32_t
+ 
+	t__şockid_t
+;
+
+41 
+__ušt32_t
+ 
+	t__fæags_t
+;
+
+42 
+__ušt64_t
+ 
+	t__fsblkút_t
+;
+
+43 
+__ušt64_t
+ 
+	t__fsfút_t
+;
+
+44 
+__ušt32_t
+ 
+	t__gid_t
+;
+
+45 
+__št64_t
+ 
+	t__id_t
+;
+
+46 
+__ušt32_t
+ 
+	t__šo_t
+;
+
+47 
+	t__key_t
+;
+
+48 
+__št32_t
+ 
+	t__lwpid_t
+;
+
+49 
+__ušt16_t
+ 
+	t__mode_t
+;
+
+50 
+	t__Æ_™em
+;
+
+51 
+__ušt16_t
+ 
+	t__Æšk_t
+;
+
+52 
+__št64_t
+ 
+	t__off_t
+;
+
+53 
+__št32_t
+ 
+	t__pid_t
+;
+
+54 
+__št64_t
+ 
+	t__¾im_t
+;
+
+57 
+__ušt8_t
+ 
+	t__§_çmy_t
+;
+
+58 
+__ušt32_t
+ 
+	t__sockËn_t
+;
+
+59 
+	t__su£cÚds_t
+;
+
+60 
+__št32_t
+ 
+	t__tim”_t
+;
+
+61 
+__ušt32_t
+ 
+	t__uid_t
+;
+
+62 
+	t__u£cÚds_t
+;
+
+82 
+	t__ù_ruÃ_t
+;
+
+83 
+__ù_ruÃ_t
+ 
+	t__ruÃ_t
+;
+
+84 
+__ù_ruÃ_t
+ 
+	t__wch¬_t
+;
+
+85 
+__ù_ruÃ_t
+ 
+	t__wšt_t
+;
+
+87 
+__ušt32_t
+ 
+	t__dev_t
+;
+
+89 
+__ušt32_t
+ 
+	t__fix±_t
+;
+
+96 
+	m__mb¡©e8
+[128];
+
+97 
+__št64_t
+ 
+	m_mb¡©eL
+;
+
+98 } 
+	t__mb¡©e_t
+;
+
+	@/usr/include/sys/cdefs.h
+
+36 #iâdef 
+_SYS_CDEFS_H_
+
+
+37 
+	#_SYS_CDEFS_H_
+
+
+	)
+
+39 #ià
+defšed
+(
+__ılu¥lus
+)
+
+40 
+	#__BEGIN_DECLS
+ "C" {
+
+	)
+
+41 
+	#__END_DECLS
+ }
+
+	)
+
+43 
+	#__BEGIN_DECLS
+
+
+	)
+
+44 
+	#__END_DECLS
+
+
+	)
+
+53 #ià
+defšed
+(
+__GNUC__
+è|| defšed(
+__INTEL_COMPILER
+)
+
+55 #ià
+__GNUC__
+ >ğ3 || 
+defšed
+(
+__INTEL_COMPILER
+)
+
+56 
+	#__GNUCLIKE_ASM
+ 3
+
+	)
+
+57 
+	#__GNUCLIKE_MATH_BUILTIN_CONSTANTS
+
+
+	)
+
+59 
+	#__GNUCLIKE_ASM
+ 2
+
+	)
+
+61 
+	#__GNUCLIKE___TYPEOF
+ 1
+
+	)
+
+62 
+	#__GNUCLIKE___OFFSETOF
+ 1
+
+	)
+
+63 
+	#__GNUCLIKE___SECTION
+ 1
+
+	)
+
+65 
+	#__GNUCLIKE_ATTRIBUTE_MODE_DI
+ 1
+
+	)
+
+67 #iâdeà
+__INTEL_COMPILER
+
+
+68 
+	#__GNUCLIKE_CTOR_SECTION_HANDLING
+ 1
+
+	)
+
+71 
+	#__GNUCLIKE_BUILTIN_CONSTANT_P
+ 1
+
+	)
+
+72 #ià
+defšed
+(
+__INTEL_COMPILER
+è&& defšed(
+__ılu¥lus
+) \
+
+73 && 
+__INTEL_COMPILER
+ < 800
+
+74 #undeà
+__GNUCLIKE_BUILTIN_CONSTANT_P
+
+
+77 #ià(
+__GNUC_MINOR__
+ > 95 || 
+__GNUC__
+ >ğ3è&& !
+defšed
+(
+__INTEL_COMPILER
+)
+
+78 
+	#__GNUCLIKE_BUILTIN_VARARGS
+ 1
+
+	)
+
+79 
+	#__GNUCLIKE_BUILTIN_STDARG
+ 1
+
+	)
+
+80 
+	#__GNUCLIKE_BUILTIN_VAALIST
+ 1
+
+	)
+
+83 #ià
+defšed
+(
+__GNUC__
+)
+
+84 
+	#__GNUC_VA_LIST_COMPATIBILITY
+ 1
+
+	)
+
+87 #iâdeà
+__INTEL_COMPILER
+
+
+88 
+	#__GNUCLIKE_BUILTIN_NEXT_ARG
+ 1
+
+	)
+
+89 
+	#__GNUCLIKE_MATH_BUILTIN_RELOPS
+
+
+	)
+
+92 
+	#__GNUCLIKE_BUILTIN_MEMCPY
+ 1
+
+	)
+
+95 
+	#__CC_SUPPORTS_INLINE
+ 1
+
+	)
+
+96 
+	#__CC_SUPPORTS___INLINE
+ 1
+
+	)
+
+97 
+	#__CC_SUPPORTS___INLINE__
+ 1
+
+	)
+
+99 
+	#__CC_SUPPORTS___FUNC__
+ 1
+
+	)
+
+100 
+	#__CC_SUPPORTS_WARNING
+ 1
+
+	)
+
+102 
+	#__CC_SUPPORTS_VARADIC_XXX
+ 1
+
+	)
+
+104 
+	#__CC_SUPPORTS_DYNAMIC_ARRAY_INIT
+ 1
+
+	)
+
+107 
+	#__CC_INT_IS_32BIT
+ 1
+
+	)
+
+114 #ià
+defšed
+(
+__GNUC__
+è&& !defšed(
+__INTEL_COMPILER
+)
+
+115 
+	#__GNUC_PREREQ__
+(
+ma
+, 
+mi
+) \
+
+116 (
+__GNUC__
+ > (
+ma
+è|| __GNUC__ =ğ(maè&& 
+__GNUC_MINOR__
+ >ğ(
+mi
+))
+
+	)
+
+118 
+	#__GNUC_PREREQ__
+(
+ma
+, 
+mi
+è0
+
+	)
+
+133 #ià
+defšed
+(
+__STDC__
+è|| defšed(
+__ılu¥lus
+)
+
+134 
+	#__P
+(
+´Ùos
+è´Ùo 
+
+	)
+
+135 
+	#__CONCAT1
+(
+x
+,
+y
+èx ## 
+	)
+y
+
+136 
+	#__CONCAT
+(
+x
+,
+y
+è
+	`__CONCAT1
+(x,y)
+
+	)
+
+137 
+	#__STRING
+(
+x
+è#x
+
+	)
+
+138 
+	#__XSTRING
+(
+x
+è
+	`__STRING
+(xè
+
+	)
+
+140 
+	#__cÚ¡
+ cÚ¡
+
+	)
+
+141 
+	#__sigÃd
+ sigÃd
+
+	)
+
+142 
+	#__vŞ©e
+ vŞ©e
+
+	)
+
+143 #ià
+defšed
+(
+__ılu¥lus
+)
+
+144 
+	#__šlše
+ 
+šlše
+
+
+	)
+
+146 #ià!(
+defšed
+(
+__CC_SUPPORTS___INLINE
+))
+
+147 
+	#__šlše
+
+
+	)
+
+152 
+	#__P
+(
+´Ùos
+è(è
+
+	)
+
+153 
+	#__CONCAT
+(
+x
+,
+y
+èx 
+	)
+y
+
+154 
+	#__STRING
+(
+x
+è"x"
+
+	)
+
+156 #ià!
+defšed
+(
+__CC_SUPPORTS___INLINE
+)
+
+157 
+	#__cÚ¡
+
+
+	)
+
+158 
+	#__šlše
+
+
+	)
+
+159 
+	#__sigÃd
+
+
+	)
+
+160 
+	#__vŞ©e
+
+
+	)
+
+169 #iâdef 
+NO_ANSI_KEYWORDS
+
+
+170 cÚ¡
+
+	)
+
+171 
+	#šlše
+
+
+	)
+
+172 sigÃd
+
+	)
+
+173 vŞ©e
+
+	)
+
+187 #ifdeà
+lšt
+
+
+188 
+	#__d—d2
+
+
+	)
+
+189 
+	#__pu»2
+
+
+	)
+
+190 
+	#__unu£d
+
+
+	)
+
+191 
+	#__·cked
+
+
+	)
+
+192 
+	#__®igÃd
+(
+x
+)
+
+	)
+
+193 
+	#__£ùiÚ
+(
+x
+)
+
+	)
+
+195 #ià!
+__GNUC_PREREQ__
+(2, 5è&& !
+defšed
+(
+__INTEL_COMPILER
+)
+
+196 
+	#__d—d2
+
+
+	)
+
+197 
+	#__pu»2
+
+
+	)
+
+198 
+	#__unu£d
+
+
+	)
+
+200 #ià
+__GNUC__
+ =ğ2 && 
+__GNUC_MINOR__
+ >ğ5 && __GNUC_MINOR__ < 7 && !
+defšed
+(
+__INTEL_COMPILER
+)
+
+201 
+	#__d—d2
+ 
+	`__©Œibu‹__
+((
+__nÜ‘uº__
+))
+
+	)
+
+202 
+	#__pu»2
+ 
+	`__©Œibu‹__
+((
+__cÚ¡__
+))
+
+	)
+
+203 
+	#__unu£d
+
+
+	)
+
+206 #ià
+__GNUC_PREREQ__
+(2, 7)
+
+207 
+	#__d—d2
+ 
+	`__©Œibu‹__
+((
+__nÜ‘uº__
+))
+
+	)
+
+208 
+	#__pu»2
+ 
+	`__©Œibu‹__
+((
+__cÚ¡__
+))
+
+	)
+
+209 
+	#__unu£d
+ 
+	`__©Œibu‹__
+((
+__unu£d__
+))
+
+	)
+
+210 
+	#__u£d
+ 
+	`__©Œibu‹__
+((
+__u£d__
+))
+
+	)
+
+211 
+	#__·cked
+ 
+	`__©Œibu‹__
+((
+__·cked__
+))
+
+	)
+
+212 
+	#__®igÃd
+(
+x
+è
+	`__©Œibu‹__
+((
+	`__®igÃd__
+(x)))
+
+	)
+
+213 
+	#__£ùiÚ
+(
+x
+è
+	`__©Œibu‹__
+((
+	`__£ùiÚ__
+(x)))
+
+	)
+
+215 #ià
+defšed
+(
+__INTEL_COMPILER
+)
+
+216 
+	#__d—d2
+ 
+	`__©Œibu‹__
+((
+__nÜ‘uº__
+))
+
+	)
+
+217 
+	#__pu»2
+ 
+	`__©Œibu‹__
+((
+__cÚ¡__
+))
+
+	)
+
+218 
+	#__unu£d
+ 
+	`__©Œibu‹__
+((
+__unu£d__
+))
+
+	)
+
+219 
+	#__u£d
+ 
+	`__©Œibu‹__
+((
+__u£d__
+))
+
+	)
+
+220 
+	#__·cked
+ 
+	`__©Œibu‹__
+((
+__·cked__
+))
+
+	)
+
+221 
+	#__®igÃd
+(
+x
+è
+	`__©Œibu‹__
+((
+	`__®igÃd__
+(x)))
+
+	)
+
+222 
+	#__£ùiÚ
+(
+x
+è
+	`__©Œibu‹__
+((
+	`__£ùiÚ__
+(x)))
+
+	)
+
+226 #ià
+__GNUC_PREREQ__
+(2, 96)
+
+227 
+	#__pu»
+ 
+	`__©Œibu‹__
+((
+__pu»__
+))
+
+	)
+
+229 
+	#__pu»
+
+
+	)
+
+232 #ià
+__GNUC_PREREQ__
+(3, 1è|| (
+defšed
+(
+__INTEL_COMPILER
+) && __INTEL_COMPILER >= 800)
+
+233 
+	#__®ways_šlše
+ 
+	`__©Œibu‹__
+((
+__®ways_šlše__
+))
+
+	)
+
+235 
+	#__®ways_šlše
+
+
+	)
+
+238 #ià
+__GNUC_PREREQ__
+(3, 3)
+
+239 
+	#__nÚnuÎ
+(
+x
+è
+	`__©Œibu‹__
+((
+	`__nÚnuÎ__
+(x)))
+
+	)
+
+241 
+	#__nÚnuÎ
+(
+x
+)
+
+	)
+
+245 #ià!
+__GNUC_PREREQ__
+(2, 7è&& !
+defšed
+(
+__INTEL_COMPILER
+)
+
+246 
+	#__func__
+ 
+NULL
+
+
+	)
+
+249 #ià(
+defšed
+(
+__INTEL_COMPILER
+è|| (defšed(
+__GNUC__
+è&& __GNUC__ >ğ2)è&& !defšed(
+__STRICT_ANSI__
+è|| 
+__STDC_VERSION__
+ >= 199901
+
+250 
+	#__LONG_LONG_SUPPORTED
+
+
+	)
+
+259 #ià!(
+__GNUC__
+ =ğ2 && 
+__GNUC_MINOR__
+ == 95)
+
+260 #ià!
+defšed
+(
+__STDC_VERSION__
+) || __STDC_VERSION__ < 199901
+
+261 
+	#__»¡riù
+
+
+	)
+
+263 
+	#__»¡riù
+ 
+»¡riù
+
+
+	)
+
+295 #ià
+__GNUC_PREREQ__
+(2, 96)
+
+296 
+	#__´ediù_Œue
+(
+exp
+è
+	`__butš_ex³ù
+(Óxp), 1)
+
+	)
+
+297 
+	#__´ediù_çl£
+(
+exp
+è
+	`__butš_ex³ù
+(Óxp), 0)
+
+	)
+
+299 
+	#__´ediù_Œue
+(
+exp
+èÓxp)
+
+	)
+
+300 
+	#__´ediù_çl£
+(
+exp
+èÓxp)
+
+	)
+
+307 #iâdeà
+__ılu¥lus
+
+
+308 
+	#__off£tof
+(
+ty³
+, 
+f›ld
+è((
+size_t
+)(&(Ñy³ *)0)->f›ld))
+
+	)
+
+310 
+	#__off£tof
+(
+ty³
+, 
+f›ld
+) \
+
+311 (
+	`__off£tof__
+ (
+»š‹½»t_ÿ¡
+ <
+size_t
+> \
+
+312 (&
+»š‹½»t_ÿ¡
+ <const volatile &> \
+
+313 (
+¡©ic_ÿ¡
+<
+ty³
+ *> (0)->
+f›ld
+))))
+
+	)
+
+315 
+	#__¿ngeof
+(
+ty³
+, 
+¡¬t
+, 
+’d
+) \
+
+316 (
+	`__off£tof
+(
+ty³
+, 
+’d
+è- __off£tofÑy³, 
+¡¬t
+))
+
+	)
+
+324 #ià!
+__GNUC_PREREQ__
+(2, 7è&& !
+defšed
+(
+__INTEL_COMPILER
+)
+
+325 
+	#__´štæike
+(
+fmrg
+, 
+fœ¡v¬¬g
+)
+
+	)
+
+326 
+	#__sÿnæike
+(
+fmrg
+, 
+fœ¡v¬¬g
+)
+
+	)
+
+327 
+	#__fÜm©_¬g
+(
+fmrg
+)
+
+	)
+
+329 
+	#__´štæike
+(
+fmrg
+, 
+fœ¡v¬¬g
+) \
+
+330 
+	`__©Œibu‹__
+((
+	`__fÜm©__
+ (
+__´štf__
+, 
+fmrg
+, 
+fœ¡v¬¬g
+)))
+
+	)
+
+331 
+	#__sÿnæike
+(
+fmrg
+, 
+fœ¡v¬¬g
+) \
+
+332 
+	`__©Œibu‹__
+((
+	`__fÜm©__
+ (
+__sÿnf__
+, 
+fmrg
+, 
+fœ¡v¬¬g
+)))
+
+	)
+
+333 
+	#__fÜm©_¬g
+(
+fmrg
+è
+	`__©Œibu‹__
+((
+	`__fÜm©_¬g__
+ (fmrg)))
+
+	)
+
+337 #ià
+__F»eBSD_cc_v”siÚ
+ >ğ300001 && 
+defšed
+(
+__GNUC__
+è&& !defšed(
+__INTEL_COMPILER
+)
+
+338 
+	#__´štf0like
+(
+fmrg
+, 
+fœ¡v¬¬g
+) \
+
+339 
+	`__©Œibu‹__
+((
+	`__fÜm©__
+ (
+__´štf0__
+, 
+fmrg
+, 
+fœ¡v¬¬g
+)))
+
+	)
+
+341 
+	#__´štf0like
+(
+fmrg
+, 
+fœ¡v¬¬g
+)
+
+	)
+
+344 #ià
+defšed
+(
+__GNUC__
+è|| defšed(
+__INTEL_COMPILER
+)
+
+345 #iâdeà
+__INTEL_COMPILER
+
+
+346 
+	#__¡rÚg_»ã»nû
+(
+sym
+,
+®Ÿssym
+) \
+
+347 
+	`__ty³of
+ (
+sym
+è
+®Ÿssym
+ 
+	`__©Œibu‹__
+ ((
+	`__®Ÿs__
+ (#sym)));
+
+	)
+
+349 #ifdeà
+__STDC__
+
+
+350 
+	#__w—k_»ã»nû
+(
+sym
+,
+®Ÿs
+) \
+
+351 
+	`__asm__
+(".weak " #alias); \
+
+352 
+	`__asm__
+(".equ " #®Ÿ ", " #sym)
+
+	)
+
+353 
+	#__w¬n_»ã»nûs
+(
+sym
+,
+msg
+) \
+
+354 
+	`__asm__
+(".section .gnu.warning." #sym); \
+
+355 
+	`__asm__
+(".asciz \"" 
+msg
+ "\""); \
+
+356 
+	`__asm__
+(".´evious")
+
+	)
+
+358 
+	#__w—k_»ã»nû
+(
+sym
+,
+®Ÿs
+) \
+
+359 
+	`__asm__
+(".weak‡lias"); \
+
+360 
+	`__asm__
+(".equ‡lŸs, sym")
+
+	)
+
+361 
+	#__w¬n_»ã»nûs
+(
+sym
+,
+msg
+) \
+
+362 
+	`__asm__
+(".section .gnu.warning.sym"); \
+
+363 
+	`__asm__
+(".asciz \"msg\""); \
+
+364 
+	`__asm__
+(".´evious")
+
+	)
+
+368 #ià
+defšed
+(
+__GNUC__
+è|| defšed(
+__INTEL_COMPILER
+)
+
+369 
+	#__IDSTRING
+(
+Çme
+,
+¡ršg
+è
+	`__asm__
+(".id’t\t\"" sŒšg "\"")
+
+	)
+
+377 
+	#__IDSTRING
+(
+Çme
+,
+¡ršg
+ècÚ¡ Çme[] 
+__unu£d
+ = 
+	)
+string
+
+386 #iâdef 
+__FBSDID
+
+
+387 #ià!
+defšed
+(
+lšt
+è&& !defšed(
+STRIP_FBSDID
+)
+
+388 
+	#__FBSDID
+(
+s
+è
+	`__IDSTRING
+(
+	`__CONCAT
+(
+__rcsid_
+,
+__LINE__
+),s)
+
+	)
+
+390 
+	#__FBSDID
+(
+s
+è
+__hack
+
+
+	)
+
+394 #iâdef 
+__RCSID
+
+
+395 #iâdef 
+NO__RCSID
+
+
+396 
+	#__RCSID
+(
+s
+è
+	`__IDSTRING
+(
+	`__CONCAT
+(
+__rcsid_
+,
+__LINE__
+),s)
+
+	)
+
+398 
+	#__RCSID
+(
+s
+è
+__hack
+
+
+	)
+
+402 #iâdef 
+__RCSID_SOURCE
+
+
+403 #iâdef 
+NO__RCSID_SOURCE
+
+
+404 
+	#__RCSID_SOURCE
+(
+s
+è
+	`__IDSTRING
+(
+	`__CONCAT
+(
+__rcsid_sourû_
+,
+__LINE__
+),s)
+
+	)
+
+406 
+	#__RCSID_SOURCE
+(
+s
+è
+__hack
+
+
+	)
+
+410 #iâdef 
+__SCCSID
+
+
+411 #iâdef 
+NO__SCCSID
+
+
+412 
+	#__SCCSID
+(
+s
+è
+	`__IDSTRING
+(
+	`__CONCAT
+(
+__sccsid_
+,
+__LINE__
+),s)
+
+	)
+
+414 
+	#__SCCSID
+(
+s
+è
+__hack
+
+
+	)
+
+418 #iâdef 
+__COPYRIGHT
+
+
+419 #iâdef 
+NO__COPYRIGHT
+
+
+420 
+	#__COPYRIGHT
+(
+s
+è
+	`__IDSTRING
+(
+	`__CONCAT
+(
+__cİyright_
+,
+__LINE__
+),s)
+
+	)
+
+422 
+	#__COPYRIGHT
+(
+s
+è
+__hack
+
+
+	)
+
+426 #iâdef 
+__DECONST
+
+
+427 
+	#__DECONST
+(
+ty³
+, 
+v¬
+è(Ñy³)(
+ušŒ_t
+)(cÚ¡ *)(v¬))
+
+	)
+
+430 #iâdef 
+__DEVOLATILE
+
+
+431 
+	#__DEVOLATILE
+(
+ty³
+, 
+v¬
+è(Ñy³)(
+ušŒ_t
+)(vŞ©*)(v¬))
+
+	)
+
+434 #iâdef 
+__DEQUALIFY
+
+
+435 
+	#__DEQUALIFY
+(
+ty³
+, 
+v¬
+è(Ñy³)(
+ušŒ_t
+)(cÚ¡ vŞ©*)(v¬))
+
+	)
+
+461 #ià
+defšed
+(
+_POSIX_C_SOURCE
+) && _POSIX_C_SOURCE == 1
+
+462 #undeà
+_POSIX_C_SOURCE
+
+
+463 
+	#_POSIX_C_SOURCE
+ 199009
+
+	)
+
+467 #ià
+defšed
+(
+_POSIX_C_SOURCE
+) && _POSIX_C_SOURCE == 2
+
+468 #undeà
+_POSIX_C_SOURCE
+
+
+469 
+	#_POSIX_C_SOURCE
+ 199209
+
+	)
+
+473 #ifdeà
+_XOPEN_SOURCE
+
+
+474 #ià
+_XOPEN_SOURCE
+ - 0 >= 600
+
+475 
+	#__XSI_VISIBLE
+ 600
+
+	)
+
+476 #undeà
+_POSIX_C_SOURCE
+
+
+477 
+	#_POSIX_C_SOURCE
+ 200112
+
+	)
+
+478 #–ià
+_XOPEN_SOURCE
+ - 0 >= 500
+
+479 
+	#__XSI_VISIBLE
+ 500
+
+	)
+
+480 #undeà
+_POSIX_C_SOURCE
+
+
+481 
+	#_POSIX_C_SOURCE
+ 199506
+
+	)
+
+489 #ià
+defšed
+(
+_POSIX_SOURCE
+è&& !defšed(
+_POSIX_C_SOURCE
+)
+
+490 
+	#_POSIX_C_SOURCE
+ 198808
+
+	)
+
+492 #ifdeà
+_POSIX_C_SOURCE
+
+
+493 #ià
+_POSIX_C_SOURCE
+ >= 200112
+
+494 
+	#__POSIX_VISIBLE
+ 200112
+
+	)
+
+495 
+	#__ISO_C_VISIBLE
+ 1999
+
+	)
+
+496 #–ià
+_POSIX_C_SOURCE
+ >= 199506
+
+497 
+	#__POSIX_VISIBLE
+ 199506
+
+	)
+
+498 
+	#__ISO_C_VISIBLE
+ 1990
+
+	)
+
+499 #–ià
+_POSIX_C_SOURCE
+ >= 199309
+
+500 
+	#__POSIX_VISIBLE
+ 199309
+
+	)
+
+501 
+	#__ISO_C_VISIBLE
+ 1990
+
+	)
+
+502 #–ià
+_POSIX_C_SOURCE
+ >= 199209
+
+503 
+	#__POSIX_VISIBLE
+ 199209
+
+	)
+
+504 
+	#__ISO_C_VISIBLE
+ 1990
+
+	)
+
+505 #–ià
+_POSIX_C_SOURCE
+ >= 199009
+
+506 
+	#__POSIX_VISIBLE
+ 199009
+
+	)
+
+507 
+	#__ISO_C_VISIBLE
+ 1990
+
+	)
+
+509 
+	#__POSIX_VISIBLE
+ 198808
+
+	)
+
+510 
+	#__ISO_C_VISIBLE
+ 0
+
+	)
+
+525 #ià
+defšed
+(
+_ANSI_SOURCE
+)
+
+526 
+	#__POSIX_VISIBLE
+ 0
+
+	)
+
+527 
+	#__XSI_VISIBLE
+ 0
+
+	)
+
+528 
+	#__BSD_VISIBLE
+ 0
+
+	)
+
+529 
+	#__ISO_C_VISIBLE
+ 1990
+
+	)
+
+530 #–ià
+defšed
+(
+_C99_SOURCE
+)
+
+531 
+	#__POSIX_VISIBLE
+ 0
+
+	)
+
+532 
+	#__XSI_VISIBLE
+ 0
+
+	)
+
+533 
+	#__BSD_VISIBLE
+ 0
+
+	)
+
+534 
+	#__ISO_C_VISIBLE
+ 1999
+
+	)
+
+536 
+	#__POSIX_VISIBLE
+ 200112
+
+	)
+
+537 
+	#__XSI_VISIBLE
+ 600
+
+	)
+
+538 
+	#__BSD_VISIBLE
+ 1
+
+	)
+
+539 
+	#__ISO_C_VISIBLE
+ 1999
+
+	)
+
+	@include/pyxser_collections.h
+
+27 #iâdeà
+PYXSER_COLLECTIONS_H
+
+
+28 
+	#PYXSER_COLLECTIONS_H
+ 1
+
+	)
+
+30 
+	~<PythÚ.h
+>
+
+32 
+	~"pyx£r.h
+"
+
+34 #ifdeà
+__ılu¥lus
+
+
+39 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeTu¶e
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+40 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+);
+
+42 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeExaùTu¶e
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+43 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+);
+
+45 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeLi¡
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+46 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+);
+
+48 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeExaùLi¡
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+49 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+);
+
+52 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeDiù
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+53 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+);
+
+55 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeExaùDiù
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+56 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+);
+
+58 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeFe
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+59 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+);
+
+61 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeExaùFe
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+62 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+docPŒ
+);
+
+64 
+PyObjeù
+ *
+pyxun£r_S”ŸlizeTu¶e
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+);
+
+65 
+PyObjeù
+ *
+pyxun£r_S”ŸlizeLi¡
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+);
+
+66 
+PyObjeù
+ *
+pyxun£r_S”ŸlizeDiù
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+);
+
+68 #ifdeà
+__ılu¥lus
+
+
+	@include/pyxser_numbers.h
+
+27 #iâdeà
+PYXSER_NUMBERS_H
+
+
+28 
+	#PYXSER_NUMBERS_H
+ 1
+
+	)
+
+30 
+	~<PythÚ.h
+>
+
+32 
+	~"šşude/pyx£r.h
+"
+
+34 #ifdeà
+__ılu¥lus
+
+
+38 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeIÁ
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+39 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+);
+
+41 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeExaùIÁ
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+42 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+);
+
+44 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeBoŞ—n
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+45 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+);
+
+47 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeLÚg
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+48 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+);
+
+50 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeFlßt
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+51 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+);
+
+53 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeExaùFlßt
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+54 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+);
+
+56 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeCom¶ex
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+57 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+);
+
+59 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeExaùCom¶ex
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+60 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+);
+
+62 
+PyObjeù
+ *
+pyxun£r_S”ŸlizeIÁ
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+);
+
+63 
+PyObjeù
+ *
+pyxun£r_S”ŸlizeExaùIÁ
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+);
+
+64 
+PyObjeù
+ *
+pyxun£r_S”ŸlizeBoŞ—n
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+);
+
+65 
+PyObjeù
+ *
+pyxun£r_S”ŸlizeLÚg
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+);
+
+66 
+PyObjeù
+ *
+pyxun£r_S”ŸlizeFlßt
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+);
+
+67 
+PyObjeù
+ *
+pyxun£r_S”ŸlizeExaùFlßt
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+);
+
+68 
+PyObjeù
+ *
+pyxun£r_S”ŸlizeCom¶ex
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+);
+
+69 
+PyObjeù
+ *
+pyxun£r_S”ŸlizeExaùCom¶ex
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+);
+
+71 #ifdeà
+__ılu¥lus
+
+
+	@include/pyxser_strings.h
+
+27 #iâdeà
+PYXSER_STRINGS_H
+
+
+28 
+	#PYXSER_STRINGS_H
+ 1
+
+	)
+
+30 
+	~<PythÚ.h
+>
+
+32 #ifdeà
+__ılu¥lus
+
+
+36 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeSŒšg
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+37 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+);
+
+39 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeExaùSŒšg
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+40 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+);
+
+42 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeUnicode
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+43 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+);
+
+45 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeExaùUnicode
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+46 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+);
+
+48 
+xmlNodePŒ
+ 
+pyx£r_S”ŸlizeBufãr
+(
+PyObjeù
+ *
+o
+, *
+Çme
+,
+
+49 
+PyLi¡Objeù
+ *
+dupI‹ms
+, 
+xmlDocPŒ
+ 
+doc
+);
+
+51 
+PyObjeù
+ *
+pyxun£r_S”ŸlizeSŒšg
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+);
+
+52 
+PyObjeù
+ *
+pyxun£r_S”ŸlizeExaùSŒšg
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+);
+
+53 
+PyObjeù
+ *
+pyxun£r_S”ŸlizeUnicode
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+);
+
+54 
+PyObjeù
+ *
+pyxun£r_S”ŸlizeExaùUnicode
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+);
+
+55 
+PyObjeù
+ *
+pyxun£r_S”ŸlizeBufãr
+(
+PythÚUn£rŸliz©iÚArgum’tsPŒ
+ 
+obj
+);
+
+57 #ifdeà
+__ılu¥lus
+
+
+	@/usr/include/machine/_types.h
+
+39 #iâdeà
+_MACHINE__TYPES_H_
+
+
+40 
+	#_MACHINE__TYPES_H_
+
+
+	)
+
+42 #iâdeà
+_SYS_CDEFS_H_
+
+
+43 #”rÜ 
+this
+ 
+fe
+ 
+Ãeds
+ 
+sys
+/
+cdefs
+.
+h
+ 
+as
+ 
+a
+ 
+´”equis™e
+
+
+46 
+	#__NO_STRICT_ALIGNMENT
+
+
+	)
+
+51 
+__sigÃd
+ 
+	t__št8_t
+;
+
+52 
+	t__ušt8_t
+;
+
+53 
+	t__št16_t
+;
+
+54 
+	t__ušt16_t
+;
+
+55 
+	t__št32_t
+;
+
+56 
+	t__ušt32_t
+;
+
+58 #ià
+defšed
+(
+lšt
+)
+
+60 
+	t__št64_t
+;
+
+62 
+	t__ušt64_t
+;
+
+63 #–ià
+defšed
+(
+__GNUCLIKE_ATTRIBUTE_MODE_DI
+)
+
+64 
+	t__©Œibu‹__
+((
+	t__mode__
+(
+	t__DI__
+))è
+	t__št64_t
+;
+
+65 
+	t__©Œibu‹__
+((
+	t__mode__
+(
+	t__DI__
+))è
+	t__ušt64_t
+;
+
+68 
+	t__št64_t
+;
+
+70 
+	t__ušt64_t
+;
+
+76 
+	t__şock_t
+;
+
+77 
+	t__ıumask_t
+;
+
+78 
+__št32_t
+ 
+	t__ü™iÿl_t
+;
+
+79 
+	t__doubË_t
+;
+
+80 
+	t__æßt_t
+;
+
+81 
+__št32_t
+ 
+	t__štåŒ_t
+;
+
+82 
+__št64_t
+ 
+	t__štmax_t
+;
+
+83 
+__št32_t
+ 
+	t__šŒ_t
+;
+
+84 
+__št32_t
+ 
+	t__št_ç¡8_t
+;
+
+85 
+__št32_t
+ 
+	t__št_ç¡16_t
+;
+
+86 
+__št32_t
+ 
+	t__št_ç¡32_t
+;
+
+87 
+__št64_t
+ 
+	t__št_ç¡64_t
+;
+
+88 
+__št8_t
+ 
+	t__št_Ëa¡8_t
+;
+
+89 
+__št16_t
+ 
+	t__št_Ëa¡16_t
+;
+
+90 
+__št32_t
+ 
+	t__št_Ëa¡32_t
+;
+
+91 
+__št64_t
+ 
+	t__št_Ëa¡64_t
+;
+
+92 
+__št32_t
+ 
+	t__±rdiff_t
+;
+
+93 
+__št32_t
+ 
+	t__»gi¡”_t
+;
+
+94 
+__št32_t
+ 
+	t__£gsz_t
+;
+
+95 
+__ušt32_t
+ 
+	t__size_t
+;
+
+96 
+__št32_t
+ 
+	t__ssize_t
+;
+
+97 
+__št32_t
+ 
+	t__time_t
+;
+
+98 
+__ušt32_t
+ 
+	t__uštåŒ_t
+;
+
+99 
+__ušt64_t
+ 
+	t__uštmax_t
+;
+
+100 
+__ušt32_t
+ 
+	t__ušŒ_t
+;
+
+101 
+__ušt32_t
+ 
+	t__ušt_ç¡8_t
+;
+
+102 
+__ušt32_t
+ 
+	t__ušt_ç¡16_t
+;
+
+103 
+__ušt32_t
+ 
+	t__ušt_ç¡32_t
+;
+
+104 
+__ušt64_t
+ 
+	t__ušt_ç¡64_t
+;
+
+105 
+__ušt8_t
+ 
+	t__ušt_Ëa¡8_t
+;
+
+106 
+__ušt16_t
+ 
+	t__ušt_Ëa¡16_t
+;
+
+107 
+__ušt32_t
+ 
+	t__ušt_Ëa¡32_t
+;
+
+108 
+__ušt64_t
+ 
+	t__ušt_Ëa¡64_t
+;
+
+109 
+__ušt32_t
+ 
+	t__u_»gi¡”_t
+;
+
+110 
+__ušt32_t
+ 
+	t__vm_off£t_t
+;
+
+111 
+__št64_t
+ 
+	t__vm_ooff£t_t
+;
+
+112 #ifdeà
+PAE
+
+
+113 
+__ušt64_t
+ 
+	t__vm_·ddr_t
+;
+
+115 
+__ušt32_t
+ 
+	t__vm_·ddr_t
+;
+
+117 
+__ušt64_t
+ 
+	t__vm_pšdex_t
+;
+
+118 
+__ušt32_t
+ 
+	t__vm_size_t
+;
+
+123 #ifdeà
+__GNUCLIKE_BUILTIN_VARARGS
+
+
+124 
+__butš_va_li¡
+ 
+	t__va_li¡
+;
+
+126 * 
+	t__va_li¡
+;
+
+128 #ià
+	`defšed
+(
+__GNUC_VA_LIST_COMPATIBILITY
+è&& !defšed(
+__GNUC_VA_LIST
+) \
+
+129 && !
+	$defšed
+(
+__NO_GNUC_VA_LIST
+)
+
+130 
+	#__GNUC_VA_LIST
+
+
+	)
+
+131 
+__va_li¡
+ 
+	t__gnuc_va_li¡
+;
+
+	@
+1
+.
+1
+/usr/include
+16
+349
+pyxser.c
+pyxser_collections.c
+pyxser_numbers.c
+pyxser_strings.c
+pyxser_tools.c
+/usr/include/string.h
+include/pyxser.h
+include/pyxser_tools.h
+/usr/include/strings.h
+/usr/include/sys/_null.h
+/usr/include/sys/_types.h
+/usr/include/sys/cdefs.h
+include/pyxser_collections.h
+include/pyxser_numbers.h
+include/pyxser_strings.h
+/usr/include/machine/_types.h
