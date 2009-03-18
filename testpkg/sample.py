@@ -1,4 +1,6 @@
 
+### $Id$
+
 __all__ = [
     'SubNestedChild',
     'NestedChild',

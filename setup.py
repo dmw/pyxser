@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+##
+## $Id$
+##
+
 import commands
 import distutils.sysconfig
 import distutils.ccompiler
