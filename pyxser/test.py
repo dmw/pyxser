@@ -21,6 +21,9 @@
 ##     <!DOCTYPE pyxs:object
 ##               PUBLIC "-//coder.cl//DTD pyxser 1.0//EN"
 ##               "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd">
+##
+## $Id$
+##
 
 
 import sys
