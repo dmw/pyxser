@@ -70,6 +70,7 @@ const char pyxser_xml_version[] = "1.0";
 const char pyxser_xml_dtd_location[] = PYXSER_DTD_FILE;
 
 static PyObject *pyxserxml(PyObject *self, PyObject *args);
+static PyObject *pyxserxmlnonstd(PyObject *self, PyObject *args);
 static PyObject *pyxunserxml(PyObject *self, PyObject *args);
 static PyObject *pyxvalidate(PyObject *self, PyObject *args);
 static PyObject *pyxgetdtd(PyObject *self, PyObject *args);
