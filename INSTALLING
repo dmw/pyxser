@@ -1,0 +1,18 @@
+
+### $Id$ ###
+
+To install pyxser, extract the tarball content, then:
+
+python ./setup.py --verbose clean --all
+python ./setup.py --verbose build --force
+python ./setup.py --verbose install
+
+To build a debug install:
+
+python ./setup.py --verbose clean --all
+env CFLAGS='-Wall -Wextra -Wshadow -pedantic -std=c99' python ./setup.py --verbose build --force --debug
+python ./setup.py --verbose install
+
+
+Thanks for using and testing... enjoy pyxser ;)
+
