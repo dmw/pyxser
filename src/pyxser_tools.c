@@ -240,9 +240,7 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docPtr, xmlNodePtr *rootNode,
 					xmlNodePtr *currentNode, PyListObject *dupSrcItems)
 {
 	char *objectName = (char *)NULL;
-	int phase = PYTHON_SERX_PHASE_NONE;
 	int c = 0;
-	int serialized = 0;
 	long listIterator = 0;
 	long listSize = 0;
     xmlDocPtr doc = (xmlDocPtr)NULL;
@@ -324,16 +322,11 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docPtr, xmlNodePtr *rootNode,
 		listSize = (long)(PyList_Size((PyObject *)objKeys));
 		while (listIterator < listSize) {
 			currentKey = PyList_GetItem(objKeys, listIterator);
-			phase = PYTHON_SERX_PHASE_NONE;
 			item = PyDict_GetItem(lstItems, currentKey);
-			serialized = 0;
 			c = 0;
 			currentSerialization = serxConcreteTypes[c];
-			while (currentSerialization.available == 1
-				   && phase == PYTHON_SERX_PHASE_NONE
-				   && serialized == 0) {
-				if (currentSerialization.checker(item)
-					&& serialized == 0) {
+			while (currentSerialization.available == 1) {
+				if (currentSerialization.checker(item)) {
 					newSerializedNode = currentSerialization.serializer(
 						item,
 						PyString_AS_STRING(currentKey),
@@ -341,16 +334,12 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docPtr, xmlNodePtr *rootNode,
 						*docPtr);
 					if (newSerializedNode != (xmlNodePtr)NULL) {
 						xmlAddChild(*currentNode, newSerializedNode);
-						phase = PYTHON_SERX_PHASE_CONCRETE;
-						serialized = 1;
+						break;
 					}
 				}
 				currentSerialization = serxConcreteTypes[++c];
-				if (currentSerialization.available == 0
-					&& phase == PYTHON_SERX_PHASE_NONE
-					&& serialized == 0) {
+				if (currentSerialization.available == 0) {
 					objectName = pyxser_GetClassName(item);
-					phase = PYTHON_SERX_PHASE_OBJECT;
 					currentSubN = xmlNewDocNode(*docPtr,
 												pyxser_GetDefaultNs(),
 												BAD_CAST pyxser_xml_element_object,
@@ -367,8 +356,8 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docPtr, xmlNodePtr *rootNode,
 															rootNode,
 															&currentSubN,
 															dupItems);
-					serialized = 1;
 					c = 0;
+					break;
 				}
 			}
 			listIterator++;
@@ -401,7 +390,7 @@ pyxser_UnserializeBlock(PythonUnserializationArgumentsPtr obj)
 	PyDictObject **modules = obj->modules;
 
 	char *attr_name = (char *)NULL;
-	int c = 0, ctrl = 0, serialized = 0;
+	int c = 0, ctrl = 0;
 	char *n_type = (char *)NULL;
 	char *n_module = (char *)NULL;
 	char *n_id = (char *)NULL;
@@ -430,10 +419,8 @@ pyxser_UnserializeBlock(PythonUnserializationArgumentsPtr obj)
 							(char *)pyxser_xml_element_collection,
 							lenCollection))	== 0) {
 				c = 0;
-				serialized = 0;
 				while (machine[c].available == 1
-					   && ron != (xmlNodePtr)NULL
-					   && serialized == 0) {
+					   && ron != (xmlNodePtr)NULL) {
 					if ((machine[c].check(ron)) == 1) {
 						unser = machine[c].deserializer(obj);
 						if (PYTHON_IS_NOT_NONE(unser)) {
@@ -443,7 +430,7 @@ pyxser_UnserializeBlock(PythonUnserializationArgumentsPtr obj)
 							if (attr_name != (char *)NULL) {
 								ctrl = PyObject_SetAttrString(*current,
 															  attr_name, unser);
-								serialized = 1;
+								break;
 							}
 						}
 					}
@@ -655,24 +642,25 @@ pyxser_SearchModuleType(PyObject *mod, const char *name)
 	long listIterator = 0;
 	long listSize = 0;
 	char *keyName = (char *)NULL;
-	if (PYTHON_IS_NOT_NONE(mod)
-		&& name != (const char *)NULL) {
-		objKeys = PyObject_GetAttrString(mod, pyxser_attr_all);
-		dict = PyObject_GetAttrString(mod, pyxser_attr_dict);
-		if (PYTHON_IS_NOT_NONE(objKeys)
-			&& (long)(PyList_Size((PyObject *)objKeys)) > 0
-			&& PYTHON_IS_NOT_NONE(dict)) {
-			listIterator = 0;
-			listSize = (long)(PyList_Size((PyObject *)objKeys));
-			while (listIterator < listSize) {
-				currentKey = PyList_GetItem(objKeys, listIterator);
-				keyName = PyString_AS_STRING(currentKey);
-				if ((strncmp(keyName, name, strlen(keyName))) == 0) {
-					item = PyDict_GetItem(dict, currentKey);
-					break;
-				}
-				listIterator++;
+	if (PYTHON_IS_NONE(mod)
+		|| name == (const char *)NULL) {
+		return Py_None;
+	}
+	objKeys = PyObject_GetAttrString(mod, pyxser_attr_all);
+	dict = PyObject_GetAttrString(mod, pyxser_attr_dict);
+	if (PYTHON_IS_NOT_NONE(objKeys)
+		&& (long)(PyList_Size((PyObject *)objKeys)) > 0
+		&& PYTHON_IS_NOT_NONE(dict)) {
+		listIterator = 0;
+		listSize = (long)(PyList_Size((PyObject *)objKeys));
+		while (listIterator < listSize) {
+			currentKey = PyList_GetItem(objKeys, listIterator);
+			keyName = PyString_AS_STRING(currentKey);
+			if ((strncmp(keyName, name, strlen(keyName))) == 0) {
+				item = PyDict_GetItem(dict, currentKey);
+				break;
 			}
+			listIterator++;
 		}
 	}
 	return item;
@@ -721,36 +709,45 @@ pyxser_SerializePrimitiveType(PyObject *o, char *name,
 	PyObject *className = (PyObject *)NULL;
 	char *sptr = (char *)NULL;
 	char *nptr = (char *)NULL;
-	if (PYTHON_IS_NOT_NONE(o)) {
-		str = PyObject_Str(o);
-		if (PYTHON_IS_NOT_NONE(str)) {
-			sptr = PyString_AS_STRING(str);
-			classPtr = PyObject_GetAttrString(o, pyxser_attr_class);
-			if (PYTHON_IS_NOT_NONE(classPtr)
-				&& sptr != (char *)NULL) {
-				className = PyObject_GetAttrString(classPtr, pyxser_attr_name);
-				if (PYTHON_IS_NOT_NONE(className)) {
-					nptr = PyString_AS_STRING(className);
-					if (sptr != (char *)NULL
-						&& nptr != (char *)NULL) {
-						newElementNode = xmlNewDocNode(doc, pyxser_GetDefaultNs(),
-													   BAD_CAST pyxser_xml_attr_item,
-													   NULL);
-						newTextNode = xmlNewDocText(doc, BAD_CAST sptr);
-						typeAttr = xmlNewProp(newElementNode,
-											  BAD_CAST pyxser_xml_attr_type,
-											  BAD_CAST nptr);
-						nameAttr = xmlNewProp(newElementNode,
-											  BAD_CAST pyxser_xml_attr_name,
-											  BAD_CAST name);
-						xmlAddChild(newElementNode, newTextNode);
-					}
-					Py_DECREF(className);
-				}
-				Py_DECREF(classPtr);
-			}
-		}
+	if (PYTHON_IS_NONE(o)) {
+		return (xmlNodePtr)NULL;
 	}
+	str = PyObject_Str(o);
+	if (PYTHON_IS_NONE(str)) {
+		return (xmlNodePtr)NULL;
+	}
+	sptr = PyString_AS_STRING(str);
+	classPtr = PyObject_GetAttrString(o, pyxser_attr_class);
+	if (PYTHON_IS_NONE(classPtr)
+		|| sptr == (char *)NULL) {
+		Py_DECREF(classPtr);
+		return (xmlNodePtr)NULL;
+	}
+	className = PyObject_GetAttrString(classPtr, pyxser_attr_name);
+	if (PYTHON_IS_NONE(className)) {
+		Py_DECREF(classPtr);
+		Py_DECREF(className);
+		return (xmlNodePtr)NULL;
+	}
+	if (PYTHON_IS_NOT_NONE(className)) {
+		nptr = PyString_AS_STRING(className);
+		if (sptr != (char *)NULL
+			&& nptr != (char *)NULL) {
+			newElementNode = xmlNewDocNode(doc, pyxser_GetDefaultNs(),
+										   BAD_CAST pyxser_xml_attr_item,
+										   NULL);
+			newTextNode = xmlNewDocText(doc, BAD_CAST sptr);
+			typeAttr = xmlNewProp(newElementNode,
+								  BAD_CAST pyxser_xml_attr_type,
+								  BAD_CAST nptr);
+			nameAttr = xmlNewProp(newElementNode,
+								  BAD_CAST pyxser_xml_attr_name,
+								  BAD_CAST name);
+			xmlAddChild(newElementNode, newTextNode);
+		}
+		Py_DECREF(className);
+	}
+	Py_DECREF(classPtr);
 	return newElementNode;
 }
 
@@ -765,22 +762,23 @@ pyxser_AddReference(PyObject *o, xmlNodePtr currentNode)
 	xmlAttrPtr refAttr = (xmlAttrPtr)NULL;
 	xmlNodePtr refNode = (xmlNodePtr)NULL;
 	long hash = -1;
-	if (PYTHON_IS_NOT_NONE(o)
-		&& currentNode != (xmlNodePtr)NULL) {
-		hash = PyObject_Hash(o);
-		if (hash != -1) {
-			longIdentifier = PyLong_FromLong(hash);
-			stringRepr = PyObject_Str(longIdentifier);
-			charpRepr = PyString_AS_STRING(stringRepr);
-			if (charpRepr != (char *)NULL) {
-				strncat(newRef, charpRepr, 32);
-				refAttr = xmlNewProp(currentNode,
-									 BAD_CAST pyxser_xml_attr_ref,
-									 BAD_CAST newRef);
-			}
-			Py_DECREF(longIdentifier);
-			Py_DECREF(stringRepr);
+	if (PYTHON_IS_NONE(o)
+		|| currentNode == (xmlNodePtr)NULL) {
+		return (xmlNodePtr)NULL;
+	}
+	hash = PyObject_Hash(o);
+	if (hash != -1) {
+		longIdentifier = PyLong_FromLong(hash);
+		stringRepr = PyObject_Str(longIdentifier);
+		charpRepr = PyString_AS_STRING(stringRepr);
+		if (charpRepr != (char *)NULL) {
+			strncat(newRef, charpRepr, 32);
+			refAttr = xmlNewProp(currentNode,
+								 BAD_CAST pyxser_xml_attr_ref,
+								 BAD_CAST newRef);
 		}
+		Py_DECREF(longIdentifier);
+		Py_DECREF(stringRepr);
 	}
 	return refNode;
 }
@@ -795,20 +793,21 @@ pyxser_AddIdentifier(PyObject *o, xmlNodePtr currentNode)
 	char newRef[33] = "id-";
 	xmlAttrPtr idAttr = (xmlAttrPtr)NULL;
 	long hash = -1;
-	if (PYTHON_IS_NOT_NONE(o)
-		&& currentNode != (xmlNodePtr)NULL) {
-		hash = PyObject_Hash(o);
-		if (hash != -1) {
-			longIdentifier = PyLong_FromLong(hash);
-			stringRepr = PyObject_Str(longIdentifier);
-			charpRepr = PyString_AS_STRING(stringRepr);
-			strncat(newRef, charpRepr, 32);
-			idAttr = xmlNewProp(currentNode,
-								BAD_CAST pyxser_xml_attr_id,
-								BAD_CAST newRef);
-			Py_DECREF(stringRepr);
-			Py_DECREF(longIdentifier);
-		}
+	if (PYTHON_IS_NONE(o)
+		|| currentNode == (xmlNodePtr)NULL) {
+		return;
+	}
+	hash = PyObject_Hash(o);
+	if (hash != -1) {
+		longIdentifier = PyLong_FromLong(hash);
+		stringRepr = PyObject_Str(longIdentifier);
+		charpRepr = PyString_AS_STRING(stringRepr);
+		strncat(newRef, charpRepr, 32);
+		idAttr = xmlNewProp(currentNode,
+							BAD_CAST pyxser_xml_attr_id,
+							BAD_CAST newRef);
+		Py_DECREF(stringRepr);
+		Py_DECREF(longIdentifier);
 	}
 }
 
@@ -820,28 +819,29 @@ pyxser_AddModuleAttr(PyObject *o, xmlNodePtr currentNode)
 	PyObject *klass = Py_None;
 	PyObject *mname = Py_None;
 	xmlAttrPtr moduleAttr = (xmlAttrPtr)NULL;
-	if (PYTHON_IS_NOT_NONE(o)
-		&& currentNode != (xmlNodePtr)NULL) {
-		klass = PyObject_GetAttrString(o, pyxser_attr_class);
-		if (PYTHON_IS_NONE(klass)) {
-			return;
-		}
-		mname = PyObject_GetAttrString(klass, pyxser_attr_module);
-		if (PYTHON_IS_NONE(mname)) {
-			Py_DECREF(klass);
-			return;
-		}
-		if (!PyString_Check(mname)) {
-			Py_DECREF(klass);
-			Py_DECREF(mname);
-		}
-		cn = PyString_AS_STRING(mname);
+	if (PYTHON_IS_NONE(o) ||
+		currentNode == (xmlNodePtr)NULL) {
+		return;
+	}
+	klass = PyObject_GetAttrString(o, pyxser_attr_class);
+	if (PYTHON_IS_NONE(klass)) {
+		return;
+	}
+	mname = PyObject_GetAttrString(klass, pyxser_attr_module);
+	if (PYTHON_IS_NONE(mname)) {
+		Py_DECREF(klass);
+		return;
+	}
+	if (!PyString_Check(mname)) {
 		Py_DECREF(klass);
 		Py_DECREF(mname);
-		moduleAttr = xmlNewProp(currentNode,
-								BAD_CAST pyxser_xml_attr_module,
-								BAD_CAST cn);
 	}
+	cn = PyString_AS_STRING(mname);
+	Py_DECREF(klass);
+	Py_DECREF(mname);
+	moduleAttr = xmlNewProp(currentNode,
+							BAD_CAST pyxser_xml_attr_module,
+							BAD_CAST cn);
 }
 
 
@@ -850,21 +850,23 @@ pyxser_PyListContains(PyListObject *lst, PyObject *o)
 {
 	PyObject *iterLst = (PyObject *)NULL;
 	PyObject *item = (PyObject *)NULL;
-	if (PYTHON_IS_NOT_NONE(lst)
-		&& PYTHON_IS_NOT_NONE(o)) {
-		iterLst = PyObject_GetIter((PyObject *)lst);
-		if (PYTHON_IS_NOT_NONE(iterLst)) {
-			while ((item = PyIter_Next(iterLst)) != (PyObject *)NULL) {
-				if (item == o) {
-					Py_DECREF(iterLst);
-					return PYXSER_FOUND;
-				}
-			}
+	if (PYTHON_IS_NONE(lst) ||
+		PYTHON_IS_NONE(o)) {
+		return PYXSER_INVALID_ARGUMENT;
+	}
+	iterLst = PyObject_GetIter((PyObject *)lst);
+	if (PYTHON_IS_NONE(iterLst)) {
+		return PYXSER_NOT_FOUND;
+	}
+	while ((item = PyIter_Next(iterLst))
+		   != (PyObject *)NULL) {
+		if (item == o) {
 			Py_DECREF(iterLst);
-			return PYXSER_NOT_FOUND;
+			return PYXSER_FOUND;
 		}
 	}
-	return PYXSER_INVALID_ARGUMENT;
+	Py_DECREF(iterLst);
+	return PYXSER_NOT_FOUND;
 }
 
 
@@ -1345,20 +1347,23 @@ pyxser_SearchObjectInMain(const char *name)
 	PyObject *currentType = (PyObject *)NULL;
 	int counter = 0;
 	long tupleSize = 0;
-	if (PYTHON_IS_NOT_NONE(dictMod)) {
-		dictKeys = PyDict_Keys(dictMod);
-		tupleSize = PyDict_Size(dictMod);
-		if (PYTHON_IS_NOT_NONE(dictKeys)) {
-			for (counter = 0; counter < tupleSize; counter++) {
-				currentKey = PyList_GetItem(dictKeys, counter);
-				if ((strncmp(PyString_AS_STRING(currentKey),
-							 type_main,
-							 strlen(type_main))) == 0) {
-					item = PyDict_GetItem(dictMod, currentKey);
-					if (PYTHON_IS_NOT_NONE(item)) {
-						currentType = (PyObject *)pyxser_SearchModuleType(item, name);
-					}
-				}
+	if (PYTHON_IS_NONE(dictMod)) {
+		return Py_None;
+	}
+	dictKeys = PyDict_Keys(dictMod);
+	tupleSize = PyDict_Size(dictMod);
+	if (PYTHON_IS_NONE(dictKeys)) {
+		return Py_None;
+	}
+	for (counter = 0; counter < tupleSize; counter++) {
+		currentKey = PyList_GetItem(dictKeys, counter);
+		if ((strncmp(PyString_AS_STRING(currentKey),
+					 type_main,
+					 strlen(type_main))) == 0) {
+			item = PyDict_GetItem(dictMod, currentKey);
+			if (PYTHON_IS_NOT_NONE(item)) {
+				currentType = (PyObject *)pyxser_SearchModuleType(item,
+																  name);
 			}
 		}
 	}
@@ -1374,18 +1379,20 @@ pyxser_SearchModule(const char *name)
 	PyObject *dictKeys = (PyObject *)NULL;
 	int counter = 0;
 	long tupleSize = 0;
-	if (PYTHON_IS_NOT_NONE(dictMod)) {
-		dictKeys = PyDict_Keys(dictMod);
-		tupleSize = PyDict_Size(dictMod);
-		if (PYTHON_IS_NOT_NONE(dictKeys)) {
-			for (counter = 0; counter < tupleSize; counter++) {
-				currentKey = PyList_GetItem(dictKeys, counter);
-				if ((strncmp(PyString_AS_STRING(currentKey),
-							 name,
-							 strlen(type_main))) == 0) {
-					item = PyDict_GetItem(dictMod, currentKey);
-				}
-			}
+	if (PYTHON_IS_NONE(dictMod)) {
+		return Py_None;
+	}
+	dictKeys = PyDict_Keys(dictMod);
+	tupleSize = PyDict_Size(dictMod);
+	if (PYTHON_IS_NONE(dictKeys)) {
+		return Py_None;
+	}
+	for (counter = 0; counter < tupleSize; counter++) {
+		currentKey = PyList_GetItem(dictKeys, counter);
+		if ((strncmp(PyString_AS_STRING(currentKey),
+					 name,
+					 strlen(type_main))) == 0) {
+			item = PyDict_GetItem(dictMod, currentKey);
 		}
 	}
 	return item;
@@ -1400,19 +1407,21 @@ pyxser_CacheModule(PyObject *d, const char *name)
 	PyObject *dictKeys = (PyObject *)NULL;
 	int counter = 0;
 	long tupleSize = 0;
-	if (PYTHON_IS_NOT_NONE(dictMod)) {
-		tupleSize = PyDict_Size(dictMod);
-		if (tupleSize > 0) {
-			dictKeys = PyDict_Keys(dictMod);
-			if (PYTHON_IS_NOT_NONE(dictKeys)) {
-				for (counter = 0; counter < tupleSize; counter++) {
-					currentKey = PyList_GetItem(dictKeys, counter);
-					if ((strncmp(PyString_AS_STRING(currentKey),
-								 name,
-								 strlen(type_main))) == 0) {
-						item = PyDict_GetItem(dictMod, currentKey);
-					}
-				}
+	if (PYTHON_IS_NONE(dictMod)) {
+		return Py_None;
+	}
+	tupleSize = PyDict_Size(dictMod);
+	if (tupleSize > 0) {
+		dictKeys = PyDict_Keys(dictMod);
+		if (PYTHON_IS_NONE(dictKeys)) {
+			return Py_None;
+		}
+		for (counter = 0; counter < tupleSize; counter++) {
+			currentKey = PyList_GetItem(dictKeys, counter);
+			if ((strncmp(PyString_AS_STRING(currentKey),
+						 name,
+						 strlen(type_main))) == 0) {
+				item = PyDict_GetItem(dictMod, currentKey);
 			}
 		}
 	}
