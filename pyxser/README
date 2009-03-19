@@ -1,23 +1,48 @@
 
-pxyser --- python xml serialization (beta release 0.1).
+pxyser --- python xml serialization
 
-pyxser is a C written extension that serializes/deserializes
-python objects in XML format. It uses a DTD to create a valid
-XML tree under UTF-8 encoding.
+pyxser stands for Python XML Serialization, it's Python
+object serializer that does the job in a standard way.
+Unlike other serializers, it uses structured document
+defined in the pyxser DTD, has a FPI (forma public
+identifier) and the deserialization process run before
+validating the serialized object document against the
+pyxser DTD.
 
-the project web page is at:
-http://projects.coder.cl/pyxser/
+it has the next functions:
 
-the project repository and download:
-https://sourceforge.net/projects/pyxser/
+string pyxser.serialize(object)
+	serilizes the given object and return it's XML
+	representation.
 
-to install, just get the tarball and:
+object pyxser.unserialize(string)
+	deserializes the given string into it's native
+	python reprsentation. it needs that all modules
+	referenced in the serilized XML can be accesible
+	to the pyxser extension.
 
-tar xzvf pyxser-1.0-beta.tar.gz
-cd pyxser
-python ./setup.py build --force
-python ./setup.py install
+boolean pyxser.validate(string)
+	validates the given XML string against the pyxser
+	DTD. you don't need to call this function before
+	every deserialization, because pyxser does the
+	validation internally.
 
-best regards,
-dmw
 
+A sample of a serialized object is the XML as follows:
+
+<?xml version="1.0" encoding="utf-8"?>
+<pyxs:obj xmlns:pyxs="http://projects.coder.cl/pyxser/model/"
+          version="1.0"
+          type="TestAnotherObject"
+          module="testpkg.sample"
+          id="id-136688140">
+  <pyxs:prop type="str" name="first_element">456</pyxs:prop>
+  <pyxs:prop type="str" name="second_element">789</pyxs:prop>
+</pyxs:obj>
+
+
+pyxser supports cross referenced objects and nested referenced
+object, because it defines the a ref attribute as IDREF which
+is used to link internal nodes in the document tree.
+
+### $Id$ ###
