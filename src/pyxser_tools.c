@@ -2,27 +2,27 @@
 /* vim:set ft=c ff=unix ts=4 sw=4 enc=latin1 noexpandtab: */
 /* kate: space-indent off; indent-width 4; mixedindent off; indent-mode cstyle; */
 /*
-    Copyright (c) 2009 Daniel Molina Wegener <dmw@coder.cl>
+  Copyright (c) 2009 Daniel Molina Wegener <dmw@coder.cl>
 
-    This file is part of pyxser.
+  This file is part of pyxser.
 
-    pyxser is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as
-    published by the Free Software Foundation, either version 3 of
-    the License, or (at your option) any later version.
+  pyxser is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as
+  published by the Free Software Foundation, either version 3 of
+  the License, or (at your option) any later version.
 
-    pyxser is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+  pyxser is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with pyxser.  If not, see <http://www.gnu.org/licenses/>.
+  You should have received a copy of the GNU General Public License
+  along with pyxser.  If not, see <http://www.gnu.org/licenses/>.
 
-    <!DOCTYPE pyxs:obj
-              PUBLIC "-//coder.cl//DTD pyxser 1.0//EN"
-              "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd">
- */
+  <!DOCTYPE pyxs:obj
+  PUBLIC "-//coder.cl//DTD pyxser 1.0//EN"
+  "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd">
+*/
 #ifndef lint
 static const char Id[] = "$Id$";
 #endif /* !lint */
@@ -248,7 +248,7 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docPtr, xmlNodePtr *rootNode,
     xmlDocPtr doc = (xmlDocPtr)NULL;
 	xmlNodePtr newSerializedNode = (xmlNodePtr)NULL;
 	xmlNodePtr *xmlRootNode = (xmlNodePtr *)NULL;
-	xmlNodePtr currentSubNode = (xmlNodePtr)NULL;
+	xmlNodePtr currentSubN = (xmlNodePtr)NULL;
 	xmlAttrPtr pyxserNs = (xmlAttrPtr)NULL;
 	xmlAttrPtr pyxserVersion = (xmlAttrPtr)NULL;
 	xmlAttrPtr pyxserType = (xmlAttrPtr)NULL;
@@ -351,21 +351,21 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docPtr, xmlNodePtr *rootNode,
 					&& serialized == 0) {
 					objectName = pyxser_GetClassName(item);
 					phase = PYTHON_SERX_PHASE_OBJECT;
-					currentSubNode = xmlNewDocNode(*docPtr,
-												   pyxser_GetDefaultNs(),
-												   BAD_CAST pyxser_xml_element_object,
-												   NULL);
-					pyxser_AddModuleAttr(o, currentSubNode);
-					pyxserType = xmlNewProp(currentSubNode,
+					currentSubN = xmlNewDocNode(*docPtr,
+												pyxser_GetDefaultNs(),
+												BAD_CAST pyxser_xml_element_object,
+												NULL);
+					pyxser_AddModuleAttr(o, currentSubN);
+					pyxserType = xmlNewProp(currentSubN,
 											BAD_CAST pyxser_xml_attr_type,
 											BAD_CAST objectName);
-					pyxserName = xmlNewProp(currentSubNode,
+					pyxserName = xmlNewProp(currentSubN,
 											BAD_CAST pyxser_xml_attr_name,
 											BAD_CAST PyString_AS_STRING(currentKey));
-					xmlAddChild(*currentNode, currentSubNode);
+					xmlAddChild(*currentNode, currentSubN);
 					newSerializedNode = pyxser_SerializeXml(item, docPtr,
 															rootNode,
-															&currentSubNode,
+															&currentSubN,
 															dupItems);
 					serialized = 1;
 					c = 0;

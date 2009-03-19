@@ -110,14 +110,14 @@ PyObject *
 pyxunser_SerializeInt(PythonUnserializationArgumentsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
-	xmlNodePtr runOverNode;
+	xmlNodePtr ron;
 	PyObject *res = Py_None;
 	if (node != (xmlNodePtr)NULL) {
-		for (runOverNode = node->children;
-			 runOverNode;
-			 runOverNode = runOverNode->next) {
-			if (runOverNode->type == XML_TEXT_NODE) {
-				res = PyInt_FromString((char *)runOverNode->content, NULL, 10);
+		for (ron = node->children;
+			 ron;
+			 ron = ron->next) {
+			if (ron->type == XML_TEXT_NODE) {
+				res = PyInt_FromString((char *)ron->content, NULL, 10);
 			}
 		}
 	}
@@ -128,14 +128,14 @@ PyObject *
 pyxunser_SerializeExactInt(PythonUnserializationArgumentsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
-	xmlNodePtr runOverNode;
+	xmlNodePtr ron;
 	PyObject *res = Py_None;
 	if (node != (xmlNodePtr)NULL) {
-		for (runOverNode = node->children;
-			 runOverNode;
-			 runOverNode = runOverNode->next) {
-			if (runOverNode->type == XML_TEXT_NODE) {
-				res = PyInt_FromString((char *)runOverNode->content, NULL, 10);
+		for (ron = node->children;
+			 ron;
+			 ron = ron->next) {
+			if (ron->type == XML_TEXT_NODE) {
+				res = PyInt_FromString((char *)ron->content, NULL, 10);
 			}
 		}
 	}
@@ -146,19 +146,19 @@ PyObject *
 pyxunser_SerializeBoolean(PythonUnserializationArgumentsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
-	xmlNodePtr runOverNode;
+	xmlNodePtr ron;
 	PyObject *res = Py_None;
 	if (node != (xmlNodePtr)NULL) {
-		for (runOverNode = node->children;
-			 runOverNode;
-			 runOverNode = runOverNode->next) {
-			if (runOverNode->type == XML_TEXT_NODE) {
-				if (strncmp((char *)runOverNode->content,
+		for (ron = node->children;
+			 ron;
+			 ron = ron->next) {
+			if (ron->type == XML_TEXT_NODE) {
+				if (strncmp((char *)ron->content,
 							pyxser_true_char_value,
 							strlen(pyxser_true_char_value)) == 0) {
 					Py_INCREF(Py_True);
 					return Py_True;
-				} else if (strncmp((char *)runOverNode->content,
+				} else if (strncmp((char *)ron->content,
 								   pyxser_false_char_value,
 								   strlen(pyxser_false_char_value)) == 0) {
 					Py_INCREF(Py_False);
@@ -174,14 +174,14 @@ PyObject *
 pyxunser_SerializeLong(PythonUnserializationArgumentsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
-	xmlNodePtr runOverNode;
+	xmlNodePtr ron;
 	PyObject *res = Py_None;
 	if (node != (xmlNodePtr)NULL) {
-		for (runOverNode = node->children;
-			 runOverNode;
-			 runOverNode = runOverNode->next) {
-			if (runOverNode->type == XML_TEXT_NODE) {
-				res = PyInt_FromString((char *)runOverNode->content, NULL, 10);
+		for (ron = node->children;
+			 ron;
+			 ron = ron->next) {
+			if (ron->type == XML_TEXT_NODE) {
+				res = PyInt_FromString((char *)ron->content, NULL, 10);
 			}
 		}
 	}
@@ -192,15 +192,15 @@ PyObject *
 pyxunser_SerializeFloat(PythonUnserializationArgumentsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
-	xmlNodePtr runOverNode;
+	xmlNodePtr ron;
 	PyObject *str = Py_None;
 	PyObject *res = Py_None;
 	if (node != (xmlNodePtr)NULL) {
-		for (runOverNode = node->children;
-			 runOverNode;
-			 runOverNode = runOverNode->next) {
-			if (runOverNode->type == XML_TEXT_NODE) {
-				str = PyString_FromString((char *)runOverNode->content);
+		for (ron = node->children;
+			 ron;
+			 ron = ron->next) {
+			if (ron->type == XML_TEXT_NODE) {
+				str = PyString_FromString((char *)ron->content);
 				if (PYTHON_IS_NOT_NONE(str)) {
 					res = PyFloat_FromString(str, NULL);
 				}
@@ -214,15 +214,15 @@ PyObject *
 pyxunser_SerializeExactFloat(PythonUnserializationArgumentsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
-	xmlNodePtr runOverNode;
+	xmlNodePtr ron;
 	PyObject *str = Py_None;
 	PyObject *res = Py_None;
 	if (node != (xmlNodePtr)NULL) {
-		for (runOverNode = node->children;
-			 runOverNode;
-			 runOverNode = runOverNode->next) {
-			if (runOverNode->type == XML_TEXT_NODE) {
-				str = PyString_FromString((char *)runOverNode->content);
+		for (ron = node->children;
+			 ron;
+			 ron = ron->next) {
+			if (ron->type == XML_TEXT_NODE) {
+				str = PyString_FromString((char *)ron->content);
 				if (PYTHON_IS_NOT_NONE(str)) {
 					res = PyFloat_FromString(str, NULL);
 				}
