@@ -2,27 +2,27 @@
 /* vim:set ft=c ff=unix ts=4 sw=4 enc=latin1 noexpandtab: */
 /* kate: space-indent off; indent-width 4; mixedindent off; indent-mode cstyle; */
 /*
-    Copyright (c) 2009 Daniel Molina Wegener <dmw@coder.cl>
+  Copyright (c) 2009 Daniel Molina Wegener <dmw@coder.cl>
 
-    This file is part of pyxser.
+  This file is part of pyxser.
 
-    pyxser is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as
-    published by the Free Software Foundation, either version 3 of
-    the License, or (at your option) any later version.
+  pyxser is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as
+  published by the Free Software Foundation, either version 3 of
+  the License, or (at your option) any later version.
 
-    pyxser is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+  pyxser is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with pyxser.  If not, see <http://www.gnu.org/licenses/>.
+  You should have received a copy of the GNU General Public License
+  along with pyxser.  If not, see <http://www.gnu.org/licenses/>.
 
-    <!DOCTYPE pyxs:obj
-              PUBLIC "-//coder.cl//DTD pyxser 1.0//EN"
-              "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd">
- */
+  <!DOCTYPE pyxs:obj
+  PUBLIC "-//coder.cl//DTD pyxser 1.0//EN"
+  "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd">
+*/
 #ifndef lint
 static const char Id[] = "$Id$";
 #endif /* !lint */
@@ -44,9 +44,9 @@ xmlNodePtr
 pyxser_SerializeUnicode(PyObject *o, char *name,
 						PyListObject *dupItems, xmlDocPtr doc)
 {
-	xmlNodePtr newElementNode = (xmlNodePtr)NULL;
+	xmlNodePtr nen = (xmlNodePtr)NULL;
 #if defined(LIBXML_UNICODE_ENABLED)
-	xmlNodePtr newTextNode = (xmlNodePtr)NULL;
+	xmlNodePtr ntxt = (xmlNodePtr)NULL;
 	xmlAttrPtr typeAttr = (xmlAttrPtr)NULL;
 	xmlAttrPtr nameAttr = (xmlAttrPtr)NULL;
 	PyObject *classPtr = (PyObject *)NULL;
@@ -69,23 +69,23 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
 					sptr = PyString_AS_STRING(unic);
 					if (sptr != (char *)NULL
 						&& nptr != (char *)NULL) {
-						newElementNode = xmlNewDocNode(doc,
-													   pyxser_GetDefaultNs(),
-													   BAD_CAST pyxser_xml_attr_item,
-													   NULL);
-						newTextNode = xmlNewDocText(doc, BAD_CAST sptr);
-						typeAttr = xmlNewProp(newElementNode,
+						nen = xmlNewDocNode(doc,
+											pyxser_GetDefaultNs(),
+											BAD_CAST pyxser_xml_attr_item,
+											NULL);
+						ntxt = xmlNewDocText(doc, BAD_CAST sptr);
+						typeAttr = xmlNewProp(nen,
 											  BAD_CAST pyxser_xml_attr_type,
 											  BAD_CAST nptr);
-						nameAttr = xmlNewProp(newElementNode,
+						nameAttr = xmlNewProp(nen,
 											  BAD_CAST pyxser_xml_attr_name,
 											  BAD_CAST name);
 						memset(sz_attr, 0, 30);
 						sprintf(sz_attr, "%ld", (long)data_size);
-						typeAttr = xmlNewProp(newElementNode,
+						typeAttr = xmlNewProp(nen,
 											  BAD_CAST pyxser_xml_attr_size,
 											  BAD_CAST sz_attr);
-						xmlAddChild(newElementNode, newTextNode);
+						xmlAddChild(nen, ntxt);
 					}
 					Py_DECREF(unic);
 				}
@@ -97,7 +97,7 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
 #else
 #error We need unicode enabled libxml2
 #endif /* LIBXML_UNICODE_ENABLED */
-	return newElementNode;
+	return nen;
 }
 
 xmlNodePtr
@@ -111,8 +111,8 @@ xmlNodePtr
 pyxser_SerializeString(PyObject *o, char *name,
 					   PyListObject *dupItems, xmlDocPtr doc)
 {
-	xmlNodePtr newElementNode = (xmlNodePtr)NULL;
-	xmlNodePtr newTextNode = (xmlNodePtr)NULL;
+	xmlNodePtr nen = (xmlNodePtr)NULL;
+	xmlNodePtr ntxt = (xmlNodePtr)NULL;
 	xmlAttrPtr typeAttr = (xmlAttrPtr)NULL;
 	xmlAttrPtr nameAttr = (xmlAttrPtr)NULL;
 	PyObject *classPtr = (PyObject *)NULL;
@@ -130,25 +130,25 @@ pyxser_SerializeString(PyObject *o, char *name,
 				nptr = PyString_AS_STRING(className);
 				if (sptr != (char *)NULL
 					&& nptr != (char *)NULL) {
-					newElementNode = xmlNewDocNode(doc,
-												   pyxser_GetDefaultNs(),
-												   BAD_CAST pyxser_xml_attr_item,
-												   NULL);
-					newTextNode = xmlNewDocText(doc, BAD_CAST sptr);
-					typeAttr = xmlNewProp(newElementNode,
+					nen = xmlNewDocNode(doc,
+										pyxser_GetDefaultNs(),
+										BAD_CAST pyxser_xml_attr_item,
+										NULL);
+					ntxt = xmlNewDocText(doc, BAD_CAST sptr);
+					typeAttr = xmlNewProp(nen,
 										  BAD_CAST pyxser_xml_attr_type,
 										  BAD_CAST nptr);
-					nameAttr = xmlNewProp(newElementNode,
+					nameAttr = xmlNewProp(nen,
 										  BAD_CAST pyxser_xml_attr_name,
 										  BAD_CAST name);
-					xmlAddChild(newElementNode, newTextNode);
+					xmlAddChild(nen, ntxt);
 				}
 				Py_DECREF(className);
 			}
 			Py_DECREF(classPtr);
 		}
 	}
-	return newElementNode;
+	return nen;
 }
 
 xmlNodePtr
@@ -168,16 +168,16 @@ PyObject *
 pyxunser_SerializeString(PythonUnserializationArgumentsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
-	xmlNodePtr runOverNode;
+	xmlNodePtr ron;
 	PyObject *str = Py_None;
 	PyObject *res = Py_None;
 	if (node != (xmlNodePtr)NULL) {
-		for (runOverNode = node->children;
-			 runOverNode;
-			 runOverNode = runOverNode->next) {
-			if (runOverNode->type == XML_TEXT_NODE
-				&& runOverNode->content != BAD_CAST NULL) {
-				str = PyString_FromString((char *)runOverNode->content);
+		for (ron = node->children;
+			 ron;
+			 ron = ron->next) {
+			if (ron->type == XML_TEXT_NODE
+				&& ron->content != BAD_CAST NULL) {
+				str = PyString_FromString((char *)ron->content);
 				res = str;
 			}
 		}
@@ -196,22 +196,23 @@ PyObject *
 pyxunser_SerializeUnicode(PythonUnserializationArgumentsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
-	xmlNodePtr runOverNode;
+	xmlNodePtr ron;
 	xmlChar *propSize = (xmlChar *)NULL;
 	PyObject *unic = Py_None;
 	PyObject *res = Py_None;
 	Py_ssize_t tsz = 0;
+	const char strict_mode[] = "strict";
 	if (node != (xmlNodePtr)NULL) {
 		propSize = xmlGetProp(node, BAD_CAST pyxser_xml_attr_size);
 		if (propSize != (xmlChar *)NULL) {
-			for (runOverNode = node->children;
-				 runOverNode;
-				 runOverNode = runOverNode->next) {
+			for (ron = node->children;
+				 ron;
+				 ron = ron->next) {
 				tsz = (Py_ssize_t)strtol((const char *)propSize, (char **)NULL, 10);
-				if (runOverNode->type == XML_TEXT_NODE) {
-					unic = PyUnicode_DecodeUnicodeEscape((const char *)runOverNode->content,
-														 (strlen((const char *)runOverNode->content)),
-														 "strict");
+				if (ron->type == XML_TEXT_NODE) {
+					unic = PyUnicode_DecodeUnicodeEscape((const char *)ron->content,
+														 (strlen((const char *)ron->content)),
+														 strict_mode);
 					res = unic;
 				}
 			}
