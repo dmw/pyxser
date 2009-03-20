@@ -29,11 +29,11 @@
 <!ENTITY % pyxser.ns '%xml.xmlns;:%pyxser.prefix;' >
 
 <!ENTITY % pyxser.object 'obj' >
-<!ENTITY % pyxser.item 'prop' >
+<!ENTITY % pyxser.prop 'prop' >
 <!ENTITY % pyxser.collection 'col' >
 
 <!ENTITY % pyxser.element.object '%pyxser.prefix;:%pyxser.object;' >
-<!ENTITY % pyxser.element.item '%pyxser.prefix;:%pyxser.item;' >
+<!ENTITY % pyxser.element.prop '%pyxser.prefix;:%pyxser.prop;' >
 <!ENTITY % pyxser.element.collection '%pyxser.prefix;:%pyxser.collection;' >
 
 <!ENTITY % pyxser.attr.name 'name' >
@@ -48,7 +48,7 @@
 <!ENTITY % pyxser.attr.encoding 'encoding' >
 
 <!ELEMENT %pyxser.element.object;
-          (%pyxser.element.item;
+          (%pyxser.element.prop;
           | %pyxser.element.collection;
           | %pyxser.element.object;)* >
 
@@ -66,20 +66,20 @@
 
 <!ELEMENT %pyxser.element.collection;
           (%pyxser.element.object;
-          | %pyxser.element.item;)* >
+          | %pyxser.element.prop;)* >
 
 <!ATTLIST %pyxser.element.collection;
           %pyxser.attr.type;            NMTOKEN         #REQUIRED
           %pyxser.attr.name;            NMTOKEN         #REQUIRED
           >
 
-<!ELEMENT %pyxser.element.item;
+<!ELEMENT %pyxser.element.prop;
           (#PCDATA)
           >
 
-<!ATTLIST %pyxser.element.item;
+<!ATTLIST %pyxser.element.prop;
           %pyxser.attr.type;            NMTOKEN         #REQUIRED
-          %pyxser.attr.name;            NMTOKEN         #REQUIRED
+          %pyxser.attr.name;            NMTOKEN         #IMPLIED
           %pyxser.attr.size;            NMTOKEN         #IMPLIED
           %pyxser.attr.key;             CDATA           #IMPLIED
           %pyxser.attr.compress;        (yes|no)        #IMPLIED

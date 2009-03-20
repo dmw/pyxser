@@ -200,9 +200,11 @@ pyxunser_SerializeFloat(PythonUnserializationArgumentsPtr obj)
 			 ron;
 			 ron = ron->next) {
 			if (ron->type == XML_TEXT_NODE) {
-				str = PyString_FromString((char *)ron->content);
-				if (PYTHON_IS_NOT_NONE(str)) {
-					res = PyFloat_FromString(str, NULL);
+				if (ron->content != (xmlChar *)NULL) {
+					str = PyString_FromString((char *)ron->content);
+					if (PYTHON_IS_NOT_NONE(str)) {
+						res = PyFloat_FromString(str, NULL);
+					}
 				}
 			}
 		}
@@ -222,9 +224,11 @@ pyxunser_SerializeExactFloat(PythonUnserializationArgumentsPtr obj)
 			 ron;
 			 ron = ron->next) {
 			if (ron->type == XML_TEXT_NODE) {
-				str = PyString_FromString((char *)ron->content);
-				if (PYTHON_IS_NOT_NONE(str)) {
-					res = PyFloat_FromString(str, NULL);
+				if (ron->content != (xmlChar *)NULL) {
+					str = PyString_FromString((char *)ron->content);
+					if (PYTHON_IS_NOT_NONE(str)) {
+						res = PyFloat_FromString(str, NULL);
+					}
 				}
 			}
 		}

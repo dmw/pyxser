@@ -109,7 +109,7 @@ extern const char pyxser_xml_attr_key[];
 extern const char pyxser_xml_attr_xml_ns[];
 extern const char pyxser_xml_element_collection[];
 extern const char pyxser_xml_element_object[];
-extern const char pyxser_xml_element_item[];
+extern const char pyxser_xml_element_prop[];
 extern const char pyxser_xml_encoding[];
 extern const char pyxser_xml_version[];
 extern const char pyxser_xml_dtd_location[];
