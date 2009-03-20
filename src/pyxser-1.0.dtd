@@ -43,7 +43,6 @@
 <!ENTITY % pyxser.attr.version 'version' >
 <!ENTITY % pyxser.attr.id 'id' >
 <!ENTITY % pyxser.attr.reference 'ref' >
-<!ENTITY % pyxser.attr.key 'key' >
 <!ENTITY % pyxser.attr.compress 'compress' >
 <!ENTITY % pyxser.attr.encoding 'encoding' >
 
@@ -61,7 +60,6 @@
           %pyxser.attr.name;            NMTOKEN         #IMPLIED
           %pyxser.attr.module;          NMTOKEN         #IMPLIED
           %pyxser.attr.size;            NMTOKEN         #IMPLIED
-          %pyxser.attr.key;             CDATA           #IMPLIED
           >
 
 <!ELEMENT %pyxser.element.collection;
@@ -81,7 +79,6 @@
           %pyxser.attr.type;            NMTOKEN         #REQUIRED
           %pyxser.attr.name;            NMTOKEN         #IMPLIED
           %pyxser.attr.size;            NMTOKEN         #IMPLIED
-          %pyxser.attr.key;             CDATA           #IMPLIED
           %pyxser.attr.compress;        (yes|no)        #IMPLIED
           %pyxser.attr.encoding;        (ascii|base64)  #IMPLIED
           >
