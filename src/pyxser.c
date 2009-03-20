@@ -63,7 +63,7 @@ const char pyxser_xml_attr_key[] = "key";
 const char pyxser_xml_attr_xml_ns[] = "xmlns:pyxs";
 const char pyxser_xml_element_collection[] = "col";
 const char pyxser_xml_element_object[] = "obj";
-const char pyxser_xml_element_item[] = "prop";
+const char pyxser_xml_element_prop[] = "prop";
 const char pyxser_xml_encoding[] = "utf-8";
 const char pyxser_xml_version[] = "1.0";
 
@@ -169,11 +169,11 @@ pyxserxml(PyObject *self, PyObject *args)
 		xmlDocDumpFormatMemoryEnc(docXml, &xmlBuff, &bufferSize,
 								  xml_encoding, 1);
 		if (xmlBuff != BAD_CAST NULL) {
-			xmlFreeDoc(docXml);
 			res = PyString_FromString((const char *)xmlBuff);
 			Py_INCREF(res);
 		}
 	}
+	xmlFreeDoc(docXml);
 	return res;
 	/* error! not created */
 }

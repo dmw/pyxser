@@ -77,9 +77,11 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
 						typeAttr = xmlNewProp(nen,
 											  BAD_CAST pyxser_xml_attr_type,
 											  BAD_CAST nptr);
-						nameAttr = xmlNewProp(nen,
-											  BAD_CAST pyxser_xml_attr_name,
-											  BAD_CAST name);
+						if (name != (char *)NULL) {
+							nameAttr = xmlNewProp(nen,
+												  BAD_CAST pyxser_xml_attr_name,
+												  BAD_CAST name);
+						}
 						memset(sz_attr, 0, 30);
 						sprintf(sz_attr, "%ld", (long)data_size);
 						typeAttr = xmlNewProp(nen,
@@ -138,9 +140,11 @@ pyxser_SerializeString(PyObject *o, char *name,
 					typeAttr = xmlNewProp(nen,
 										  BAD_CAST pyxser_xml_attr_type,
 										  BAD_CAST nptr);
-					nameAttr = xmlNewProp(nen,
-										  BAD_CAST pyxser_xml_attr_name,
-										  BAD_CAST name);
+					if (name != (char *)NULL) {
+						nameAttr = xmlNewProp(nen,
+											  BAD_CAST pyxser_xml_attr_name,
+											  BAD_CAST name);
+					}
 					xmlAddChild(nen, ntxt);
 				}
 				Py_DECREF(className);
