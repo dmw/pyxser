@@ -56,6 +56,11 @@ xmlNodePtr pyxser_SerializeXmlNonStd(PyObject *o, xmlDocPtr *docPtr,
 									 xmlNodePtr *rootNode, xmlNodePtr *currentNode,
 									 PyListObject *dupSrcItems);
 
+
+xmlNodePtr pyxser_RunSerialization(PyObject *item, PyObject *o, PyObject *currentKey,
+								   PyListObject *dupItems, xmlDocPtr *docPtr,
+								   xmlNodePtr *rootNode, xmlNodePtr *currentNode);
+
 PyObject *pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj);
 
 PyObject *pyxser_SearchModuleType(PyObject *mod, const char *name);
