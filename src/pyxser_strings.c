@@ -1,4 +1,4 @@
-/* -*- mode: c; indent-tabs-mode: t; tab-width: 4; c-file-style: "python" -*- */
+/* -*- mode: c; indent-tabs-mode: nil; tab-width: 4; c-file-style: "python" -*- */
 /* vim:set ft=c ff=unix ts=4 sw=4 enc=latin1 noexpandtab: */
 /* kate: space-indent off; indent-width 4; mixedindent off; indent-mode cstyle; */
 /*
