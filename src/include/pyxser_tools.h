@@ -61,6 +61,10 @@ extern "C" {
                                        PyListObject *dupItems, xmlDocPtr *docPtr,
                                        xmlNodePtr *rootNode, xmlNodePtr *currentNode);
 
+    PyObject *pyxser_SearchTypesInModules(const char *n_module,
+                                          const char *n_type,
+                                          PyDictObject **modules);
+
     PyObject *pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj);
 
     PyObject *pyxser_SearchModuleType(PyObject *mod, const char *name);
