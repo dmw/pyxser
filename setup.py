@@ -4,9 +4,12 @@
 ## $Id$
 ##
 
+import sys
 import commands
 import distutils.sysconfig
 import distutils.ccompiler
+import distutils.file_util
+import distutils.command.install
 from distutils.core import setup
 from distutils.core import setup, Extension
 from distutils.command.install import INSTALL_SCHEMES
@@ -21,7 +24,8 @@ def pkgconfig(*packages, **kw):
         kw.setdefault(flag_map.get(token[:2]), []).append(token[2:])
     return kw
 
-pylibdir = distutils.sysconfig.get_python_lib(plat_specific=1, standard_lib=0)
+pylibdir = distutils.sysconfig.get_python_lib(plat_specific=0, standard_lib=0)
+pyxser_dtd_file = pylibdir + "/pyxser/xml/pyxser-1.0.dtd"
 pyxser_dtd_location = '\"' + pylibdir + "/pyxser/xml/pyxser-1.0.dtd" + '\"'
 
 pyxser_params = {}
@@ -59,7 +63,7 @@ setup (name = 'pyxser',
        author_email = 'dmw@coder.cl',
        url = 'http://projects.coder.cl/pyxser/',
        download_url = 'http://sourceforge.net/project/showfiles.php?group_id=256386',
-       data_files = [("pyxser/xml", ["src/pyxser-1.0.dtd"])],
+       data_files = [('pyxser/xml', ['src/pyxser-1.0.dtd'])],
        license = '''GNU LESSER GENERAL PUBLIC LICENSE, Version 3, 29 June 2007''',
        long_description = '''
        pyxser --- a single xml serialization/deserialization extension for python.
