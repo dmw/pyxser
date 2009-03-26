@@ -28,9 +28,10 @@ pylibdir = distutils.sysconfig.get_python_lib(plat_specific=0, standard_lib=0)
 pyxser_dtd_file = pylibdir + "/pyxser/xml/pyxser-1.0.dtd"
 pyxser_dtd_location = '\"' + pylibdir + "/pyxser/xml/pyxser-1.0.dtd" + '\"'
 
-pyxser_params = {}
 pyxser_params = pkgconfig("libxml-2.0")
-pyxser_params["library_dirs"] = []
+
+if not pyxser_params["library_dirs"]:
+    pyxser_params["library_dirs"] = []
 
 # extra library dirs
 pyxser_params["library_dirs"].append("/lib")
@@ -40,6 +41,9 @@ pyxser_params["library_dirs"].append("/usr/X11R6/lib")
 pyxser_params["library_dirs"].append("/opt/lib")
 
 # extra include dirs
+if not pyxser_params["include_dirs"]:
+    pyxser_params["include_dirs"] = []
+
 pyxser_params["include_dirs"].append("/usr/include")
 pyxser_params["include_dirs"].append("/usr/local/include")
 pyxser_params["include_dirs"].append("/usr/X11R6/include")
