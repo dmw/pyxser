@@ -30,8 +30,17 @@ pyxser_dtd_location = '\"' + pylibdir + "/pyxser/xml/pyxser-1.0.dtd" + '\"'
 
 pyxser_params = pkgconfig("libxml-2.0")
 
-if not pyxser_params["library_dirs"]:
+if not isinstance(pyxser_params, dict):
+    print "*** configuration dictionary not created, creating one..."
+    pyxser_params = {}
+
+if not pyxser_params.has_key("library_dirs"):
+    print "*** library_dirs reconfigured..."
     pyxser_params["library_dirs"] = []
+
+if not pyxser_params.has_key("include_dirs"):
+    print "*** include_dirs reconfigured..."
+    pyxser_params["include_dirs"] = []
 
 # extra library dirs
 pyxser_params["library_dirs"].append("/lib")
@@ -41,9 +50,6 @@ pyxser_params["library_dirs"].append("/usr/X11R6/lib")
 pyxser_params["library_dirs"].append("/opt/lib")
 
 # extra include dirs
-if not pyxser_params["include_dirs"]:
-    pyxser_params["include_dirs"] = []
-
 pyxser_params["include_dirs"].append("/usr/include")
 pyxser_params["include_dirs"].append("/usr/local/include")
 pyxser_params["include_dirs"].append("/usr/X11R6/include")
