@@ -20,7 +20,13 @@ for scheme in INSTALL_SCHEMES.values():
 
 def pkgconfig(*packages, **kw):
     flag_map = {'-I': 'include_dirs', '-L': 'library_dirs', '-l': 'libraries'}
-    items = commands.getoutput("pkg-config --silence-errors --libs --cflags %s" % ' '.join(packages))
+    items = commands.getoutput("pkg-config --silence-errors --libs --cflags %s " % ' '.join(packages))
+    if not (len(items) > 0):
+        print "Please install the required development packages, read the INSTALLING file"
+        sys.exit(0)
+    if items.find("not found") >= 0:
+        print "Please install the required development packages, read the INSTALLING file"
+        sys.exit(0)
     for token in items.split():
         kw.setdefault(flag_map.get(token[:2]), []).append(token[2:])
     return kw

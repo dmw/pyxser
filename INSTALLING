@@ -13,6 +13,14 @@ python ./setup.py --verbose clean --all
 env CFLAGS='-Wall -Wextra -Wshadow -pedantic -std=c99' python ./setup.py --verbose build --force --debug
 python ./setup.py --verbose install
 
-
 Thanks for using and testing... enjoy pyxser ;)
+
+Ubuntu/Kubuntu/Xubuntu Users:
+pyxser needs the following packages for building: libxml2, libxml2-dbg,
+libxml2-dev, libxml2-doc, libxml2-utils, python-libxml2, python-libxml2-dbg,
+python, python-dev
+
+I think that Debian needs similar packages... plese be carefull on building
+this module, read some manuals on installing non distribution-standard
+Python modules.
 
