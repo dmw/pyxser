@@ -19,7 +19,7 @@ for scheme in INSTALL_SCHEMES.values():
 
 def pkgconfig(*packages, **kw):
     flag_map = {'-I': 'include_dirs', '-L': 'library_dirs', '-l': 'libraries'}
-    items = commands.getoutput("pkg-config --libs --cflags %s" % ' '.join(packages))
+    items = commands.getoutput("pkg-config --silence-errors --libs --cflags %s" % ' '.join(packages))
     for token in items.split():
         kw.setdefault(flag_map.get(token[:2]), []).append(token[2:])
     return kw
