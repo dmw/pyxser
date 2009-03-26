@@ -13,7 +13,6 @@ import distutils.command.install
 from distutils.core import setup
 from distutils.core import setup, Extension
 from distutils.command.install import INSTALL_SCHEMES
-from setupext import Data_Files, install_Data_Files, wininst_request_delete
 
 for scheme in INSTALL_SCHEMES.values():
     scheme['data'] = scheme['purelib']
@@ -32,7 +31,8 @@ def pkgconfig(*packages, **kw):
     return kw
 
 pylibdir = distutils.sysconfig.get_python_lib(plat_specific=1, standard_lib=0)
-pyxser_dtd_file = pylibdir + "/pyxser/xml/pyxser-1.0.dtd"
+pyxser_dtd_file_dir = pylibdir + "/pyxser/xml"
+pyxser_dtd_file = pylibdir + "pyxser/xml/pyxser-1.0.dtd"
 pyxser_dtd_location = '\"' + pylibdir + "/pyxser/xml/pyxser-1.0.dtd" + '\"'
 
 pyxser_params = pkgconfig("libxml-2.0")
@@ -80,11 +80,7 @@ setup (name = 'pyxser',
        author_email = 'dmw@coder.cl',
        url = 'http://projects.coder.cl/pyxser/',
        download_url = 'http://sourceforge.net/project/showfiles.php?group_id=256386',
-       cmdclass = {'install_data':install_Data_Files,
-                   'bdist_wininst':wininst_request_delete},
-       data_files = [Data_Files(base_dir='install_lib',
-                                copy_to=('pyxser/xml'),
-                                files=['src/pyxser-1.0.dtd'])],
+       data_files = [(pyxser_dtd_file_dir, ['src/pyxser-1.0.dtd'])],
        license = '''GNU LESSER GENERAL PUBLIC LICENSE, Version 3, 29 June 2007''',
        long_description = '''
        pyxser --- a single xml serialization/deserialization extension for python.
