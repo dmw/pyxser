@@ -1,0 +1,11 @@
+
+KNOWN PYXSER ISSUES:
+
+* Can't get any type defined in the __main__ module, this
+  means that every class defined in __main__ can not be
+  deserialized.
+
+* Can't install on Mac OS X. The pyxser DTD isn't installed
+  on the Python library directory, instead it is installed
+  on the User Library directory.
+
