@@ -74,7 +74,7 @@ static PyObject *pyxserxmlnonstd(PyObject *self, PyObject *args);
 static PyObject *pyxunserxml(PyObject *self, PyObject *args);
 static PyObject *pyxvalidate(PyObject *self, PyObject *args);
 static PyObject *pyxgetdtd(PyObject *self, PyObject *args);
-
+static PyObject *xmlcleanup(PyObject *self, PyObject *args);
 
 void *dummy(PyObject *obj);
 
@@ -115,12 +115,16 @@ static const char getdtd_documentation[] = \
 	"The serialization model resides in the pyxser public identifier DTD.\n"
 	"This function returns the pyxser DTD location in your system as string\n\n";
 
+static const char xmlcleanup_documentation[] = \
+	"Calls the cleanup function for the libxml2 parser, be carefull using this\n"
+	"function, and try to use it when the parser really isn't in use.\n\n";
 
 static PyMethodDef serxMethods[] = {
     {"serialize", pyxserxml, METH_VARARGS, serialize_documentation},
     {"unserialize", pyxunserxml, METH_VARARGS, deserialize_documentation},
     {"validate", pyxvalidate, METH_VARARGS, validate_documentation},
     {"getdtd", pyxgetdtd, METH_VARARGS, getdtd_documentation},
+    {"xmlcleanup", xmlcleanup, METH_VARARGS, xmlcleanup_documentation},
     {NULL, NULL, 0, NULL}
 };
 
@@ -263,6 +267,14 @@ pyxvalidate(PyObject *self, PyObject *args)
 	}
 	return res;
 }
+
+static PyObject *
+xmlcleanup(PyObject *self, PyObject *args)
+{
+    xmlCleanupParser();
+    return Py_None;
+}
+
 
 
 /* pyserx.c ends here */

@@ -125,6 +125,8 @@ if __name__ == "__main__":
         unserialized = pyxser.unserialize(serialized)
         print "5. Unserialized Object:\n" + repr(unserialized) + "\n\n"
 
+        pyxser.xmlcleanup();
+
     except Exception, e:
         print "-" * 60
         traceback.print_exc(file=sys.stdout)
