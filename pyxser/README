@@ -45,4 +45,13 @@ pyxser supports cross referenced objects and nested referenced
 object, because it defines the a ref attribute as IDREF which
 is used to link internal nodes in the document tree.
 
+*** See the INSTALLING file for installing instructions. ***
+*** See the AUTHORS file to get information about the authors ***
+
+The pyxser web page is:
+http://coder.cl/software/pyxser/
+
+Best regards,
+Daniel Molina Wegener
+
 ### $Id$ ###

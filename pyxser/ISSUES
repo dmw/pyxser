@@ -5,7 +5,9 @@ KNOWN PYXSER ISSUES:
   means that every class defined in __main__ can not be
   deserialized.
 
-* Can't install on Mac OS X. The pyxser DTD isn't installed
+- Can't install on Mac OS X. The pyxser DTD isn't installed
   on the Python library directory, instead it is installed
   on the User Library directory.
+  SOLVED: now it runs under Mac OS X.
+
 
