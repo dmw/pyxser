@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 ##
-## $Id: setup.py 23 2009-03-26 00:48:26Z damowe $
+## $Id$
 ##
 
 import sys
@@ -14,6 +14,10 @@ from distutils.core import setup
 from distutils.core import setup, Extension
 from distutils.command.install import INSTALL_SCHEMES
 
+if sys.hexversion >= 33947888 or sys.hexversion <= 33817840:
+    print "Unsupported Python version"
+    sys.exit()
+
 for scheme in INSTALL_SCHEMES.values():
     scheme['data'] = scheme['purelib']
 
@@ -21,10 +25,10 @@ def pkgconfig(*packages, **kw):
     flag_map = {'-I': 'include_dirs', '-L': 'library_dirs', '-l': 'libraries'}
     items = commands.getoutput("pkg-config --silence-errors --libs --cflags %s " % ' '.join(packages))
     if not (len(items) > 0):
-        print "Please install the required development packages, read the INSTALLING file"
+        print("Please install the required development packages, read the INSTALLING file")
         sys.exit(0)
     if items.find("not found") >= 0:
-        print "Please install the required development packages, read the INSTALLING file"
+        print("Please install the required development packages, read the INSTALLING file")
         sys.exit(0)
     for token in items.split():
         kw.setdefault(flag_map.get(token[:2]), []).append(token[2:])
@@ -38,15 +42,15 @@ pyxser_dtd_location = '\"' + pylibdir + "/pyxser/xml/pyxser-1.0.dtd" + '\"'
 pyxser_params = pkgconfig("libxml-2.0")
 
 if not isinstance(pyxser_params, dict):
-    print "*** configuration dictionary not created, creating one..."
+    print("*** configuration dictionary not created, creating one...")
     pyxser_params = {}
 
 if not pyxser_params.has_key("library_dirs"):
-    print "*** library_dirs reconfigured..."
+    print("*** library_dirs reconfigured...")
     pyxser_params["library_dirs"] = []
 
 if not pyxser_params.has_key("include_dirs"):
-    print "*** include_dirs reconfigured..."
+    print("*** include_dirs reconfigured...")
     pyxser_params["include_dirs"] = []
 
 # extra library dirs
