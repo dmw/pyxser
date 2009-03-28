@@ -39,12 +39,12 @@ if __name__ == "__main__":
     another.second_element = 456
 
     other = testpkg.sample.TestAnotherObject()
-    other.first_element = "abc"
+    other.first_element = complex(5.82, 3.99)
     other.second_element = "cdf"
 
     thisa = testpkg.sample.TestAnotherObject()
     thisa.first_element = "xyz"
-    thisa.second_element = "zyx"
+    thisa.second_element = complex(7.81, 2.01)
 
     thisb = testpkg.sample.TestAnotherObject()
     thisb.first_element = "456"
@@ -52,7 +52,7 @@ if __name__ == "__main__":
 
     thisc = testpkg.sample.TestAnotherObject()
     thisc.first_element = "XXX"
-    thisc.second_element = thisb
+    thisc.second_element = complex(32.1, 33.1)
 
     test = testpkg.sample.ParentObject("hola", "chao", 2354345L)
     test.child("hi", 4.5, 2354)
