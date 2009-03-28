@@ -38,6 +38,7 @@ static const char Id[] = "$Id$";
 static const char pyxser_true_char_value[] = "True";
 static const char pyxser_false_char_value[] = "False";
 
+
 xmlNodePtr
 pyxser_SerializeInt(PyObject *o, char *name,
 					PyListObject *dupItems, xmlDocPtr doc)
@@ -90,16 +91,67 @@ xmlNodePtr
 pyxser_SerializeComplex(PyObject *o, char *name,
 						PyListObject *dupItems, xmlDocPtr doc)
 {
-	return pyxser_SerializePrimitiveType(o, name,
-										 dupItems, doc);
+	PyObject *classPtr = (PyObject *)NULL;
+	PyObject *className = (PyObject *)NULL;
+    Py_complex cx;
+
+	xmlNodePtr newElementNode = (xmlNodePtr)NULL;
+	xmlNodePtr newTextNode = (xmlNodePtr)NULL;
+	xmlAttrPtr typeAttr = (xmlAttrPtr)NULL;
+	xmlAttrPtr nameAttr = (xmlAttrPtr)NULL;
+
+	char *nptr = (char *)NULL;
+    char sptr[128];
+
+    if (PYTHON_IS_NONE(o)
+        || name == (char *)NULL) {
+        return (xmlNodePtr)NULL;
+    }
+    cx = PyComplex_AsCComplex(o);
+    memset((void *)sptr, 0, 128);
+    sprintf(sptr, "%lf:%lf", cx.real, cx.imag);
+	classPtr = PyObject_GetAttrString(o, pyxser_attr_class);
+	if (PYTHON_IS_NONE(classPtr)
+		|| sptr == (char *)NULL) {
+		Py_DECREF(classPtr);
+		return (xmlNodePtr)NULL;
+	}
+	className = PyObject_GetAttrString(classPtr, pyxser_attr_name);
+	if (PYTHON_IS_NONE(className)) {
+		Py_DECREF(classPtr);
+		Py_DECREF(className);
+		return (xmlNodePtr)NULL;
+	}
+	if (PYTHON_IS_NOT_NONE(className)) {
+		nptr = PyString_AS_STRING(className);
+		if (sptr != (char *)NULL
+			&& nptr != (char *)NULL) {
+			newElementNode = xmlNewDocNode(doc, pyxser_GetDefaultNs(),
+										   BAD_CAST pyxser_xml_element_prop,
+										   NULL);
+			newTextNode = xmlNewDocText(doc, BAD_CAST sptr);
+			typeAttr = xmlNewProp(newElementNode,
+								  BAD_CAST pyxser_xml_attr_type,
+								  BAD_CAST nptr);
+			if (name != (char *)NULL) {
+				nameAttr = xmlNewProp(newElementNode,
+									  BAD_CAST pyxser_xml_attr_name,
+									  BAD_CAST name);
+			}
+			xmlAddChild(newElementNode, newTextNode);
+		}
+		Py_DECREF(className);
+	}
+	Py_DECREF(classPtr);
+	return newElementNode;
 }
 
 xmlNodePtr
 pyxser_SerializeExactComplex(PyObject *o, char *name,
 							 PyListObject *dupItems, xmlDocPtr doc)
 {
-	return pyxser_SerializePrimitiveType(o, name,
-										 dupItems, doc);
+	return pyxser_SerializeComplex(o, name,
+                                   dupItems, doc);
 }
 
 PyObject *
@@ -235,21 +287,34 @@ pyxunser_SerializeExactFloat(PythonUnserializationArgumentsPtr obj)
 PyObject *
 pyxunser_SerializeComplex(PythonUnserializationArgumentsPtr obj)
 {
+    PyObject *cxo = (PyObject *)NULL;
 	xmlNodePtr node = *(obj->currentNode);
+	xmlNodePtr ron;
+	PyObject *res = Py_None;
+    Py_complex cx;
+
 	if (node != (xmlNodePtr)NULL) {
-		return Py_None;
+		for (ron = node->children;
+			 ron;
+			 ron = ron->next) {
+			if (ron->type == XML_TEXT_NODE) {
+				if (ron->content != (xmlChar *)NULL) {
+                    sscanf((char *)ron->content, "%lf:%lf", &cx.real, &cx.imag);
+                    cxo = PyComplex_FromCComplex(cx);
+					if (PYTHON_IS_NOT_NONE(cxo)) {
+						res = cxo;
+					}
+				}
+			}
+		}
 	}
-	return Py_None;
+	return res;
 }
 
 PyObject *
 pyxunser_SerializeExactComplex(PythonUnserializationArgumentsPtr obj)
 {
-	xmlNodePtr node = *(obj->currentNode);
-	if (node != (xmlNodePtr)NULL) {
-		return Py_None;
-	}
-	return Py_None;
+    return pyxunser_SerializeComplex(obj);
 }
 
 /* pyserx_numbers.c ends here */
