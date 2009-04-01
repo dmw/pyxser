@@ -38,7 +38,8 @@ static const char Id[] = "$Id$";
 
 xmlNodePtr
 pyxser_SerializeUnicode(PyObject *o, char *name,
-						PyListObject *dupItems, xmlDocPtr doc)
+						PyListObject *dupItems, xmlDocPtr doc,
+                        int *depth, int *depthcnt)
 {
 	xmlNodePtr nen = (xmlNodePtr)NULL;
 	xmlNodePtr ntxt = (xmlNodePtr)NULL;
@@ -73,8 +74,15 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
     }
 
 
-    data_size = PyUnicode_GET_SIZE(o);
-    unic = PyUnicode_AsUnicodeEscapeString(o);
+    unic = PyUnicode_AsEncodedString(o, (char *)doc->encoding,
+                                     pyxser_xml_encoding_mode);
+    if (PYTHON_IS_NONE(unic)) {
+        Py_DECREF(classPtr);
+        Py_DECREF(className);
+        return (xmlNodePtr)NULL;
+    }
+
+    data_size = PyUnicode_GET_SIZE(unic);
     if (PYTHON_IS_NOT_NONE(unic)) {
         nptr = PyString_AS_STRING(className);
         sptr = PyString_AS_STRING(unic);
@@ -110,14 +118,17 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
 
 xmlNodePtr
 pyxser_SerializeExactUnicode(PyObject *o, char *name,
-							 PyListObject *dupItems, xmlDocPtr doc)
+							 PyListObject *dupItems, xmlDocPtr doc,
+                             int *depth, int *depthcnt)
 {
-	return pyxser_SerializeUnicode(o, name, (PyListObject *)NULL, doc);
+	return pyxser_SerializeUnicode(o, name, (PyListObject *)NULL, doc,
+                                   depth, depthcnt);
 }
 
 xmlNodePtr
 pyxser_SerializeString(PyObject *o, char *name,
-					   PyListObject *dupItems, xmlDocPtr doc)
+					   PyListObject *dupItems, xmlDocPtr doc,
+                       int *depth, int *depthcnt)
 {
 	xmlNodePtr nen = (xmlNodePtr)NULL;
 	xmlNodePtr ntxt = (xmlNodePtr)NULL;
@@ -176,15 +187,20 @@ pyxser_SerializeString(PyObject *o, char *name,
 }
 
 xmlNodePtr
-pyxser_SerializeExactString(PyObject *o, char *name, PyListObject *dupItems, xmlDocPtr doc)
+pyxser_SerializeExactString(PyObject *o, char *name,
+                            PyListObject *dupItems, xmlDocPtr doc,
+                            int *depth, int *depthcnt)
 {
-	return pyxser_SerializeString(o, name, (PyListObject *)NULL, doc);
+	return pyxser_SerializeString(o, name, (PyListObject *)NULL, doc,
+                                  depth, depthcnt);
 }
 
 xmlNodePtr
-pyxser_SerializeBuffer(PyObject *o, char *name, PyListObject *dupItems, xmlDocPtr doc)
+pyxser_SerializeBuffer(PyObject *o, char *name, PyListObject *dupItems,
+                       xmlDocPtr doc, int *depth, int *depthcnt)
 {
-	return pyxser_SerializePrimitiveType(o, name, (PyListObject *)NULL, doc);
+	return pyxser_SerializePrimitiveType(o, name, (PyListObject *)NULL,
+                                         doc, depth, depthcnt);
 }
 
 
@@ -221,11 +237,11 @@ pyxunser_SerializeUnicode(PythonUnserializationArgumentsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
 	xmlNodePtr ron;
+    xmlDocPtr doc = *(obj->docPtr);
 	xmlChar *propSize = (xmlChar *)NULL;
 	PyObject *unic = Py_None;
 	PyObject *res = Py_None;
 	Py_ssize_t tsz = 0;
-	const char strict_mode[] = "strict";
 
     if (node == (xmlNodePtr)NULL) {
         return res;
@@ -236,11 +252,11 @@ pyxunser_SerializeUnicode(PythonUnserializationArgumentsPtr obj)
         for (ron = node->children;
              ron;
              ron = ron->next) {
-            tsz = (Py_ssize_t)strtol((const char *)propSize, (char **)NULL, 10);
+            tsz = (Py_ssize_t)strtol((const char *)propSize,
+                                     (char **)NULL, 10);
             if (ron->type == XML_TEXT_NODE) {
-                unic = PyUnicode_DecodeUnicodeEscape((const char *)ron->content,
-                                                     (strlen((const char *)ron->content)),
-                                                     strict_mode);
+                unic = PyUnicode_Decode((const char *)ron->content, tsz,
+                                        (char *)doc->encoding, pyxser_xml_encoding_mode);
                 res = unic;
             }
         }

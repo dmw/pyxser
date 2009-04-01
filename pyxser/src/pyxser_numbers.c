@@ -41,55 +41,68 @@ static const char pyxser_false_char_value[] = "False";
 
 xmlNodePtr
 pyxser_SerializeInt(PyObject *o, char *name,
-					PyListObject *dupItems, xmlDocPtr doc)
+					PyListObject *dupItems, xmlDocPtr doc,
+                    int *depth, int *depthcnt)
 {
 	return pyxser_SerializePrimitiveType(o, name,
-										 dupItems, doc);
+										 dupItems, doc,
+                                         depth, depthcnt);
 }
 
 xmlNodePtr
 pyxser_SerializeExactInt(PyObject *o, char *name,
-						 PyListObject *dupItems, xmlDocPtr doc)
+						 PyListObject *dupItems, xmlDocPtr doc,
+                         int *depth, int *depthcnt)
 {
 	return pyxser_SerializePrimitiveType(o, name,
-										 dupItems, doc);
+										 dupItems, doc,
+                                         depth, depthcnt);
 }
 
 xmlNodePtr
 pyxser_SerializeBoolean(PyObject *o, char *name,
-						PyListObject *dupItems, xmlDocPtr doc)
+						PyListObject *dupItems, xmlDocPtr doc,
+                        int *depth, int *depthcnt)
 {
 	return pyxser_SerializePrimitiveType(o, name,
-										 dupItems, doc);
+										 dupItems, doc,
+                                         depth, depthcnt);
 }
 
 xmlNodePtr
 pyxser_SerializeLong(PyObject *o, char *name,
-					 PyListObject *dupItems, xmlDocPtr doc)
+					 PyListObject *dupItems, xmlDocPtr doc,
+                     int *depth, int *depthcnt)
 {
 	return pyxser_SerializePrimitiveType(o, name,
-										 dupItems, doc);
+										 dupItems, doc,
+                                         depth, depthcnt);
 }
 
 xmlNodePtr
 pyxser_SerializeFloat(PyObject *o, char *name,
-					  PyListObject *dupItems, xmlDocPtr doc)
+					  PyListObject *dupItems, xmlDocPtr doc,
+                      int *depth, int *depthcnt)
 {
 	return pyxser_SerializePrimitiveType(o, name,
-										 dupItems, doc);
+										 dupItems, doc,
+                                         depth, depthcnt);
 }
 
 xmlNodePtr
 pyxser_SerializeExactFloat(PyObject *o, char *name,
-						   PyListObject *dupItems, xmlDocPtr doc)
+						   PyListObject *dupItems, xmlDocPtr doc,
+                           int *depth, int *depthcnt)
 {
 	return pyxser_SerializePrimitiveType(o, name,
-										 dupItems, doc);
+										 dupItems, doc,
+                                         depth, depthcnt);
 }
 
 xmlNodePtr
 pyxser_SerializeComplex(PyObject *o, char *name,
-						PyListObject *dupItems, xmlDocPtr doc)
+						PyListObject *dupItems, xmlDocPtr doc,
+                        int *depth, int *depthcnt)
 {
 	PyObject *classPtr = (PyObject *)NULL;
 	PyObject *className = (PyObject *)NULL;
@@ -148,10 +161,11 @@ pyxser_SerializeComplex(PyObject *o, char *name,
 
 xmlNodePtr
 pyxser_SerializeExactComplex(PyObject *o, char *name,
-							 PyListObject *dupItems, xmlDocPtr doc)
+							 PyListObject *dupItems, xmlDocPtr doc,
+                             int *depth, int *depthcnt)
 {
 	return pyxser_SerializeComplex(o, name,
-                                   dupItems, doc);
+                                   dupItems, doc, depth, depthcnt);
 }
 
 PyObject *

@@ -35,9 +35,9 @@ static const char Id[] = "$Id$";
 #include "include/pyxser.h"
 
 static const char msg_non_object[] = \
-	"Invalid call, the function needs an XML string to restore an object";
+	"Invalid arguments, please read the documentation.";
 static const char msg_non_method[] = \
-	"Invalid call, been called as object";
+	"Invalid call, been called as object.";
 static const char xml_version[] = \
 	"1.0";
 static const char xml_encoding[] = \
@@ -65,16 +65,19 @@ const char pyxser_xml_element_collection[] = "col";
 const char pyxser_xml_element_object[] = "obj";
 const char pyxser_xml_element_prop[] = "prop";
 const char pyxser_xml_encoding[] = "utf-8";
+const char pyxser_xml_encoding_mode[] = "strict";
 const char pyxser_xml_version[] = "1.0";
 
 const char pyxser_xml_dtd_location[] = PYXSER_DTD_FILE;
 
-static PyObject *pyxserxml(PyObject *self, PyObject *args);
+static PyObject *pyxserxml(PyObject *self, PyObject *args, PyObject *keywds);
 static PyObject *pyxserxmlnonstd(PyObject *self, PyObject *args);
 static PyObject *pyxunserxml(PyObject *self, PyObject *args);
 static PyObject *pyxvalidate(PyObject *self, PyObject *args);
 static PyObject *pyxgetdtd(PyObject *self, PyObject *args);
 static PyObject *xmlcleanup(PyObject *self, PyObject *args);
+static PyDictObject *pyxser_modules = (PyDictObject *)NULL;
+void pyxser_unregister(void);
 
 void *dummy(PyObject *obj);
 
@@ -120,7 +123,7 @@ static const char xmlcleanup_documentation[] = \
 	"function, and try to use it when the parser really isn't in use.\n\n";
 
 static PyMethodDef serxMethods[] = {
-    {"serialize", pyxserxml, METH_VARARGS, serialize_documentation},
+    {"serialize", (PyCFunction)pyxserxml, METH_VARARGS | METH_KEYWORDS, serialize_documentation},
     {"unserialize", pyxunserxml, METH_VARARGS, deserialize_documentation},
     {"validate", pyxvalidate, METH_VARARGS, validate_documentation},
     {"getdtd", pyxgetdtd, METH_VARARGS, getdtd_documentation},
@@ -137,14 +140,20 @@ initpyxser(void)
     if (m == NULL)
         return;
 	/* init module */
+    Py_AtExit(pyxser_unregister);
     LIBXML_TEST_VERSION;
 }
 
 static PyObject *
-pyxserxml(PyObject *self, PyObject *args)
+pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 {
+    static char *kwlist[] = {"obj", "enc", "depth", NULL};
 	PyObject *res = Py_None;
 	PyObject *input = (PyObject *)NULL;
+    char *py_enc = (char *)NULL;
+    int py_depth = 0;
+    int py_depth_cnt = 1;
+
 	xmlNodePtr serXml = (xmlNodePtr)NULL;
 	xmlNodePtr rootNode = (xmlNodePtr)NULL;
 	xmlDocPtr docXml = (xmlDocPtr)NULL;
@@ -156,15 +165,23 @@ pyxserxml(PyObject *self, PyObject *args)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return res;
 	}
-	ok = PyArg_ParseTuple(args, "O", &input);
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Osi", kwlist,
+                                     &input, &py_enc, &py_depth);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return res;
 	}
+
+    if (py_depth == 0) {
+        py_depth = 999999;
+    }
+
 	dupItems = (PyListObject *)PyList_New(0);
+
 	serXml = pyxser_SerializeXml(input, &docXml, &rootNode,
-								 (xmlNodePtr *)NULL, dupItems);
+								 (xmlNodePtr *)NULL, dupItems,
+                                 py_enc, &py_depth, &py_depth_cnt);
 	if (dupItems != (PyListObject *)NULL) {
 		Py_DECREF(dupItems);
 	}
@@ -190,7 +207,6 @@ pyxunserxml(PyObject *self, PyObject *args)
 	PyObject *tree = (PyObject *)NULL;
 	PyObject *current = (PyObject *)NULL;
 	PyDictObject *dupItems = (PyDictObject *)NULL;
-	PyDictObject *modules = (PyDictObject *)NULL;
 	xmlNodePtr rootNode = (xmlNodePtr)NULL;
 	xmlNodePtr currentNode = (xmlNodePtr)NULL;
 	xmlDocPtr docXml = (xmlDocPtr)NULL;
@@ -209,13 +225,15 @@ pyxunserxml(PyObject *self, PyObject *args)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return res;
 	}
-	dupItems = (PyDictObject *)PyDict_New();
+    if (PYTHON_IS_NONE(pyxser_modules)) {
+        pyxser_modules = (PyDictObject *)PyDict_New();
+    }
 
 	obj.doc = &input;
 	obj.current = &current;
 	obj.tree = &tree;
 	obj.dups = &dupItems;
-	obj.modules = &modules;
+	obj.modules = &pyxser_modules;
 	obj.docPtr = &docXml;
 	obj.rootNode = &rootNode;
 	obj.currentNode = &currentNode;
@@ -275,6 +293,16 @@ xmlcleanup(PyObject *self, PyObject *args)
     return Py_None;
 }
 
+
+void
+pyxser_unregister(void)
+{
+    if (PYTHON_IS_NOT_NONE(pyxser_modules)) {
+        Py_DECREF(pyxser_modules);
+    }
+    xmlFreeDtd(pyxser_dtd_object);
+    xmlCleanupParser();
+}
 
 
 /* pyserx.c ends here */

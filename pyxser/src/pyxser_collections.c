@@ -39,72 +39,89 @@ static const char Id[] = "$Id$";
 static xmlNodePtr pyxser_GlobalTupleSerialization(PyObject *o,
 												  char *name,
 												  PyListObject *dupItems,
-												  xmlDocPtr docPtr);
+												  xmlDocPtr docPtr,
+                                                  int *depth, int *depthcnt);
 
 static xmlNodePtr pyxser_GlobalListSerialization(PyObject *o,
 												 char *name,
 												 PyListObject *dupItems,
-												 xmlDocPtr docPtr);
+												 xmlDocPtr docPtr,
+                                                 int *depth, int *depthcnt);
 
 static xmlNodePtr pyxser_GlobalDictSerialization(PyObject *o,
 												 char *name,
 												 PyListObject *dupItems,
-												 xmlDocPtr docPtr);
+												 xmlDocPtr docPtr,
+                                                 int *depth, int *depthcnt);
 
 static xmlNodePtr pyxser_RunSerializationCol(PyObject *item, PyObject *currentKey,
 											 PyListObject *dupItems, xmlDocPtr *docPtr,
-											 xmlNodePtr currentNode);
+											 xmlNodePtr currentNode,
+                                             int *depth, int *depthcnt);
 
 
 /* Tuples */
 xmlNodePtr
 pyxser_SerializeTuple(PyObject *o, char *name,
-					  PyListObject *dupItems, xmlDocPtr docPtr)
+					  PyListObject *dupItems, xmlDocPtr docPtr,
+                      int *depth, int *depthcnt)
 {
-	return pyxser_GlobalTupleSerialization(o, name, dupItems, docPtr);
+	return pyxser_GlobalTupleSerialization(o, name, dupItems, docPtr,
+                                           depth, depthcnt);
 }
 
 xmlNodePtr
 pyxser_SerializeExactTuple(PyObject *o, char *name,
-						   PyListObject *dupItems, xmlDocPtr docPtr)
+						   PyListObject *dupItems, xmlDocPtr docPtr,
+                           int *depth, int *depthcnt)
 {
-	return pyxser_GlobalTupleSerialization(o, name, dupItems, docPtr);
+	return pyxser_GlobalTupleSerialization(o, name, dupItems, docPtr,
+                                           depth, depthcnt);
 }
 
 /* Lists */
 xmlNodePtr
 pyxser_SerializeList(PyObject *o, char *name,
-					 PyListObject *dupItems, xmlDocPtr docPtr)
+					 PyListObject *dupItems, xmlDocPtr docPtr,
+                     int *depth, int *depthcnt)
 {
-	return pyxser_GlobalListSerialization(o, name, dupItems, docPtr);
+	return pyxser_GlobalListSerialization(o, name, dupItems, docPtr,
+                                          depth, depthcnt);
 }
 
 xmlNodePtr
 pyxser_SerializeExactList(PyObject *o, char *name,
-						  PyListObject *dupItems, xmlDocPtr docPtr)
+						  PyListObject *dupItems, xmlDocPtr docPtr,
+                          int *depth, int *depthcnt)
 {
-	return pyxser_GlobalListSerialization(o, name, dupItems, docPtr);
+	return pyxser_GlobalListSerialization(o, name, dupItems, docPtr,
+                                          depth, depthcnt);
 }
 /* Dictionaries */
 
 xmlNodePtr
 pyxser_SerializeDict(PyObject *o, char *name,
-					 PyListObject *dupItems, xmlDocPtr docPtr)
+					 PyListObject *dupItems, xmlDocPtr docPtr,
+                     int *depth, int *depthcnt)
 {
-	return pyxser_GlobalDictSerialization(o, name, dupItems, docPtr);
+	return pyxser_GlobalDictSerialization(o, name, dupItems, docPtr,
+                                          depth, depthcnt);
 }
 
 xmlNodePtr
 pyxser_SerializeExactDict(PyObject *o, char *name,
-						  PyListObject *dupItems, xmlDocPtr docPtr)
+						  PyListObject *dupItems, xmlDocPtr docPtr,
+                          int *depth, int *depthcnt)
 {
-	return pyxser_GlobalDictSerialization(o, name, dupItems, docPtr);
+	return pyxser_GlobalDictSerialization(o, name, dupItems, docPtr,
+                                          depth, depthcnt);
 }
 
 static xmlNodePtr
 pyxser_RunSerializationCol(PyObject *item, PyObject *currentKey,
 						   PyListObject *dupItems, xmlDocPtr *docPtr,
-						   xmlNodePtr currentNode)
+						   xmlNodePtr currentNode,
+                           int *depth, int *depthcnt)
 {
 	int d = 0;
 	xmlNodePtr newElementNode = currentNode;
@@ -123,12 +140,14 @@ pyxser_RunSerializationCol(PyObject *item, PyObject *currentKey,
 				newSerNode = currentSerialization.serializer(
 					item,
 					(char *)NULL,
-					(PyListObject *)NULL, *docPtr);
+					(PyListObject *)NULL, *docPtr,
+                    depth, depthcnt);
 			} else {
 				newSerNode = currentSerialization.serializer(
 					item,
 					PyString_AS_STRING(currentKey),
-					(PyListObject *)NULL, *docPtr);
+					(PyListObject *)NULL, *docPtr,
+                    depth, depthcnt);
 			}
 			if (newSerNode != (xmlNodePtr)NULL) {
 				xmlAddChild(newElementNode, newSerNode);
@@ -161,12 +180,16 @@ pyxser_RunSerializationCol(PyObject *item, PyObject *currentKey,
 										  BAD_CAST PyString_AS_STRING(currentKey));
 				}
 				pyxser_AddModuleAttr(item, currentSubN);
+                (*depthcnt)++;
 				newSerNode = pyxser_SerializeXml(item,
 												 docPtr,
 												 &currentSubN,
 												 &currentSubN,
-												 dupItems);
+												 dupItems,
+                                                 (char *)(*docPtr)->encoding,
+                                                 depth, depthcnt);
 				xmlAddChild(newElementNode, currentSubN);
+                (*depthcnt)--;
 				break;
 			}
 		}
@@ -176,7 +199,8 @@ pyxser_RunSerializationCol(PyObject *item, PyObject *currentKey,
 
 static xmlNodePtr
 pyxser_GlobalListSerialization(PyObject *o, char *name,
-							   PyListObject *dupItems, xmlDocPtr docPtr)
+							   PyListObject *dupItems, xmlDocPtr docPtr,
+                               int *depth, int *depthcnt)
 {
 	xmlNodePtr newElementNode = (xmlNodePtr)NULL;
 	xmlAttrPtr typeAttr = (xmlAttrPtr)NULL;
@@ -219,7 +243,8 @@ pyxser_GlobalListSerialization(PyObject *o, char *name,
 			}
 			newSerNode = pyxser_RunSerializationCol(item, Py_None,
 													dupItems, &docPtr,
-													newElementNode);
+													newElementNode,
+                                                    depth, depthcnt);
 		}
 	}
 	Py_DECREF(className);
@@ -228,7 +253,8 @@ pyxser_GlobalListSerialization(PyObject *o, char *name,
 }
 
 static xmlNodePtr
-pyxser_GlobalTupleSerialization(PyObject *o, char *name, PyListObject *dupItems, xmlDocPtr docPtr)
+pyxser_GlobalTupleSerialization(PyObject *o, char *name, PyListObject *dupItems, xmlDocPtr docPtr,
+                                int *depth, int *depthcnt)
 {
 	xmlNodePtr newElementNode = (xmlNodePtr)NULL;
 	xmlAttrPtr typeAttr = (xmlAttrPtr)NULL;
@@ -271,7 +297,8 @@ pyxser_GlobalTupleSerialization(PyObject *o, char *name, PyListObject *dupItems,
 			}
 			newSerNode = pyxser_RunSerializationCol(item, Py_None,
 													dupItems, &docPtr,
-													newElementNode);
+													newElementNode,
+                                                    depth, depthcnt);
 		}
 	}
 	Py_DECREF(className);
@@ -280,7 +307,8 @@ pyxser_GlobalTupleSerialization(PyObject *o, char *name, PyListObject *dupItems,
 }
 
 static xmlNodePtr
-pyxser_GlobalDictSerialization(PyObject *o, char *name, PyListObject *dupItems, xmlDocPtr docPtr)
+pyxser_GlobalDictSerialization(PyObject *o, char *name, PyListObject *dupItems, xmlDocPtr docPtr,
+                               int *depth, int *depthcnt)
 {
 	xmlNodePtr newElementNode = (xmlNodePtr)NULL;
 	xmlAttrPtr typeAttr = (xmlAttrPtr)NULL;
@@ -329,7 +357,8 @@ pyxser_GlobalDictSerialization(PyObject *o, char *name, PyListObject *dupItems, 
 				d = 0;
 				newSerNode = pyxser_RunSerializationCol(item, currentKey,
 														dupItems, &docPtr,
-														newElementNode);
+														newElementNode,
+                                                        depth, depthcnt);
 			}
 			Py_DECREF(dictKeys);
 		}
@@ -660,7 +689,10 @@ pyxunser_SerializeDict(PythonUnserializationArgumentsPtr obj)
 					}
 				} else {
 					key = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_name);
-					PyDict_SetItemString(dict, key, unser);
+                    if (PYTHON_IS_NOT_NONE(unser)
+                        && key != (char *)NULL) {
+                        PyDict_SetItemString(dict, key, unser);
+                    }
 				}
 			}
 		}

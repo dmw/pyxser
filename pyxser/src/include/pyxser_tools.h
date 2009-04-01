@@ -47,19 +47,21 @@ extern "C" {
 
     xmlNodePtr pyxser_SerializePrimitiveType(PyObject *o, char *name,
                                              PyListObject *dupItems,
-                                             xmlDocPtr doc);
+                                             xmlDocPtr doc,
+                                             int *depth, int *depthcnt);
 
-    xmlNodePtr pyxser_SerializeXml(PyObject *o, xmlDocPtr *docPtr, xmlNodePtr *rootNode,
-                                   xmlNodePtr *currentNode, PyListObject *dupSrcItems);
+    xmlNodePtr pyxser_SerializeXml(PyObject *o, xmlDocPtr *docptr, xmlNodePtr *rootNode,
+                                   xmlNodePtr *currentNode, PyListObject *dupSrcItems,
+                                   const char *enc, int *depth, int *depthcnt);
 
     xmlNodePtr pyxser_SerializeXmlNonStd(PyObject *o, xmlDocPtr *docPtr,
                                          xmlNodePtr *rootNode, xmlNodePtr *currentNode,
                                          PyListObject *dupSrcItems);
 
-
     xmlNodePtr pyxser_RunSerialization(PyObject *item, PyObject *o, PyObject *currentKey,
-                                       PyListObject *dupItems, xmlDocPtr *docPtr,
-                                       xmlNodePtr *rootNode, xmlNodePtr *currentNode);
+                                       PyListObject *dupItems, xmlDocPtr *docptr,
+                                       xmlNodePtr *rootNode, xmlNodePtr *currentNode,
+                                       int *depth, int *depthcnt);
 
     PyObject *pyxser_SearchTypesInModules(const char *n_module,
                                           const char *n_type,

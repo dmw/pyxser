@@ -75,7 +75,8 @@ extern "C" {
         int available;
         int (*checker)(PyObject *o);
         xmlNodePtr (*serializer)(PyObject *o, char *name,
-                                 PyListObject *dupItems, xmlDocPtr doc);
+                                 PyListObject *dupItems, xmlDocPtr doc,
+                                 int *depth, int *depthcnt);
     } PythonTypeSerialize;
 
     typedef struct pythonTypeDeserialize_ {
@@ -111,6 +112,7 @@ extern "C" {
     extern const char pyxser_xml_element_object[];
     extern const char pyxser_xml_element_prop[];
     extern const char pyxser_xml_encoding[];
+    extern const char pyxser_xml_encoding_mode[];
     extern const char pyxser_xml_version[];
     extern const char pyxser_xml_dtd_location[];
     extern const char pyxser_xml_dtd[];
