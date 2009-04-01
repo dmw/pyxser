@@ -37,29 +37,29 @@ extern "C" {
 
 /* Tuples */
     xmlNodePtr pyxser_SerializeTuple(PyObject *o, char *name,
-                                     PyListObject *dupItems, xmlDocPtr docPtr);
+                                     PyListObject *dupItems, xmlDocPtr docPtr,
+                                     int *depth, int *depthcnt);
 
     xmlNodePtr pyxser_SerializeExactTuple(PyObject *o, char *name,
-                                          PyListObject *dupItems, xmlDocPtr docPtr);
+                                          PyListObject *dupItems, xmlDocPtr docPtr,
+                                          int *depth, int *depthcnt);
 /* Lists */
     xmlNodePtr pyxser_SerializeList(PyObject *o, char *name,
-                                    PyListObject *dupItems, xmlDocPtr docPtr);
+                                    PyListObject *dupItems, xmlDocPtr docPtr,
+                                    int *depth, int *depthcnt);
 
     xmlNodePtr pyxser_SerializeExactList(PyObject *o, char *name,
-                                         PyListObject *dupItems, xmlDocPtr docPtr);
+                                         PyListObject *dupItems, xmlDocPtr docPtr,
+                                         int *depth, int *depthcnt);
 
 /* Dictionaries */
     xmlNodePtr pyxser_SerializeDict(PyObject *o, char *name,
-                                    PyListObject *dupItems, xmlDocPtr docPtr);
+                                    PyListObject *dupItems, xmlDocPtr docPtr,
+                                    int *depth, int *depthcnt);
 
     xmlNodePtr pyxser_SerializeExactDict(PyObject *o, char *name,
-                                         PyListObject *dupItems, xmlDocPtr docPtr);
-/* Files */
-    xmlNodePtr pyxser_SerializeFile(PyObject *o, char *name,
-                                    PyListObject *dupItems, xmlDocPtr docPtr);
-
-    xmlNodePtr pyxser_SerializeExactFile(PyObject *o, char *name,
-                                         PyListObject *dupItems, xmlDocPtr docPtr);
+                                         PyListObject *dupItems, xmlDocPtr docPtr,
+                                         int *depth, int *depthcnt);
 
     PyObject *pyxunser_SerializeTuple(PythonUnserializationArgumentsPtr obj);
     PyObject *pyxunser_SerializeList(PythonUnserializationArgumentsPtr obj);

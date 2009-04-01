@@ -34,19 +34,24 @@ extern "C" {
 #endif /* !__cplusplus */
 
     xmlNodePtr pyxser_SerializeString(PyObject *o, char *name,
-                                      PyListObject *dupItems, xmlDocPtr doc);
+                                      PyListObject *dupItems, xmlDocPtr doc,
+                                      int *depth, int *depthcnt);
 
     xmlNodePtr pyxser_SerializeExactString(PyObject *o, char *name,
-                                           PyListObject *dupItems, xmlDocPtr doc);
+                                           PyListObject *dupItems, xmlDocPtr doc,
+                                           int *depth, int *depthcnt);
 
     xmlNodePtr pyxser_SerializeUnicode(PyObject *o, char *name,
-                                       PyListObject *dupItems, xmlDocPtr doc);
+                                       PyListObject *dupItems, xmlDocPtr doc,
+                                       int *depth, int *depthcnt);
 
     xmlNodePtr pyxser_SerializeExactUnicode(PyObject *o, char *name,
-                                            PyListObject *dupItems, xmlDocPtr doc);
+                                            PyListObject *dupItems, xmlDocPtr doc,
+                                            int *depth, int *depthcnt);
 
     xmlNodePtr pyxser_SerializeBuffer(PyObject *o, char *name,
-                                      PyListObject *dupItems, xmlDocPtr doc);
+                                      PyListObject *dupItems, xmlDocPtr doc,
+                                      int *depth, int *depthcnt);
 
     PyObject *pyxunser_SerializeString(PythonUnserializationArgumentsPtr obj);
     PyObject *pyxunser_SerializeExactString(PythonUnserializationArgumentsPtr obj);

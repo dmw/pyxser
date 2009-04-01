@@ -68,62 +68,26 @@ if __name__ == "__main__":
     test.dyn_prop7 = 1000
 
     try:
-        serialized = pyxser.serialize(test)
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0)
         print "Serilized Object:\n" + serialized
-        print "Serilized Object Validation:\n", pyxser.validate(serialized)
         print "First Object:\n" + repr(test) + "\n\n"
+        print "Serilized Object Validation:\n", pyxser.validate(serialized)
         unserialized = pyxser.unserialize(serialized)
         print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
 
-        another = testpkg.sample.TestAnotherObject()
-        another.first_element = 123
-        another.second_element = 456
-
-        serialized = pyxser.serialize(another)
-        print "1. Serilized Object:\n" + serialized
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2)
+        print "Serilized Object:\n" + serialized
+        print "First Object:\n" + repr(test) + "\n\n"
         print "Serilized Object Validation:\n", pyxser.validate(serialized)
         unserialized = pyxser.unserialize(serialized)
-        print "1. Unserialized Object:\n" + repr(unserialized) + "\n\n"
+        print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
 
-        other = testpkg.sample.TestAnotherObject()
-        other.first_element = "abc"
-        other.second_element = "cdf"
-
-        serialized = pyxser.serialize(other)
-        print "2. Serilized Object:\n" + serialized
+        serialized = pyxser.serialize(obj = test, enc = "utf-16", depth = 2)
+        print "Serilized Object:\n" + serialized
+        print "First Object:\n" + repr(test) + "\n\n"
         print "Serilized Object Validation:\n", pyxser.validate(serialized)
         unserialized = pyxser.unserialize(serialized)
-        print "2. Unserialized Object:\n" + repr(unserialized) + "\n\n"
-
-        thisa = testpkg.sample.TestAnotherObject()
-        thisa.first_element = "xyz"
-        thisa.second_element = "zyx"
-
-        serialized = pyxser.serialize(thisa)
-        print "3. Serilized Object:\n" + serialized
-        print "Serilized Object Validation:\n", pyxser.validate(serialized)
-        unserialized = pyxser.unserialize(serialized)
-        print "3. Unserialized Object:\n" + repr(unserialized) + "\n\n"
-
-        thisb = testpkg.sample.TestAnotherObject()
-        thisb.first_element = "456"
-        thisb.second_element = "789"
-
-        serialized = pyxser.serialize(thisb)
-        print "4. Serilized Object:\n" + serialized
-        print "Serilized Object Validation:\n", pyxser.validate(serialized)
-        unserialized = pyxser.unserialize(serialized)
-        print "4. Unserialized Object:\n" + repr(unserialized) + "\n\n"
-
-        thisc = testpkg.sample.TestAnotherObject()
-        thisc.first_element = "XXX"
-        thisc.second_element = thisb
-
-        serialized = pyxser.serialize(thisc)
-        print "5. Serilized Object:\n" + serialized
-        print "Serilized Object Validation:\n", pyxser.validate(serialized)
-        unserialized = pyxser.unserialize(serialized)
-        print "5. Unserialized Object:\n" + repr(unserialized) + "\n\n"
+        print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
 
         pyxser.xmlcleanup();
 
