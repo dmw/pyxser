@@ -27,6 +27,8 @@
 static const char Id[] = "$Id$";
 #endif /* !lint */
 
+#include <stdarg.h>
+
 #include "include/pyxser.h"
 
 static xmlNsPtr pyxser_default_ns;
@@ -135,6 +137,8 @@ inline PyObject *pyxser_UnserializeElement(PyObject *ct,
                                            xmlNodePtr ron,
                                            const char *n_id,
                                            PythonUnserializationArgumentsPtr obj);
+
+void pyxser_validity_exception(void *ctx, const char *msg, va_list args);
 
 
 static const char type_int[] = "int";
@@ -283,7 +287,14 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docptr, xmlNodePtr *rootNode,
 			&& rootNode != (xmlNodePtr *)NULL
 			&& *rootNode == (xmlNodePtr)NULL) {
 			doc = xmlNewDoc(BAD_CAST pyxser_xml_version);
-			doc->encoding = (BAD_CAST xmlStrdup(BAD_CAST enc));
+            doc->encoding = BAD_CAST xmlStrdup((BAD_CAST enc));
+            doc->charset = xmlParseCharEncoding(BAD_CAST enc);
+            doc->parseFlags = \
+                XML_PARSE_DTDVALID
+                | XML_PARSE_RECOVER
+                | XML_PARSE_NOWARNING
+                | XML_PARSE_NOERROR
+                | XML_PARSE_NOBLANKS;
 			*docptr = doc;
 			*rootNode = xmlNewDocNode(doc, pyxser_GetDefaultNs(),
 									  BAD_CAST pyxser_xml_element_object,
@@ -1533,6 +1544,16 @@ pyxser_GetPyxserDTD()
 	return pyxser_dtd_object;
 }
 
+void
+pyxser_validity_exception(void *ctx, const char *msg, va_list args)
+{
+    PyObject *err;
+    char error_buffer[1024];
+    memset(error_buffer, 0, 512);
+    sprintf(error_buffer, msg, args);
+    PyErr_SetString(invalid_encoding_exception, error_buffer);
+}
+
 int
 pyxser_ValidateDocument(xmlDocPtr doc)
 {
@@ -1542,8 +1563,9 @@ pyxser_ValidateDocument(xmlDocPtr doc)
 		return 0;
 	}
 	cvp->userData = (void *) stderr;
-	cvp->error    = (xmlValidityErrorFunc) fprintf;
-	cvp->warning  = (xmlValidityWarningFunc) fprintf;
+	cvp->error = (xmlValidityErrorFunc) fprintf;
+	cvp->warning = (xmlValidityWarningFunc) fprintf;
+    cvp->doc = doc;
 	if (!xmlValidateDtd(cvp, doc, dtd)) {
 		return 0;
 	}

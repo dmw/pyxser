@@ -36,6 +36,9 @@ static const char Id[] = "$Id$";
 #include "include/pyxser_tools.h"
 
 
+static xmlChar *pyxser_ConvertInput(const char *in, const char *encoding);
+
+
 xmlNodePtr
 pyxser_SerializeUnicode(PyObject *o, char *name,
 						PyListObject *dupItems, xmlDocPtr doc,
@@ -51,6 +54,7 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
 	PyObject *unic = (PyObject *)NULL;
 
 	size_t data_size = 0;
+    char error_buffer[512];
 	char *sptr = (char *)NULL;
 	char *nptr = (char *)NULL;
 	char sz_attr[30];
@@ -73,12 +77,15 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
         return (xmlNodePtr)NULL;
     }
 
-
     unic = PyUnicode_AsEncodedString(o, (char *)doc->encoding,
                                      pyxser_xml_encoding_mode);
+
     if (PYTHON_IS_NONE(unic)) {
         Py_DECREF(classPtr);
         Py_DECREF(className);
+        memset(error_buffer, 0, 512);
+        sprintf(error_buffer, "Invalid bytecode for encoding '%s'", pyxser_xml_encoding);
+        PyErr_SetString(invalid_encoding_exception, error_buffer);
         return (xmlNodePtr)NULL;
     }
 
@@ -92,7 +99,8 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
                                 pyxser_GetDefaultNs(),
                                 BAD_CAST pyxser_xml_attr_item,
                                 NULL);
-            ntxt = xmlNewDocText(doc, BAD_CAST sptr);
+            ntxt = xmlNewDocText(doc,
+                                 pyxser_ConvertInput(sptr, doc->encoding));
             typeAttr = xmlNewProp(nen,
                                   BAD_CAST pyxser_xml_attr_type,
                                   BAD_CAST nptr);
@@ -279,5 +287,44 @@ pyxunser_SerializeBuffer(PythonUnserializationArgumentsPtr obj)
 	}
 	return Py_None;
 }
+
+static xmlChar *
+pyxser_ConvertInput(const char *in, const char *encoding)
+{
+    xmlChar *out;
+    int ret;
+    int size;
+    int out_size;
+    int temp;
+    xmlCharEncodingHandlerPtr handler;
+
+    if (in == 0)
+        return 0;
+
+    handler = xmlFindCharEncodingHandler(encoding);
+
+    if (!handler) {
+        return 0;
+    }
+
+    size = (int) strlen(in) + 1;
+    out_size = size * 2 - 1;
+    out = (unsigned char *) xmlMalloc((size_t) out_size);
+
+    if (out != 0) {
+        temp = size - 1;
+        ret = handler->input(out, &out_size, (const xmlChar *) in, &temp);
+        if ((ret < 0) || (temp - size + 1)) {
+            xmlFree(out);
+            out = 0;
+        } else {
+            out = (unsigned char *) xmlRealloc(out, out_size + 1);
+            out[out_size] = 0;  /*null terminating out */
+        }
+    }
+
+    return out;
+}
+
 
 /* pyserx_strings.c ends here */
