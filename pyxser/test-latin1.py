@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# -*- coding: iso-8859-1; -*-
 ##
 ##     Copyright (c) 2009 Daniel Molina Wegener <dmw@coder.cl>
 ##
@@ -22,7 +22,7 @@
 ##               PUBLIC "-//coder.cl//DTD pyxser 1.0//EN"
 ##               "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd">
 ##
-## $Id$
+## $Id: test.py 36 2009-04-01 03:49:23Z damowe $
 ##
 
 
@@ -59,30 +59,30 @@ if __name__ == "__main__":
     test.nested("holahola", 345, "hola")
     test.subnested(other)
     another.dyn_prop1 = thisa
-    test.dyn_prop1 = [u'hol√°', u'cha√≥', another]
-    test.dyn_prop2 = (u'hol`', u's√Øn', 'trip', other)
-    test.dyn_prop3 = {'saludo1': u'h√≥l√†', 'saludo2': u'ch√§√≥', 'saludo4': 'goodbye', 'saludo5': thisc}
-    test.dyn_prop4 = u's√≥m√© t√®xt√® √Ø√± Unicod√®'
-    test.dyn_prop5 = u'A√±other Tex√© I√± √ún√¨c√≥D√ãc'
+    test.dyn_prop1 = [u'hol·', u'chaÛ', another]
+    test.dyn_prop2 = (u'hol`', u'sÔn', 'trip', other)
+    test.dyn_prop3 = {'saludo1': u'hÛl‡', 'saludo2': u'ch‰Û', 'saludo4': 'goodbye', 'saludo5': thisc}
+    test.dyn_prop4 = u'hol·hol·caca'
+    test.dyn_prop5 = u'ÒeÒeÒeÒe'
     test.dyn_prop6 = 1.5
     test.dyn_prop7 = 1000
 
     try:
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0)
+        serialized = pyxser.serialize(obj = test, enc = "ISO-8859-1", depth = 0)
         print "Serilized Object:\n" + serialized
         print "First Object:\n" + repr(test) + "\n\n"
         print "Serilized Object Validation:\n", pyxser.validate(serialized)
         unserialized = pyxser.unserialize(serialized)
         print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
 
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2)
+        serialized = pyxser.serialize(obj = test, enc = "ISO-8859-1", depth = 2)
         print "Serilized Object:\n" + serialized
         print "First Object:\n" + repr(test) + "\n\n"
         print "Serilized Object Validation:\n", pyxser.validate(serialized)
         unserialized = pyxser.unserialize(serialized)
         print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
 
-        serialized = pyxser.serialize(obj = test, enc = "utf-16", depth = 2)
+        serialized = pyxser.serialize(obj = test, enc = "ISO-8859-1", depth = 2)
         print "Serilized Object:\n" + serialized
         print "First Object:\n" + repr(test) + "\n\n"
         print "Serilized Object Validation:\n", pyxser.validate(serialized)

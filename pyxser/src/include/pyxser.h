@@ -117,6 +117,10 @@ extern "C" {
     extern const char pyxser_xml_dtd_location[];
     extern const char pyxser_xml_dtd[];
 
+    extern PyObject *invalid_encoding_exception;
+    extern PyObject *invalid_xml_exception;
+    extern PyObject *invalid_argument_exception;
+
 #ifdef __cplusplus
 };
 #endif /* !__cplusplus */

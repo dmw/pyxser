@@ -67,6 +67,7 @@ const char pyxser_xml_element_prop[] = "prop";
 const char pyxser_xml_encoding[] = "utf-8";
 const char pyxser_xml_encoding_mode[] = "strict";
 const char pyxser_xml_version[] = "1.0";
+const char pyxser_ext_version[] = "0.2rc1";
 
 const char pyxser_xml_dtd_location[] = PYXSER_DTD_FILE;
 
@@ -76,10 +77,36 @@ static PyObject *pyxunserxml(PyObject *self, PyObject *args);
 static PyObject *pyxvalidate(PyObject *self, PyObject *args);
 static PyObject *pyxgetdtd(PyObject *self, PyObject *args);
 static PyObject *xmlcleanup(PyObject *self, PyObject *args);
-static PyDictObject *pyxser_modules = (PyDictObject *)NULL;
-void pyxser_unregister(void);
+static void pyxsersaver(xmlDocPtr out_doc, xmlChar **doc_txt_ptr,
+                        int * doc_txt_len, const char * txt_encoding,
+                        int format);
 
+PyObject *invalid_encoding_exception;
+PyObject *invalid_xml_exception;
+PyObject *invalid_argument_exception;
+
+static PyDictObject *pyxser_modules = (PyDictObject *)NULL;
+void pyxser_register_encodings(void);
+void pyxser_register_exceptions(PyObject *m);
+void pyxser_unregister(void);
 void *dummy(PyObject *obj);
+
+typedef struct pyxser_encodings_s {
+    const char *enc_f;
+    const char *enc_t;
+} pyxser_encodings_t;
+
+pyxser_encodings_t pyxser_encodings[] = {
+    {"ISO-8859-1", "iso-8859-1"},
+    {"ISO-8859-1", "latin1"},
+    {"ISO-8859-1", "Latin1"},
+    {"ISO-8859-1", "iso-Latin-1"},
+    {"ISO-8859-1", "iso-latin-1"},
+    {"UTF-8", "utf-8"},
+    {"UTF-8", "utf8"},
+    {"UTF-8", "UTF8"},
+    {NULL, NULL}
+};
 
 static const char serialize_documentation[] = \
 	"Gets any object defined in a Python module as class as argument\n"
@@ -141,6 +168,9 @@ initpyxser(void)
         return;
 	/* init module */
     Py_AtExit(pyxser_unregister);
+    pyxser_register_encodings();
+    pyxser_register_exceptions(m);
+    PyModule_AddObject(m, "__version__", PyString_FromString(pyxser_ext_version));
     LIBXML_TEST_VERSION;
 }
 
@@ -177,6 +207,10 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
         py_depth = 999999;
     }
 
+    if (py_enc == (char *)NULL) {
+        py_enc = xml_encoding;
+    }
+
 	dupItems = (PyListObject *)PyList_New(0);
 
 	serXml = pyxser_SerializeXml(input, &docXml, &rootNode,
@@ -187,12 +221,16 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	}
 	if (serXml != (xmlNodePtr)NULL
 		&& docXml != (xmlDocPtr)NULL) {
-		xmlDocDumpFormatMemoryEnc(docXml, &xmlBuff, &bufferSize,
-								  xml_encoding, 1);
-		if (xmlBuff != BAD_CAST NULL) {
-			res = PyString_FromString((const char *)xmlBuff);
-			Py_INCREF(res);
-		}
+        if ((pyxser_ValidateDocument(docXml)) == 1) {
+            xmlDocDumpFormatMemoryEnc(docXml, &xmlBuff, &bufferSize,
+                                      xmlStrdup(py_enc), 1);
+            if (xmlBuff != BAD_CAST NULL) {
+                res = PyString_FromStringAndSize(xmlBuff, bufferSize);
+                if (PYTHON_IS_NOT_NONE(res)) {
+                    Py_INCREF(res);
+                }
+            }
+        }
 	}
 	xmlFreeDoc(docXml);
 	return res;
@@ -301,8 +339,41 @@ pyxser_unregister(void)
         Py_DECREF(pyxser_modules);
     }
     xmlFreeDtd(pyxser_dtd_object);
+    xmlCleanupEncodingAliases();
     xmlCleanupParser();
 }
 
+
+void
+pyxser_register_encodings(void)
+{
+    int c;
+    for (c = 0; pyxser_encodings[c].enc_f != NULL
+             && pyxser_encodings[c].enc_t != NULL; c++) {
+        xmlAddEncodingAlias(pyxser_encodings[c].enc_f,
+                            pyxser_encodings[c].enc_t);
+    }
+}
+
+void
+pyxser_register_exceptions(PyObject *m)
+{
+    extern PyObject *invalid_encoding_exception;
+    extern PyObject *invalid_xml_exception;
+    extern PyObject *invalid_argument_exception;
+
+    invalid_argument_exception = PyErr_NewException("pyxser.InvalidArgumentException", NULL, NULL);
+    invalid_encoding_exception = PyErr_NewException("pyxser.InvalidEncodingException", NULL, NULL);
+    invalid_xml_exception = PyErr_NewException("pyxser.InvalidXMLException", NULL, NULL);
+
+    Py_INCREF(invalid_encoding_exception);
+    Py_INCREF(invalid_xml_exception);
+    Py_INCREF(invalid_argument_exception);
+
+    PyModule_AddObject(m, "InvalidArgumentException", invalid_argument_exception);
+    PyModule_AddObject(m, "InvalidXMLException", invalid_xml_exception);
+    PyModule_AddObject(m, "InvalidEncodingException", invalid_encoding_exception);
+
+}
 
 /* pyserx.c ends here */
