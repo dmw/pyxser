@@ -1,0 +1,168 @@
+Serilized Object:
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<pyxs:obj xmlns:pyxs="http://projects.coder.cl/pyxser/model/" version="1.0" type="ParentObject" module="testpkg.sample" id="id-136668716">
+  <pyxs:prop type="unicode" name="dyn_prop4" size="12">holáholácaca</pyxs:prop>
+  <pyxs:prop type="unicode" name="dyn_prop5" size="8">ñeñeñeñe</pyxs:prop>
+  <pyxs:prop type="float" name="dyn_prop6">1.5</pyxs:prop>
+  <pyxs:prop type="int" name="dyn_prop7">1000</pyxs:prop>
+  <pyxs:col type="list" name="dyn_prop1">
+    <pyxs:prop type="unicode" size="4">holá</pyxs:prop>
+    <pyxs:prop type="unicode" size="4">chaó</pyxs:prop>
+    <pyxs:obj type="TestAnotherObject" module="testpkg.sample" id="id-136658764">
+      <pyxs:prop type="int" name="first_element">123</pyxs:prop>
+      <pyxs:obj module="testpkg.sample" type="TestAnotherObject" name="dyn_prop1" id="id-136668620">
+        <pyxs:prop type="str" name="first_element">xyz</pyxs:prop>
+        <pyxs:prop type="complex" name="second_element">7.810000:2.010000</pyxs:prop>
+      </pyxs:obj>
+      <pyxs:prop type="int" name="second_element">456</pyxs:prop>
+    </pyxs:obj>
+  </pyxs:col>
+  <pyxs:col type="tuple" name="dyn_prop2">
+    <pyxs:prop type="unicode" size="4">hol`</pyxs:prop>
+    <pyxs:prop type="unicode" size="3">sïn</pyxs:prop>
+    <pyxs:prop type="str">trip</pyxs:prop>
+    <pyxs:obj type="TestAnotherObject" module="testpkg.sample" id="id-136668364">
+      <pyxs:prop type="complex" name="first_element">5.820000:3.990000</pyxs:prop>
+      <pyxs:prop type="str" name="second_element">cdf</pyxs:prop>
+    </pyxs:obj>
+  </pyxs:col>
+  <pyxs:col type="dict" name="dyn_prop3">
+    <pyxs:prop type="unicode" name="saludo1" size="4">hólà</pyxs:prop>
+    <pyxs:prop type="unicode" name="saludo2" size="4">chäó</pyxs:prop>
+    <pyxs:obj type="TestAnotherObject" name="saludo5" module="testpkg.sample" id="id-136668684">
+      <pyxs:prop type="str" name="first_element">XXX</pyxs:prop>
+      <pyxs:prop type="complex" name="second_element">32.100000:33.100000</pyxs:prop>
+    </pyxs:obj>
+    <pyxs:prop type="str" name="saludo4">goodbye</pyxs:prop>
+  </pyxs:col>
+  <pyxs:obj module="testpkg.sample" type="ChildObject" name="parent3" id="id-136668748">
+    <pyxs:prop type="str" name="child1">hi</pyxs:prop>
+    <pyxs:prop type="float" name="child2">4.5</pyxs:prop>
+    <pyxs:prop type="int" name="child3">2354</pyxs:prop>
+    <pyxs:obj module="testpkg.sample" type="NestedChild" name="child4" id="id-136668780">
+      <pyxs:obj module="testpkg.sample" type="SubNestedChild" name="nested4" id="id-136668844">
+        <pyxs:obj module="testpkg.sample" type="TestAnotherObject" name="subnested1" ref="id-136668364"/>
+      </pyxs:obj>
+      <pyxs:prop type="str" name="nested1">holahola</pyxs:prop>
+      <pyxs:prop type="int" name="nested2">345</pyxs:prop>
+      <pyxs:prop type="str" name="nested3">hola</pyxs:prop>
+    </pyxs:obj>
+  </pyxs:obj>
+  <pyxs:prop type="str" name="parent2">chao</pyxs:prop>
+  <pyxs:prop type="str" name="parent1">hola</pyxs:prop>
+</pyxs:obj>
+
+First Object:
+
+-> {'dyn_prop4': u'hol\xe1hol\xe1caca', 'dyn_prop5': u'\xf1e\xf1e\xf1e\xf1e', 'dyn_prop6': 1.5, 'dyn_prop7': 1000, 'dyn_prop1': [u'hol\xe1', u'cha\xf3', {'first_element': 123, 'dyn_prop1': {'first_element': 'xyz', 'second_element': (7.8099999999999996+2.0099999999999998j)}, 'second_element': 456}], 'dyn_prop2': (u'hol`', u's\xefn', 'trip', {'first_element': (5.8200000000000003+3.9900000000000002j), 'second_element': 'cdf'}), 'dyn_prop3': {'saludo1': u'h\xf3l\xe0', 'saludo2': u'ch\xe4\xf3', 'saludo5': {'first_element': 'XXX', 'second_element': (32.100000000000001+33.100000000000001j)}, 'saludo4': 'goodbye'}, 'parent3': 
+	-> {'child1': 'hi', 'child2': 4.5, 'child3': 2354, 'child4': 
+		-> {'nested4': 
+			-> {'subnested1': {'first_element': (5.8200000000000003+3.9900000000000002j), 'second_element': 'cdf'}}, 'nested1': 'holahola', 'nested2': 345, 'nested3': 'hola'}}, 'parent2': 'chao', 'parent1': 'hola'}
+
+
+Serilized Object Validation:
+True
+Unserialized Object:
+
+-> {'dyn_prop4': u'hol\xc3\xa1hol\xc3\xa1ca', 'dyn_prop5': u'\xc3\xb1e\xc3\xb1e\xc3\xb1', 'dyn_prop6': 1.5, 'dyn_prop7': 1000, 'dyn_prop1': [u'hol\xc3', u'cha\xc3', {'first_element': 123, 'dyn_prop1': {'first_element': 'xyz', 'second_element': (7.8099999999999996+2.0099999999999998j)}, 'second_element': 456}], 'dyn_prop2': (u'hol`', u's\xc3\xaf', 'trip', {'first_element': (5.8200000000000003+3.9900000000000002j), 'second_element': 'cdf'}), 'dyn_prop3': {'saludo1': u'h\xc3\xb3l', 'saludo2': u'ch\xc3\xa4', 'saludo5': {'first_element': 'XXX', 'second_element': (32.100000000000001+33.100000000000001j)}, 'saludo4': 'goodbye'}, 'parent3': 
+	-> {'child1': 'hi', 'child2': 4.5, 'child3': 2354, 'child4': 
+		-> {'nested4': 
+			-> {'subnested1': {'first_element': (5.8200000000000003+3.9900000000000002j), 'second_element': 'cdf'}}, 'nested1': 'holahola', 'nested2': 345, 'nested3': 'hola'}}, 'parent2': 'chao', 'parent1': 'hola'}
+
+
+Serilized Object:
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<pyxs:obj xmlns:pyxs="http://projects.coder.cl/pyxser/model/" version="1.0" type="ParentObject" module="testpkg.sample" id="id-136668716">
+  <pyxs:prop type="unicode" name="dyn_prop4" size="12">holáholácaca</pyxs:prop>
+  <pyxs:prop type="unicode" name="dyn_prop5" size="8">ñeñeñeñe</pyxs:prop>
+  <pyxs:prop type="float" name="dyn_prop6">1.5</pyxs:prop>
+  <pyxs:prop type="int" name="dyn_prop7">1000</pyxs:prop>
+  <pyxs:col type="list" name="dyn_prop1">
+    <pyxs:prop type="unicode" size="4">holá</pyxs:prop>
+    <pyxs:prop type="unicode" size="4">chaó</pyxs:prop>
+    <pyxs:obj type="TestAnotherObject" module="testpkg.sample" id="id-136658764"/>
+  </pyxs:col>
+  <pyxs:col type="tuple" name="dyn_prop2">
+    <pyxs:prop type="unicode" size="4">hol`</pyxs:prop>
+    <pyxs:prop type="unicode" size="3">sïn</pyxs:prop>
+    <pyxs:prop type="str">trip</pyxs:prop>
+    <pyxs:obj type="TestAnotherObject" module="testpkg.sample" id="id-136668364"/>
+  </pyxs:col>
+  <pyxs:col type="dict" name="dyn_prop3">
+    <pyxs:prop type="unicode" name="saludo1" size="4">hólà</pyxs:prop>
+    <pyxs:prop type="unicode" name="saludo2" size="4">chäó</pyxs:prop>
+    <pyxs:obj type="TestAnotherObject" name="saludo5" module="testpkg.sample" id="id-136668684"/>
+    <pyxs:prop type="str" name="saludo4">goodbye</pyxs:prop>
+  </pyxs:col>
+  <pyxs:obj module="testpkg.sample" type="ChildObject" name="parent3" id="id-136668748"/>
+  <pyxs:prop type="str" name="parent2">chao</pyxs:prop>
+  <pyxs:prop type="str" name="parent1">hola</pyxs:prop>
+</pyxs:obj>
+
+First Object:
+
+-> {'dyn_prop4': u'hol\xe1hol\xe1caca', 'dyn_prop5': u'\xf1e\xf1e\xf1e\xf1e', 'dyn_prop6': 1.5, 'dyn_prop7': 1000, 'dyn_prop1': [u'hol\xe1', u'cha\xf3', {'first_element': 123, 'dyn_prop1': {'first_element': 'xyz', 'second_element': (7.8099999999999996+2.0099999999999998j)}, 'second_element': 456}], 'dyn_prop2': (u'hol`', u's\xefn', 'trip', {'first_element': (5.8200000000000003+3.9900000000000002j), 'second_element': 'cdf'}), 'dyn_prop3': {'saludo1': u'h\xf3l\xe0', 'saludo2': u'ch\xe4\xf3', 'saludo5': {'first_element': 'XXX', 'second_element': (32.100000000000001+33.100000000000001j)}, 'saludo4': 'goodbye'}, 'parent3': 
+	-> {'child1': 'hi', 'child2': 4.5, 'child3': 2354, 'child4': 
+		-> {'nested4': 
+			-> {'subnested1': {'first_element': (5.8200000000000003+3.9900000000000002j), 'second_element': 'cdf'}}, 'nested1': 'holahola', 'nested2': 345, 'nested3': 'hola'}}, 'parent2': 'chao', 'parent1': 'hola'}
+
+
+Serilized Object Validation:
+True
+Unserialized Object:
+
+-> {'dyn_prop4': u'hol\xc3\xa1hol\xc3\xa1ca', 'dyn_prop5': u'\xc3\xb1e\xc3\xb1e\xc3\xb1', 'dyn_prop6': 1.5, 'dyn_prop7': 1000, 'dyn_prop1': [u'hol\xc3', u'cha\xc3', {}], 'dyn_prop2': (u'hol`', u's\xc3\xaf', 'trip', {}), 'dyn_prop3': {'saludo1': u'h\xc3\xb3l', 'saludo2': u'ch\xc3\xa4', 'saludo5': {}, 'saludo4': 'goodbye'}, 'parent3': 
+	-> {}, 'parent2': 'chao', 'parent1': 'hola'}
+
+
+Serilized Object:
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<pyxs:obj xmlns:pyxs="http://projects.coder.cl/pyxser/model/" version="1.0" type="ParentObject" module="testpkg.sample" id="id-136668716">
+  <pyxs:prop type="unicode" name="dyn_prop4" size="12">holáholácaca</pyxs:prop>
+  <pyxs:prop type="unicode" name="dyn_prop5" size="8">ñeñeñeñe</pyxs:prop>
+  <pyxs:prop type="float" name="dyn_prop6">1.5</pyxs:prop>
+  <pyxs:prop type="int" name="dyn_prop7">1000</pyxs:prop>
+  <pyxs:col type="list" name="dyn_prop1">
+    <pyxs:prop type="unicode" size="4">holá</pyxs:prop>
+    <pyxs:prop type="unicode" size="4">chaó</pyxs:prop>
+    <pyxs:obj type="TestAnotherObject" module="testpkg.sample" id="id-136658764"/>
+  </pyxs:col>
+  <pyxs:col type="tuple" name="dyn_prop2">
+    <pyxs:prop type="unicode" size="4">hol`</pyxs:prop>
+    <pyxs:prop type="unicode" size="3">sïn</pyxs:prop>
+    <pyxs:prop type="str">trip</pyxs:prop>
+    <pyxs:obj type="TestAnotherObject" module="testpkg.sample" id="id-136668364"/>
+  </pyxs:col>
+  <pyxs:col type="dict" name="dyn_prop3">
+    <pyxs:prop type="unicode" name="saludo1" size="4">hólà</pyxs:prop>
+    <pyxs:prop type="unicode" name="saludo2" size="4">chäó</pyxs:prop>
+    <pyxs:obj type="TestAnotherObject" name="saludo5" module="testpkg.sample" id="id-136668684"/>
+    <pyxs:prop type="str" name="saludo4">goodbye</pyxs:prop>
+  </pyxs:col>
+  <pyxs:obj module="testpkg.sample" type="ChildObject" name="parent3" id="id-136668748"/>
+  <pyxs:prop type="str" name="parent2">chao</pyxs:prop>
+  <pyxs:prop type="str" name="parent1">hola</pyxs:prop>
+</pyxs:obj>
+
+First Object:
+
+-> {'dyn_prop4': u'hol\xe1hol\xe1caca', 'dyn_prop5': u'\xf1e\xf1e\xf1e\xf1e', 'dyn_prop6': 1.5, 'dyn_prop7': 1000, 'dyn_prop1': [u'hol\xe1', u'cha\xf3', {'first_element': 123, 'dyn_prop1': {'first_element': 'xyz', 'second_element': (7.8099999999999996+2.0099999999999998j)}, 'second_element': 456}], 'dyn_prop2': (u'hol`', u's\xefn', 'trip', {'first_element': (5.8200000000000003+3.9900000000000002j), 'second_element': 'cdf'}), 'dyn_prop3': {'saludo1': u'h\xf3l\xe0', 'saludo2': u'ch\xe4\xf3', 'saludo5': {'first_element': 'XXX', 'second_element': (32.100000000000001+33.100000000000001j)}, 'saludo4': 'goodbye'}, 'parent3': 
+	-> {'child1': 'hi', 'child2': 4.5, 'child3': 2354, 'child4': 
+		-> {'nested4': 
+			-> {'subnested1': {'first_element': (5.8200000000000003+3.9900000000000002j), 'second_element': 'cdf'}}, 'nested1': 'holahola', 'nested2': 345, 'nested3': 'hola'}}, 'parent2': 'chao', 'parent1': 'hola'}
+
+
+Serilized Object Validation:
+True
+Unserialized Object:
+
+-> {'dyn_prop4': u'hol\xc3\xa1hol\xc3\xa1ca', 'dyn_prop5': u'\xc3\xb1e\xc3\xb1e\xc3\xb1', 'dyn_prop6': 1.5, 'dyn_prop7': 1000, 'dyn_prop1': [u'hol\xc3', u'cha\xc3', {}], 'dyn_prop2': (u'hol`', u's\xc3\xaf', 'trip', {}), 'dyn_prop3': {'saludo1': u'h\xc3\xb3l', 'saludo2': u'ch\xc3\xa4', 'saludo5': {}, 'saludo4': 'goodbye'}, 'parent3': 
+	-> {}, 'parent2': 'chao', 'parent1': 'hola'}
+
+
+------------------------------------------------------------
+Traceback (most recent call last):
+  File "./test-latin1.py", line 100, in <module>
+    serialized = pyxser.serialize_c14n(obj = test, enc = "iso-8859-1", depth = 0, esc = 1, com = 1)
+ValueError: Invalid encoding, canonical XML uses UTF-8.
+------------------------------------------------------------

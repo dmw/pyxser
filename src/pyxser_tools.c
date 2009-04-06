@@ -288,13 +288,8 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docptr, xmlNodePtr *rootNode,
 			&& *rootNode == (xmlNodePtr)NULL) {
 			doc = xmlNewDoc(BAD_CAST pyxser_xml_version);
             doc->encoding = BAD_CAST xmlStrdup((BAD_CAST enc));
-            doc->charset = xmlParseCharEncoding(BAD_CAST enc);
-            doc->parseFlags = \
-                XML_PARSE_DTDVALID
-                | XML_PARSE_RECOVER
-                | XML_PARSE_NOWARNING
-                | XML_PARSE_NOERROR
-                | XML_PARSE_NOBLANKS;
+            doc->charset = xmlParseCharEncoding(enc);
+            doc->parseFlags = XML_PARSE_RECOVER;
 			*docptr = doc;
 			*rootNode = xmlNewDocNode(doc, pyxser_GetDefaultNs(),
 									  BAD_CAST pyxser_xml_element_object,
@@ -614,15 +609,21 @@ pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj)
 	char *n_module = (char *)NULL;
 	char *n_id = (char *)NULL;
 	char *strdoc = (char *)NULL;
+
+    int parseopts = XML_PARSE_RECOVER;
+
 	if (PYTHON_IS_NONE(doc)) {
 		return Py_None;
 	}
+
 	strdoc = PyString_AS_STRING(*doc);
 	if (strdoc == (char *)NULL) {
 		return Py_None;
 	}
+
 	*docptr = xmlReadMemory((const char *)strdoc, strlen(strdoc), NULL,
-							(const char *)pyxser_xml_encoding, 0);
+							(const char *)(obj->encoding), parseopts);
+
 	if (*docptr != (xmlDocPtr)NULL) {
 		if ((pyxser_ValidateDocument(*docptr)) == 1) {
             *rootNode = xmlDocGetRootElement(*docptr);
@@ -677,12 +678,15 @@ pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj)
 			}
 		}
 	}
+
 	if (*docptr != (xmlDocPtr)NULL) {
 		xmlFreeDoc(*docptr);
 	}
+
     if (PYTHON_IS_NOT_NONE(*dups)) {
         Py_DECREF(*dups);
     }
+
 	return *tree;
 }
 
@@ -1547,11 +1551,10 @@ pyxser_GetPyxserDTD()
 void
 pyxser_validity_exception(void *ctx, const char *msg, va_list args)
 {
-    PyObject *err;
     char error_buffer[1024];
     memset(error_buffer, 0, 512);
     sprintf(error_buffer, msg, args);
-    PyErr_SetString(invalid_encoding_exception, error_buffer);
+    PyErr_SetString(invalid_xml_exception, error_buffer);
 }
 
 int
@@ -1562,9 +1565,9 @@ pyxser_ValidateDocument(xmlDocPtr doc)
 	if ((cvp = xmlNewValidCtxt()) == NULL) {
 		return 0;
 	}
-	cvp->userData = (void *) stderr;
-	cvp->error = (xmlValidityErrorFunc) fprintf;
-	cvp->warning = (xmlValidityWarningFunc) fprintf;
+	cvp->userData = (void *) NULL;
+	cvp->error = (xmlValidityErrorFunc) pyxser_validity_exception;
+	cvp->warning = (xmlValidityWarningFunc) pyxser_validity_exception;
     cvp->doc = doc;
 	if (!xmlValidateDtd(cvp, doc, dtd)) {
 		return 0;
