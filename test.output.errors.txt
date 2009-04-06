@@ -13,6 +13,6 @@ ValueError: Invalid arguments, please read the documentation.
 ------------------------------------------------------------
 Traceback (most recent call last):
   File "./test-errors.py", line 85, in <module>
-    unserialized = pyxser.unserialize(obj = "wawawawaw", enc = "utf-8", depth = 0)
+    unserialized = pyxser.unserialize(obj = "wawawawaw", enc = "utf-8")
 ValueError: Invalid arguments, please read the documentation.
 ------------------------------------------------------------
