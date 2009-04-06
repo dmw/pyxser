@@ -82,7 +82,7 @@ if __name__ == "__main__":
         print "-" * 60
 
     try:
-        unserialized = pyxser.unserialize(obj = "wawawawaw", enc = "utf-8", depth = 0)
+        unserialized = pyxser.unserialize(obj = "wawawawaw", enc = "utf-8")
     except Exception, e:
         print "-" * 60
         traceback.print_exc(file=sys.stdout)

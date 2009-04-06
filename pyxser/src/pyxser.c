@@ -145,7 +145,6 @@ static const char deserialize_documentation[] = \
     "Uses the next keyword argumens:\n"
     "   obj     ->      the serialized python object\n"
     "   enc     ->      xml serialization encoding\n"
-    "   depth   ->      node navigation depth\n\n"
 	"Takes an XML string as arguments to deserialize it and be converted\n"
 	"back to it's original Python object. The deserialization algorithm\n"
 	"supports automatic module loading, but searches for them in the module\n"
@@ -372,7 +371,7 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	xmlNodePtr currentNode = (xmlNodePtr)NULL;
 	xmlDocPtr docXml = (xmlDocPtr)NULL;
 
-    static char *kwlist[] = {"obj", "enc", "depth", NULL};
+    static char *kwlist[] = {"obj", "enc", NULL};
     char *py_enc = (char *)NULL;
     int py_depth = 0;
 
@@ -384,8 +383,8 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return res;
 	}
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Osi", kwlist,
-                                     &input, &py_enc, &py_depth);
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os", kwlist,
+                                     &input, &py_enc);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
