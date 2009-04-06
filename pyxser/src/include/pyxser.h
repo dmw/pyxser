@@ -67,6 +67,9 @@ extern "C" {
         xmlDocPtr *docPtr;
         xmlNodePtr *rootNode;
         xmlNodePtr *currentNode;
+        char *encoding;
+        int depth;
+        int depthcnt;
     } PythonUnserializationArguments;
 
     typedef PythonUnserializationArguments *PythonUnserializationArgumentsPtr;

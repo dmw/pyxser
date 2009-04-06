@@ -1,0 +1,18 @@
+Entity: line 1: parser error : Start tag expected, '<' not found
+wawawawaw
+^
+Entity: line 1: parser error : Start tag expected, '<' not found
+wawawawaw
+^
+------------------------------------------------------------
+Traceback (most recent call last):
+  File "./test-errors.py", line 71, in <module>
+    serialized = pyxser.serialize(obj = None, enc = None, depth = "hola")
+ValueError: Invalid arguments, please read the documentation.
+------------------------------------------------------------
+------------------------------------------------------------
+Traceback (most recent call last):
+  File "./test-errors.py", line 85, in <module>
+    unserialized = pyxser.unserialize(obj = "wawawawaw", enc = "utf-8", depth = 0)
+ValueError: Invalid arguments, please read the documentation.
+------------------------------------------------------------

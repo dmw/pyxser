@@ -100,7 +100,7 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
                                 BAD_CAST pyxser_xml_attr_item,
                                 NULL);
             ntxt = xmlNewDocText(doc,
-                                 pyxser_ConvertInput(sptr, doc->encoding));
+                                 BAD_CAST pyxser_ConvertInput(sptr, (char *)doc->encoding));
             typeAttr = xmlNewProp(nen,
                                   BAD_CAST pyxser_xml_attr_type,
                                   BAD_CAST nptr);
