@@ -97,11 +97,12 @@ if __name__ == "__main__":
         print "-" * 60
 
     try:
-        serialized = pyxser.serialize_c14n(obj = test, enc = "iso-8859-1", depth = 0, esc = 1, com = 1)
+        print "---8<--- C14N ---8<---"
+        serialized = pyxser.serialize_c14n(obj = test, depth = 0, exc = 0, com = 0)
         print "Serilized Object:\n" + serialized
         print "First Object:\n" + repr(test) + "\n\n"
-        print "Serilized Object Validation:\n", pyxser.validate(obj = serialized, enc = "iso-8859-1")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "iso-8859-1", depth = 0)
+        print "Serilized Object Validation:\n", pyxser.validate(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
         print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
 
         pyxser.xmlcleanup();

@@ -20,7 +20,7 @@
               PUBLIC '-//coder.cl//DTD pyxser 1.0//EN'
               'http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd'>
 
-    $Id$
+    $Id: pyxser-1.0.dtd 16 2009-03-20 02:57:46Z damowe $
   -->
 
 <!ENTITY % xml.xmlns 'xmlns' >
@@ -52,14 +52,14 @@
           | %pyxser.element.object;)* >
 
 <!ATTLIST %pyxser.element.object;
-          %pyxser.ns;                   CDATA           #FIXED          'http://projects.coder.cl/pyxser/model/'
-          %pyxser.attr.version;         CDATA           #FIXED          '1.0'
-          %pyxser.attr.id;              ID              #IMPLIED
-          %pyxser.attr.reference;       IDREF           #IMPLIED
-          %pyxser.attr.type;            NMTOKEN         #IMPLIED
-          %pyxser.attr.name;            NMTOKEN         #IMPLIED
-          %pyxser.attr.module;          NMTOKEN         #IMPLIED
-          %pyxser.attr.size;            NMTOKEN         #IMPLIED
+          %pyxser.ns;                   CDATA         #FIXED          'http://projects.coder.cl/pyxser/model/'
+          %pyxser.attr.version;         CDATA         #FIXED          '1.0'
+          %pyxser.attr.id;              CDATA         #IMPLIED
+          %pyxser.attr.reference;       CDATA         #IMPLIED
+          %pyxser.attr.type;            CDATA         #IMPLIED
+          %pyxser.attr.name;            CDATA         #IMPLIED
+          %pyxser.attr.module;          CDATA         #IMPLIED
+          %pyxser.attr.size;            CDATA         #IMPLIED
           >
 
 <!ELEMENT %pyxser.element.collection;
@@ -67,8 +67,8 @@
           | %pyxser.element.prop;)* >
 
 <!ATTLIST %pyxser.element.collection;
-          %pyxser.attr.type;            NMTOKEN         #REQUIRED
-          %pyxser.attr.name;            NMTOKEN         #REQUIRED
+          %pyxser.attr.type;            CDATA         #REQUIRED
+          %pyxser.attr.name;            CDATA         #REQUIRED
           >
 
 <!ELEMENT %pyxser.element.prop;
@@ -76,9 +76,9 @@
           >
 
 <!ATTLIST %pyxser.element.prop;
-          %pyxser.attr.type;            NMTOKEN         #REQUIRED
-          %pyxser.attr.name;            NMTOKEN         #IMPLIED
-          %pyxser.attr.size;            NMTOKEN         #IMPLIED
+          %pyxser.attr.type;            CDATA           #REQUIRED
+          %pyxser.attr.name;            CDATA           #IMPLIED
+          %pyxser.attr.size;            CDATA           #IMPLIED
           %pyxser.attr.compress;        (yes|no)        #IMPLIED
           %pyxser.attr.encoding;        (ascii|base64)  #IMPLIED
           >

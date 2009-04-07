@@ -105,6 +105,12 @@ extern "C" {
 
     int pyxser_ValidateDocument(xmlDocPtr doc);
 
+    int pyxser_ValidateDocumentC14N(xmlDocPtr doc);
+
+    int pyxser_C14NRenderAllNodes(void * user_data,
+                                  xmlNodePtr node,
+                                  xmlNodePtr parent);
+
 #ifdef __cplusplus
 };
 #endif /* !__cplusplus */

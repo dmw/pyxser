@@ -37,7 +37,9 @@ def pkgconfig(*packages, **kw):
 pylibdir = distutils.sysconfig.get_python_lib(plat_specific=1, standard_lib=0)
 pyxser_dtd_file_dir = pylibdir + "/pyxser/xml"
 pyxser_dtd_file = pylibdir + "pyxser/xml/pyxser-1.0.dtd"
+pyxser_dtd_c14n_file = pylibdir + "pyxser/xml/pyxser-1.0-c14n.dtd"
 pyxser_dtd_location = '\"' + pylibdir + "/pyxser/xml/pyxser-1.0.dtd" + '\"'
+pyxser_dtd_c14n_location = '\"' + pylibdir + "/pyxser/xml/pyxser-1.0-c14n.dtd" + '\"'
 
 pyxser_params = pkgconfig("libxml-2.0")
 
@@ -74,7 +76,8 @@ pyxser_mod = Extension('pyxser',
                                   './src/pyxser_tools.c',
                                   './src/pyxser_strings.c',
                                   './src/pyxser_collections.c'],
-                       define_macros = [("PYXSER_DTD_FILE", pyxser_dtd_location)],
+                       define_macros = [("PYXSER_DTD_FILE", pyxser_dtd_location),
+                                        ("PYXSER_DTD_C14N_FILE", pyxser_dtd_c14n_location)],
                        **pyxser_params)
 
 setup (name = 'pyxser',
@@ -84,7 +87,7 @@ setup (name = 'pyxser',
        author_email = 'dmw@coder.cl',
        url = 'http://coder.cl/software/pyxser/',
        download_url = 'http://sourceforge.net/project/showfiles.php?group_id=256386',
-       data_files = [(pyxser_dtd_file_dir, ['src/pyxser-1.0.dtd'])],
+       data_files = [(pyxser_dtd_file_dir, ['src/pyxser-1.0.dtd', 'src/pyxser-1.0-c14n.dtd'])],
        license = '''GNU LESSER GENERAL PUBLIC LICENSE, Version 3, 29 June 2007''',
        long_description = '''
        pyxser --- a single xml serialization/deserialization extension for python.
