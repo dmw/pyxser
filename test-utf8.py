@@ -106,28 +106,28 @@ if __name__ == "__main__":
 
 
     try:
-        serialized = pyxser.serialize_c14n(obj = test, enc = "utf-8", depth = 0, esc = 0, com = 1)
+        serialized = pyxser.serialize_c14n(obj = test, depth = 0, exc = 0, com = 1)
         print "Serilized Object:\n" + serialized
         print "First Object:\n" + repr(test) + "\n\n"
         print "Serilized Object Validation:\n", pyxser.validate(serialized, enc = "utf-8")
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
         print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
 
-        serialized = pyxser.serialize_c14n(obj = test, enc = "utf-8", depth = 1, esc = 0, com = 1)
+        serialized = pyxser.serialize_c14n(obj = test, depth = 1, exc = 0, com = 1)
         print "Serilized Object:\n" + serialized
         print "First Object:\n" + repr(test) + "\n\n"
         print "Serilized Object Validation:\n", pyxser.validate(serialized, enc = "utf-8")
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
         print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
 
-        serialized = pyxser.serialize_c14n(obj = test, enc = "utf-8", depth = 2, esc = 0, com = 1)
+        serialized = pyxser.serialize_c14n(obj = test, depth = 2, exc = 0, com = 1)
         print "Serilized Object:\n" + serialized
         print "First Object:\n" + repr(test) + "\n\n"
         print "Serilized Object Validation:\n", pyxser.validate(serialized, enc = "utf-8")
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
         print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
 
-        serialized = pyxser.serialize_c14n(obj = test, enc = "utf-8", depth = 3, esc = 0, com = 1)
+        serialized = pyxser.serialize_c14n(obj = test, depth = 3, exc = 0, com = 1)
         print "Serilized Object:\n" + serialized
         print "First Object:\n" + repr(test) + "\n\n"
         print "Serilized Object Validation:\n", pyxser.validate(serialized, enc = "utf-8")

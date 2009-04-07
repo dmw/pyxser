@@ -118,6 +118,7 @@ extern "C" {
     extern const char pyxser_xml_encoding_mode[];
     extern const char pyxser_xml_version[];
     extern const char pyxser_xml_dtd_location[];
+    extern const char pyxser_xml_dtd_c14n_location[];
     extern const char pyxser_xml_dtd[];
 
     extern PyObject *invalid_encoding_exception;
