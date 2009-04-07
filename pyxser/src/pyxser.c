@@ -126,8 +126,7 @@ static const char serialize_documentation[] = \
 	"The serialization algorithm is a O(n) one, this means which the\n"
 	"serializer runs over the object tree just one time and cross\n"
 	"refernces are serialized as XML references through the IDREF\n"
-	"attribute pyxs:ref. Also this serialization method is supposed\n"
-	"to support C14N\n\n"
+	"attribute pyxs:ref.\n\n"
 	"The serialization model resides in the pyxser public identifier DTD:\n"
 	"    <!DOCTYPE pyxs:obj\n"
     "              PUBLIC '-//coder.cl//DTD pyxser 1.0//EN'\n"
@@ -142,7 +141,14 @@ static const char serializec14n_documentation[] = \
     "   com     ->      with comments\n\n"
     "Same as serialize(), but uses C14N canonization, to use exceluse\n"
     "canonization esc argument must differ from zero and to use comments\n"
-    "com must differ from zero\n\n";
+    "com must differ from zero\n\n"
+	"    <!DOCTYPE pyxs:obj\n"
+    "              PUBLIC '-//coder.cl//DTD pyxser C14N 1.0//EN'\n"
+    "              'http://projects.coder.cl/pyxser/dtd/pyxser-1.0-c14n.dtd'>\n\n"
+    "* Information about Canonical XML at:\n\thttp://www.w3.org/TR/xml-c14n\n"
+    "* Information about Exclusive Canonical XML at\n\thttp://www.w3.org/TR/xml-exc-c14n\n"
+    "NOTE: The canonical DTD converts all ID, IDREF and NMTOKEN\n"
+    "      attributes to CDATA attributes\n";
 
 static const char deserialize_documentation[] = \
     "Uses the next keyword argumens:\n"
