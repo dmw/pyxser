@@ -217,8 +217,8 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 	xmlNodePtr serXml = (xmlNodePtr)NULL;
 	xmlNodePtr rootNode = (xmlNodePtr)NULL;
 	xmlDocPtr docXml = (xmlDocPtr)NULL;
-    xmlOutputBufferPtr xmlBuff = (xmlOutputBufferPtr *)NULL;
-    xmlChar **docPtr = (xmlChar **)NULL;
+    xmlOutputBufferPtr xmlBuff = (xmlOutputBufferPtr)NULL;
+    xmlChar *docPtr = (xmlChar *)NULL;
 
     static char *kwlist[] = {"obj", "depth", "exc", "com", NULL};
     int py_depth = 999999;
@@ -272,9 +272,9 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
                 PyErr_SetString(PyExc_ValueError, msg_non_object);
                 return NULL;
             }
-            if (xmlBuff != BAD_CAST NULL) {
+            if (xmlBuff != NULL) {
                 ret = xmlBuff->buffer->use;
-                docPtr = xmlStrndup(xmlBuff->buffer->content, ret);
+                docPtr = BAD_CAST xmlStrndup(xmlBuff->buffer->content, ret);
                 res = PyString_FromString((char *)docPtr);
                 xmlOutputBufferClose(xmlBuff);
                 if (PYTHON_IS_NOT_NONE(res)) {

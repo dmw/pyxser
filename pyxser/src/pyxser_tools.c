@@ -290,7 +290,6 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docptr, xmlNodePtr *rootNode,
 			doc = xmlNewDoc(BAD_CAST pyxser_xml_version);
             doc->encoding = BAD_CAST xmlStrdup((BAD_CAST enc));
             doc->charset = xmlParseCharEncoding(enc);
-            doc->parseFlags = XML_PARSE_RECOVER;
 			*docptr = doc;
 			*rootNode = xmlNewDocNode(doc, pyxser_GetDefaultNs(),
 									  BAD_CAST pyxser_xml_element_object,
