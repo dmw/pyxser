@@ -272,6 +272,7 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 	if (PYTHON_IS_NONE(args)) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
+        Py_INCREF(res);
 		return res;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Oiii", kwlist,
@@ -298,7 +299,7 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 								 (xmlNodePtr *)NULL, dupItems,
                                  xml_encoding, &py_depth, &py_depth_cnt);
 
-	if (dupItems != (PyListObject *)NULL) {
+	if (PYTHON_IS_NOT_NONE(dupItems)) {
 		Py_DECREF(dupItems);
 	}
 
@@ -359,6 +360,7 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 	if (PYTHON_IS_NONE(args)) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
+        Py_INCREF(res);
 		return res;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Oiii", kwlist,
@@ -440,6 +442,7 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	if (PYTHON_IS_NONE(args)) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
+        Py_INCREF(res);
 		return res;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Osi", kwlist,
@@ -539,6 +542,7 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
+        Py_INCREF(res);
 		return res;
 	}
 
@@ -602,6 +606,7 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 	if (PYTHON_IS_NONE(args)) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
+        Py_INCREF(res);
 		return res;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os", kwlist,
@@ -609,6 +614,7 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
+        Py_INCREF(res);
 		return res;
 	}
 
@@ -629,7 +635,8 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_xml);
 		return NULL;
     }
-	return res;
+    Py_INCREF(res);
+    return res;
 }
 
 static PyObject *
@@ -648,6 +655,7 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
 	if (PYTHON_IS_NONE(args)) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
+        Py_INCREF(res);
 		return res;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os", kwlist,
@@ -655,6 +663,7 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
+        Py_INCREF(res);
 		return res;
 	}
 
@@ -675,13 +684,25 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_xml);
 		return NULL;
     }
+    Py_INCREF(res);
+    Py_INCREF(res);
 	return res;
 }
 
 static PyObject *
 xmlcleanup(PyObject *self, PyObject *args)
 {
+    if (PYTHON_IS_NOT_NONE(pyxser_modules)) {
+        Py_DECREF(pyxser_modules);
+        pyxser_modules = NULL;
+    }
+    xmlFreeDtd(pyxser_dtd_object);
+    pyxser_dtd_object = NULL;
+    xmlFreeDtd(pyxser_dtd_c14n_object);
+    pyxser_dtd_c14n_object = NULL;
     xmlCleanupParser();
+    pyxser_register_encodings();
+    Py_INCREF(Py_None);
     return Py_None;
 }
 
@@ -691,6 +712,7 @@ pyxser_unregister(void)
 {
     if (PYTHON_IS_NOT_NONE(pyxser_modules)) {
         Py_DECREF(pyxser_modules);
+        pyxser_modules = NULL;
     }
     xmlFreeDtd(pyxser_dtd_object);
     xmlCleanupEncodingAliases();

@@ -67,27 +67,38 @@ if __name__ == "__main__":
     test.dyn_prop6 = 1.5
     test.dyn_prop7 = 1000
 
-    for correl in range(0, 10):
+    try:
 
-        try:
-            serialized = pyxser.serialize(obj = test, enc = "iso-8859-1", depth = 0)
-            pyxser.validate(obj = serialized, enc = "iso-8859-1")
-            unserialized = pyxser.unserialize(obj = serialized, enc = "iso-8859-1", depth = 0)
+        correl = 0
+        while correl < 30000:
 
-        except Exception, e:
-            print "-" * 60
-            traceback.print_exc(file=sys.stdout)
-            print "-" * 60
+            try:
+                serialized = pyxser.serialize(obj = test, enc = "iso-8859-1", depth = 0)
+                pyxser.validate(obj = serialized, enc = "iso-8859-1")
+                unserialized = pyxser.unserialize(obj = serialized, enc = "iso-8859-1", depth = 0)
 
-        try:
-            serialized = pyxser.serialize_c14n(obj = test, depth = 0, exc = 0, com = 0)
-            pyxser.validate(obj = serialized, enc = "utf-8")
-            unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+            except Exception, e:
+                print "-" * 60
+                traceback.print_exc(file=sys.stdout)
+                print "-" * 60
 
-            serialized = pyxser.serialize_c14n_strict(obj = test, depth = 0, exc = 0, com = 0)
+            try:
+                serialized = pyxser.serialize_c14n(obj = test, depth = 0, exc = 0, com = 0)
+                pyxser.validate(obj = serialized, enc = "utf-8")
+                unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
 
-        except Exception, e:
-            print "-" * 60
-            traceback.print_exc(file=sys.stdout)
-            print "-" * 60
+                serialized = pyxser.serialize_c14n_strict(obj = test, depth = 0, exc = 0, com = 0)
+
+            except Exception, e:
+                print "-" * 60
+                traceback.print_exc(file=sys.stdout)
+                print "-" * 60
+
+            pyxser.xmlcleanup()
+            correl += 1
+
+    except Exception, e:
+        print "-" * 60
+        traceback.print_exc(file=sys.stdout)
+        print "-" * 60
 
