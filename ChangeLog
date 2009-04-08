@@ -1,0 +1,9 @@
+0.2rc1 (2009.04.08):
+
+	* Added serialize_c14n()
+	* Added serialize_c14n_strict()
+	* Added validate_c14n()
+	* Added encodings support
+	* Added serialization depth support
+
+

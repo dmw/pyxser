@@ -624,58 +624,60 @@ pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj)
 	*docptr = xmlReadMemory((const char *)strdoc, strlen(strdoc), NULL,
 							(const char *)(obj->encoding), parseopts);
 
-	if (*docptr != (xmlDocPtr)NULL) {
-        *rootNode = xmlDocGetRootElement(*docptr);
-        currentNode = rootNode;
-        *currentNode = *rootNode;
-        obj->currentNode = currentNode;
-        n_type = (char *)xmlGetProp(*currentNode,
-                                    BAD_CAST pyxser_xml_attr_type);
-        n_module = (char *)xmlGetProp(*currentNode,
-                                      BAD_CAST pyxser_xml_attr_module);
-        n_id = (char *)xmlGetProp(*currentNode,
-                                  BAD_CAST pyxser_xml_attr_id);
-        if (*dups == (PyDictObject *)NULL) {
-            *dups = (PyDictObject *)PyDict_New();
-        }
-        if (*modules == (PyDictObject *)NULL) {
-            *modules = (PyDictObject *)PyDict_New();
-        }
-        if (n_type != (char *)NULL
-            && n_module != (char *)NULL
-            && n_id != (char *)NULL) {
-            if ((pyxser_ModuleNotMain(n_module)) == 1) {
-                ct = pyxser_SearchTypesInModules(n_module,
-                                                 n_type,
-                                                 modules);
-                if (PYTHON_IS_NOT_NONE(ct)) {
-                    if (*tree == (PyObject *)NULL) {
-                        *tree = PyInstance_NewRaw(ct, PyDict_New());
-                        *current = *tree;
-                        obj->current = current;
-                        obj->tree = tree;
-                        pyxser_UnserializeBlock(obj);
-                        *(obj->current) = cacheCurrent;
-                        *(obj->currentNode) = cacheCurrentNode;
-                        obj->tree = tree;
+    if (pyxser_ValidateDocument(*docptr) == 1) {
+        if (*docptr != (xmlDocPtr)NULL) {
+            *rootNode = xmlDocGetRootElement(*docptr);
+            currentNode = rootNode;
+            *currentNode = *rootNode;
+            obj->currentNode = currentNode;
+            n_type = (char *)xmlGetProp(*currentNode,
+                                        BAD_CAST pyxser_xml_attr_type);
+            n_module = (char *)xmlGetProp(*currentNode,
+                                          BAD_CAST pyxser_xml_attr_module);
+            n_id = (char *)xmlGetProp(*currentNode,
+                                      BAD_CAST pyxser_xml_attr_id);
+            if (*dups == (PyDictObject *)NULL) {
+                *dups = (PyDictObject *)PyDict_New();
+            }
+            if (*modules == (PyDictObject *)NULL) {
+                *modules = (PyDictObject *)PyDict_New();
+            }
+            if (n_type != (char *)NULL
+                && n_module != (char *)NULL
+                && n_id != (char *)NULL) {
+                if ((pyxser_ModuleNotMain(n_module)) == 1) {
+                    ct = pyxser_SearchTypesInModules(n_module,
+                                                     n_type,
+                                                     modules);
+                    if (PYTHON_IS_NOT_NONE(ct)) {
+                        if (*tree == (PyObject *)NULL) {
+                            *tree = PyInstance_NewRaw(ct, PyDict_New());
+                            *current = *tree;
+                            obj->current = current;
+                            obj->tree = tree;
+                            pyxser_UnserializeBlock(obj);
+                            *(obj->current) = cacheCurrent;
+                            *(obj->currentNode) = cacheCurrentNode;
+                            obj->tree = tree;
+                        }
                     }
-                }
-            } else {
-                ct = pyxser_SearchObjectInMain(n_type);
-                if (PYTHON_IS_NOT_NONE(ct)) {
-                    if (*tree == (PyObject *)NULL) {
-                        *tree = PyInstance_NewRaw(ct, PyDict_New());
-                        *current = *tree;
-                        obj->current = current;
-                        obj->tree = tree;
-                        pyxser_UnserializeBlock(obj);
-                        *(obj->current) = cacheCurrent;
-                        *(obj->currentNode) = cacheCurrentNode;
+                } else {
+                    ct = pyxser_SearchObjectInMain(n_type);
+                    if (PYTHON_IS_NOT_NONE(ct)) {
+                        if (*tree == (PyObject *)NULL) {
+                            *tree = PyInstance_NewRaw(ct, PyDict_New());
+                            *current = *tree;
+                            obj->current = current;
+                            obj->tree = tree;
+                            pyxser_UnserializeBlock(obj);
+                            *(obj->current) = cacheCurrent;
+                            *(obj->currentNode) = cacheCurrentNode;
+                        }
                     }
                 }
             }
         }
-	}
+    }
 
 	if (*docptr != (xmlDocPtr)NULL) {
 		xmlFreeDoc(*docptr);
