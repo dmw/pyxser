@@ -1,0 +1,63 @@
+         238 function calls in 0.035 CPU seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.035    0.035 <string>:1(<module>)
+        1    0.000    0.000    0.000    0.000 __init__.py:4(<module>)
+        2    0.000    0.000    0.000    0.000 __init__.py:48(normalize_encoding)
+        2    0.000    0.000    0.001    0.000 __init__.py:70(search_function)
+        2    0.000    0.000    0.000    0.000 codecs.py:77(__new__)
+        1    0.000    0.000    0.000    0.000 sample.py:11(TestAnotherObject)
+        1    0.000    0.000    0.000    0.000 sample.py:19(SubNestedChild)
+        1    0.000    0.000    0.000    0.000 sample.py:21(__init__)
+        1    0.000    0.000    0.000    0.000 sample.py:26(NestedChild)
+        1    0.000    0.000    0.000    0.000 sample.py:31(__init__)
+        1    0.000    0.000    0.000    0.000 sample.py:38(ChildObject)
+        1    0.000    0.000    0.000    0.000 sample.py:43(__init__)
+        1    0.000    0.000    0.000    0.000 sample.py:5(<module>)
+        1    0.000    0.000    0.000    0.000 sample.py:50(ParentObject)
+        1    0.000    0.000    0.000    0.000 sample.py:54(__init__)
+        1    0.000    0.000    0.000    0.000 sample.py:57(child)
+        1    0.000    0.000    0.000    0.000 sample.py:59(nested)
+        1    0.000    0.000    0.000    0.000 sample.py:61(subnested)
+        1    0.033    0.033    0.034    0.034 test-utf8-prof.py:29(<module>)
+        1    0.000    0.000    0.000    0.000 traceback.py:1(<module>)
+        1    0.000    0.000    0.000    0.000 utf_16_be.py:18(IncrementalEncoder)
+        1    0.000    0.000    0.000    0.000 utf_16_be.py:22(IncrementalDecoder)
+        1    0.000    0.000    0.000    0.000 utf_16_be.py:25(StreamWriter)
+        1    0.000    0.000    0.000    0.000 utf_16_be.py:28(StreamReader)
+        1    0.000    0.000    0.000    0.000 utf_16_be.py:33(getregentry)
+        1    0.000    0.000    0.000    0.000 utf_16_be.py:8(<module>)
+       80    0.000    0.000    0.001    0.000 utf_8.py:15(decode)
+        1    0.000    0.000    0.000    0.000 utf_8.py:18(IncrementalEncoder)
+        1    0.000    0.000    0.000    0.000 utf_8.py:22(IncrementalDecoder)
+        1    0.000    0.000    0.000    0.000 utf_8.py:25(StreamWriter)
+        1    0.000    0.000    0.000    0.000 utf_8.py:28(StreamReader)
+        1    0.000    0.000    0.000    0.000 utf_8.py:33(getregentry)
+        1    0.000    0.000    0.000    0.000 utf_8.py:8(<module>)
+        1    0.000    0.000    0.000    0.000 warnings.py:24(warn)
+        1    0.000    0.000    0.000    0.000 warnings.py:64(warn_explicit)
+        2    0.000    0.000    0.000    0.000 {__import__}
+       80    0.000    0.000    0.000    0.000 {_codecs.utf_8_decode}
+        2    0.000    0.000    0.000    0.000 {built-in method __new__ of type object at 0x8116d80}
+        1    0.001    0.001    0.035    0.035 {execfile}
+        2    0.000    0.000    0.000    0.000 {globals}
+        2    0.000    0.000    0.000    0.000 {hasattr}
+        4    0.000    0.000    0.000    0.000 {isinstance}
+        3    0.000    0.000    0.000    0.000 {issubclass}
+        2    0.000    0.000    0.000    0.000 {locals}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        1    0.000    0.000    0.000    0.000 {method 'endswith' of 'str' objects}
+        8    0.000    0.000    0.000    0.000 {method 'get' of 'dict' objects}
+        2    0.000    0.000    0.000    0.000 {method 'join' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 {method 'lower' of 'str' objects}
+        2    0.000    0.000    0.000    0.000 {method 'replace' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 {method 'setdefault' of 'dict' objects}
+        2    0.000    0.000    0.000    0.000 {method 'split' of 'str' objects}
+        2    0.000    0.000    0.000    0.000 {method 'translate' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 {pyxser.xmlcleanup}
+        1    0.000    0.000    0.000    0.000 {range}
+        1    0.000    0.000    0.000    0.000 {sys._getframe}
+
+

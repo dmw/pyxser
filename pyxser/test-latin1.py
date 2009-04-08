@@ -105,6 +105,10 @@ if __name__ == "__main__":
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
         print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
 
+        serialized = pyxser.serialize_c14n_strict(obj = test, depth = 0, exc = 0, com = 0)
+        print "Serilized Object:\n" + serialized
+        print "First Object:\n" + repr(test) + "\n\n"
+
         pyxser.xmlcleanup();
 
     except Exception, e:
