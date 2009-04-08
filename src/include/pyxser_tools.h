@@ -42,6 +42,7 @@ extern "C" {
     extern const PythonTypeSerialize serxConcreteTypes[];
     extern const PythonTypeDeserialize unserxConcreteTypes[];
     extern xmlDtdPtr pyxser_dtd_object;
+    extern xmlDtdPtr pyxser_dtd_c14n_object;
 
     char *pyxser_GetClassName(PyObject *obj);
 
