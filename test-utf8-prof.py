@@ -71,7 +71,7 @@ if __name__ == "__main__":
     try:
 
         correl = 0
-        while correl < 30000:
+        while correl < 10000:
 
             try:
                 serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0)

@@ -221,9 +221,7 @@ pyxser_GlobalListSerialization(PyObject *o, char *name,
 	}
 	className = PyObject_GetAttrString(classPtr, pyxser_attr_name);
 	if (PYTHON_IS_NONE(className)) {
-		if (PYTHON_IS_NOT_NONE(classPtr)) {
-            Py_DECREF(classPtr);
-        }
+        PYXSER_FREE_OBJECT(classPtr);
 		return (xmlNodePtr)NULL;
 	}
 	nptr = PyString_AS_STRING(className);
@@ -249,12 +247,8 @@ pyxser_GlobalListSerialization(PyObject *o, char *name,
                                                     depth, depthcnt);
 		}
 	}
-    if (PYTHON_IS_NOT_NONE(className)) {
-        Py_DECREF(className);
-    }
-    if (PYTHON_IS_NOT_NONE(classPtr)) {
-        Py_DECREF(classPtr);
-    }
+    PYXSER_FREE_OBJECT(className);
+    PYXSER_FREE_OBJECT(classPtr);
 	return newElementNode;
 }
 
@@ -281,9 +275,7 @@ pyxser_GlobalTupleSerialization(PyObject *o, char *name, PyListObject *dupItems,
 	}
 	className = PyObject_GetAttrString(classPtr, pyxser_attr_name);
 	if (PYTHON_IS_NONE(className)) {
-        if (PYTHON_IS_NOT_NONE(classPtr)) {
-            Py_DECREF(classPtr);
-        }
+        PYXSER_FREE_OBJECT(classPtr);
 		return (xmlNodePtr)NULL;
 	}
 	nptr = PyString_AS_STRING(className);
@@ -309,12 +301,8 @@ pyxser_GlobalTupleSerialization(PyObject *o, char *name, PyListObject *dupItems,
                                                     depth, depthcnt);
 		}
 	}
-    if (PYTHON_IS_NOT_NONE(className)) {
-        Py_DECREF(className);
-    }
-    if (PYTHON_IS_NOT_NONE(classPtr)) {
-        Py_DECREF(classPtr);
-    }
+    PYXSER_FREE_OBJECT(className);
+    PYXSER_FREE_OBJECT(classPtr);
 	return newElementNode;
 }
 
@@ -343,9 +331,7 @@ pyxser_GlobalDictSerialization(PyObject *o, char *name, PyListObject *dupItems, 
 	}
 	className = PyObject_GetAttrString(classPtr, pyxser_attr_name);
 	if (PYTHON_IS_NONE(className)) {
-		if (PYTHON_IS_NOT_NONE(classPtr)) {
-            Py_DECREF(classPtr);
-        }
+        PYXSER_FREE_OBJECT(classPtr);
 		return (xmlNodePtr)NULL;
 	}
 	nptr = PyString_AS_STRING(className);
@@ -379,12 +365,8 @@ pyxser_GlobalDictSerialization(PyObject *o, char *name, PyListObject *dupItems, 
             }
 		}
 	}
-    if (PYTHON_IS_NOT_NONE(className)) {
-        Py_DECREF(className);
-    }
-    if (PYTHON_IS_NOT_NONE(classPtr)) {
-        Py_DECREF(classPtr);
-    }
+    PYXSER_FREE_OBJECT(className);
+    PYXSER_FREE_OBJECT(classPtr);
 	return newElementNode;
 }
 

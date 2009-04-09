@@ -213,23 +213,31 @@ static PyMethodDef serxMethods[] = {
     {"serialize", (PyCFunction)pyxserxml,
      METH_VARARGS | METH_KEYWORDS,
      serialize_documentation},
+
     {"serialize_c14n", (PyCFunction)pyxserxmlc14n,
      METH_VARARGS | METH_KEYWORDS,
      serializec14n_documentation},
+
     {"serialize_c14n_strict", (PyCFunction)pyxserxmlc14nstrict,
      METH_VARARGS | METH_KEYWORDS,
      serializec14n_documentation_strict},
+
     {"unserialize", (PyCFunction)pyxunserxml,
      METH_VARARGS | METH_KEYWORDS,
      deserialize_documentation},
+
     {"validate", (PyCFunction)pyxvalidate,
      METH_VARARGS | METH_KEYWORDS,
      validate_documentation},
+
     {"validate_c14n", (PyCFunction)pyxvalidatec14n,
      METH_VARARGS | METH_KEYWORDS,
      validate_documentation_c14n},
+
     {"getdtd", pyxgetdtd, METH_VARARGS, getdtd_documentation},
+
     {"xmlcleanup", xmlcleanup, METH_VARARGS, xmlcleanup_documentation},
+
     {NULL, NULL, 0, NULL}
 };
 
@@ -403,11 +411,15 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
                     Py_INCREF(res);
                     return res;
                 } else {
+                    xmlFree(xmlBuff);
                     xmlFreeDoc(docXml);
                     PyErr_SetString(PyExc_ValueError, msg_non_object);
                     return NULL;
                 }
             } else {
+                if (xmlBuff != (xmlChar *)NULL) {
+                    xmlFree(xmlBuff);
+                }
                 xmlFreeDoc(docXml);
                 PyErr_SetString(PyExc_ValueError, msg_non_object);
                 return NULL;
@@ -492,6 +504,7 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
                     Py_INCREF(res);
                     return res;
                 } else {
+                    xmlFree(xmlBuff);
                     xmlFreeDoc(docXml);
                     PyErr_SetString(PyExc_ValueError, msg_non_object);
                     return NULL;
@@ -685,7 +698,6 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
     }
     Py_INCREF(res);
-    Py_INCREF(res);
 	return res;
 }
 
@@ -701,6 +713,7 @@ xmlcleanup(PyObject *self, PyObject *args)
     xmlFreeDtd(pyxser_dtd_c14n_object);
     pyxser_dtd_c14n_object = NULL;
     xmlCleanupParser();
+    xmlCleanupEncodingAliases();
     pyxser_register_encodings();
     Py_INCREF(Py_None);
     return Py_None;

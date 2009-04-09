@@ -46,6 +46,11 @@ extern "C" {
 	(((PyObject *)o == Py_None) ||              \
 	 ((PyObject *)o == (PyObject *)NULL))
 
+#define PYXSER_FREE_OBJECT(o)                   \
+    if (PYTHON_IS_NOT_NONE(o)) {                \
+        Py_DECREF(o);                           \
+    }
+
 /* lol code xD */
 #define PYTHON_HAZ_KLASS(o)                             \
 	(PyObject_HasAttrString(o, PYTHON_CLASS_ATTR) == 1)
