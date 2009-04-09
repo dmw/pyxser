@@ -73,9 +73,7 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
                                        pyxser_attr_name);
 
     if (PYTHON_IS_NONE(className)) {
-        if (PYTHON_IS_NOT_NONE(classPtr)) {
-            Py_DECREF(classPtr);
-        }
+        PYXSER_FREE_OBJECT(classPtr);
         return (xmlNodePtr)NULL;
     }
 
@@ -83,12 +81,8 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
                                      pyxser_xml_encoding_mode);
 
     if (PYTHON_IS_NONE(unic)) {
-        if (PYTHON_IS_NOT_NONE(classPtr)) {
-            Py_DECREF(classPtr);
-        }
-        if (PYTHON_IS_NOT_NONE(className)) {
-            Py_DECREF(className);
-        }
+        PYXSER_FREE_OBJECT(className);
+        PYXSER_FREE_OBJECT(classPtr);
         memset(error_buffer, 0, 512);
         sprintf(error_buffer, "Invalid bytecode for encoding '%s'", pyxser_xml_encoding);
         PyErr_SetString(invalid_encoding_exception, error_buffer);
@@ -122,17 +116,10 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
                                   BAD_CAST sz_attr);
             xmlAddChild(nen, ntxt);
         }
-        if (PYTHON_IS_NOT_NONE(unic)) {
-            Py_DECREF(unic);
-        }
+        PYXSER_FREE_OBJECT(unic);
     }
-
-    if (PYTHON_IS_NOT_NONE(className)) {
-        Py_DECREF(className);
-    }
-    if (PYTHON_IS_NOT_NONE(classPtr)) {
-        Py_DECREF(classPtr);
-    }
+    PYXSER_FREE_OBJECT(className);
+    PYXSER_FREE_OBJECT(classPtr);
 	return nen;
 }
 
@@ -169,9 +156,6 @@ pyxser_SerializeString(PyObject *o, char *name,
     classPtr = PyObject_GetAttrString(o, pyxser_attr_class);
 
     if (PYTHON_IS_NONE(classPtr) || sptr == (char *)NULL) {
-        if (PYTHON_IS_NOT_NONE(classPtr)) {
-            Py_DECREF(classPtr);
-        }
         return (xmlNodePtr)NULL;
     }
 
@@ -179,9 +163,7 @@ pyxser_SerializeString(PyObject *o, char *name,
                                        pyxser_attr_name);
 
     if (PYTHON_IS_NONE(className)) {
-        if (PYTHON_IS_NOT_NONE(classPtr)) {
-            Py_DECREF(classPtr);
-        }
+        PYXSER_FREE_OBJECT(classPtr);
         return (xmlNodePtr)NULL;
     }
 
@@ -203,12 +185,8 @@ pyxser_SerializeString(PyObject *o, char *name,
         }
         xmlAddChild(nen, ntxt);
     }
-    if (PYTHON_IS_NOT_NONE(className)) {
-        Py_DECREF(className);
-    }
-    if (PYTHON_IS_NOT_NONE(classPtr)) {
-        Py_DECREF(classPtr);
-    }
+    PYXSER_FREE_OBJECT(className);
+    PYXSER_FREE_OBJECT(classPtr);
 	return nen;
 }
 
