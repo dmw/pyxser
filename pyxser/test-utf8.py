@@ -68,33 +68,37 @@ if __name__ == "__main__":
     test.dyn_prop7 = 1000
 
     try:
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0)
-        print "Serilized Object:\n" + serialized
         print "First Object:\n" + repr(test) + "\n\n"
-        print "Serilized Object Validation:\n", pyxser.validate(serialized, enc = "utf-8")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
-        print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
-
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 1)
-        print "Serilized Object:\n" + serialized
-        print "First Object:\n" + repr(test) + "\n\n"
-        print "Serilized Object Validation:\n", pyxser.validate(serialized, enc = "utf-8")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
-        print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
 
         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2)
         print "Serilized Object:\n" + serialized
-        print "First Object:\n" + repr(test) + "\n\n"
         print "Serilized Object Validation:\n", pyxser.validate(serialized, enc = "utf-8")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", depth = 0)
-        print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+        print "Unserialized Object (d.2):\n" + repr(unserialized) + "\n\n"
 
         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 3)
         print "Serilized Object:\n" + serialized
-        print "First Object:\n" + repr(test) + "\n\n"
         print "Serilized Object Validation:\n", pyxser.validate(serialized, enc = "utf-8")
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
-        print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
+        print "Unserialized Object (d.3):\n" + repr(unserialized) + "\n\n"
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 4)
+        print "Serilized Object:\n" + serialized
+        print "Serilized Object Validation:\n", pyxser.validate(serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+        print "Unserialized Object (d.4):\n" + repr(unserialized) + "\n\n"
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 5)
+        print "Serilized Object:\n" + serialized
+        print "Serilized Object Validation:\n", pyxser.validate(serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+        print "Unserialized Object (d.5):\n" + repr(unserialized) + "\n\n"
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0)
+        print "Serilized Object:\n" + serialized
+        print "Serilized Object Validation:\n", pyxser.validate(serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+        print "Unserialized Object (d.0):\n" + repr(unserialized) + "\n\n"
 
         pyxser.xmlcleanup();
 

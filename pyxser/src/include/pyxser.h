@@ -98,6 +98,12 @@ extern "C" {
 #include "include/pyxser_collections.h"
 #include "include/pyxser_tools.h"
 
+    extern const char msg_non_object[];
+    extern const char msg_non_method[];
+    extern const char msg_non_xml[];
+    extern const char msg_non_canon_encoding[];
+    extern const char xml_version[];
+    extern const char xml_encoding[];
     extern const char pyxser_attr_class[];
     extern const char pyxser_attr_dict[];
     extern const char pyxser_attr_module[];

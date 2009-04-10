@@ -35,17 +35,17 @@ static const char Id[] = "$Id$";
 
 #include "include/pyxser.h"
 
-static const char msg_non_object[] = \
+const char msg_non_object[] = \
 	"Invalid arguments, please read the documentation.";
-static const char msg_non_method[] = \
+const char msg_non_method[] = \
 	"Invalid call, been called as object.";
-static const char msg_non_xml[] = \
+const char msg_non_xml[] = \
 	"Invalid XML, please read the documentation.";
-static const char msg_non_canon_encoding[] = \
+const char msg_non_canon_encoding[] = \
 	"Invalid encoding, canonical XML uses UTF-8.";
-static const char xml_version[] = \
+const char xml_version[] = \
 	"1.0";
-static const char xml_encoding[] = \
+const char xml_encoding[] = \
 	"utf-8";
 
 const char pyxser_attr_class[] = "__class__";
