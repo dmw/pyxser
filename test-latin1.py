@@ -72,21 +72,21 @@ if __name__ == "__main__":
         print "Serilized Object:\n" + serialized
         print "First Object:\n" + repr(test) + "\n\n"
         print "Serilized Object Validation:\n", pyxser.validate(obj = serialized, enc = "iso-8859-1")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "iso-8859-1", depth = 0)
+        unserialized = pyxser.unserialize(obj = serialized, enc = "iso-8859-1")
         print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
 
         serialized = pyxser.serialize(obj = test, enc = "iso-8859-1", depth = 2)
         print "Serilized Object:\n" + serialized
         print "First Object:\n" + repr(test) + "\n\n"
         print "Serilized Object Validation:\n", pyxser.validate(obj = serialized, enc = "iso-8859-1")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "iso-8859-1", depth = 0)
+        unserialized = pyxser.unserialize(obj = serialized, enc = "iso-8859-1")
         print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
 
         serialized = pyxser.serialize(obj = test, enc = "iso-8859-1", depth = 2)
         print "Serilized Object:\n" + serialized
         print "First Object:\n" + repr(test) + "\n\n"
         print "Serilized Object Validation:\n", pyxser.validate(obj = serialized, enc = "iso-8859-1")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "iso-8859-1", depth = 0)
+        unserialized = pyxser.unserialize(obj = serialized, enc = "iso-8859-1")
         print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
 
         pyxser.xmlcleanup();

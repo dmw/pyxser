@@ -611,20 +611,30 @@ pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj)
 	char *strdoc = (char *)NULL;
 
     int parseopts = XML_PARSE_RECOVER;
+    int validity = 0;
 
 	if (PYTHON_IS_NONE(doc)) {
+		PyErr_SetString(PyExc_ValueError, "Invalid XML");
 		return Py_None;
 	}
 
 	strdoc = PyString_AS_STRING(*doc);
 	if (strdoc == (char *)NULL) {
-		return Py_None;
+		PyErr_SetString(PyExc_ValueError, "Invalid XML");
+		return NULL;
 	}
 
 	*docptr = xmlReadMemory((const char *)strdoc, strlen(strdoc), NULL,
 							(const char *)(obj->encoding), parseopts);
 
-    if (pyxser_ValidateDocument(*docptr) == 1) {
+    if (*docptr == (xmlDocPtr)NULL) {
+		PyErr_SetString(PyExc_ValueError, "Invalid XML");
+        return NULL;
+    }
+
+    validity = pyxser_ValidateDocument(*docptr);
+
+    if (validity == 1) {
         if (*docptr != (xmlDocPtr)NULL) {
             *rootNode = xmlDocGetRootElement(*docptr);
             currentNode = rootNode;
@@ -1571,11 +1581,19 @@ pyxser_ValidateDocument(xmlDocPtr doc)
 	if ((cvp = xmlNewValidCtxt()) == NULL) {
 		return 0;
 	}
+#ifdef PYXSER_DEBUG
+#warning USING DEBUG!
+	cvp->userData = (void *) stderr;
+	cvp->error = (xmlValidityErrorFunc) fprintf;
+	cvp->warning = (xmlValidityWarningFunc) fprintf;
+#else
 	cvp->userData = (void *) NULL;
 	cvp->error = (xmlValidityErrorFunc) pyxser_validity_exception;
 	cvp->warning = (xmlValidityWarningFunc) pyxser_validity_exception;
+#endif
 	if (!xmlValidateDtd(cvp, doc, dtd)) {
-		return 0;
+        xmlFreeValidCtxt(cvp);
+        return 0;
 	}
 	xmlFreeValidCtxt(cvp);
 	return 1;
@@ -1589,10 +1607,18 @@ pyxser_ValidateDocumentC14N(xmlDocPtr doc)
 	if ((cvp = xmlNewValidCtxt()) == NULL) {
 		return 0;
 	}
+#ifdef PYXSER_DEBUG
+#warning USING DEBUG!
+	cvp->userData = (void *) stderr;
+	cvp->error = (xmlValidityErrorFunc) fprintf;
+	cvp->warning = (xmlValidityWarningFunc) fprintf;
+#else
 	cvp->userData = (void *) NULL;
 	cvp->error = (xmlValidityErrorFunc) pyxser_validity_exception;
 	cvp->warning = (xmlValidityWarningFunc) pyxser_validity_exception;
+#endif
 	if (!xmlValidateDtd(cvp, doc, dtd)) {
+        xmlFreeValidCtxt(cvp);
 		return 0;
 	}
 	xmlFreeValidCtxt(cvp);

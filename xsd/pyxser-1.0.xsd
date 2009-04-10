@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2009 Daniel Molina Wegener <dmw@coder.cl>
+
+  This file is part of pyxser.
+
+  pyxser is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as
+  published by the Free Software Foundation, either version 3 of
+  the License, or (at your option) any later version.
+
+  pyxser is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with pyxser.  If not, see <http://www.gnu.org/licenses/>.
+
+  <!DOCTYPE pyxs:obj
+            PUBLIC '-//coder.cl//DTD pyxser 1.0//EN'
+            'http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd'>
+
+  $Id: pyxser-1.0.dtd 40 2009-04-07 01:36:55Z damowe $
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://projects.coder.cl/pyxser/model/" xmlns:pyxs="http://projects.coder.cl/pyxser/model/">
+  <xs:element name="obj">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="pyxs:prop"/>
+        <xs:element ref="pyxs:col"/>
+        <xs:element ref="pyxs:obj"/>
+      </xs:choice>
+      <xs:attribute name="version" default="1.0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="1.0"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="objid" type="xs:ID"/>
+      <xs:attribute name="objref" type="xs:IDREF"/>
+      <xs:attribute name="type" type="xs:NMTOKEN"/>
+      <xs:attribute name="name" type="xs:NMTOKEN"/>
+      <xs:attribute name="module" type="xs:NMTOKEN"/>
+      <xs:attribute name="size" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="col">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="pyxs:obj"/>
+        <xs:element ref="pyxs:prop"/>
+      </xs:choice>
+      <xs:attribute name="type" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="name" use="required" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="prop">
+    <xs:complexType mixed="true">
+      <xs:attribute name="type" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="name" type="xs:NMTOKEN"/>
+      <xs:attribute name="size" type="xs:NMTOKEN"/>
+      <xs:attribute name="compress">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="encoding">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="ascii"/>
+            <xs:enumeration value="base64"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
