@@ -14,7 +14,9 @@ from distutils.core import setup
 from distutils.core import setup, Extension
 from distutils.command.install import INSTALL_SCHEMES
 
-if sys.hexversion >= 33947888 or sys.hexversion <= 33817840:
+vi = sys.version_info
+
+if not (vi[0] == 2 and (vi[1] == 4 or vi[1] == 5 or vi[1] == 6)):
     print "Unsupported Python version"
     sys.exit()
 
@@ -93,5 +95,4 @@ setup (name = 'pyxser',
        pyxser --- a single xml serialization/deserialization extension for python.
        ''',
        ext_modules = [pyxser_mod])
-
 
