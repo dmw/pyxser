@@ -89,7 +89,10 @@ setup (name = 'pyxser',
        author_email = 'dmw@coder.cl',
        url = 'http://coder.cl/software/pyxser/',
        download_url = 'http://sourceforge.net/project/showfiles.php?group_id=256386',
-       data_files = [(pyxser_dtd_file_dir, ['src/pyxser-1.0.dtd', 'src/pyxser-1.0-c14n.dtd'])],
+       data_files = [(pyxser_dtd_file_dir, ['xsd/pyxser-1.0.dtd',
+                                            'xsd/pyxser-1.0-c14n.dtd',
+                                            'xsd/pyxser-1.0.xsd',
+                                            'xsd/pyxser-1.0-c14n.xsd'])],
        license = '''GNU LESSER GENERAL PUBLIC LICENSE, Version 3, 29 June 2007''',
        long_description = '''
        pyxser --- a single xml serialization/deserialization extension for python.

@@ -218,12 +218,10 @@ pyxunser_SerializeBoolean(PythonUnserializationArgumentsPtr obj)
 				if (strncmp((char *)ron->content,
 							pyxser_true_char_value,
 							strlen(pyxser_true_char_value)) == 0) {
-					Py_INCREF(Py_True);
 					return Py_True;
 				} else if (strncmp((char *)ron->content,
 								   pyxser_false_char_value,
 								   strlen(pyxser_false_char_value)) == 0) {
-					Py_INCREF(Py_False);
 					return Py_False;
 				}
 			}
