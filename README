@@ -4,29 +4,10 @@ pxyser --- python xml serialization
 pyxser stands for Python XML Serialization, it's Python
 object serializer that does the job in a standard way.
 Unlike other serializers, it uses structured document
-defined in the pyxser DTD, has a FPI (forma public
+defined in the pyxser DTD, has a FPI (public format
 identifier) and the deserialization process run before
 validating the serialized object document against the
 pyxser DTD.
-
-it has the next functions:
-
-string pyxser.serialize(object)
-	serilizes the given object and return it's XML
-	representation.
-
-object pyxser.unserialize(string)
-	deserializes the given string into it's native
-	python reprsentation. it needs that all modules
-	referenced in the serilized XML can be accesible
-	to the pyxser extension.
-
-boolean pyxser.validate(string)
-	validates the given XML string against the pyxser
-	DTD. you don't need to call this function before
-	every deserialization, because pyxser does the
-	validation internally.
-
 
 A sample of a serialized object is the XML as follows:
 

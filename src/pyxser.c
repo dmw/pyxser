@@ -280,8 +280,7 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 	if (PYTHON_IS_NONE(args)) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
-        Py_INCREF(res);
-		return res;
+		return NULL;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Oiii", kwlist,
                                      &input, &py_depth,
@@ -330,7 +329,6 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
                 if (PYTHON_IS_NOT_NONE(res)) {
                     xmlFree(docPtr);
                     xmlFreeDoc(docXml);
-                    Py_INCREF(res);
                     return res;
                 }
             } else {
@@ -368,8 +366,7 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 	if (PYTHON_IS_NONE(args)) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
-        Py_INCREF(res);
-		return res;
+		return NULL;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Oiii", kwlist,
                                      &input, &py_depth,
@@ -408,7 +405,6 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
                 if (PYTHON_IS_NOT_NONE(res)) {
                     xmlFree(xmlBuff);
                     xmlFreeDoc(docXml);
-                    Py_INCREF(res);
                     return res;
                 } else {
                     xmlFree(xmlBuff);
@@ -454,8 +450,7 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	if (PYTHON_IS_NONE(args)) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
-        Py_INCREF(res);
-		return res;
+		return NULL;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Osi", kwlist,
                                      &input, &in_enc, &py_depth);
@@ -501,7 +496,6 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
                 if (PYTHON_IS_NOT_NONE(res)) {
                     xmlFree(xmlBuff);
                     xmlFreeDoc(docXml);
-                    Py_INCREF(res);
                     return res;
                 } else {
                     xmlFree(xmlBuff);
@@ -555,8 +549,7 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
-        Py_INCREF(res);
-		return res;
+		return NULL;
 	}
 
     if (PYTHON_IS_NONE(pyxser_modules)) {
@@ -590,7 +583,6 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
         return NULL;
     }
-    Py_INCREF(res);
     return res;
 }
 
@@ -599,7 +591,6 @@ pyxgetdtd(PyObject *self, PyObject *args)
 {
 	PyObject *res;
 	res = PyString_FromString((const char *)pyxser_xml_dtd_location);
-	Py_INCREF(res);
 	return res;
 }
 
@@ -619,16 +610,14 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 	if (PYTHON_IS_NONE(args)) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
-        Py_INCREF(res);
-		return res;
+		return NULL;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os", kwlist,
                                      &input, &py_enc);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
-        Py_INCREF(res);
-		return res;
+		return NULL;
 	}
 
     py_enc = xmlgetencoding(xmlParseCharEncoding(py_enc));
@@ -648,7 +637,6 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_xml);
 		return NULL;
     }
-    Py_INCREF(res);
     return res;
 }
 
@@ -668,16 +656,14 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
 	if (PYTHON_IS_NONE(args)) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
-        Py_INCREF(res);
-		return res;
+		return NULL;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os", kwlist,
                                      &input, &py_enc);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
-        Py_INCREF(res);
-		return res;
+		return NULL;
 	}
 
     py_enc = xmlgetencoding(xmlParseCharEncoding(py_enc));
@@ -697,7 +683,6 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_xml);
 		return NULL;
     }
-    Py_INCREF(res);
 	return res;
 }
 

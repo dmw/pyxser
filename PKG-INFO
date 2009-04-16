@@ -1,0 +1,19 @@
+Metadata-Version: 1.0
+Name: pyxser
+Version: 0.2rc1
+Summary: pyxser -- Pyhon XML Serialization
+Home-page: http://coder.cl/software/pyxser/
+Author: Daniel Molina Wegener
+Author-email: dmw@coder.cl
+License: LGPLv3
+Description: pyxser stands for Python XML Serialization, it's Python
+	     object serializer that does the job in a standard way.
+       	     Unlike other serializers, it uses structured document
+	     defined in the pyxser DTD, has a FPI (public format
+	     identifier) and the deserialization process run before
+	     validating the serialized object document against the
+	     pyxser DTD.
+
+	     It supports C14N XML serialization.
+
+Platform: UNKNOWN
