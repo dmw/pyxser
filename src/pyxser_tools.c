@@ -433,16 +433,19 @@ pyxser_UnserializeElement(PyObject *ct, PyObject **current,
                           PythonUnserializationArgumentsPtr obj)
 {
     PyObject *unser = (PyObject *)NULL;
+    PyObject *ndict = (PyObject *)NULL;
     char *attr_name = (char *)NULL;
     int ctrl = 0;
-    unser = PyInstance_NewRaw(ct, PyDict_New());
+    ndict = PyDict_New();
+    unser = PyInstance_NewRaw(ct, ndict);
+    Py_XDECREF(ndict);
     attr_name = pyxser_ExtractPropertyName(pyxser_xml_attr_name,
                                            ron);
     if (PYTHON_IS_NOT_NONE(unser)) {
         if (attr_name != (char *)NULL) {
             ctrl = PyObject_SetAttrString(*current,
                                           attr_name, unser);
-            xmlFree(attr_name);
+            PYXSER_XMLFREE(attr_name);
         }
         pyxser_AddAvailableObject((PyObject *)*dups,
                                   (char *)n_id, unser);
@@ -450,6 +453,7 @@ pyxser_UnserializeElement(PyObject *ct, PyObject **current,
         cacheCurrentNode = ron;
         *(obj->current) = unser;
         *(obj->currentNode) = ron;
+        Py_XDECREF(unser);
         unser = pyxser_UnserializeBlock(obj);
         *(obj->current) = cacheCurrent;
         *(obj->currentNode) = cacheCurrentNode;
@@ -531,7 +535,7 @@ pyxser_UnserializeBlock(PythonUnserializationArgumentsPtr obj)
 							if (attr_name != (char *)NULL) {
 								ctrl = PyObject_SetAttrString(*current,
 															  attr_name, unser);
-                                xmlFree(attr_name);
+                                PYXSER_XMLFREE(attr_name);
  								break;
 							}
 						}
@@ -576,23 +580,20 @@ pyxser_UnserializeBlock(PythonUnserializationArgumentsPtr obj)
                                                               obj);
                         }
 					}
-                    xmlFree(n_type);
-                    xmlFree(n_module);
-                    xmlFree(n_id);
-                    xmlFree(n_ref);
+                    PYXSER_XMLFREE(n_type);
+                    PYXSER_XMLFREE(n_module);
+                    PYXSER_XMLFREE(n_id);
+                    PYXSER_XMLFREE(n_ref);
 				} else {
 					attr_name = pyxser_ExtractPropertyName(pyxser_xml_attr_name,
                                                            ron);
 					if (attr_name != (char *)NULL
 						&& PYTHON_IS_NOT_NONE(unser)) {
 						ctrl = PyObject_SetAttrString(*current, attr_name, unser);
-                        xmlFree(attr_name);
+                        Py_XDECREF(unser);
+                        PYXSER_XMLFREE(attr_name);
 					}
 				}
-                xmlFree(n_type);
-                xmlFree(n_module);
-                xmlFree(n_id);
-                xmlFree(n_ref);
 			}
 		}
 	}
@@ -610,6 +611,7 @@ pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj)
 	PyDictObject **modules = obj->modules;
 	PyObject *cacheCurrent = (PyObject *)NULL;
 	PyObject *ct = (PyObject *)NULL;
+    PyObject *ndict = (PyObject *)NULL;
 
 	xmlDocPtr *docptr = obj->docPtr;
 	xmlNodePtr *rootNode = obj->rootNode;
@@ -672,7 +674,8 @@ pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj)
                                                      modules);
                     if (PYTHON_IS_NOT_NONE(ct)) {
                         if (*tree == (PyObject *)NULL) {
-                            *tree = PyInstance_NewRaw(ct, PyDict_New());
+                            ndict = PyDict_New();
+                            *tree = PyInstance_NewRaw(ct, ndict);
                             *current = *tree;
                             obj->current = current;
                             obj->tree = tree;
@@ -686,7 +689,8 @@ pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj)
                     ct = pyxser_SearchObjectInMain(n_type);
                     if (PYTHON_IS_NOT_NONE(ct)) {
                         if (*tree == (PyObject *)NULL) {
-                            *tree = PyInstance_NewRaw(ct, PyDict_New());
+                            ndict = PyDict_New();
+                            *tree = PyInstance_NewRaw(ct, ndict);
                             *current = *tree;
                             obj->current = current;
                             obj->tree = tree;
@@ -697,9 +701,9 @@ pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj)
                     }
                 }
             }
-            xmlFree(n_type);
-            xmlFree(n_module);
-            xmlFree(n_id);
+            PYXSER_XMLFREE(n_type);
+            PYXSER_XMLFREE(n_module);
+            PYXSER_XMLFREE(n_id);
         }
     }
 	if (*docptr != (xmlDocPtr)NULL) {
@@ -743,6 +747,8 @@ pyxser_SearchModuleType(PyObject *mod, const char *name)
 			listIterator++;
 		}
 	}
+    PYXSER_FREE_OBJECT(objKeys);
+    PYXSER_FREE_OBJECT(dict);
 	return item;
 }
 
@@ -833,6 +839,7 @@ pyxser_SerializePrimitiveType(PyObject *o, char *name,
 		}
         PYXSER_FREE_OBJECT(className);
 	}
+    PYXSER_FREE_OBJECT(str);
     PYXSER_FREE_OBJECT(classPtr);
 	return newElementNode;
 }
@@ -854,7 +861,7 @@ pyxser_AddReference(PyObject *o, xmlNodePtr currentNode)
 		|| currentNode == (xmlNodePtr)NULL) {
 		return (xmlNodePtr)NULL;
 	}
-	hash = PyObject_Hash(o);
+	hash = (long)o;
 	if (hash != -1) {
 		longIdentifier = PyLong_FromLong(hash);
 		stringRepr = PyObject_Str(longIdentifier);
@@ -956,8 +963,10 @@ pyxser_PyListContains(PyListObject *lst, PyObject *o)
 		   != (PyObject *)NULL) {
 		if (item == o) {
 			Py_DECREF(iterLst);
+            Py_DECREF(item);
 			return PYXSER_FOUND;
 		}
+        Py_XDECREF(item);
 	}
     PYXSER_FREE_OBJECT(iterLst);
 	return PYXSER_NOT_FOUND;
@@ -1183,10 +1192,10 @@ pyxunserInt_Check(xmlNodePtr node)
 		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
 		if (prop != (char *)NULL) {
 			if ((strncmp(prop, type_int, strlen(type_int))) == 0) {
-                xmlFree(prop);
+                PYXSER_XMLFREE(prop);
 				return 1;
 			}
-            xmlFree(prop);
+            PYXSER_XMLFREE(prop);
 		}
 	}
 	return 0;
@@ -1207,10 +1216,10 @@ pyxunserBool_Check(xmlNodePtr node)
 		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
 		if (prop != (char *)NULL) {
 			if ((strncmp(prop, type_bool, strlen(type_bool))) == 0) {
-                xmlFree(prop);
+                PYXSER_XMLFREE(prop);
                 return 1;
 			}
-            xmlFree(prop);
+            PYXSER_XMLFREE(prop);
 		}
 	}
 	return 0;
@@ -1224,10 +1233,10 @@ pyxunserLong_CheckExact(xmlNodePtr node)
 		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
 		if (prop != (char *)NULL) {
 			if ((strncmp(prop, type_long, strlen(type_long))) == 0) {
-                xmlFree(prop);
+                PYXSER_XMLFREE(prop);
 				return 1;
 			}
-            xmlFree(prop);
+            PYXSER_XMLFREE(prop);
 		}
 	}
 	return 0;
@@ -1241,10 +1250,10 @@ pyxunserFloat_Check(xmlNodePtr node)
 		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
 		if (prop != (char *)NULL) {
 			if ((strncmp(prop, type_float, strlen(type_float))) == 0) {
-                xmlFree(prop);
+                PYXSER_XMLFREE(prop);
 				return 1;
 			}
-            xmlFree(prop);
+            PYXSER_XMLFREE(prop);
 		}
 	}
 	return 0;
@@ -1258,10 +1267,10 @@ pyxunserFloat_CheckExact(xmlNodePtr node)
 		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
 		if (prop != (char *)NULL) {
 			if ((strncmp(prop, type_float, strlen(type_float))) == 0) {
-                xmlFree(prop);
+                PYXSER_XMLFREE(prop);
 				return 1;
 			}
-            xmlFree(prop);
+            PYXSER_XMLFREE(prop);
 		}
 	}
 	return 0;
@@ -1275,10 +1284,10 @@ pyxunserComplex_Check(xmlNodePtr node)
 		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
 		if (prop != (char *)NULL) {
 			if ((strncmp(prop, type_complex, strlen(type_complex))) == 0) {
-                xmlFree(prop);
+                PYXSER_XMLFREE(prop);
 				return 1;
 			}
-            xmlFree(prop);
+            PYXSER_XMLFREE(prop);
 		}
 	}
 	return 0;
@@ -1292,10 +1301,10 @@ pyxunserComplex_CheckExact(xmlNodePtr node)
 		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
 		if (prop != (char *)NULL) {
 			if ((strncmp(prop, type_complex, strlen(type_complex))) == 0) {
-                xmlFree(prop);
+                PYXSER_XMLFREE(prop);
 				return 1;
 			}
-            xmlFree(prop);
+            PYXSER_XMLFREE(prop);
 		}
 	}
 	return 0;
@@ -1309,10 +1318,10 @@ pyxunserString_Check(xmlNodePtr node)
 		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
 		if (prop != (char *)NULL) {
 			if ((strncmp(prop, type_str, strlen(type_str))) == 0) {
-                xmlFree(prop);
+                PYXSER_XMLFREE(prop);
 				return 1;
 			}
-            xmlFree(prop);
+            PYXSER_XMLFREE(prop);
 		}
 	}
 	return 0;
@@ -1326,10 +1335,10 @@ pyxunserString_CheckExact(xmlNodePtr node)
 		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
 		if (prop != (char *)NULL) {
 			if ((strncmp(prop, type_str, strlen(type_str))) == 0) {
-                xmlFree(prop);
+                PYXSER_XMLFREE(prop);
 				return 1;
 			}
-            xmlFree(prop);
+            PYXSER_XMLFREE(prop);
 		}
 	}
 	return 0;
@@ -1343,10 +1352,10 @@ pyxunserUnicode_Check(xmlNodePtr node)
 		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
 		if (prop != (char *)NULL) {
 			if ((strncmp(prop, type_unicode, strlen(type_unicode))) == 0) {
-                xmlFree(prop);
+                PYXSER_XMLFREE(prop);
 				return 1;
 			}
-            xmlFree(prop);
+            PYXSER_XMLFREE(prop);
 		}
 	}
 	return 0;
@@ -1360,10 +1369,10 @@ pyxunserUnicodeExact_CheckExact(xmlNodePtr node)
 		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
 		if (prop != (char *)NULL) {
 			if ((strncmp(prop, type_unicode, strlen(type_unicode))) == 0) {
-                xmlFree(prop);
+                PYXSER_XMLFREE(prop);
 				return 1;
 			}
-            xmlFree(prop);
+            PYXSER_XMLFREE(prop);
 		}
 	}
 	return 0;
@@ -1377,10 +1386,10 @@ pyxunserBuffer_Check(xmlNodePtr node)
 		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
 		if (prop != (char *)NULL) {
 			if ((strncmp(prop, type_buffer, strlen(type_buffer))) == 0) {
-                xmlFree(prop);
+                PYXSER_XMLFREE(prop);
 				return 1;
 			}
-            xmlFree(prop);
+            PYXSER_XMLFREE(prop);
 		}
 	}
 	return 0;
@@ -1394,10 +1403,10 @@ pyxunserTuple_Check(xmlNodePtr node)
 		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
 		if (prop != (char *)NULL) {
 			if ((strncmp(prop, type_tuple, strlen(type_tuple))) == 0) {
-                xmlFree(prop);
+                PYXSER_XMLFREE(prop);
 				return 1;
 			}
-            xmlFree(prop);
+            PYXSER_XMLFREE(prop);
 		}
 	}
 	return 0;
@@ -1411,10 +1420,10 @@ pyxunserList_Check(xmlNodePtr node)
 		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
 		if (prop != (char *)NULL) {
 			if ((strncmp(prop, type_list, strlen(type_list))) == 0) {
-                xmlFree(prop);
+                PYXSER_XMLFREE(prop);
 				return 1;
 			}
-            xmlFree(prop);
+            PYXSER_XMLFREE(prop);
 		}
 	}
 	return 0;
@@ -1428,10 +1437,10 @@ pyxunserDict_Check(xmlNodePtr node)
 		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
 		if (prop != (char *)NULL) {
 			if ((strncmp(prop, type_dict, strlen(type_dict))) == 0) {
-                xmlFree(prop);
+                PYXSER_XMLFREE(prop);
 				return 1;
 			}
-            xmlFree(prop);
+            PYXSER_XMLFREE(prop);
 		}
 	}
 	return 0;
@@ -1491,6 +1500,7 @@ pyxser_SearchObjectInMain(const char *name)
 			}
 		}
 	}
+    PYXSER_FREE_OBJECT(dictKeys);
 	return ct;
 }
 
@@ -1519,6 +1529,7 @@ pyxser_SearchModule(const char *name)
 			item = PyDict_GetItem(dictMod, currentKey);
 		}
 	}
+    PYXSER_FREE_OBJECT(dictKeys);
 	return item;
 }
 
@@ -1548,6 +1559,7 @@ pyxser_CacheModule(PyObject *d, const char *name)
 				item = PyDict_GetItem(dictMod, currentKey);
 			}
 		}
+        PYXSER_FREE_OBJECT(dictKeys);
 	}
 	return item;
 }
@@ -1639,7 +1651,7 @@ pyxser_ValidateDocument(xmlDocPtr doc)
         xmlFreeValidCtxt(cvp);
         return 0;
 	}
-	xmlFreeValidCtxt(cvp);
+    xmlFreeValidCtxt(cvp);
 	return 1;
 }
 

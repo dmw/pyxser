@@ -126,13 +126,13 @@ pyxser_SerializeComplex(PyObject *o, char *name,
 	classPtr = PyObject_GetAttrString(o, pyxser_attr_class);
 	if (PYTHON_IS_NONE(classPtr)
 		|| sptr == (char *)NULL) {
-		Py_DECREF(classPtr);
+		PYXSER_FREE_OBJECT(classPtr);
 		return (xmlNodePtr)NULL;
 	}
 	className = PyObject_GetAttrString(classPtr, pyxser_attr_name);
 	if (PYTHON_IS_NONE(className)) {
-		Py_DECREF(classPtr);
-		Py_DECREF(className);
+		PYXSER_FREE_OBJECT(classPtr);
+		PYXSER_FREE_OBJECT(className);
 		return (xmlNodePtr)NULL;
 	}
 	if (PYTHON_IS_NOT_NONE(className)) {
@@ -153,9 +153,9 @@ pyxser_SerializeComplex(PyObject *o, char *name,
 			}
 			xmlAddChild(newElementNode, newTextNode);
 		}
-		Py_DECREF(className);
+		PYXSER_FREE_OBJECT(className);
 	}
-	Py_DECREF(classPtr);
+	PYXSER_FREE_OBJECT(classPtr);
 	return newElementNode;
 }
 
@@ -218,10 +218,12 @@ pyxunser_SerializeBoolean(PythonUnserializationArgumentsPtr obj)
 				if (strncmp((char *)ron->content,
 							pyxser_true_char_value,
 							strlen(pyxser_true_char_value)) == 0) {
+                    Py_INCREF(Py_True);
 					return Py_True;
 				} else if (strncmp((char *)ron->content,
 								   pyxser_false_char_value,
 								   strlen(pyxser_false_char_value)) == 0) {
+                    Py_INCREF(Py_False);
 					return Py_False;
 				}
 			}
@@ -264,6 +266,7 @@ pyxunser_SerializeFloat(PythonUnserializationArgumentsPtr obj)
 					str = PyString_FromString((char *)ron->content);
 					if (PYTHON_IS_NOT_NONE(str)) {
 						res = PyFloat_FromString(str, NULL);
+                        Py_DECREF(str);
 					}
 				}
 			}
@@ -288,6 +291,7 @@ pyxunser_SerializeExactFloat(PythonUnserializationArgumentsPtr obj)
 					str = PyString_FromString((char *)ron->content);
 					if (PYTHON_IS_NOT_NONE(str)) {
 						res = PyFloat_FromString(str, NULL);
+                        Py_DECREF(str);
 					}
 				}
 			}
@@ -315,7 +319,7 @@ pyxunser_SerializeComplex(PythonUnserializationArgumentsPtr obj)
                     cxo = PyComplex_FromCComplex(cx);
 					if (PYTHON_IS_NOT_NONE(cxo)) {
 						res = cxo;
-					}
+                    }
 				}
 			}
 		}

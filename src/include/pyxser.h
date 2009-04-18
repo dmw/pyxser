@@ -51,6 +51,13 @@ extern "C" {
         Py_DECREF(o);                           \
     }
 
+#define PYXSER_XMLFREE(o)                       \
+    if ((void *)o != (void *)NULL) {            \
+        xmlFree(o);                             \
+        o = NULL;                               \
+    }                                           \
+
+
 /* lol code xD */
 #define PYTHON_HAZ_KLASS(o)                             \
 	(PyObject_HasAttrString(o, PYTHON_CLASS_ATTR) == 1)
