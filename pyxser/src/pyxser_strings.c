@@ -102,7 +102,7 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
                                 NULL);
             txtin = pyxser_ConvertInput(sptr, (char *)doc->encoding);
             ntxt = xmlNewDocText(doc, txtin);
-            xmlFree(txtin);
+            PYXSER_XMLFREE(txtin);
             typeAttr = xmlNewProp(nen,
                                   BAD_CAST pyxser_xml_attr_type,
                                   BAD_CAST nptr);
@@ -266,7 +266,7 @@ pyxunser_SerializeUnicode(PythonUnserializationArgumentsPtr obj)
                 res = unic;
             }
         }
-        xmlFree(propSize);
+        PYXSER_XMLFREE(propSize);
     }
 	return res;
 }
@@ -314,7 +314,7 @@ pyxser_ConvertInput(const char *in, const char *encoding)
         temp = size - 1;
         ret = handler->input(out, &out_size, (const xmlChar *) in, &temp);
         if ((ret < 0) || (temp - size + 1)) {
-            xmlFree(out);
+            PYXSER_XMLFREE(out);
             out = 0;
         } else {
             out = (unsigned char *) xmlRealloc(out, out_size + 1);
