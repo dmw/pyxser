@@ -93,7 +93,6 @@ PyObject *invalid_xml_exception;
 PyObject *invalid_argument_exception;
 
 static PyDictObject *pyxser_modules = (PyDictObject *)NULL;
-void pyxser_register_encodings(void);
 void pyxser_unregister(void);
 void *dummy(PyObject *obj);
 
@@ -101,18 +100,6 @@ typedef struct pyxser_encodings_s {
     const char *enc_f;
     const char *enc_t;
 } pyxser_encodings_t;
-
-pyxser_encodings_t pyxser_encodings[] = {
-    {"ISO-8859-1", "iso-8859-1"},
-    {"ISO-8859-1", "latin1"},
-    {"ISO-8859-1", "Latin1"},
-    {"ISO-8859-1", "iso-Latin-1"},
-    {"ISO-8859-1", "iso-latin-1"},
-    {"UTF-8", "utf-8"},
-    {"UTF-8", "utf8"},
-    {"UTF-8", "UTF8"},
-    {NULL, NULL}
-};
 
 static const char serialize_documentation[] = \
     "Uses the next keyword argumens:\n"
@@ -251,7 +238,6 @@ initpyxser(void)
         return;
 	/* init module */
     Py_AtExit(pyxser_unregister);
-    pyxser_register_encodings();
     PyModule_AddObject(m, "__version__", PyString_FromString(pyxser_ext_version));
     LIBXML_TEST_VERSION;
 }
@@ -699,7 +685,6 @@ xmlcleanup(PyObject *self, PyObject *args)
     pyxser_dtd_c14n_object = NULL;
     xmlCleanupParser();
     xmlCleanupEncodingAliases();
-    pyxser_register_encodings();
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -715,18 +700,6 @@ pyxser_unregister(void)
     xmlFreeDtd(pyxser_dtd_object);
     xmlCleanupEncodingAliases();
     xmlCleanupParser();
-}
-
-
-void
-pyxser_register_encodings(void)
-{
-    int c;
-    for (c = 0; pyxser_encodings[c].enc_f != NULL
-             && pyxser_encodings[c].enc_t != NULL; c++) {
-        xmlAddEncodingAlias(pyxser_encodings[c].enc_f,
-                            pyxser_encodings[c].enc_t);
-    }
 }
 
 

@@ -33,6 +33,8 @@ import pyxser
 import testpkg.sample
 from guppy import hpy
 
+h = hpy()
+
 def display_heap(hp):
     print hp
     c = 10
@@ -51,6 +53,7 @@ def test_normal(test):
         print "-" * 60
         traceback.print_exc(file=sys.stdout)
         print "-" * 60
+        display_heap(h.heap())
         sys.exit()
 
 def test_c14n(test):
@@ -63,11 +66,11 @@ def test_c14n(test):
         print "-" * 60
         traceback.print_exc(file=sys.stdout)
         print "-" * 60
+        display_heap(h.heap())
         sys.exit()
 
 
 if __name__ == "__main__":
-    h = hpy()
     another = testpkg.sample.TestAnotherObject()
     another.first_element = 123
     another.second_element = 456
@@ -101,21 +104,21 @@ if __name__ == "__main__":
     test.dyn_prop6 = 1.5
     test.dyn_prop7 = 1000
 
-
     try:
         correl = 0
-        while correl < 20000:
+        while correl < 15000:
             test_normal(test)
             test_c14n(test)
+            pyxser.xmlcleanup()
             if (correl % 100) == 0:
                 print "amount: ", correl
-            pyxser.xmlcleanup()
             correl += 1
 
     except Exception, e:
         print "-" * 60
         traceback.print_exc(file=sys.stdout)
         print "-" * 60
+        display_heap(h.heap())
 
     display_heap(h.heap())
 
