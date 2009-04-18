@@ -457,24 +457,25 @@ pyxunser_SerializeTuple(PythonUnserializationArgumentsPtr obj)
 						if (PYTHON_IS_NOT_NONE(currentType)) {
 							unser = PyInstance_NewRaw(currentType, PyDict_New());
 							if (PYTHON_IS_NOT_NONE(unser)) {
-								unser = PyInstance_NewRaw(currentType, PyDict_New());
-								if (PYTHON_IS_NOT_NONE(unser)) {
-									++tsz;
-									_PyTuple_Resize(&tuple, tsz);
-									PyTuple_SET_ITEM(tuple, (tsz - 1), unser);
-									pyxser_AddAvailableObject((PyObject *)*dups, (char *)n_id, unser);
-									cacheCurrent = *(obj->current);
-									cacheCurrentNode = ron;
-									*(obj->current) = unser;
-									*(obj->currentNode) = ron;
-									unser = pyxser_UnserializeBlock(obj);
-									*(obj->current) = cacheCurrent;
-									*(obj->currentNode) = cacheCurrentNode;
-									ron = cacheCurrentNode;
-								}
-							}
-						}
+                                ++tsz;
+                                _PyTuple_Resize(&tuple, tsz);
+                                PyTuple_SET_ITEM(tuple, (tsz - 1), unser);
+                                pyxser_AddAvailableObject((PyObject *)*dups, (char *)n_id, unser);
+                                cacheCurrent = *(obj->current);
+                                cacheCurrentNode = ron;
+                                *(obj->current) = unser;
+                                *(obj->currentNode) = ron;
+                                unser = pyxser_UnserializeBlock(obj);
+                                *(obj->current) = cacheCurrent;
+                                *(obj->currentNode) = cacheCurrentNode;
+                                ron = cacheCurrentNode;
+                            }
+                        }
 					}
+                    xmlFree(n_type);
+                    xmlFree(n_module);
+                    xmlFree(n_id);
+                    xmlFree(n_ref);
 				} else {
 					++tsz;
 					_PyTuple_Resize(&tuple, tsz);
@@ -564,23 +565,24 @@ pyxunser_SerializeList(PythonUnserializationArgumentsPtr obj)
 						currentType = pyxser_SearchObjectInMain(n_type);
 						if (PYTHON_IS_NOT_NONE(currentType)) {
 							unser = PyInstance_NewRaw(currentType, PyDict_New());
-							if (PYTHON_IS_NOT_NONE(unser)) {
-								unser = PyInstance_NewRaw(currentType, PyDict_New());
-								if (PYTHON_IS_NOT_NONE(unser)) {
-									PyList_Append(list, unser);
-									pyxser_AddAvailableObject((PyObject *)*dups, (char *)n_id, unser);
-									cacheCurrent = *(obj->current);
-									cacheCurrentNode = ron;
-									*(obj->current) = unser;
-									*(obj->currentNode) = ron;
-									unser = pyxser_UnserializeBlock(obj);
-									*(obj->current) = cacheCurrent;
-									*(obj->currentNode) = cacheCurrentNode;
-									ron = cacheCurrentNode;
-								}
-							}
+                            if (PYTHON_IS_NOT_NONE(unser)) {
+                                PyList_Append(list, unser);
+                                pyxser_AddAvailableObject((PyObject *)*dups, (char *)n_id, unser);
+                                cacheCurrent = *(obj->current);
+                                cacheCurrentNode = ron;
+                                *(obj->current) = unser;
+                                *(obj->currentNode) = ron;
+                                unser = pyxser_UnserializeBlock(obj);
+                                *(obj->current) = cacheCurrent;
+                                *(obj->currentNode) = cacheCurrentNode;
+                                ron = cacheCurrentNode;
+                            }
 						}
 					}
+                    xmlFree(n_type);
+                    xmlFree(n_module);
+                    xmlFree(n_id);
+                    xmlFree(n_ref);
 				} else {
 					PyList_Append(list, unser);
 				}
@@ -630,6 +632,7 @@ pyxunser_SerializeDict(PythonUnserializationArgumentsPtr obj)
 						if (PYTHON_IS_NOT_NONE(unser)) {
 							key = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_name);
 							PyDict_SetItemString(dict, key, unser);
+                            xmlFree(key);
 							break;
 						}
 					}
@@ -656,6 +659,7 @@ pyxunser_SerializeDict(PythonUnserializationArgumentsPtr obj)
                             if (PYTHON_IS_NOT_NONE(unser)) {
                                 key = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_name);
                                 PyDict_SetItemString(dict, key, unser);
+                                xmlFree(key);
                                 pyxser_AddAvailableObject((PyObject *)*dups, (char *)n_id, unser);
                                 cacheCurrent = *(obj->current);
                                 cacheCurrentNode = ron;
@@ -671,24 +675,26 @@ pyxunser_SerializeDict(PythonUnserializationArgumentsPtr obj)
 						currentType = pyxser_SearchObjectInMain(n_type);
 						if (PYTHON_IS_NOT_NONE(currentType)) {
 							unser = PyInstance_NewRaw(currentType, PyDict_New());
-							if (PYTHON_IS_NOT_NONE(unser)) {
-								unser = PyInstance_NewRaw(currentType, PyDict_New());
-								if (PYTHON_IS_NOT_NONE(unser)) {
-									key = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_name);
-									PyDict_SetItemString(dict, key, unser);
-									pyxser_AddAvailableObject((PyObject *)*dups, (char *)n_id, unser);
-									cacheCurrent = *(obj->current);
-									cacheCurrentNode = ron;
-									*(obj->current) = unser;
-									*(obj->currentNode) = ron;
-									unser = pyxser_UnserializeBlock(obj);
-									*(obj->current) = cacheCurrent;
-									*(obj->currentNode) = cacheCurrentNode;
-									ron = cacheCurrentNode;
-								}
-							}
+                            if (PYTHON_IS_NOT_NONE(unser)) {
+                                key = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_name);
+                                PyDict_SetItemString(dict, key, unser);
+                                xmlFree(key);
+                                pyxser_AddAvailableObject((PyObject *)*dups, (char *)n_id, unser);
+                                cacheCurrent = *(obj->current);
+                                cacheCurrentNode = ron;
+                                *(obj->current) = unser;
+                                *(obj->currentNode) = ron;
+                                unser = pyxser_UnserializeBlock(obj);
+                                *(obj->current) = cacheCurrent;
+                                *(obj->currentNode) = cacheCurrentNode;
+                                ron = cacheCurrentNode;
+                            }
 						}
 					}
+                    xmlFree(n_type);
+                    xmlFree(n_module);
+                    xmlFree(n_id);
+                    xmlFree(n_ref);
 				} else {
 					key = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_name);
                     if (PYTHON_IS_NOT_NONE(unser)

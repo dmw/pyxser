@@ -48,6 +48,7 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
 	xmlNodePtr ntxt = (xmlNodePtr)NULL;
 	xmlAttrPtr typeAttr = (xmlAttrPtr)NULL;
 	xmlAttrPtr nameAttr = (xmlAttrPtr)NULL;
+    xmlChar *txtin = (xmlChar *)NULL;
 
 	PyObject *classPtr = (PyObject *)NULL;
 	PyObject *className = (PyObject *)NULL;
@@ -99,8 +100,9 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
                                 pyxser_GetDefaultNs(),
                                 BAD_CAST pyxser_xml_attr_item,
                                 NULL);
-            ntxt = xmlNewDocText(doc,
-                                 BAD_CAST pyxser_ConvertInput(sptr, (char *)doc->encoding));
+            txtin = pyxser_ConvertInput(sptr, (char *)doc->encoding);
+            ntxt = xmlNewDocText(doc, txtin);
+            xmlFree(txtin);
             typeAttr = xmlNewProp(nen,
                                   BAD_CAST pyxser_xml_attr_type,
                                   BAD_CAST nptr);
@@ -264,6 +266,7 @@ pyxunser_SerializeUnicode(PythonUnserializationArgumentsPtr obj)
                 res = unic;
             }
         }
+        xmlFree(propSize);
     }
 	return res;
 }
