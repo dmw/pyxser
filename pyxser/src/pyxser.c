@@ -122,7 +122,8 @@ static const char serialize_documentation[] = \
 	"The serialization model resides in the pyxser public identifier DTD:\n"
 	"    <!DOCTYPE pyxs:obj\n"
     "              PUBLIC '-//coder.cl//DTD pyxser 1.0//EN'\n"
-    "              'http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd'>\n";
+    "              'http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd'>\n"
+    "Returns an Unicode Object\n\n";
 
 static const char serializec14n_documentation[] = \
     "Uses the next keyword argumens:\n"
@@ -140,7 +141,8 @@ static const char serializec14n_documentation[] = \
     "* Information about Canonical XML at:\n\thttp://www.w3.org/TR/xml-c14n\n"
     "* Information about Exclusive Canonical XML at\n\thttp://www.w3.org/TR/xml-exc-c14n\n"
     "NOTE: The canonical DTD converts all ID, IDREF and NMTOKEN\n"
-    "      attributes to CDATA attributes\n";
+    "      attributes to CDATA attributes\n"
+    "Returns an Unicode Object\n\n";
 
 static const char serializec14n_documentation_strict[] = \
     "Uses the next keyword argumens:\n"
@@ -159,7 +161,8 @@ static const char serializec14n_documentation_strict[] = \
     "* Information about Exclusive Canonical XML at\n\thttp://www.w3.org/TR/xml-exc-c14n\n"
     "NOTE: C14N serialized objects can not be deserialized because we\n"
     "      need the ID and IDREF attributes to suppor cross referenced\n"
-    "      objects.\n";
+    "      objects.\n"
+    "Returns an Unicode Object\n\n";
 
 static const char deserialize_documentation[] = \
     "Uses the next keyword argumens:\n"
