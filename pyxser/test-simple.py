@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: iso-8859-1; -*-
+# -*- coding: utf-8 -*-
 ##
 ##     Copyright (c) 2009 Daniel Molina Wegener <dmw@coder.cl>
 ##
@@ -22,7 +22,7 @@
 ##               PUBLIC "-//coder.cl//DTD pyxser 1.0//EN"
 ##               "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd">
 ##
-## $Id$
+## $Id: test-utf8.py 53 2009-04-16 02:46:15Z damowe $
 ##
 
 
@@ -42,35 +42,9 @@ def display_heap(hp):
         more = more.more
         c += 10
 
-def test_normal(test):
-    try:
-        serialized = pyxser.serialize(obj = test, enc = "iso-8859-1", depth = 0)
-        pyxser.validate(obj = serialized, enc = "iso-8859-1")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "iso-8859-1")
-        del serialized
-        del userialized
-    except Exception, e:
-        print "-" * 60
-        traceback.print_exc(file=sys.stdout)
-        print "-" * 60
-        sys.exit()
-
-def test_c14n(test):
-    try:
-        serialized = pyxser.serialize_c14n(obj = test, depth = 0, exc = 0, com = 0)
-        pyxser.validate(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
-        serialized = pyxser.serialize_c14n_strict(obj = test, depth = 0, exc = 0, com = 0)
-        del serialized
-        del userialized
-    except Exception, e:
-        print "-" * 60
-        traceback.print_exc(file=sys.stdout)
-        print "-" * 60
-        sys.exit()
 
 if __name__ == "__main__":
-    hps = hpy()
+    h = hpy()
     another = testpkg.sample.TestAnotherObject()
     another.first_element = 123
     another.second_element = 456
@@ -96,31 +70,22 @@ if __name__ == "__main__":
     test.nested("holahola", 345, "hola")
     test.subnested(other)
     another.dyn_prop1 = thisa
-    test.dyn_prop1 = [u'hol·', u'chaÛ', another]
-    test.dyn_prop2 = (u'hol`', u'sÔn', 'trip', other)
-    test.dyn_prop3 = {'saludo1': u'hÛl‡', 'saludo2': u'ch‰Û', 'saludo4': 'goodbye', 'saludo5': thisc}
-    test.dyn_prop4 = u'hol·hol·caca'
-    test.dyn_prop5 = u'ÒeÒeÒeÒe'
+    test.dyn_prop1 = [u'hol√°', u'cha√≥', another]
+    test.dyn_prop2 = (u'hol`', u's√Øn', 'trip', other)
+    test.dyn_prop3 = {'saludo1': u'h√≥l√†', 'saludo2': u'ch√§√≥', 'saludo4': 'goodbye', 'saludo5': thisc}
+    test.dyn_prop4 = u's√≥m√© t√®xt√® √Ø√± Unicod√®'
+    test.dyn_prop5 = u'A√±other Tex√© I√± √ún√¨c√≥D√ãc'
     test.dyn_prop6 = 1.5
     test.dyn_prop7 = 1000
 
     try:
-
-        correl = 0
-        while correl < 20000:
-            test_normal(test)
-            test_c14n(test)
-            pyxser.xmlcleanup()
-            if (correl % 100) == 0:
-                print "amount: ", correl
-            correl += 1
+        pyxser.xmlcleanup();
 
     except Exception, e:
         print "-" * 60
         traceback.print_exc(file=sys.stdout)
         print "-" * 60
-        sys.exit()
 
-
-    display_heap(hps.heap())
+    hps = h.heapu()
+    display_heap(hps)
 

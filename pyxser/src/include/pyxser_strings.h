@@ -53,11 +53,11 @@ extern "C" {
                                       PyListObject *dupItems, xmlDocPtr doc,
                                       int *depth, int *depthcnt);
 
-    PyObject *pyxunser_SerializeString(PythonUnserializationArgumentsPtr obj);
-    PyObject *pyxunser_SerializeExactString(PythonUnserializationArgumentsPtr obj);
-    PyObject *pyxunser_SerializeUnicode(PythonUnserializationArgumentsPtr obj);
-    PyObject *pyxunser_SerializeExactUnicode(PythonUnserializationArgumentsPtr obj);
-    PyObject *pyxunser_SerializeBuffer(PythonUnserializationArgumentsPtr obj);
+    PyObject *pyxunser_SerializeString(PyxSerDeserializationArgsPtr obj);
+    PyObject *pyxunser_SerializeExactString(PyxSerDeserializationArgsPtr obj);
+    PyObject *pyxunser_SerializeUnicode(PyxSerDeserializationArgsPtr obj);
+    PyObject *pyxunser_SerializeExactUnicode(PyxSerDeserializationArgsPtr obj);
+    PyObject *pyxunser_SerializeBuffer(PyxSerDeserializationArgsPtr obj);
 
 #ifdef __cplusplus
 };

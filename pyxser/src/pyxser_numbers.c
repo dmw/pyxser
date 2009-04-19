@@ -169,7 +169,7 @@ pyxser_SerializeExactComplex(PyObject *o, char *name,
 }
 
 PyObject *
-pyxunser_SerializeInt(PythonUnserializationArgumentsPtr obj)
+pyxunser_SerializeInt(PyxSerDeserializationArgsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
 	xmlNodePtr ron;
@@ -187,7 +187,7 @@ pyxunser_SerializeInt(PythonUnserializationArgumentsPtr obj)
 }
 
 PyObject *
-pyxunser_SerializeExactInt(PythonUnserializationArgumentsPtr obj)
+pyxunser_SerializeExactInt(PyxSerDeserializationArgsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
 	xmlNodePtr ron;
@@ -205,7 +205,7 @@ pyxunser_SerializeExactInt(PythonUnserializationArgumentsPtr obj)
 }
 
 PyObject *
-pyxunser_SerializeBoolean(PythonUnserializationArgumentsPtr obj)
+pyxunser_SerializeBoolean(PyxSerDeserializationArgsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
 	xmlNodePtr ron;
@@ -218,12 +218,10 @@ pyxunser_SerializeBoolean(PythonUnserializationArgumentsPtr obj)
 				if (strncmp((char *)ron->content,
 							pyxser_true_char_value,
 							strlen(pyxser_true_char_value)) == 0) {
-                    Py_INCREF(Py_True);
 					return Py_True;
 				} else if (strncmp((char *)ron->content,
 								   pyxser_false_char_value,
 								   strlen(pyxser_false_char_value)) == 0) {
-                    Py_INCREF(Py_False);
 					return Py_False;
 				}
 			}
@@ -233,7 +231,7 @@ pyxunser_SerializeBoolean(PythonUnserializationArgumentsPtr obj)
 }
 
 PyObject *
-pyxunser_SerializeLong(PythonUnserializationArgumentsPtr obj)
+pyxunser_SerializeLong(PyxSerDeserializationArgsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
 	xmlNodePtr ron;
@@ -251,7 +249,7 @@ pyxunser_SerializeLong(PythonUnserializationArgumentsPtr obj)
 }
 
 PyObject *
-pyxunser_SerializeFloat(PythonUnserializationArgumentsPtr obj)
+pyxunser_SerializeFloat(PyxSerDeserializationArgsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
 	xmlNodePtr ron;
@@ -276,7 +274,7 @@ pyxunser_SerializeFloat(PythonUnserializationArgumentsPtr obj)
 }
 
 PyObject *
-pyxunser_SerializeExactFloat(PythonUnserializationArgumentsPtr obj)
+pyxunser_SerializeExactFloat(PyxSerDeserializationArgsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
 	xmlNodePtr ron;
@@ -301,7 +299,7 @@ pyxunser_SerializeExactFloat(PythonUnserializationArgumentsPtr obj)
 }
 
 PyObject *
-pyxunser_SerializeComplex(PythonUnserializationArgumentsPtr obj)
+pyxunser_SerializeComplex(PyxSerDeserializationArgsPtr obj)
 {
     PyObject *cxo = (PyObject *)NULL;
 	xmlNodePtr node = *(obj->currentNode);
@@ -328,7 +326,7 @@ pyxunser_SerializeComplex(PythonUnserializationArgumentsPtr obj)
 }
 
 PyObject *
-pyxunser_SerializeExactComplex(PythonUnserializationArgumentsPtr obj)
+pyxunser_SerializeExactComplex(PyxSerDeserializationArgsPtr obj)
 {
     return pyxunser_SerializeComplex(obj);
 }

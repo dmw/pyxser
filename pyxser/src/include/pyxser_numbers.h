@@ -67,14 +67,14 @@ extern "C" {
                                             PyListObject *dupItems, xmlDocPtr doc,
                                             int *depth, int *depthcnt);
 
-    PyObject *pyxunser_SerializeInt(PythonUnserializationArgumentsPtr obj);
-    PyObject *pyxunser_SerializeExactInt(PythonUnserializationArgumentsPtr obj);
-    PyObject *pyxunser_SerializeBoolean(PythonUnserializationArgumentsPtr obj);
-    PyObject *pyxunser_SerializeLong(PythonUnserializationArgumentsPtr obj);
-    PyObject *pyxunser_SerializeFloat(PythonUnserializationArgumentsPtr obj);
-    PyObject *pyxunser_SerializeExactFloat(PythonUnserializationArgumentsPtr obj);
-    PyObject *pyxunser_SerializeComplex(PythonUnserializationArgumentsPtr obj);
-    PyObject *pyxunser_SerializeExactComplex(PythonUnserializationArgumentsPtr obj);
+    PyObject *pyxunser_SerializeInt(PyxSerDeserializationArgsPtr obj);
+    PyObject *pyxunser_SerializeExactInt(PyxSerDeserializationArgsPtr obj);
+    PyObject *pyxunser_SerializeBoolean(PyxSerDeserializationArgsPtr obj);
+    PyObject *pyxunser_SerializeLong(PyxSerDeserializationArgsPtr obj);
+    PyObject *pyxunser_SerializeFloat(PyxSerDeserializationArgsPtr obj);
+    PyObject *pyxunser_SerializeExactFloat(PyxSerDeserializationArgsPtr obj);
+    PyObject *pyxunser_SerializeComplex(PyxSerDeserializationArgsPtr obj);
+    PyObject *pyxunser_SerializeExactComplex(PyxSerDeserializationArgsPtr obj);
 
 #ifdef __cplusplus
 };

@@ -61,9 +61,9 @@ extern "C" {
                                          PyListObject *dupItems, xmlDocPtr docPtr,
                                          int *depth, int *depthcnt);
 
-    PyObject *pyxunser_SerializeTuple(PythonUnserializationArgumentsPtr obj);
-    PyObject *pyxunser_SerializeList(PythonUnserializationArgumentsPtr obj);
-    PyObject *pyxunser_SerializeDict(PythonUnserializationArgumentsPtr obj);
+    PyObject *pyxunser_SerializeTuple(PyxSerDeserializationArgsPtr obj);
+    PyObject *pyxunser_SerializeList(PyxSerDeserializationArgsPtr obj);
+    PyObject *pyxunser_SerializeDict(PyxSerDeserializationArgsPtr obj);
 
 #ifdef __cplusplus
 };

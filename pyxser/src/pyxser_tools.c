@@ -136,7 +136,7 @@ inline PyObject *pyxser_UnserializeElement(PyObject *ct,
                                            xmlNodePtr cacheCurrentNode,
                                            xmlNodePtr ron,
                                            const char *n_id,
-                                           PythonUnserializationArgumentsPtr obj);
+                                           PyxSerDeserializationArgsPtr obj);
 
 void pyxser_validity_exception(void *ctx, const char *msg, va_list args);
 
@@ -319,9 +319,7 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docptr, xmlNodePtr *rootNode,
 		if (PYTHON_IS_NONE(objKeys)
 			|| (PYTHON_IS_NOT_NONE(objKeys)
 				&& (long)(PyList_Size((PyObject *)objKeys)) <= 0)) {
-            if (PYTHON_IS_NOT_NONE(lstItems)) {
-                Py_DECREF(lstItems);
-            }
+            PYXSER_FREE_OBJECT(lstItems);
 			return (xmlNodePtr)NULL;
 		}
 		listIterator = 0;
@@ -329,7 +327,11 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docptr, xmlNodePtr *rootNode,
 		while (listIterator < listSize) {
 			currentKey = PyList_GetItem(objKeys, listIterator);
 			item = PyDict_GetItem(lstItems, currentKey);
+            Py_XINCREF(currentKey);
+            Py_XINCREF(item);
 			if (PYTHON_IS_NONE(item)) {
+                Py_XDECREF(currentKey);
+                Py_XDECREF(item);
 				listIterator++;
 				continue;
 			}
@@ -343,6 +345,8 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docptr, xmlNodePtr *rootNode,
             }
             (*depthcnt)--;
 			listIterator++;
+            Py_XDECREF(currentKey);
+            Py_XDECREF(item);
 		}
         PYXSER_FREE_OBJECT(objKeys);
         PYXSER_FREE_OBJECT(lstItems);
@@ -430,7 +434,7 @@ pyxser_UnserializeElement(PyObject *ct, PyObject **current,
                           PyDictObject **dups, PyObject *cacheCurrent,
                           xmlNodePtr cacheCurrentNode, xmlNodePtr ron,
                           const char *n_id,
-                          PythonUnserializationArgumentsPtr obj)
+                          PyxSerDeserializationArgsPtr obj)
 {
     PyObject *unser = (PyObject *)NULL;
     PyObject *ndict = (PyObject *)NULL;
@@ -488,7 +492,7 @@ pyxser_SearchTypesInModules(const char *n_module,
 }
 
 PyObject *
-pyxser_UnserializeBlock(PythonUnserializationArgumentsPtr obj)
+pyxser_UnserializeBlock(PyxSerDeserializationArgsPtr obj)
 {
 	PyObject **current = obj->current;
 	PyDictObject **dups = obj->dups;
@@ -594,6 +598,10 @@ pyxser_UnserializeBlock(PythonUnserializationArgumentsPtr obj)
                         PYXSER_XMLFREE(attr_name);
 					}
 				}
+                PYXSER_XMLFREE(n_type);
+                PYXSER_XMLFREE(n_module);
+                PYXSER_XMLFREE(n_id);
+                PYXSER_XMLFREE(n_ref);
 			}
 		}
 	}
@@ -602,7 +610,7 @@ pyxser_UnserializeBlock(PythonUnserializationArgumentsPtr obj)
 
 
 PyObject *
-pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj)
+pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
 {
 	PyObject **doc = obj->doc;
 	PyObject **current = obj->current;
@@ -628,7 +636,7 @@ pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj)
 
 	if (PYTHON_IS_NONE(doc)) {
 		PyErr_SetString(PyExc_ValueError, "Invalid XML");
-		return Py_None;
+		return NULL;
 	}
 
 	strdoc = PyString_AS_STRING(*doc);
@@ -662,9 +670,6 @@ pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj)
             if (*dups == (PyDictObject *)NULL) {
                 *dups = (PyDictObject *)PyDict_New();
             }
-            if (*modules == (PyDictObject *)NULL) {
-                *modules = (PyDictObject *)PyDict_New();
-            }
             if (n_type != (char *)NULL
                 && n_module != (char *)NULL
                 && n_id != (char *)NULL) {
@@ -675,6 +680,9 @@ pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj)
                     if (PYTHON_IS_NOT_NONE(ct)) {
                         if (*tree == (PyObject *)NULL) {
                             ndict = PyDict_New();
+                            if (PYTHON_IS_NONE(ndict)) {
+                                return NULL;
+                            }
                             *tree = PyInstance_NewRaw(ct, ndict);
                             *current = *tree;
                             obj->current = current;
@@ -690,6 +698,9 @@ pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj)
                     if (PYTHON_IS_NOT_NONE(ct)) {
                         if (*tree == (PyObject *)NULL) {
                             ndict = PyDict_New();
+                            if (PYTHON_IS_NONE(ndict)) {
+                                return NULL;
+                            }
                             *tree = PyInstance_NewRaw(ct, ndict);
                             *current = *tree;
                             obj->current = current;
@@ -962,8 +973,8 @@ pyxser_PyListContains(PyListObject *lst, PyObject *o)
 	while ((item = PyIter_Next(iterLst))
 		   != (PyObject *)NULL) {
 		if (item == o) {
-			Py_DECREF(iterLst);
-            Py_DECREF(item);
+			Py_XDECREF(iterLst);
+            Py_XDECREF(item);
 			return PYXSER_FOUND;
 		}
         Py_XDECREF(item);

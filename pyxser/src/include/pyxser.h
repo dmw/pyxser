@@ -84,7 +84,7 @@ extern "C" {
         int depthcnt;
     } PythonUnserializationArguments;
 
-    typedef PythonUnserializationArguments *PythonUnserializationArgumentsPtr;
+    typedef PythonUnserializationArguments *PyxSerDeserializationArgsPtr;
 
     typedef struct pythonTypeSerialize_ {
         int available;
@@ -97,7 +97,7 @@ extern "C" {
     typedef struct pythonTypeDeserialize_ {
         int available;
         int (*check)(xmlNodePtr node);
-        PyObject *(*deserializer)(PythonUnserializationArgumentsPtr obj);
+        PyObject *(*deserializer)(PyxSerDeserializationArgsPtr obj);
     } PythonTypeDeserialize;
 
 #include "include/pyxser_numbers.h"

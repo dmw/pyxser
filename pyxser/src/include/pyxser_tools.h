@@ -68,7 +68,7 @@ extern "C" {
                                           const char *n_type,
                                           PyDictObject **modules);
 
-    PyObject *pyxser_UnserializeXml(PythonUnserializationArgumentsPtr obj);
+    PyObject *pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj);
 
     PyObject *pyxser_SearchModuleType(PyObject *mod, const char *name);
 
@@ -86,7 +86,7 @@ extern "C" {
 
     char *pyxser_ExtractPropertyName(const char *name, xmlNodePtr node);
 
-    PyObject *pyxser_UnserializeBlock(PythonUnserializationArgumentsPtr obj);
+    PyObject *pyxser_UnserializeBlock(PyxSerDeserializationArgsPtr obj);
 
     int pyxser_ModuleNotMain(const char *mod);
 

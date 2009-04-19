@@ -59,7 +59,7 @@ def test_normal(test):
 def test_c14n(test):
     try:
         serialized = pyxser.serialize_c14n(obj = test, depth = 0, exc = 0, com = 0)
-        pyxser.validate(obj = serialized, enc = "utf-8")
+        pyxser.validate_c14n(obj = serialized, enc = "utf-8")
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
         serialized = pyxser.serialize_c14n_strict(obj = test, depth = 0, exc = 0, com = 0)
     except Exception, e:
@@ -106,13 +106,15 @@ if __name__ == "__main__":
 
     try:
         correl = 0
-        while correl < 15000:
+        while correl < 50000:
             test_normal(test)
             test_c14n(test)
             pyxser.xmlcleanup()
-            if (correl % 100) == 0:
-                print "amount: ", correl
+            if (correl % 1000) == 0:
+                print "Current amount: ", correl
             correl += 1
+
+        print "Last: ", (correl - 1)
 
     except Exception, e:
         print "-" * 60
