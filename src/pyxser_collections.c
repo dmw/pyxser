@@ -369,7 +369,7 @@ pyxser_GlobalDictSerialization(PyObject *o, char *name, PyListObject *dupItems, 
 }
 
 PyObject *
-pyxunser_SerializeTuple(PythonUnserializationArgumentsPtr obj)
+pyxunser_SerializeTuple(PyxSerDeserializationArgsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
 	xmlNodePtr ron = (xmlNodePtr)NULL;
@@ -496,7 +496,7 @@ pyxunser_SerializeTuple(PythonUnserializationArgumentsPtr obj)
 }
 
 PyObject *
-pyxunser_SerializeList(PythonUnserializationArgumentsPtr obj)
+pyxunser_SerializeList(PyxSerDeserializationArgsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
 	xmlNodePtr ron = (xmlNodePtr)NULL;
@@ -614,7 +614,7 @@ pyxunser_SerializeList(PythonUnserializationArgumentsPtr obj)
 }
 
 PyObject *
-pyxunser_SerializeDict(PythonUnserializationArgumentsPtr obj)
+pyxunser_SerializeDict(PyxSerDeserializationArgsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
 	xmlNodePtr ron = (xmlNodePtr)NULL;

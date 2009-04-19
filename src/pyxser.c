@@ -84,6 +84,7 @@ static PyObject *pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds);
 static PyObject *pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds);
 static PyObject *pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds);
 static PyObject *pyxgetdtd(PyObject *self, PyObject *args);
+static PyObject *pyxgetdtdc14n(PyObject *self, PyObject *args);
 static PyObject *xmlcleanup(PyObject *self, PyObject *args);
 static char *xmlgetencoding(int id);
 
@@ -91,6 +92,9 @@ static char *xmlgetencoding(int id);
 PyObject *invalid_encoding_exception;
 PyObject *invalid_xml_exception;
 PyObject *invalid_argument_exception;
+PyObject *pyxser_version_obj = (PyObject *)NULL;
+PyObject *pyxstr_dtd = (PyObject *)NULL;
+PyObject *pyxstr_dtd_c14n = (PyObject *)NULL;
 
 static PyDictObject *pyxser_modules = (PyDictObject *)NULL;
 void pyxser_unregister(void);
@@ -188,8 +192,12 @@ static const char validate_documentation_c14n[] = \
     "your local filesystem.\n\n";
 
 static const char getdtd_documentation[] = \
-	"This function returns the pyxser DTD location in your system as\n"
+	"This function returns the pyxser 1.0 DTD location in your system as\n"
     "string\n\n";
+
+static const char getdtd_c14n_documentation[] = \
+	"This function returns the pyxser 1.0 DTD for C14N location in your\n"
+    "system as string\n\n";
 
 static const char xmlcleanup_documentation[] = \
 	"Calls the cleanup function for the libxml2 parser, be carefull\n"
@@ -222,6 +230,7 @@ static PyMethodDef serxMethods[] = {
      validate_documentation_c14n},
 
     {"getdtd", pyxgetdtd, METH_VARARGS, getdtd_documentation},
+    {"getdtd_c14n", pyxgetdtdc14n, METH_VARARGS, getdtd_c14n_documentation},
 
     {"xmlcleanup", xmlcleanup, METH_VARARGS, xmlcleanup_documentation},
 
@@ -238,8 +247,13 @@ initpyxser(void)
         return;
 	/* init module */
     Py_AtExit(pyxser_unregister);
-    PyModule_AddObject(m, "__version__", PyString_FromString(pyxser_ext_version));
+    pyxser_version_obj = PyString_FromString(pyxser_ext_version);
+    PyModule_AddObject(m, "__version__", pyxser_version_obj);
+#ifdef PYXSER_DEBUG
+#warning USING DEBUG!
+#else
     LIBXML_TEST_VERSION;
+#endif
 }
 
 static PyObject *
@@ -287,14 +301,13 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
     }
 
 	dupItems = (PyListObject *)PyList_New(0);
+    Py_XINCREF(input);
 
 	serXml = pyxser_SerializeXml(input, &docXml, &rootNode,
 								 (xmlNodePtr *)NULL, dupItems,
                                  xml_encoding, &py_depth, &py_depth_cnt);
-
-	if (PYTHON_IS_NOT_NONE(dupItems)) {
-		Py_DECREF(dupItems);
-	}
+    Py_XDECREF(input);
+    Py_XDECREF(dupItems);
 
 	if (serXml != (xmlNodePtr)NULL
 		&& docXml != (xmlDocPtr)NULL) {
@@ -303,6 +316,7 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
             ret = xmlC14NExecute(docXml, pyxser_C14NRenderAllNodes, docXml,
                                  py_exc, NULL, py_com, xmlBuff);
             if (ret < 0) {
+                xmlFree(docPtr);
                 xmlOutputBufferClose(xmlBuff);
                 PyErr_SetString(PyExc_ValueError, msg_non_object);
                 return NULL;
@@ -373,14 +387,13 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
     }
 
 	dupItems = (PyListObject *)PyList_New(0);
+    Py_XINCREF(input);
 
 	serXml = pyxser_SerializeXml(input, &docXml, &rootNode,
 								 (xmlNodePtr *)NULL, dupItems,
                                  xml_encoding, &py_depth, &py_depth_cnt);
-
-	if (dupItems != (PyListObject *)NULL) {
-		Py_DECREF(dupItems);
-	}
+    Py_XINCREF(input);
+    Py_XDECREF(dupItems);
 
 	if (serXml != (xmlNodePtr)NULL
 		&& docXml != (xmlDocPtr)NULL) {
@@ -462,14 +475,14 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
     }
 
 	dupItems = (PyListObject *)PyList_New(0);
+    Py_XINCREF(input);
 
 	serXml = pyxser_SerializeXml(input, &docXml, &rootNode,
 								 (xmlNodePtr *)NULL, dupItems,
                                  py_enc, &py_depth, &py_depth_cnt);
 
-	if (dupItems != (PyListObject *)NULL) {
-		Py_DECREF(dupItems);
-	}
+    Py_XDECREF(input);
+    Py_XDECREF(dupItems);
 
 	if (serXml != (xmlNodePtr)NULL
 		&& docXml != (xmlDocPtr)NULL) {
@@ -552,6 +565,7 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
     }
 
+    Py_XINCREF(input);
 	obj.doc = &input;
 	obj.current = &current;
 	obj.tree = &tree;
@@ -566,18 +580,32 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 
 	res = pyxser_UnserializeXml(&obj);
     if (res == NULL) {
-		PyErr_SetString(PyExc_ValueError, msg_non_object);
+        Py_XDECREF(input);
+        PyErr_SetString(PyExc_ValueError, msg_non_object);
         return NULL;
     }
+    Py_XDECREF(input);
     return res;
 }
 
 static PyObject *
 pyxgetdtd(PyObject *self, PyObject *args)
 {
-	PyObject *res;
-	res = PyString_FromString((const char *)pyxser_xml_dtd_location);
-	return res;
+    if (pyxstr_dtd == NULL) {
+        pyxstr_dtd = PyString_FromString((const char *)pyxser_xml_dtd_location);
+        Py_XINCREF(pyxstr_dtd);
+    }
+	return pyxstr_dtd;
+}
+
+static PyObject *
+pyxgetdtdc14n(PyObject *self, PyObject *args)
+{
+    if (pyxstr_dtd_c14n == NULL) {
+        pyxstr_dtd_c14n = PyString_FromString((const char *)pyxser_xml_dtd_c14n_location);
+        Py_XINCREF(pyxstr_dtd_c14n);
+    }
+	return pyxstr_dtd_c14n;
 }
 
 static PyObject *
@@ -585,7 +613,7 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 {
 	xmlDocPtr docPtr = (xmlDocPtr)NULL;
 	PyObject *res = Py_False;
-	char *input = (char *)NULL;
+	PyObject *input = (PyObject *)NULL;
 	char *docstr = (char *)NULL;
     int parseopts = XML_PARSE_RECOVER;
 
@@ -611,11 +639,14 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
         py_enc = (char *)xml_encoding;
     }
 
+    Py_XINCREF(input);
     docstr = PyString_AS_STRING(input);
 	docPtr = xmlReadMemory(docstr, strlen(docstr), NULL,
                            (const char *)py_enc, parseopts);
+    Py_XDECREF(input);
 	if (docPtr != (xmlDocPtr)NULL) {
 		if ((pyxser_ValidateDocument(docPtr)) == 1) {
+            Py_INCREF(Py_True);
 			res = Py_True;
 		}
         xmlFreeDoc(docPtr);
@@ -631,7 +662,7 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
 {
 	xmlDocPtr docPtr = (xmlDocPtr)NULL;
 	PyObject *res = Py_False;
-	char *input = (char *)NULL;
+	PyObject *input = (PyObject *)NULL;
 	char *docstr = (char *)NULL;
     int parseopts = XML_PARSE_RECOVER;
 
@@ -657,11 +688,15 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
         py_enc = (char *)xml_encoding;
     }
 
+    Py_XINCREF(input);
     docstr = PyString_AS_STRING(input);
 	docPtr = xmlReadMemory(docstr, strlen(docstr), NULL,
                            (const char *)py_enc, parseopts);
+    Py_XDECREF(input);
+
 	if (docPtr != (xmlDocPtr)NULL) {
 		if ((pyxser_ValidateDocumentC14N(docPtr)) == 1) {
+            Py_INCREF(Py_True);
 			res = Py_True;
 		}
         xmlFreeDoc(docPtr);
@@ -693,15 +728,14 @@ xmlcleanup(PyObject *self, PyObject *args)
 void
 pyxser_unregister(void)
 {
-    if (PYTHON_IS_NOT_NONE(pyxser_modules)) {
-        Py_DECREF(pyxser_modules);
-        pyxser_modules = NULL;
-    }
+    Py_XDECREF(pyxser_version_obj);
+    pyxser_version_obj = NULL;
+    Py_XDECREF(pyxser_modules);
+    pyxser_modules = NULL;
     xmlFreeDtd(pyxser_dtd_object);
     xmlCleanupEncodingAliases();
     xmlCleanupParser();
 }
-
 
 static char *
 xmlgetencoding(int id)

@@ -111,7 +111,7 @@ if __name__ == "__main__":
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
         print "Unserialized Object (d.0):\n" + repr(unserialized) + "\n\n"
 
-        pyxser.xmlcleanup();
+        pyxser.xmlcleanup()
 
     except Exception, e:
         print "-" * 60
@@ -129,15 +129,18 @@ if __name__ == "__main__":
 
         serialized = pyxser.serialize_c14n_strict(obj = test, depth = 0, exc = 0, com = 0)
         print "Serilized Object:\n" + serialized
+        print "Serilized Object Validation:\n", pyxser.validate_c14n(obj = serialized, enc = "utf-8")
         print "First Object:\n" + repr(test) + "\n\n"
 
-        pyxser.xmlcleanup();
+        pyxser.xmlcleanup()
 
     except Exception, e:
         print "-" * 60
         traceback.print_exc(file=sys.stdout)
         print "-" * 60
 
+    print pyxser.getdtd()
+    print pyxser.getdtd_c14n()
 
     hps = h.heapu()
     display_heap(hps)

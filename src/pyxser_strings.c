@@ -211,7 +211,7 @@ pyxser_SerializeBuffer(PyObject *o, char *name, PyListObject *dupItems,
 
 
 PyObject *
-pyxunser_SerializeString(PythonUnserializationArgumentsPtr obj)
+pyxunser_SerializeString(PyxSerDeserializationArgsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
 	xmlNodePtr ron;
@@ -232,14 +232,14 @@ pyxunser_SerializeString(PythonUnserializationArgumentsPtr obj)
 }
 
 PyObject *
-pyxunser_SerializeExactString(PythonUnserializationArgumentsPtr obj)
+pyxunser_SerializeExactString(PyxSerDeserializationArgsPtr obj)
 {
 	return pyxunser_SerializeString(obj);
 }
 
 #define PYXSER_MAX_LENGTH				8192
 PyObject *
-pyxunser_SerializeUnicode(PythonUnserializationArgumentsPtr obj)
+pyxunser_SerializeUnicode(PyxSerDeserializationArgsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
 	xmlNodePtr ron;
@@ -272,13 +272,13 @@ pyxunser_SerializeUnicode(PythonUnserializationArgumentsPtr obj)
 }
 
 PyObject *
-pyxunser_SerializeExactUnicode(PythonUnserializationArgumentsPtr obj)
+pyxunser_SerializeExactUnicode(PyxSerDeserializationArgsPtr obj)
 {
 	return pyxunser_SerializeUnicode(obj);
 }
 
 PyObject *
-pyxunser_SerializeBuffer(PythonUnserializationArgumentsPtr obj)
+pyxunser_SerializeBuffer(PyxSerDeserializationArgsPtr obj)
 {
 	if (obj != NULL) {
 		// XXX: must change to base 64 encoded buffer.
