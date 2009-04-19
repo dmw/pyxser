@@ -673,10 +673,10 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
     }
 
-    data_size = PyUnicode_GET_SIZE(unic);
+    data_size = PyUnicode_GET_DATA_SIZE(unic);
     if (PYTHON_IS_NOT_NONE(unic)) {
         docstr = PyString_AS_STRING(unic);
-        docPtr = xmlReadMemory(docstr, strlen(docstr), NULL,
+        docPtr = xmlReadMemory(docstr, data_size, NULL,
                                (const char *)py_enc, parseopts);
         Py_XDECREF(unic);
         if (docPtr != (xmlDocPtr)NULL) {
@@ -743,10 +743,10 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
     }
 
-    data_size = PyUnicode_GET_SIZE(unic);
+    data_size = PyUnicode_GET_DATA_SIZE(unic);
     if (PYTHON_IS_NOT_NONE(unic)) {
         docstr = PyString_AS_STRING(unic);
-        docPtr = xmlReadMemory(docstr, strlen(docstr), NULL,
+        docPtr = xmlReadMemory(docstr, data_size, NULL,
                                (const char *)py_enc, parseopts);
         Py_XDECREF(unic);
         if (docPtr != (xmlDocPtr)NULL) {
