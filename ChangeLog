@@ -1,5 +1,6 @@
 0.2rc1 (2009.04.08):
 
+	Daniel Molina Wegener <dmw@coder.cl>
 	* Added serialize_c14n()
 	* Added serialize_c14n_strict()
 	* Added validate_c14n()
@@ -9,12 +10,11 @@
 
 0.2r (2009.04.18):
 
+	Daniel Molina Wegener <dmw@coder.cl>
 	* Removed memory leaks concerning libxml2 usage.
 	* Removed memory leaks concerning Python C/API usage.
 	* Improved fault detection.
 	* Improved pointer checking deallocations.
-	* Added unit test tset-utf8-prof.py with 50.000 cilces ;)
-
-
-
+	* Added unit test test-utf8-prof.py with 50.000 cilces ;)
+	* Every serilization is made into unicode objects.
 
