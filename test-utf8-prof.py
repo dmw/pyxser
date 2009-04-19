@@ -106,7 +106,7 @@ if __name__ == "__main__":
 
     try:
         correl = 0
-        while correl < 50000:
+        while correl <= 50000:
             test_normal(test)
             test_c14n(test)
             pyxser.xmlcleanup()
