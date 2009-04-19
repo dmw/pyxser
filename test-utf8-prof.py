@@ -47,7 +47,7 @@ def display_heap(hp):
 def test_normal(test):
     try:
         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0)
-        pyxser.validate(serialized, enc = "utf-8")
+        pyxser.validate(obj = serialized, enc = "utf-8")
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
     except Exception, e:
         print "-" * 60
@@ -106,7 +106,7 @@ if __name__ == "__main__":
 
     try:
         correl = 0
-        while correl < 50000:
+        while correl <= 50000:
             test_normal(test)
             test_c14n(test)
             pyxser.xmlcleanup()
