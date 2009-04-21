@@ -80,6 +80,11 @@ const char pyxser_xml_dtd_c14n_location[] = PYXSER_DTD_C14N_FILE;
 static PyObject *pyxserxml(PyObject *self, PyObject *args, PyObject *keywds);
 static PyObject *pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds);
 static PyObject *pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds);
+
+static PyObject *u_pyxserxml(PyObject *self, PyObject *args, PyObject *keywds);
+static PyObject *u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds);
+static PyObject *u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds);
+
 static PyObject *pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds);
 static PyObject *pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds);
 static PyObject *pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds);
@@ -122,8 +127,7 @@ static const char serialize_documentation[] = \
 	"The serialization model resides in the pyxser public identifier DTD:\n"
 	"    <!DOCTYPE pyxs:obj\n"
     "              PUBLIC '-//coder.cl//DTD pyxser 1.0//EN'\n"
-    "              'http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd'>\n"
-    "Returns an Unicode Object\n\n";
+    "              'http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd'>\n";
 
 static const char serializec14n_documentation[] = \
     "Uses the next keyword argumens:\n"
@@ -141,8 +145,7 @@ static const char serializec14n_documentation[] = \
     "* Information about Canonical XML at:\n\thttp://www.w3.org/TR/xml-c14n\n"
     "* Information about Exclusive Canonical XML at\n\thttp://www.w3.org/TR/xml-exc-c14n\n"
     "NOTE: The canonical DTD converts all ID, IDREF and NMTOKEN\n"
-    "      attributes to CDATA attributes\n"
-    "Returns an Unicode Object\n\n";
+    "      attributes to CDATA attributes\n";
 
 static const char serializec14n_documentation_strict[] = \
     "Uses the next keyword argumens:\n"
@@ -161,8 +164,19 @@ static const char serializec14n_documentation_strict[] = \
     "* Information about Exclusive Canonical XML at\n\thttp://www.w3.org/TR/xml-exc-c14n\n"
     "NOTE: C14N serialized objects can not be deserialized because we\n"
     "      need the ID and IDREF attributes to suppor cross referenced\n"
-    "      objects.\n"
-    "Returns an Unicode Object\n\n";
+    "      objects.\n";
+
+static const char u_serialize_documentation[] = \
+    "The same as serialize() but returns a Python unicode\n"
+    "object.\n";
+
+static const char u_serializec14n_documentation[] = \
+    "The same as serialize_c14n() but returns a Python unicode\n"
+    "object.\n";
+
+static const char u_serializec14n_documentation_strict[] = \
+    "The same as serialize_c14n_strict() but returns a Python\n"
+    "unicode object.\n";
 
 static const char deserialize_documentation[] = \
     "Uses the next keyword argumens:\n"
@@ -220,6 +234,18 @@ static PyMethodDef serxMethods[] = {
      METH_VARARGS | METH_KEYWORDS,
      serializec14n_documentation_strict},
 
+    {"u_serialize", (PyCFunction)u_pyxserxml,
+     METH_VARARGS | METH_KEYWORDS,
+     u_serialize_documentation},
+
+    {"u_serialize_c14n", (PyCFunction)u_pyxserxmlc14n,
+     METH_VARARGS | METH_KEYWORDS,
+     u_serializec14n_documentation},
+
+    {"u_serialize_c14n_strict", (PyCFunction)u_pyxserxmlc14nstrict,
+     METH_VARARGS | METH_KEYWORDS,
+     u_serializec14n_documentation_strict},
+
     {"unserialize", (PyCFunction)pyxunserxml,
      METH_VARARGS | METH_KEYWORDS,
      deserialize_documentation},
@@ -260,7 +286,363 @@ initpyxser(void)
 }
 
 static PyObject *
+pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
+{
+	PyObject *res = Py_None;
+	PyObject *input = (PyObject *)NULL;
+	PyListObject *dupItems = (PyListObject *)NULL;
+
+	xmlNodePtr serXml = (xmlNodePtr)NULL;
+	xmlNodePtr rootNode = (xmlNodePtr)NULL;
+	xmlDocPtr docXml = (xmlDocPtr)NULL;
+	xmlChar *xmlBuff = (xmlChar *)NULL;
+
+    static char *kwlist[] = {"obj", "enc", "depth", NULL};
+    char *py_enc = (char *)NULL;
+    char *in_enc = (char *)NULL;
+    int py_depth = 0;
+    int py_depth_cnt = 1;
+	int bufferSize = 0, ok = -1;
+
+	if (PYTHON_IS_NONE(args)) {
+		/* error! don't have arguments */
+		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		return NULL;
+	}
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Osi", kwlist,
+                                     &input, &in_enc, &py_depth);
+	if (!ok) {
+		/* error! don't have arguments */
+		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		return NULL;
+	}
+
+    if (py_depth == 0) {
+        py_depth = 999999;
+    }
+
+    py_enc = xmlgetencoding(xmlParseCharEncoding(in_enc));
+    if (py_enc == (char *)NULL) {
+		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		return NULL;
+    }
+
+    if (PYTHON_IS_NONE(input)) {
+		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		return NULL;
+    }
+
+	dupItems = (PyListObject *)PyList_New(0);
+    Py_XINCREF(input);
+
+	serXml = pyxser_SerializeXml(input, &docXml, &rootNode,
+								 (xmlNodePtr *)NULL, dupItems,
+                                 py_enc, &py_depth, &py_depth_cnt);
+
+    Py_XDECREF(input);
+    Py_XDECREF(dupItems);
+
+	if (serXml != (xmlNodePtr)NULL
+		&& docXml != (xmlDocPtr)NULL) {
+        if ((pyxser_ValidateDocument(docXml)) == 1) {
+            xmlDocDumpFormatMemoryEnc(docXml, &xmlBuff, &bufferSize,
+                                      py_enc, 1);
+            if (xmlBuff != BAD_CAST NULL) {
+                res = PyString_FromStringAndSize((const char *)xmlBuff,
+                                                 bufferSize);
+                if (PYTHON_IS_NOT_NONE(res)) {
+                    xmlFree(xmlBuff);
+                    xmlFreeDoc(docXml);
+                    return res;
+                } else {
+                    xmlFree(xmlBuff);
+                    xmlFreeDoc(docXml);
+                    PyErr_SetString(PyExc_ValueError, msg_non_object);
+                    return NULL;
+                }
+            } else {
+                xmlFreeDoc(docXml);
+                PyErr_SetString(PyExc_ValueError, msg_non_object);
+                return NULL;
+            }
+        } else {
+            xmlFreeDoc(docXml);
+            PyErr_SetString(PyExc_ValueError, msg_non_object);
+            return NULL;
+        }
+	}
+	xmlFreeDoc(docXml);
+	return NULL;
+	/* error! not created */
+}
+
+static PyObject *
 pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
+{
+	PyObject *res = Py_None;
+	PyObject *input = (PyObject *)NULL;
+	PyListObject *dupItems = (PyListObject *)NULL;
+
+	xmlNodePtr serXml = (xmlNodePtr)NULL;
+	xmlNodePtr rootNode = (xmlNodePtr)NULL;
+	xmlDocPtr docXml = (xmlDocPtr)NULL;
+    xmlOutputBufferPtr xmlBuff = (xmlOutputBufferPtr)NULL;
+    xmlChar *docPtr = (xmlChar *)NULL;
+
+    static char *kwlist[] = {"obj", "depth", "exc", "com", NULL};
+    int py_depth = 999999;
+    int py_depth_cnt = 1;
+    int py_exc = 0;
+    int py_com = 0;
+	int ok = -1;
+    int ret = 0;
+
+	if (PYTHON_IS_NONE(args)) {
+		/* error! don't have arguments */
+		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		return NULL;
+	}
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Oiii", kwlist,
+                                     &input, &py_depth,
+                                     &py_exc, &py_com);
+	if (!ok) {
+		/* error! don't have arguments */
+		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		return NULL;
+	}
+
+    if (PYTHON_IS_NONE(input)) {
+		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		return NULL;
+    }
+
+    if (py_depth == 0) {
+        py_depth = 999999;
+    }
+
+	dupItems = (PyListObject *)PyList_New(0);
+    Py_XINCREF(input);
+
+	serXml = pyxser_SerializeXml(input, &docXml, &rootNode,
+								 (xmlNodePtr *)NULL, dupItems,
+                                 xml_encoding, &py_depth, &py_depth_cnt);
+    Py_XDECREF(input);
+    Py_XDECREF(dupItems);
+
+	if (serXml != (xmlNodePtr)NULL
+		&& docXml != (xmlDocPtr)NULL) {
+        if ((pyxser_ValidateDocumentC14N(docXml)) == 1) {
+            xmlBuff = xmlAllocOutputBuffer(NULL);
+            ret = xmlC14NExecute(docXml, pyxser_C14NRenderAllNodes, docXml,
+                                 py_exc, NULL, py_com, xmlBuff);
+            if (ret < 0) {
+                xmlFree(docPtr);
+                xmlOutputBufferClose(xmlBuff);
+                PyErr_SetString(PyExc_ValueError, msg_non_object);
+                return NULL;
+            }
+            if (xmlBuff != NULL) {
+                ret = xmlBuff->buffer->use;
+                docPtr = BAD_CAST xmlStrndup(xmlBuff->buffer->content, ret);
+                res = PyString_FromStringAndSize((const char *)docPtr, ret);
+                xmlOutputBufferClose(xmlBuff);
+                if (PYTHON_IS_NOT_NONE(res)) {
+                    xmlFree(docPtr);
+                    xmlFreeDoc(docXml);
+                    return res;
+                }
+            } else {
+                xmlFreeDoc(docXml);
+                PyErr_SetString(PyExc_ValueError, msg_non_object);
+                return NULL;
+            }
+        }
+	}
+	xmlFreeDoc(docXml);
+	return NULL;
+	/* error! not created */
+}
+
+static PyObject *
+pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
+{
+	PyObject *res = Py_None;
+	PyObject *input = (PyObject *)NULL;
+	PyListObject *dupItems = (PyListObject *)NULL;
+
+	xmlNodePtr serXml = (xmlNodePtr)NULL;
+	xmlNodePtr rootNode = (xmlNodePtr)NULL;
+	xmlDocPtr docXml = (xmlDocPtr)NULL;
+    xmlChar *xmlBuff = (xmlChar *)NULL;
+
+    static char *kwlist[] = {"obj", "depth", "exc", "com", NULL};
+    int py_depth = 999999;
+    int py_depth_cnt = 1;
+    int py_exc = 0;
+    int py_com = 0;
+	int ok = -1;
+    int ret = 0;
+
+	if (PYTHON_IS_NONE(args)) {
+		/* error! don't have arguments */
+		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		return NULL;
+	}
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Oiii", kwlist,
+                                     &input, &py_depth,
+                                     &py_exc, &py_com);
+	if (!ok) {
+		/* error! don't have arguments */
+		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		return NULL;
+	}
+
+    if (PYTHON_IS_NONE(input)) {
+		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		return NULL;
+    }
+
+    if (py_depth == 0) {
+        py_depth = 999999;
+    }
+
+	dupItems = (PyListObject *)PyList_New(0);
+    Py_XINCREF(input);
+
+	serXml = pyxser_SerializeXml(input, &docXml, &rootNode,
+								 (xmlNodePtr *)NULL, dupItems,
+                                 xml_encoding, &py_depth,
+                                 &py_depth_cnt);
+    Py_XINCREF(input);
+    Py_XDECREF(dupItems);
+
+	if (serXml != (xmlNodePtr)NULL
+		&& docXml != (xmlDocPtr)NULL) {
+        if ((pyxser_ValidateDocumentC14N(docXml)) == 1) {
+            ret = xmlC14NDocDumpMemory(docXml, NULL, py_exc, NULL,
+                                       py_com, &xmlBuff);
+            if (xmlBuff != NULL && ret > 0) {
+                res = PyString_FromStringAndSize((const char *)xmlBuff,
+                                                 ret);
+                if (PYTHON_IS_NOT_NONE(res)) {
+                    xmlFree(xmlBuff);
+                    xmlFreeDoc(docXml);
+                    return res;
+                } else {
+                    xmlFree(xmlBuff);
+                    xmlFreeDoc(docXml);
+                    PyErr_SetString(PyExc_ValueError, msg_non_object);
+                    return NULL;
+                }
+            } else {
+                if (xmlBuff != (xmlChar *)NULL) {
+                    xmlFree(xmlBuff);
+                }
+                xmlFreeDoc(docXml);
+                PyErr_SetString(PyExc_ValueError, msg_non_object);
+                return NULL;
+            }
+        }
+	}
+    PyErr_SetString(PyExc_ValueError, msg_non_object);
+	xmlFreeDoc(docXml);
+	return NULL;
+	/* error! not created */
+}
+
+static PyObject *
+u_pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
+{
+	PyObject *res = Py_None;
+	PyObject *input = (PyObject *)NULL;
+	PyListObject *dupItems = (PyListObject *)NULL;
+
+	xmlNodePtr serXml = (xmlNodePtr)NULL;
+	xmlNodePtr rootNode = (xmlNodePtr)NULL;
+	xmlDocPtr docXml = (xmlDocPtr)NULL;
+	xmlChar *xmlBuff = (xmlChar *)NULL;
+
+    static char *kwlist[] = {"obj", "enc", "depth", NULL};
+    char *py_enc = (char *)NULL;
+    char *in_enc = (char *)NULL;
+    int py_depth = 0;
+    int py_depth_cnt = 1;
+	int bufferSize = 0, ok = -1;
+
+	if (PYTHON_IS_NONE(args)) {
+		/* error! don't have arguments */
+		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		return NULL;
+	}
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Osi", kwlist,
+                                     &input, &in_enc, &py_depth);
+	if (!ok) {
+		/* error! don't have arguments */
+		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		return NULL;
+	}
+
+    if (py_depth == 0) {
+        py_depth = 999999;
+    }
+
+    py_enc = xmlgetencoding(xmlParseCharEncoding(in_enc));
+    if (py_enc == (char *)NULL) {
+		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		return NULL;
+    }
+
+    if (PYTHON_IS_NONE(input)) {
+		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		return NULL;
+    }
+
+	dupItems = (PyListObject *)PyList_New(0);
+    Py_XINCREF(input);
+
+	serXml = pyxser_SerializeXml(input, &docXml, &rootNode,
+								 (xmlNodePtr *)NULL, dupItems,
+                                 py_enc, &py_depth, &py_depth_cnt);
+
+    Py_XDECREF(input);
+    Py_XDECREF(dupItems);
+
+	if (serXml != (xmlNodePtr)NULL
+		&& docXml != (xmlDocPtr)NULL) {
+        if ((pyxser_ValidateDocument(docXml)) == 1) {
+            xmlDocDumpFormatMemoryEnc(docXml, &xmlBuff, &bufferSize,
+                                      py_enc, 1);
+            if (xmlBuff != BAD_CAST NULL) {
+                res = PyUnicode_Decode((const char *)xmlBuff, bufferSize,
+                                       (char *)py_enc, pyxser_xml_encoding_mode);
+                if (PYTHON_IS_NOT_NONE(res)) {
+                    xmlFree(xmlBuff);
+                    xmlFreeDoc(docXml);
+                    return res;
+                } else {
+                    xmlFree(xmlBuff);
+                    xmlFreeDoc(docXml);
+                    PyErr_SetString(PyExc_ValueError, msg_non_object);
+                    return NULL;
+                }
+            } else {
+                xmlFreeDoc(docXml);
+                PyErr_SetString(PyExc_ValueError, msg_non_object);
+                return NULL;
+            }
+        } else {
+            xmlFreeDoc(docXml);
+            PyErr_SetString(PyExc_ValueError, msg_non_object);
+            return NULL;
+        }
+	}
+	xmlFreeDoc(docXml);
+	return NULL;
+	/* error! not created */
+}
+
+static PyObject *
+u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 {
 	PyObject *res = Py_None;
 	PyObject *input = (PyObject *)NULL;
@@ -349,7 +731,7 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 }
 
 static PyObject *
-pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
+u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 {
 	PyObject *res = Py_None;
 	PyObject *input = (PyObject *)NULL;
@@ -429,97 +811,6 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
         }
 	}
     PyErr_SetString(PyExc_ValueError, msg_non_object);
-	xmlFreeDoc(docXml);
-	return NULL;
-	/* error! not created */
-}
-
-static PyObject *
-pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
-{
-	PyObject *res = Py_None;
-	PyObject *input = (PyObject *)NULL;
-	PyListObject *dupItems = (PyListObject *)NULL;
-
-	xmlNodePtr serXml = (xmlNodePtr)NULL;
-	xmlNodePtr rootNode = (xmlNodePtr)NULL;
-	xmlDocPtr docXml = (xmlDocPtr)NULL;
-	xmlChar *xmlBuff = (xmlChar *)NULL;
-
-    static char *kwlist[] = {"obj", "enc", "depth", NULL};
-    char *py_enc = (char *)NULL;
-    char *in_enc = (char *)NULL;
-    int py_depth = 0;
-    int py_depth_cnt = 1;
-	int bufferSize = 0, ok = -1;
-
-	if (PYTHON_IS_NONE(args)) {
-		/* error! don't have arguments */
-		PyErr_SetString(PyExc_ValueError, msg_non_object);
-		return NULL;
-	}
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Osi", kwlist,
-                                     &input, &in_enc, &py_depth);
-	if (!ok) {
-		/* error! don't have arguments */
-		PyErr_SetString(PyExc_ValueError, msg_non_object);
-		return NULL;
-	}
-
-    if (py_depth == 0) {
-        py_depth = 999999;
-    }
-
-    py_enc = xmlgetencoding(xmlParseCharEncoding(in_enc));
-    if (py_enc == (char *)NULL) {
-		PyErr_SetString(PyExc_ValueError, msg_non_object);
-		return NULL;
-    }
-
-    if (PYTHON_IS_NONE(input)) {
-		PyErr_SetString(PyExc_ValueError, msg_non_object);
-		return NULL;
-    }
-
-	dupItems = (PyListObject *)PyList_New(0);
-    Py_XINCREF(input);
-
-	serXml = pyxser_SerializeXml(input, &docXml, &rootNode,
-								 (xmlNodePtr *)NULL, dupItems,
-                                 py_enc, &py_depth, &py_depth_cnt);
-
-    Py_XDECREF(input);
-    Py_XDECREF(dupItems);
-
-	if (serXml != (xmlNodePtr)NULL
-		&& docXml != (xmlDocPtr)NULL) {
-        if ((pyxser_ValidateDocument(docXml)) == 1) {
-            xmlDocDumpFormatMemoryEnc(docXml, &xmlBuff, &bufferSize,
-                                      py_enc, 1);
-            if (xmlBuff != BAD_CAST NULL) {
-                res = PyUnicode_Decode((const char *)xmlBuff, bufferSize,
-                                       (char *)py_enc, pyxser_xml_encoding_mode);
-                if (PYTHON_IS_NOT_NONE(res)) {
-                    xmlFree(xmlBuff);
-                    xmlFreeDoc(docXml);
-                    return res;
-                } else {
-                    xmlFree(xmlBuff);
-                    xmlFreeDoc(docXml);
-                    PyErr_SetString(PyExc_ValueError, msg_non_object);
-                    return NULL;
-                }
-            } else {
-                xmlFreeDoc(docXml);
-                PyErr_SetString(PyExc_ValueError, msg_non_object);
-                return NULL;
-            }
-        } else {
-            xmlFreeDoc(docXml);
-            PyErr_SetString(PyExc_ValueError, msg_non_object);
-            return NULL;
-        }
-	}
 	xmlFreeDoc(docXml);
 	return NULL;
 	/* error! not created */
