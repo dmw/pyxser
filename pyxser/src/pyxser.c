@@ -86,8 +86,14 @@ static PyObject *u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywd
 static PyObject *u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds);
 
 static PyObject *pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds);
+static PyObject *u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds);
+
 static PyObject *pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds);
 static PyObject *pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds);
+
+static PyObject *u_pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds);
+static PyObject *u_pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds);
+
 static PyObject *pyxgetdtd(PyObject *self, PyObject *args);
 static PyObject *pyxgetdtdc14n(PyObject *self, PyObject *args);
 static PyObject *xmlcleanup(PyObject *self, PyObject *args);
@@ -194,6 +200,9 @@ static const char deserialize_documentation[] = \
 	"serilized.\n\n"
 	"Every serilized object is validated against the pyxser DTD 1.0\n\n";
 
+static const char u_deserialize_documentation[] = \
+    "Same as unserialize() but uses an Python unicode object as input\n";
+
 static const char validate_documentation[] = \
     "Uses the next keyword argumens:\n"
     "   obj     ->      the serialized python object\n"
@@ -205,8 +214,14 @@ static const char validate_documentation_c14n[] = \
     "Uses the next keyword argumens:\n"
     "   obj     ->      the serialized python object\n"
     "   enc     ->      xml serialization encoding\n\n"
-	"Validates the XML input string against the pyxser DTD 1.0 C14N in\n"
+	"Validates the XML input string against the pyxser DTD C14N 1.0 in\n"
     "your local filesystem.\n\n";
+
+static const char u_validate_documentation[] = \
+    "Same as validate() but uses a Python unicode object as input\n";
+
+static const char u_validate_documentation_c14n[] = \
+    "Same as validate_c14n() but uses a Python unicode object as input\n";
 
 static const char getdtd_documentation[] = \
 	"This function returns the pyxser 1.0 DTD location in your system as\n"
@@ -250,6 +265,10 @@ static PyMethodDef serxMethods[] = {
      METH_VARARGS | METH_KEYWORDS,
      deserialize_documentation},
 
+    {"u_unserialize", (PyCFunction)u_pyxunserxml,
+     METH_VARARGS | METH_KEYWORDS,
+     u_deserialize_documentation},
+
     {"validate", (PyCFunction)pyxvalidate,
      METH_VARARGS | METH_KEYWORDS,
      validate_documentation},
@@ -257,6 +276,14 @@ static PyMethodDef serxMethods[] = {
     {"validate_c14n", (PyCFunction)pyxvalidatec14n,
      METH_VARARGS | METH_KEYWORDS,
      validate_documentation_c14n},
+
+    {"u_validate", (PyCFunction)u_pyxvalidate,
+     METH_VARARGS | METH_KEYWORDS,
+     u_validate_documentation},
+
+    {"u_validate_c14n", (PyCFunction)u_pyxvalidatec14n,
+     METH_VARARGS | METH_KEYWORDS,
+     u_validate_documentation_c14n},
 
     {"getdtd", pyxgetdtd, METH_VARARGS, getdtd_documentation},
     {"getdtd_c14n", pyxgetdtdc14n, METH_VARARGS, getdtd_c14n_documentation},
@@ -820,7 +847,6 @@ static PyObject *
 pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 {
 	PyObject *res = Py_None;
-	PyObject *unic = Py_None;
 	PyObject *input = (PyObject *)NULL;
 	PyObject *tree = (PyObject *)NULL;
 	PyObject *current = (PyObject *)NULL;
@@ -833,7 +859,6 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
     static char *kwlist[] = {"obj", "enc", NULL};
     char *py_enc = (char *)NULL;
     int py_depth = 0;
-    size_t data_size = 0;
 
 	PythonUnserializationArguments obj;
 
@@ -880,7 +905,6 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
     obj.depthcnt = 0;
 
     res = pyxser_UnserializeXml(&obj);
-    Py_XDECREF(unic);
     if (res == NULL) {
         Py_XDECREF(input);
         PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -908,7 +932,6 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
     static char *kwlist[] = {"obj", "enc", NULL};
     char *py_enc = (char *)NULL;
     int py_depth = 0;
-    size_t data_size = 0;
 
 	PythonUnserializationArguments obj;
 
@@ -951,7 +974,6 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
     }
 
-    data_size = PyUnicode_GET_SIZE(unic);
     if (PYTHON_IS_NOT_NONE(unic)) {
         obj.doc = &unic;
         obj.current = &current;
@@ -1145,7 +1167,6 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 	PyObject *res = Py_False;
 	PyObject *input = (PyObject *)NULL;
 	PyObject *unic = (PyObject *)NULL;
-    size_t data_size = 0;
 	char *docstr = (char *)NULL;
     int parseopts = XML_PARSE_RECOVER;
 
@@ -1173,32 +1194,16 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 
     Py_XINCREF(input);
 
-    unic = PyUnicode_AsEncodedString(input, (char *)py_enc,
-                                     pyxser_xml_encoding_mode);
-
-    if (PYTHON_IS_NONE(unic)) {
-        Py_XDECREF(input);
-		PyErr_SetString(PyExc_ValueError, msg_non_object);
-		return NULL;
-    }
-
-    data_size = PyUnicode_GET_DATA_SIZE(unic);
-    if (PYTHON_IS_NOT_NONE(unic)) {
-        docstr = PyString_AS_STRING(unic);
-        docPtr = xmlReadMemory(docstr, data_size, NULL,
-                               (const char *)py_enc, parseopts);
-        Py_XDECREF(unic);
-        if (docPtr != (xmlDocPtr)NULL) {
-            if ((pyxser_ValidateDocument(docPtr)) == 1) {
-                Py_INCREF(Py_True);
-                res = Py_True;
-            }
-            xmlFreeDoc(docPtr);
-        } else {
-            Py_XDECREF(input);
-            PyErr_SetString(PyExc_ValueError, msg_non_xml);
-            return NULL;
+    docstr = PyString_AS_STRING(input);
+    docPtr = xmlReadMemory(docstr, PyString_GET_SIZE(input),
+                           NULL, (const char *)py_enc, parseopts);
+    Py_XDECREF(unic);
+    if (docPtr != (xmlDocPtr)NULL) {
+        if ((pyxser_ValidateDocument(docPtr)) == 1) {
+            Py_INCREF(Py_True);
+            res = Py_True;
         }
+        xmlFreeDoc(docPtr);
     } else {
         Py_XDECREF(input);
         PyErr_SetString(PyExc_ValueError, msg_non_xml);
@@ -1214,8 +1219,6 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
 	xmlDocPtr docPtr = (xmlDocPtr)NULL;
 	PyObject *res = Py_False;
 	PyObject *input = (PyObject *)NULL;
-	PyObject *unic = (PyObject *)NULL;
-    size_t data_size = 0;
 	char *docstr = (char *)NULL;
     int parseopts = XML_PARSE_RECOVER;
 
@@ -1243,37 +1246,21 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
 
     Py_INCREF(input);
 
-    unic = PyUnicode_AsEncodedString(input, (char *)py_enc,
-                                     pyxser_xml_encoding_mode);
-
-    if (PYTHON_IS_NONE(unic)) {
-        Py_XDECREF(input);
-		PyErr_SetString(PyExc_ValueError, msg_non_object);
-		return NULL;
-    }
-
-    data_size = PyUnicode_GET_DATA_SIZE(unic);
-    if (PYTHON_IS_NOT_NONE(unic)) {
-        docstr = PyString_AS_STRING(unic);
-        docPtr = xmlReadMemory(docstr, data_size, NULL,
-                               (const char *)py_enc, parseopts);
-        Py_XDECREF(unic);
-        if (docPtr != (xmlDocPtr)NULL) {
-            if ((pyxser_ValidateDocumentC14N(docPtr)) == 1) {
-                Py_INCREF(Py_True);
-                res = Py_True;
-            }
-            xmlFreeDoc(docPtr);
-        } else {
-            Py_XDECREF(input);
-            PyErr_SetString(PyExc_ValueError, msg_non_xml);
-            return NULL;
+    docstr = PyString_AS_STRING(input);
+    docPtr = xmlReadMemory(docstr, PyString_GET_SIZE(input), NULL,
+                           (const char *)py_enc, parseopts);
+    if (docPtr != (xmlDocPtr)NULL) {
+        if ((pyxser_ValidateDocumentC14N(docPtr)) == 1) {
+            Py_INCREF(Py_True);
+            res = Py_True;
         }
+        xmlFreeDoc(docPtr);
     } else {
         Py_XDECREF(input);
         PyErr_SetString(PyExc_ValueError, msg_non_xml);
         return NULL;
     }
+
     Py_XDECREF(input);
     return res;
 }

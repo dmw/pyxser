@@ -33,8 +33,6 @@ import pyxser
 import testpkg.sample
 from guppy import hpy
 
-h = hpy()
-
 def display_heap(hp):
     print hp
     c = 10
@@ -46,43 +44,97 @@ def display_heap(hp):
 
 def test_normal(test):
     try:
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0)
-        pyxser.validate(obj = serialized, enc = "utf-8")
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2)
+        pyxser.validate(serialized, enc = "utf-8")
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 3)
+        pyxser.validate(serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 4)
+        pyxser.validate(serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 5)
+        pyxser.validate(serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0)
+        pyxser.validate(serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+
+        pyxser.xmlcleanup()
+
     except Exception, e:
         print "-" * 60
         traceback.print_exc(file=sys.stdout)
         print "-" * 60
-        display_heap(h.heap())
-        sys.exit()
 
-def test_normal_unicode(test):
-    try:
-        serialized = pyxser.u_serialize(obj = test, enc = "utf-8", depth = 0)
-        pyxser.validate(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
-    except Exception, e:
-        print "-" * 60
-        traceback.print_exc(file=sys.stdout)
-        print "-" * 60
-        display_heap(h.heap())
-        sys.exit()
-
-def test_c14n(test):
+def test_normal_c14n(test):
     try:
         serialized = pyxser.serialize_c14n(obj = test, depth = 0, exc = 0, com = 0)
-        pyxser.validate_c14n(obj = serialized, enc = "utf-8")
+        pyxser.validate(obj = serialized, enc = "utf-8")
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+
         serialized = pyxser.serialize_c14n_strict(obj = test, depth = 0, exc = 0, com = 0)
+        pyxser.validate_c14n(obj = serialized, enc = "utf-8")
+
+        pyxser.xmlcleanup()
+
     except Exception, e:
         print "-" * 60
         traceback.print_exc(file=sys.stdout)
         print "-" * 60
-        display_heap(h.heap())
-        sys.exit()
+
+def test_unicode(test):
+    try:
+        serialized = pyxser.u_serialize(obj = test, enc = "utf-8", depth = 2)
+        pyxser.u_validate(serialized, enc = "utf-8")
+        unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
+
+        serialized = pyxser.u_serialize(obj = test, enc = "utf-8", depth = 3)
+        pyxser.u_validate(serialized, enc = "utf-8")
+        unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
+
+        serialized = pyxser.u_serialize(obj = test, enc = "utf-8", depth = 4)
+        pyxser.u_validate(serialized, enc = "utf-8")
+        unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
+
+        serialized = pyxser.u_serialize(obj = test, enc = "utf-8", depth = 5)
+        pyxser.u_validate(serialized, enc = "utf-8")
+        unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
+
+        serialized = pyxser.u_serialize(obj = test, enc = "utf-8", depth = 0)
+        pyxser.u_validate(serialized, enc = "utf-8")
+        unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
+
+        pyxser.xmlcleanup()
+
+    except Exception, e:
+        print "-" * 60
+        traceback.print_exc(file=sys.stdout)
+        print "-" * 60
+
+def test_unicode_c14n(test):
+    try:
+        serialized = pyxser.u_serialize_c14n(obj = test, depth = 0, exc = 0, com = 0)
+        pyxser.u_validate(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
+
+        serialized = pyxser.u_serialize_c14n_strict(obj = test, depth = 0, exc = 0, com = 0)
+        pyxser.u_validate_c14n(obj = serialized, enc = "utf-8")
+
+        pyxser.xmlcleanup()
+
+    except Exception, e:
+        print "-" * 60
+        traceback.print_exc(file=sys.stdout)
+        print "-" * 60
 
 
 if __name__ == "__main__":
+    h = hpy()
     another = testpkg.sample.TestAnotherObject()
     another.first_element = 123
     another.second_element = 456
@@ -116,25 +168,19 @@ if __name__ == "__main__":
     test.dyn_prop6 = 1.5
     test.dyn_prop7 = 1000
 
-    try:
-        correl = 0
-        while correl <= 50000:
-            test_normal(test)
-            test_c14n(test)
-            pyxser.xmlcleanup()
-            if (correl % 1000) == 0:
-                print "Current amount: ", correl
-            correl += 1
+    crawl = 0
+    while crawl <= 15000:
+        test_normal(test)
+        test_normal_c14n(test)
+        test_unicode(test)
+        test_unicode_c14n(test)
+        pyxser.getdtd()
+        pyxser.getdtd_c14n()
+        pyxser.xmlcleanup()
+        if (crawl % 1000) == 0:
+            print "cicle: ", crawl
+        crawl += 1
 
-        print "Last: ", (correl - 1)
-
-    except Exception, e:
-        print "-" * 60
-        traceback.print_exc(file=sys.stdout)
-        print "-" * 60
-        display_heap(h.heap())
-
-    display_heap(h.heap())
-
-
+    hps = h.heapu()
+    display_heap(hps)
 
