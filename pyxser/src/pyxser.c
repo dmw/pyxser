@@ -315,7 +315,7 @@ initpyxser(void)
 static PyObject *
 pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 {
-	PyObject *res = Py_None;
+	PyObject *res = (PyObject *)NULL;
 	PyObject *input = (PyObject *)NULL;
 	PyListObject *dupItems = (PyListObject *)NULL;
 
@@ -406,7 +406,7 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 static PyObject *
 pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 {
-	PyObject *res = Py_None;
+	PyObject *res = (PyObject *)NULL;
 	PyObject *input = (PyObject *)NULL;
 	PyListObject *dupItems = (PyListObject *)NULL;
 
@@ -493,7 +493,7 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 static PyObject *
 pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 {
-	PyObject *res = Py_None;
+	PyObject *res = (PyObject *)NULL;
 	PyObject *input = (PyObject *)NULL;
 	PyListObject *dupItems = (PyListObject *)NULL;
 
@@ -891,7 +891,6 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
     }
 
     Py_XINCREF(input);
-
     obj.doc = &input;
     obj.current = &current;
     obj.tree = &tree;
@@ -903,15 +902,15 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
     obj.encoding = py_enc;
     obj.depth = py_depth;
     obj.depthcnt = 0;
-
     res = pyxser_UnserializeXml(&obj);
+    Py_XDECREF(input);
+
     if (res == NULL) {
         Py_XDECREF(input);
         PyErr_SetString(PyExc_ValueError, msg_non_object);
         return NULL;
     }
 
-    Py_XDECREF(input);
     return res;
 }
 
@@ -967,9 +966,9 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 
     unic = PyUnicode_AsEncodedString(input, (char *)py_enc,
                                      pyxser_xml_encoding_mode);
+    Py_XDECREF(input);
 
     if (PYTHON_IS_NONE(unic)) {
-        Py_XDECREF(input);
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
     }
@@ -988,15 +987,13 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
         obj.depthcnt = 0;
 
         res = pyxser_UnserializeXml(&obj);
-        Py_XDECREF(unic);
         if (res == NULL) {
             Py_XDECREF(input);
             PyErr_SetString(PyExc_ValueError, msg_non_object);
             return NULL;
         }
     }
-
-    Py_XDECREF(input);
+    Py_XDECREF(unic);
     return res;
 }
 
@@ -1057,6 +1054,7 @@ u_pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 
     unic = PyUnicode_AsEncodedString(input, (char *)py_enc,
                                      pyxser_xml_encoding_mode);
+    Py_XDECREF(input);
 
     if (PYTHON_IS_NONE(unic)) {
         Py_XDECREF(input);
@@ -1077,16 +1075,13 @@ u_pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
             }
             xmlFreeDoc(docPtr);
         } else {
-            Py_XDECREF(input);
             PyErr_SetString(PyExc_ValueError, msg_non_xml);
             return NULL;
         }
     } else {
-        Py_XDECREF(input);
         PyErr_SetString(PyExc_ValueError, msg_non_xml);
         return NULL;
     }
-    Py_XDECREF(input);
     return res;
 }
 
@@ -1127,6 +1122,7 @@ u_pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
 
     unic = PyUnicode_AsEncodedString(input, (char *)py_enc,
                                      pyxser_xml_encoding_mode);
+    Py_XDECREF(input);
 
     if (PYTHON_IS_NONE(unic)) {
         Py_XDECREF(input);
@@ -1147,16 +1143,13 @@ u_pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
             }
             xmlFreeDoc(docPtr);
         } else {
-            Py_XDECREF(input);
             PyErr_SetString(PyExc_ValueError, msg_non_xml);
             return NULL;
         }
     } else {
-        Py_XDECREF(input);
         PyErr_SetString(PyExc_ValueError, msg_non_xml);
         return NULL;
     }
-    Py_XDECREF(input);
     return res;
 }
 
@@ -1197,6 +1190,7 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
     docstr = PyString_AS_STRING(input);
     docPtr = xmlReadMemory(docstr, PyString_GET_SIZE(input),
                            NULL, (const char *)py_enc, parseopts);
+    Py_XDECREF(input);
     Py_XDECREF(unic);
     if (docPtr != (xmlDocPtr)NULL) {
         if ((pyxser_ValidateDocument(docPtr)) == 1) {
@@ -1205,11 +1199,9 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
         }
         xmlFreeDoc(docPtr);
     } else {
-        Py_XDECREF(input);
         PyErr_SetString(PyExc_ValueError, msg_non_xml);
         return NULL;
     }
-    Py_XDECREF(input);
     return res;
 }
 
@@ -1249,6 +1241,7 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
     docstr = PyString_AS_STRING(input);
     docPtr = xmlReadMemory(docstr, PyString_GET_SIZE(input), NULL,
                            (const char *)py_enc, parseopts);
+    Py_XDECREF(input);
     if (docPtr != (xmlDocPtr)NULL) {
         if ((pyxser_ValidateDocumentC14N(docPtr)) == 1) {
             Py_INCREF(Py_True);
@@ -1256,12 +1249,9 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
         }
         xmlFreeDoc(docPtr);
     } else {
-        Py_XDECREF(input);
         PyErr_SetString(PyExc_ValueError, msg_non_xml);
         return NULL;
     }
-
-    Py_XDECREF(input);
     return res;
 }
 
