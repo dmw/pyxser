@@ -56,6 +56,18 @@ def test_normal(test):
         display_heap(h.heap())
         sys.exit()
 
+def test_normal_unicode(test):
+    try:
+        serialized = pyxser.u_serialize(obj = test, enc = "utf-8", depth = 0)
+        pyxser.validate(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
+    except Exception, e:
+        print "-" * 60
+        traceback.print_exc(file=sys.stdout)
+        print "-" * 60
+        display_heap(h.heap())
+        sys.exit()
+
 def test_c14n(test):
     try:
         serialized = pyxser.serialize_c14n(obj = test, depth = 0, exc = 0, com = 0)
