@@ -330,8 +330,6 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docptr, xmlNodePtr *rootNode,
             Py_XINCREF(currentKey);
             Py_XINCREF(item);
 			if (PYTHON_IS_NONE(item)) {
-                Py_XDECREF(currentKey);
-                Py_XDECREF(item);
 				listIterator++;
 				continue;
 			}
@@ -345,8 +343,6 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docptr, xmlNodePtr *rootNode,
             }
             (*depthcnt)--;
 			listIterator++;
-            Py_XDECREF(currentKey);
-            Py_XDECREF(item);
 		}
         PYXSER_FREE_OBJECT(objKeys);
         PYXSER_FREE_OBJECT(lstItems);
@@ -753,8 +749,6 @@ pyxser_SearchModuleType(PyObject *mod, const char *name)
 			listIterator++;
 		}
 	}
-    PYXSER_FREE_OBJECT(objKeys);
-    PYXSER_FREE_OBJECT(dict);
 	return item;
 }
 
@@ -968,11 +962,8 @@ pyxser_PyListContains(PyListObject *lst, PyObject *o)
 	while ((item = PyIter_Next(iterLst))
 		   != (PyObject *)NULL) {
 		if (item == o) {
-			Py_XDECREF(iterLst);
-            Py_XDECREF(item);
 			return PYXSER_FOUND;
 		}
-        Py_XDECREF(item);
 	}
     PYXSER_FREE_OBJECT(iterLst);
 	return PYXSER_NOT_FOUND;
@@ -1506,7 +1497,6 @@ pyxser_SearchObjectInMain(const char *name)
 			}
 		}
 	}
-    PYXSER_FREE_OBJECT(dictKeys);
 	return ct;
 }
 
@@ -1535,7 +1525,6 @@ pyxser_SearchModule(const char *name)
 			item = PyDict_GetItem(dictMod, currentKey);
 		}
 	}
-    PYXSER_FREE_OBJECT(dictKeys);
 	return item;
 }
 
@@ -1565,7 +1554,6 @@ pyxser_CacheModule(PyObject *d, const char *name)
 				item = PyDict_GetItem(dictMod, currentKey);
 			}
 		}
-        PYXSER_FREE_OBJECT(dictKeys);
 	}
 	return item;
 }

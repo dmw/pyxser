@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env PYTHONDEBUG=y python2.5
 # -*- coding: utf-8 -*-
 ##
 ##     Copyright (c) 2009 Daniel Molina Wegener <dmw@coder.cl>
