@@ -444,6 +444,7 @@ pyxser_UnserializeElement(PyObject *ct, PyObject **current,
         if (attr_name != (char *)NULL) {
             ctrl = PyObject_SetAttrString(*current,
                                           attr_name, unser);
+            Py_XINCREF(unser);
             PYXSER_XMLFREE(attr_name);
         }
         pyxser_AddAvailableObject((PyObject *)*dups,
@@ -481,6 +482,7 @@ pyxser_SearchTypesInModules(const char *n_module,
     if (!PYTHON_IS_NOT_NONE(chkMod)) {
         PyDict_SetItemString((PyObject *)*modules,
                              n_module, cacheMod);
+        Py_XINCREF(cacheMod);
     }
     return (PyObject *)pyxser_SearchModuleType(cacheMod, n_type);
 }
@@ -533,6 +535,7 @@ pyxser_UnserializeBlock(PyxSerDeserializationArgsPtr obj)
 							if (attr_name != (char *)NULL) {
 								ctrl = PyObject_SetAttrString(*current,
 															  attr_name, unser);
+                                Py_XINCREF(unser);
                                 PYXSER_XMLFREE(attr_name);
  								break;
 							}
@@ -588,6 +591,7 @@ pyxser_UnserializeBlock(PyxSerDeserializationArgsPtr obj)
 					if (attr_name != (char *)NULL
 						&& PYTHON_IS_NOT_NONE(unser)) {
 						ctrl = PyObject_SetAttrString(*current, attr_name, unser);
+                        Py_XINCREF(unser);
                         PYXSER_XMLFREE(attr_name);
 					}
 				}
@@ -672,10 +676,7 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
                     if (PYTHON_IS_NOT_NONE(ct)) {
                         if (*tree == (PyObject *)NULL) {
                             ndict = PyDict_New();
-                            if (PYTHON_IS_NONE(ndict)) {
-                                return NULL;
-                            }
-                            *tree = PyInstance_NewRaw(ct, ndict);
+                            *tree = PyInstance_NewRaw(ct, NULL);
                             *current = *tree;
                             obj->current = current;
                             obj->tree = tree;
@@ -690,10 +691,7 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
                     if (PYTHON_IS_NOT_NONE(ct)) {
                         if (*tree == (PyObject *)NULL) {
                             ndict = PyDict_New();
-                            if (PYTHON_IS_NONE(ndict)) {
-                                return NULL;
-                            }
-                            *tree = PyInstance_NewRaw(ct, ndict);
+                            *tree = PyInstance_NewRaw(ct, NULL);
                             *current = *tree;
                             obj->current = current;
                             obj->tree = tree;

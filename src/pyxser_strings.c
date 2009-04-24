@@ -78,19 +78,8 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
         return (xmlNodePtr)NULL;
     }
 
-    unic = PyUnicode_AsEncodedString(o, (char *)doc->encoding,
-                                     pyxser_xml_encoding_mode);
-
-    if (PYTHON_IS_NONE(unic)) {
-        PYXSER_FREE_OBJECT(className);
-        PYXSER_FREE_OBJECT(classPtr);
-        memset(error_buffer, 0, 512);
-        sprintf(error_buffer, "Invalid bytecode for encoding '%s'", pyxser_xml_encoding);
-        PyErr_SetString(invalid_encoding_exception, error_buffer);
-        return (xmlNodePtr)NULL;
-    }
-
-    data_size = PyUnicode_GET_SIZE(unic);
+    unic = PyUnicode_AsUnicodeEscapeString(o);
+    data_size = PyString_GET_SIZE(unic);
     if (PYTHON_IS_NOT_NONE(unic)) {
         nptr = PyString_AS_STRING(className);
         sptr = PyString_AS_STRING(unic);
@@ -100,9 +89,7 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
                                 pyxser_GetDefaultNs(),
                                 BAD_CAST pyxser_xml_attr_item,
                                 NULL);
-            txtin = pyxser_ConvertInput(sptr, (char *)doc->encoding);
-            ntxt = xmlNewDocText(doc, txtin);
-            PYXSER_XMLFREE(txtin);
+            ntxt = xmlNewDocText(doc, sptr);
             typeAttr = xmlNewProp(nen,
                                   BAD_CAST pyxser_xml_attr_type,
                                   BAD_CAST nptr);
@@ -245,8 +232,10 @@ pyxunser_SerializeUnicode(PyxSerDeserializationArgsPtr obj)
 	xmlNodePtr ron;
     xmlDocPtr doc = *(obj->docPtr);
 	xmlChar *propSize = (xmlChar *)NULL;
-	PyObject *unic = Py_None;
-	PyObject *res = Py_None;
+    char *in = (char *)NULL;
+	PyObject *unic = NULL;
+	PyObject *pstr = NULL;
+	PyObject *res = NULL;
 	Py_ssize_t tsz = 0;
 
     if (node == (xmlNodePtr)NULL) {
@@ -261,8 +250,9 @@ pyxunser_SerializeUnicode(PyxSerDeserializationArgsPtr obj)
             tsz = (Py_ssize_t)strtol((const char *)propSize,
                                      (char **)NULL, 10);
             if (ron->type == XML_TEXT_NODE) {
-                unic = PyUnicode_Decode((const char *)ron->content, tsz,
-                                        (char *)doc->encoding, pyxser_xml_encoding_mode);
+                unic = PyUnicode_DecodeUnicodeEscape((char *)ron->content,
+                                                     strlen(ron->content),
+                                                     pyxser_xml_encoding_mode);
                 res = unic;
             }
         }
