@@ -380,6 +380,7 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
                 if (PYTHON_IS_NOT_NONE(res)) {
                     xmlFree(xmlBuff);
                     xmlFreeDoc(docXml);
+                    Py_XINCREF(res);
                     return res;
                 } else {
                     xmlFree(xmlBuff);
@@ -903,7 +904,6 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
     obj.depth = py_depth;
     obj.depthcnt = 0;
     res = pyxser_UnserializeXml(&obj);
-    Py_XDECREF(input);
 
     if (res == NULL) {
         Py_XDECREF(input);
@@ -911,6 +911,8 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
         return NULL;
     }
 
+    Py_XDECREF(input);
+    Py_XINCREF(res);
     return res;
 }
 
@@ -994,6 +996,7 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
         }
     }
     Py_XDECREF(unic);
+    Py_XINCREF(res);
     return res;
 }
 
@@ -1070,7 +1073,6 @@ u_pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
         Py_XDECREF(unic);
         if (docPtr != (xmlDocPtr)NULL) {
             if ((pyxser_ValidateDocument(docPtr)) == 1) {
-                Py_INCREF(Py_True);
                 res = Py_True;
             }
             xmlFreeDoc(docPtr);
@@ -1138,7 +1140,6 @@ u_pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
         Py_XDECREF(unic);
         if (docPtr != (xmlDocPtr)NULL) {
             if ((pyxser_ValidateDocumentC14N(docPtr)) == 1) {
-                Py_INCREF(Py_True);
                 res = Py_True;
             }
             xmlFreeDoc(docPtr);
@@ -1194,7 +1195,6 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
     Py_XDECREF(unic);
     if (docPtr != (xmlDocPtr)NULL) {
         if ((pyxser_ValidateDocument(docPtr)) == 1) {
-            Py_INCREF(Py_True);
             res = Py_True;
         }
         xmlFreeDoc(docPtr);
@@ -1242,9 +1242,9 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
     docPtr = xmlReadMemory(docstr, PyString_GET_SIZE(input), NULL,
                            (const char *)py_enc, parseopts);
     Py_XDECREF(input);
+
     if (docPtr != (xmlDocPtr)NULL) {
         if ((pyxser_ValidateDocumentC14N(docPtr)) == 1) {
-            Py_INCREF(Py_True);
             res = Py_True;
         }
         xmlFreeDoc(docPtr);
