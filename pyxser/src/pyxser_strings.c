@@ -67,6 +67,7 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
     classPtr = PyObject_GetAttrString(o, pyxser_attr_class);
 
     if (PYTHON_IS_NONE(classPtr)) {
+        PyErr_Clear();
         return (xmlNodePtr)NULL;
     }
 
@@ -74,6 +75,7 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
                                        pyxser_attr_name);
 
     if (PYTHON_IS_NONE(className)) {
+        PyErr_Clear();
         PYXSER_FREE_OBJECT(classPtr);
         return (xmlNodePtr)NULL;
     }
@@ -145,6 +147,7 @@ pyxser_SerializeString(PyObject *o, char *name,
     classPtr = PyObject_GetAttrString(o, pyxser_attr_class);
 
     if (PYTHON_IS_NONE(classPtr) || sptr == (char *)NULL) {
+        PyErr_Clear();
         return (xmlNodePtr)NULL;
     }
 
@@ -152,6 +155,7 @@ pyxser_SerializeString(PyObject *o, char *name,
                                        pyxser_attr_name);
 
     if (PYTHON_IS_NONE(className)) {
+        PyErr_Clear();
         PYXSER_FREE_OBJECT(classPtr);
         return (xmlNodePtr)NULL;
     }
@@ -270,11 +274,7 @@ pyxunser_SerializeExactUnicode(PyxSerDeserializationArgsPtr obj)
 PyObject *
 pyxunser_SerializeBuffer(PyxSerDeserializationArgsPtr obj)
 {
-	if (obj != NULL) {
-		// XXX: must change to base 64 encoded buffer.
-		return Py_None;
-	}
-	return Py_None;
+    return NULL;
 }
 
 static xmlChar *

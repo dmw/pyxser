@@ -217,10 +217,12 @@ pyxser_GlobalListSerialization(PyObject *o, char *name,
 	}
 	classPtr = PyObject_GetAttrString(o, pyxser_attr_class);
 	if (PYTHON_IS_NONE(classPtr)) {
+        PyErr_Clear();
 		return (xmlNodePtr)NULL;
 	}
 	className = PyObject_GetAttrString(classPtr, pyxser_attr_name);
 	if (PYTHON_IS_NONE(className)) {
+        PyErr_Clear();
         PYXSER_FREE_OBJECT(classPtr);
 		return (xmlNodePtr)NULL;
 	}
@@ -271,10 +273,12 @@ pyxser_GlobalTupleSerialization(PyObject *o, char *name, PyListObject *dupItems,
 	}
 	classPtr = PyObject_GetAttrString(o, pyxser_attr_class);
 	if (PYTHON_IS_NONE(classPtr)) {
+        PyErr_Clear();
 		return (xmlNodePtr)NULL;
 	}
 	className = PyObject_GetAttrString(classPtr, pyxser_attr_name);
 	if (PYTHON_IS_NONE(className)) {
+        PyErr_Clear();
         PYXSER_FREE_OBJECT(classPtr);
 		return (xmlNodePtr)NULL;
 	}
@@ -327,10 +331,12 @@ pyxser_GlobalDictSerialization(PyObject *o, char *name, PyListObject *dupItems, 
 	}
 	classPtr = PyObject_GetAttrString(o, pyxser_attr_class);
 	if (PYTHON_IS_NONE(classPtr)) {
+        PyErr_Clear();
 		return (xmlNodePtr)NULL;
 	}
 	className = PyObject_GetAttrString(classPtr, pyxser_attr_name);
 	if (PYTHON_IS_NONE(className)) {
+        PyErr_Clear();
         PYXSER_FREE_OBJECT(classPtr);
 		return (xmlNodePtr)NULL;
 	}
@@ -648,7 +654,6 @@ pyxunser_SerializeDict(PyxSerDeserializationArgsPtr obj)
 						if (PYTHON_IS_NOT_NONE(unser)) {
 							key = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_name);
 							PyDict_SetItemString(dict, key, unser);
-                            Py_XINCREF(unser);
                             PYXSER_XMLFREE(key);
 							break;
 						}
@@ -677,7 +682,6 @@ pyxunser_SerializeDict(PyxSerDeserializationArgsPtr obj)
                             if (PYTHON_IS_NOT_NONE(unser)) {
                                 key = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_name);
                                 PyDict_SetItemString(dict, key, unser);
-                                Py_XINCREF(unser);
                                 PYXSER_XMLFREE(key);
                                 pyxser_AddAvailableObject((PyObject *)*dups, (char *)n_id, unser);
                                 cacheCurrent = *(obj->current);
@@ -698,7 +702,6 @@ pyxunser_SerializeDict(PyxSerDeserializationArgsPtr obj)
                             if (PYTHON_IS_NOT_NONE(unser)) {
                                 key = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_name);
                                 PyDict_SetItemString(dict, key, unser);
-                                Py_XINCREF(unser);
                                 PYXSER_XMLFREE(key);
                                 pyxser_AddAvailableObject((PyObject *)*dups, (char *)n_id, unser);
                                 cacheCurrent = *(obj->current);
@@ -721,7 +724,6 @@ pyxunser_SerializeDict(PyxSerDeserializationArgsPtr obj)
                     if (PYTHON_IS_NOT_NONE(unser)
                         && key != (char *)NULL) {
                         PyDict_SetItemString(dict, key, unser);
-                        Py_XINCREF(unser);
                     }
 				}
                 PYXSER_XMLFREE(n_type);

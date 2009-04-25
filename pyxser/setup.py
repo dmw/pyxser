@@ -1,4 +1,4 @@
-#!/usr/bin/env debug-python
+#!/usr/bin/env python
 
 ##
 ## $Id$

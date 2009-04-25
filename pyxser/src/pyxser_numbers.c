@@ -126,11 +126,13 @@ pyxser_SerializeComplex(PyObject *o, char *name,
 	classPtr = PyObject_GetAttrString(o, pyxser_attr_class);
 	if (PYTHON_IS_NONE(classPtr)
 		|| sptr == (char *)NULL) {
+        PyErr_Clear();
 		PYXSER_FREE_OBJECT(classPtr);
 		return (xmlNodePtr)NULL;
 	}
 	className = PyObject_GetAttrString(classPtr, pyxser_attr_name);
 	if (PYTHON_IS_NONE(className)) {
+        PyErr_Clear();
 		PYXSER_FREE_OBJECT(classPtr);
 		PYXSER_FREE_OBJECT(className);
 		return (xmlNodePtr)NULL;
@@ -153,8 +155,8 @@ pyxser_SerializeComplex(PyObject *o, char *name,
 			}
 			xmlAddChild(newElementNode, newTextNode);
 		}
-		PYXSER_FREE_OBJECT(className);
 	}
+    PYXSER_FREE_OBJECT(className);
 	PYXSER_FREE_OBJECT(classPtr);
 	return newElementNode;
 }
