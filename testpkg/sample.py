@@ -14,7 +14,6 @@ class TestAnotherObject:
     def __str__(self):
         return repr(self.__dict__)
     def __repr__(self):
-        print "TestAnotherObject"
         return repr(self.__dict__)
 
 class SubNestedChild():
@@ -22,7 +21,6 @@ class SubNestedChild():
     def __init__(self, m1):
         self.subnested1 = m1
     def __repr__(self):
-        print "SubNestedChild"
         return "\n\t\t\t-> " + repr(self.__dict__)
 
 class NestedChild():
@@ -35,7 +33,6 @@ class NestedChild():
         self.nested2 = m2
         self.nested3 = m3
     def __repr__(self):
-        print "NestedChild"
         return "\n\t\t-> " + repr(self.__dict__)
 
 class ChildObject:
@@ -48,7 +45,6 @@ class ChildObject:
         self.child2 = m2
         self.child3 = m3
     def __repr__(self):
-        print "ChildObject"
         return "\n\t-> " + repr(self.__dict__)
 
 class ParentObject:
@@ -65,7 +61,6 @@ class ParentObject:
     def subnested(self, m1):
         self.parent3.child4.nested4 = SubNestedChild(m1)
     def __repr__(self):
-        print "ParentObject"
         return "\n-> " + repr(self.__dict__)
 
 

@@ -381,6 +381,7 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
                     xmlFree(xmlBuff);
                     xmlFreeDoc(docXml);
                     Py_XINCREF(res);
+                    PyErr_Clear();
                     return res;
                 } else {
                     xmlFree(xmlBuff);
@@ -477,6 +478,7 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
                 if (PYTHON_IS_NOT_NONE(res)) {
                     xmlFree(docPtr);
                     xmlFreeDoc(docXml);
+                    PyErr_Clear();
                     return res;
                 }
             } else {
@@ -555,6 +557,7 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
                 if (PYTHON_IS_NOT_NONE(res)) {
                     xmlFree(xmlBuff);
                     xmlFreeDoc(docXml);
+                    PyErr_Clear();
                     return res;
                 } else {
                     xmlFree(xmlBuff);
@@ -646,6 +649,7 @@ u_pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
                 if (PYTHON_IS_NOT_NONE(res)) {
                     xmlFree(xmlBuff);
                     xmlFreeDoc(docXml);
+                    PyErr_Clear();
                     return res;
                 } else {
                     xmlFree(xmlBuff);
@@ -744,6 +748,7 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
                 if (PYTHON_IS_NOT_NONE(res)) {
                     xmlFree(docPtr);
                     xmlFreeDoc(docXml);
+                    PyErr_Clear();
                     return res;
                 }
             } else {
@@ -821,6 +826,7 @@ u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
                 if (PYTHON_IS_NOT_NONE(res)) {
                     xmlFree(xmlBuff);
                     xmlFreeDoc(docXml);
+                    PyErr_Clear();
                     return res;
                 } else {
                     xmlFree(xmlBuff);
@@ -877,7 +883,7 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
 	}
 
-    if (PYTHON_IS_NONE(pyxser_modules)) {
+    if (pyxser_modules == (PyObject *)NULL) {
         pyxser_modules = (PyDictObject *)PyDict_New();
     }
 
@@ -912,7 +918,6 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
     }
 
     Py_XDECREF(input);
-    Py_XINCREF(res);
     return res;
 }
 
@@ -996,7 +1001,7 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
         }
     }
     Py_XDECREF(unic);
-    Py_XINCREF(res);
+    PyErr_Clear();
     return res;
 }
 
@@ -1005,8 +1010,8 @@ pyxgetdtd(PyObject *self, PyObject *args)
 {
     if (pyxstr_dtd == NULL) {
         pyxstr_dtd = PyString_FromString((const char *)pyxser_xml_dtd_location);
-        Py_XINCREF(pyxstr_dtd);
     }
+    Py_XINCREF(pyxstr_dtd);
 	return pyxstr_dtd;
 }
 
@@ -1015,8 +1020,8 @@ pyxgetdtdc14n(PyObject *self, PyObject *args)
 {
     if (pyxstr_dtd_c14n == NULL) {
         pyxstr_dtd_c14n = PyString_FromString((const char *)pyxser_xml_dtd_c14n_location);
-        Py_XINCREF(pyxstr_dtd_c14n);
     }
+    Py_XINCREF(pyxstr_dtd_c14n);
 	return pyxstr_dtd_c14n;
 }
 
@@ -1084,6 +1089,7 @@ u_pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
         PyErr_SetString(PyExc_ValueError, msg_non_xml);
         return NULL;
     }
+    PyErr_Clear();
     return res;
 }
 
@@ -1151,6 +1157,7 @@ u_pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
         PyErr_SetString(PyExc_ValueError, msg_non_xml);
         return NULL;
     }
+    PyErr_Clear();
     return res;
 }
 
@@ -1202,6 +1209,7 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
         PyErr_SetString(PyExc_ValueError, msg_non_xml);
         return NULL;
     }
+    PyErr_Clear();
     return res;
 }
 
@@ -1252,16 +1260,13 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
         PyErr_SetString(PyExc_ValueError, msg_non_xml);
         return NULL;
     }
+    PyErr_Clear();
     return res;
 }
 
 static PyObject *
 xmlcleanup(PyObject *self, PyObject *args)
 {
-    if (PYTHON_IS_NOT_NONE(pyxser_modules)) {
-        Py_DECREF(pyxser_modules);
-        pyxser_modules = NULL;
-    }
     xmlFreeDtd(pyxser_dtd_object);
     pyxser_dtd_object = NULL;
     xmlFreeDtd(pyxser_dtd_c14n_object);
@@ -1269,6 +1274,7 @@ xmlcleanup(PyObject *self, PyObject *args)
     xmlCleanupParser();
     xmlCleanupEncodingAliases();
     Py_INCREF(Py_None);
+    PyErr_Clear();
     return Py_None;
 }
 
@@ -1276,7 +1282,6 @@ xmlcleanup(PyObject *self, PyObject *args)
 void
 pyxser_unregister(void)
 {
-    Py_XDECREF(pyxser_version_obj);
     pyxser_version_obj = NULL;
     Py_XDECREF(pyxser_modules);
     pyxser_modules = NULL;
