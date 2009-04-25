@@ -1090,6 +1090,7 @@ u_pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
         return NULL;
     }
     PyErr_Clear();
+    Py_XINCREF(res);
     return res;
 }
 
@@ -1158,6 +1159,7 @@ u_pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
         return NULL;
     }
     PyErr_Clear();
+    Py_XINCREF(res);
     return res;
 }
 
@@ -1167,7 +1169,6 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 	xmlDocPtr docPtr = (xmlDocPtr)NULL;
 	PyObject *res = Py_False;
 	PyObject *input = (PyObject *)NULL;
-	PyObject *unic = (PyObject *)NULL;
 	char *docstr = (char *)NULL;
     int parseopts = XML_PARSE_RECOVER;
 
@@ -1199,7 +1200,6 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
     docPtr = xmlReadMemory(docstr, PyString_GET_SIZE(input),
                            NULL, (const char *)py_enc, parseopts);
     Py_XDECREF(input);
-    Py_XDECREF(unic);
     if (docPtr != (xmlDocPtr)NULL) {
         if ((pyxser_ValidateDocument(docPtr)) == 1) {
             res = Py_True;
@@ -1210,6 +1210,7 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
         return NULL;
     }
     PyErr_Clear();
+    Py_XINCREF(res);
     return res;
 }
 
@@ -1261,6 +1262,7 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
         return NULL;
     }
     PyErr_Clear();
+    Py_XINCREF(res);
     return res;
 }
 
