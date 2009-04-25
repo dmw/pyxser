@@ -43,24 +43,24 @@ def display_heap(hp):
 
 def test_normal(test):
     try:
-##         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2)
-##         pyxser.validate(obj = serialized, enc = "utf-8")
-##         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2)
+        pyxser.validate(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
 
-##         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 3)
-##         pyxser.validate(obj = serialized, enc = "utf-8")
-##         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
-##         repr(unserialized)
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 3)
+        pyxser.validate(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+        repr(unserialized)
 
-##         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 4)
-##         pyxser.validate(obj = serialized, enc = "utf-8")
-##         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
-##         repr(unserialized)
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 4)
+        pyxser.validate(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+        repr(unserialized)
 
-##         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 5)
-##         pyxser.validate(obj = serialized, enc = "utf-8")
-##         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
-##         repr(unserialized)
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 5)
+        pyxser.validate(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+        repr(unserialized)
 
         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0)
         pyxser.validate(obj = serialized, enc = "utf-8")
@@ -77,7 +77,7 @@ def test_normal(test):
 def test_normal_c14n(test):
     try:
         serialized = pyxser.serialize_c14n(obj = test, depth = 0, exc = 0, com = 0)
-        pyxser.validate(obj = serialized, enc = "utf-8")
+        pyxser.validate_c14n(obj = serialized, enc = "utf-8")
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
         repr(unserialized)
 
@@ -128,14 +128,11 @@ def test_unicode(test):
 def test_unicode_c14n(test):
     try:
         serialized = pyxser.u_serialize_c14n(obj = test, depth = 0, exc = 0, com = 0)
-        print "11.len: ", len(serialized);
         pyxser.u_validate(obj = serialized, enc = "utf-8")
         unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
         repr(unserialized)
-        print "done.3.1"
 
         serialized = pyxser.u_serialize_c14n_strict(obj = test, depth = 0, exc = 0, com = 0)
-        print "12.len: ", len(serialized);
         pyxser.u_validate_c14n(obj = serialized, enc = "utf-8")
 
         pyxser.xmlcleanup()
@@ -181,15 +178,15 @@ if __name__ == "__main__":
     test.dyn_prop7 = 1000
 
     crawl = 0
-    while crawl <= 15000:
+    while crawl <= 50000:
         test_normal(test)
-        #test_normal_c14n(test)
-        #test_unicode(test)
-        #test_unicode_c14n(test)
+        test_normal_c14n(test)
+        test_unicode(test)
+        test_unicode_c14n(test)
         pyxser.getdtd()
         pyxser.getdtd_c14n()
         pyxser.xmlcleanup()
-        if (crawl % 1) == 0:
+        if (crawl % 5000) == 0:
             print "cicle: ", crawl
         crawl += 1
 
