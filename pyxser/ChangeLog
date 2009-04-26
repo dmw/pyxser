@@ -18,3 +18,21 @@
 	* Added unit test test-utf8-prof.py with 50.000 cilces ;)
 	* Every serilization is made into unicode objects.
 
+
+1.0rc1 (2009.04.26):
+
+	Daniel Molina Wegener <dmw@coder.cl>
+	* Added both byte string and unicode returning and procesing
+	functions. This means that we have serialize(),
+	serialize_c14n(), serialize_c14n_strict(), unserialize(),
+	validate() and validate_c14n() functions for byte strings
+	and u_serialize(), u_serialize_c14n(), u_serialize_c14n_strict(),
+	u_unserialize(), u_validate() and u_validate_c14n() for
+	unicode strings.
+	* Removed memory leaks, now it runs over 1400000 pyxser
+	operations without crashing (100000 cicles testing every
+	function).
+	* Removed bugs concerning reference counting that was
+	crashing when trying to access unserialized objects attributes.
+	* This is an approach to a production environment release ;)
+
