@@ -321,6 +321,7 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docptr, xmlNodePtr *rootNode,
 			|| (PYTHON_IS_NOT_NONE(objKeys)
 				&& (long)(PyList_Size((PyObject *)objKeys)) <= 0)) {
             PYXSER_FREE_OBJECT(lstItems);
+            PYXSER_FREE_OBJECT(objKeys);
             PyErr_Clear();
 			return (xmlNodePtr)NULL;
 		}
@@ -444,6 +445,7 @@ pyxser_UnserializeElement(PyObject *ct, PyObject **current,
     int ctrl = 0;
     ndict = PyDict_New();
     unser = PyInstance_NewRaw(ct, ndict);
+    Py_XDECREF(ndict);
     attr_name = pyxser_ExtractPropertyName(pyxser_xml_attr_name,
                                            ron);
     if (PYTHON_IS_NOT_NONE(unser)) {
@@ -451,6 +453,7 @@ pyxser_UnserializeElement(PyObject *ct, PyObject **current,
             ctrl = PyObject_SetAttrString(*current,
                                           attr_name, unser);
             PYXSER_XMLFREE(attr_name);
+            Py_XDECREF(unser);
         }
         pyxser_AddAvailableObject((PyObject *)*dups,
                                   (char *)n_id, unser);
@@ -515,6 +518,7 @@ pyxser_UnserializeBlock(PyxSerDeserializationArgsPtr obj)
 								ctrl = PyObject_SetAttrString(*current,
 															  attr_name, unser);
                                 PYXSER_XMLFREE(attr_name);
+                                Py_XDECREF(unser);
  								break;
 							}
 						}
@@ -661,6 +665,7 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
                             *(obj->current) = cacheCurrent;
                             *(obj->currentNode) = cacheCurrentNode;
                             obj->tree = tree;
+                            Py_XDECREF(ndict);
                         }
                     }
                 } else {
@@ -675,6 +680,7 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
                             pyxser_UnserializeBlock(obj);
                             *(obj->current) = cacheCurrent;
                             *(obj->currentNode) = cacheCurrentNode;
+                            Py_XDECREF(ndict);
                         }
                     }
                 }
@@ -723,11 +729,10 @@ pyxser_SearchModuleType(PyObject *mod, const char *name)
 			}
 			listIterator++;
 		}
-	} else {
-        PyErr_Clear();
     }
     Py_XDECREF(objKeys);
     Py_XDECREF(dict);
+    PyErr_Clear();
 	return item;
 }
 
@@ -795,12 +800,14 @@ pyxser_SerializePrimitiveType(PyObject *o, char *name,
 		|| sptr == (char *)NULL) {
         PyErr_Clear();
         PYXSER_FREE_OBJECT(classPtr);
+        PYXSER_FREE_OBJECT(str);
 		return (xmlNodePtr)NULL;
 	}
 	className = PyObject_GetAttrString(classPtr, pyxser_attr_name);
 	if (PYTHON_IS_NONE(className)) {
         PyErr_Clear();
         PYXSER_FREE_OBJECT(classPtr);
+        PYXSER_FREE_OBJECT(str);
 		return (xmlNodePtr)NULL;
 	}
 	if (PYTHON_IS_NOT_NONE(className)) {
@@ -823,8 +830,9 @@ pyxser_SerializePrimitiveType(PyObject *o, char *name,
 		}
 	}
     PYXSER_FREE_OBJECT(className);
-    PYXSER_FREE_OBJECT(str);
     PYXSER_FREE_OBJECT(classPtr);
+    PYXSER_FREE_OBJECT(str);
+    PyErr_Clear();
 	return newElementNode;
 }
 
@@ -1480,9 +1488,11 @@ pyxser_SearchObjectInMain(const char *name)
 			if (PYTHON_IS_NOT_NONE(item)) {
 				ct = (PyObject *)pyxser_SearchModuleType(item,
                                                          name);
+                Py_XDECREF(item);
 			}
 		}
 	}
+    Py_XDECREF(dictKeys);
 	return ct;
 }
 
@@ -1511,6 +1521,7 @@ pyxser_SearchModule(const char *name)
 			item = PyDict_GetItem(dictMod, currentKey);
 		}
 	}
+    Py_XDECREF(dictKeys);
 	return item;
 }
 
@@ -1564,6 +1575,7 @@ pyxser_CacheModule(PyObject *d, const char *name)
 				item = PyDict_GetItem(dictMod, currentKey);
 			}
 		}
+        Py_XDECREF(dictKeys);
 	}
 	return item;
 }

@@ -380,7 +380,6 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
                 if (PYTHON_IS_NOT_NONE(res)) {
                     xmlFree(xmlBuff);
                     xmlFreeDoc(docXml);
-                    Py_XINCREF(res);
                     PyErr_Clear();
                     return res;
                 } else {
