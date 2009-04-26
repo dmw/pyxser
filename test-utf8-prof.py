@@ -46,6 +46,7 @@ def test_normal(test):
         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2)
         pyxser.validate(obj = serialized, enc = "utf-8")
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+        repr(unserialized);
 
         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 3)
         pyxser.validate(obj = serialized, enc = "utf-8")
@@ -177,17 +178,20 @@ if __name__ == "__main__":
     test.dyn_prop6 = 1.5
     test.dyn_prop7 = 1000
 
-    crawl = 0
-    while crawl <= 50000:
-        test_normal(test)
-        test_normal_c14n(test)
-        test_unicode(test)
-        test_unicode_c14n(test)
-        pyxser.getdtd()
-        pyxser.getdtd_c14n()
-        pyxser.xmlcleanup()
-        if (crawl % 5000) == 0:
-            print "cicle: ", crawl
-        crawl += 1
-
-
+    try:
+        crawl = 0
+        while crawl <= 100000:
+            test_normal(test)
+            test_normal_c14n(test)
+            test_unicode(test)
+            test_unicode_c14n(test)
+            pyxser.getdtd()
+            pyxser.getdtd_c14n()
+            pyxser.xmlcleanup()
+            if (crawl % 1000) == 0:
+                print "cicle: ", crawl
+            crawl += 1
+    except Exception, e:
+        print "-" * 60
+        traceback.print_exc(file=sys.stdout)
+        print "-" * 60
