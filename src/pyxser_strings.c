@@ -48,14 +48,12 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
 	xmlNodePtr ntxt = (xmlNodePtr)NULL;
 	xmlAttrPtr typeAttr = (xmlAttrPtr)NULL;
 	xmlAttrPtr nameAttr = (xmlAttrPtr)NULL;
-    xmlChar *txtin = (xmlChar *)NULL;
 
 	PyObject *classPtr = (PyObject *)NULL;
 	PyObject *className = (PyObject *)NULL;
 	PyObject *unic = (PyObject *)NULL;
 
 	size_t data_size = 0;
-    char error_buffer[512];
 	char *sptr = (char *)NULL;
 	char *nptr = (char *)NULL;
 	char sz_attr[30];
@@ -91,7 +89,7 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
                                 pyxser_GetDefaultNs(),
                                 BAD_CAST pyxser_xml_attr_item,
                                 NULL);
-            ntxt = xmlNewDocText(doc, sptr);
+            ntxt = xmlNewDocText(doc, BAD_CAST sptr);
             typeAttr = xmlNewProp(nen,
                                   BAD_CAST pyxser_xml_attr_type,
                                   BAD_CAST nptr);
@@ -234,11 +232,8 @@ pyxunser_SerializeUnicode(PyxSerDeserializationArgsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
 	xmlNodePtr ron;
-    xmlDocPtr doc = *(obj->docPtr);
 	xmlChar *propSize = (xmlChar *)NULL;
-    char *in = (char *)NULL;
 	PyObject *unic = NULL;
-	PyObject *pstr = NULL;
 	PyObject *res = NULL;
 	Py_ssize_t tsz = 0;
 
@@ -255,7 +250,7 @@ pyxunser_SerializeUnicode(PyxSerDeserializationArgsPtr obj)
                                      (char **)NULL, 10);
             if (ron->type == XML_TEXT_NODE) {
                 unic = PyUnicode_DecodeUnicodeEscape((char *)ron->content,
-                                                     strlen(ron->content),
+                                                     xmlStrlen(ron->content),
                                                      pyxser_xml_encoding_mode);
                 res = unic;
             }

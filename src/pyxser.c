@@ -882,7 +882,7 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
 	}
 
-    if (pyxser_modules == (PyObject *)NULL) {
+    if (pyxser_modules == (PyDictObject *)NULL) {
         pyxser_modules = (PyDictObject *)PyDict_New();
     }
 
