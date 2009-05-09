@@ -31,6 +31,7 @@
 #include <datetime.h>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
+#include <libxml/xmlschemas.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -137,6 +138,8 @@ extern "C" {
     extern const char pyxser_xml_version[];
     extern const char pyxser_xml_dtd_location[];
     extern const char pyxser_xml_dtd_c14n_location[];
+    extern const char pyxser_xml_xsd_location[];
+    extern const char pyxser_xml_xsd_c14n_location[];
     extern const char pyxser_xml_dtd[];
 
     extern PyObject *invalid_encoding_exception;
