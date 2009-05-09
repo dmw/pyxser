@@ -157,6 +157,10 @@ static const char type_main[] = "__main__";
 
 xmlDtdPtr pyxser_dtd_object = (xmlDtdPtr)NULL;
 xmlDtdPtr pyxser_dtd_c14n_object = (xmlDtdPtr)NULL;
+xmlSchemaParserCtxtPtr pyxser_xsd_parser_object = (xmlSchemaParserCtxtPtr)NULL;
+xmlSchemaParserCtxtPtr pyxser_xsd_parser_c14n_object = (xmlSchemaParserCtxtPtr)NULL;
+xmlSchemaPtr pyxser_xsd_object = (xmlSchemaPtr)NULL;
+xmlSchemaPtr pyxser_xsd_c14n_object = (xmlSchemaPtr)NULL;
 
 const PythonTypeSerialize serxConcreteTypes[] = {
 	/* Numeric Types */
@@ -1636,6 +1640,32 @@ pyxser_GetPyxserDTDC14N()
 	return pyxser_dtd_c14n_object;
 }
 
+xmlSchemaPtr
+pyxser_GetPyxserXSD()
+{
+	if (pyxser_xsd_parser_object == (xmlSchemaParserCtxtPtr)NULL) {
+		pyxser_xsd_parser_object = xmlSchemaNewParserCtxt(
+            pyxser_xml_xsd_location);
+	}
+    if (pyxser_xsd_object == (xmlSchemaPtr)NULL) {
+        pyxser_xsd_object = xmlSchemaParse(pyxser_xsd_parser_object);
+    }
+	return pyxser_xsd_object;
+}
+
+xmlSchemaPtr
+pyxser_GetPyxserXSDC14N()
+{
+	if (pyxser_xsd_parser_c14n_object == (xmlSchemaParserCtxtPtr)NULL) {
+		pyxser_xsd_parser_c14n_object = xmlSchemaNewParserCtxt(
+            pyxser_xml_xsd_c14n_location);
+	}
+    if (pyxser_xsd_c14n_object == (xmlSchemaPtr)NULL) {
+        pyxser_xsd_c14n_object = xmlSchemaParse(pyxser_xsd_parser_c14n_object);
+    }
+	return pyxser_xsd_c14n_object;
+}
+
 void
 pyxser_validity_exception(void *ctx, const char *msg, va_list args)
 {
@@ -1695,6 +1725,54 @@ pyxser_ValidateDocumentC14N(xmlDocPtr doc)
 	}
 	xmlFreeValidCtxt(cvp);
 	return 1;
+}
+
+int
+pyxser_ValidateDocumentXSD(xmlDocPtr doc)
+{
+    /* remember scheme? software configuration management? xD */
+    xmlSchemaPtr scm = pyxser_GetPyxserXSD();
+    xmlSchemaValidCtxtPtr ctx = (xmlSchemaValidCtxtPtr)NULL;
+    if (scm != NULL && doc != NULL) {
+        ctx = xmlSchemaNewValidCtxt(scm);
+        if (ctx != (xmlSchemaNewValidCtxt)NULL) {
+            if (xmlSchemaIsValid(ctx)) {
+                if (!xmlSchemaValidateDoc(ctx, doc)) {
+                    xmlSchemaFreeValidCtxt(ctx);
+                    return 0;
+                } else {
+                    xmlSchemaFreeValidCtxt(ctx);
+                    return 1;
+                }
+            }
+            xmlSchemaFreeValidCtxt(ctx);
+        }
+    }
+    return 0;
+}
+
+int
+pyxser_ValidateDocumentXSDC14N(xmlDocPtr doc)
+{
+    /* remember scheme? software configuration management? xD */
+    xmlSchemaPtr scm = pyxser_GetPyxserXSDC14N();
+    xmlSchemaValidCtxtPtr ctx = (xmlSchemaValidCtxtPtr)NULL;
+    if (scm != NULL && doc != NULL) {
+        ctx = xmlSchemaNewValidCtxt(scm);
+        if (ctx != (xmlSchemaNewValidCtxt)NULL) {
+            if (xmlSchemaIsValid(ctx)) {
+                if (!xmlSchemaValidateDoc(ctx, doc)) {
+                    xmlSchemaFreeValidCtxt(ctx);
+                    return 0;
+                } else {
+                    xmlSchemaFreeValidCtxt(ctx);
+                    return 1;
+                }
+            }
+            xmlSchemaFreeValidCtxt(ctx);
+        }
+    }
+    return 0;
 }
 
 int

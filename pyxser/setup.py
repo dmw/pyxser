@@ -40,8 +40,12 @@ pylibdir = distutils.sysconfig.get_python_lib(plat_specific=1, standard_lib=0)
 pyxser_dtd_file_dir = pylibdir + "/pyxser/xml"
 pyxser_dtd_file = pylibdir + "pyxser/xml/pyxser-1.0.dtd"
 pyxser_dtd_c14n_file = pylibdir + "pyxser/xml/pyxser-1.0-c14n.dtd"
+pyxser_xsd_file = pylibdir + "pyxser/xml/pyxser-1.0.xsd"
+pyxser_xsd_c14n_file = pylibdir + "pyxser/xml/pyxser-1.0-c14n.xsd"
 pyxser_dtd_location = '\"' + pylibdir + "/pyxser/xml/pyxser-1.0.dtd" + '\"'
 pyxser_dtd_c14n_location = '\"' + pylibdir + "/pyxser/xml/pyxser-1.0-c14n.dtd" + '\"'
+pyxser_xsd_location = '\"' + pylibdir + "/pyxser/xml/pyxser-1.0.xsd" + '\"'
+pyxser_xsd_c14n_location = '\"' + pylibdir + "/pyxser/xml/pyxser-1.0-c14n.xsd" + '\"'
 
 pyxser_params = pkgconfig("libxml-2.0")
 
@@ -79,7 +83,9 @@ pyxser_mod = Extension('pyxser',
                                   './src/pyxser_strings.c',
                                   './src/pyxser_collections.c'],
                        define_macros = [("PYXSER_DTD_FILE", pyxser_dtd_location),
-                                        ("PYXSER_DTD_C14N_FILE", pyxser_dtd_c14n_location)],
+                                        ("PYXSER_DTD_C14N_FILE", pyxser_dtd_c14n_location),
+                                        ("PYXSER_XSD_FILE", pyxser_xsd_location),
+                                        ("PYXSER_XSD_C14N_FILE", pyxser_xsd_c14n_location)],
                        **pyxser_params)
 
 setup (name = 'pyxser',
