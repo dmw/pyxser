@@ -43,10 +43,6 @@ extern "C" {
     extern const PythonTypeDeserialize unserxConcreteTypes[];
     extern xmlDtdPtr pyxser_dtd_object;
     extern xmlDtdPtr pyxser_dtd_c14n_object;
-    extern xmlSchemaParserCtxtPtr pyxser_xsd_parser_object;
-    extern xmlSchemaParserCtxtPtr pyxser_xsd_parser_c14n_object;
-    extern xmlSchemaPtr pyxser_xsd_object;
-    extern xmlSchemaPtr pyxser_xsd_c14n_object;
 
     char *pyxser_GetClassName(PyObject *obj);
 
@@ -87,6 +83,10 @@ extern "C" {
     void pyxser_AddModuleAttr(PyObject *o, xmlNodePtr currentNode);
 
     xmlNsPtr pyxser_GetDefaultNs(void);
+
+    xmlNsPtr pyxser_GetXsiNs();
+
+    xmlNsPtr pyxser_GetXsdNs();
 
     char *pyxser_ExtractPropertyName(const char *name, xmlNodePtr node);
 

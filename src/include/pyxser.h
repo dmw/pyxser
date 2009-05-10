@@ -37,7 +37,7 @@
 extern "C" {
 #endif /* !__cplusplus */
 
-#define PYXSER_VERSION					"0.1"
+#define PYXSER_VERSION					"1.0r"
 
 #define PYTHON_IS_NOT_NONE(o)                   \
 	(((PyObject *)o != Py_None) &&              \
@@ -110,14 +110,18 @@ extern "C" {
     extern const char msg_non_method[];
     extern const char msg_non_xml[];
     extern const char msg_non_canon_encoding[];
+
     extern const char xml_version[];
     extern const char xml_encoding[];
+
     extern const char pyxser_attr_class[];
     extern const char pyxser_attr_dict[];
     extern const char pyxser_attr_module[];
     extern const char pyxser_attr_name[];
     extern const char pyxser_attr_all[];
+
     extern const char pyxser_version[];
+
     extern const char pyxser_xml_attr_id[];
     extern const char pyxser_xml_attr_item[];
     extern const char pyxser_xml_attr_module[];
@@ -130,16 +134,30 @@ extern "C" {
     extern const char pyxser_xml_attr_version[];
     extern const char pyxser_xml_attr_key[];
     extern const char pyxser_xml_attr_xml_ns[];
+    extern const char pyxser_xml_attr_xml_xsi[];
+    extern const char pyxser_xml_attr_xml_xsi_value[];
+
     extern const char pyxser_xml_element_collection[];
     extern const char pyxser_xml_element_object[];
     extern const char pyxser_xml_element_prop[];
+
     extern const char pyxser_xml_encoding[];
     extern const char pyxser_xml_encoding_mode[];
     extern const char pyxser_xml_version[];
+
     extern const char pyxser_xml_dtd_location[];
     extern const char pyxser_xml_dtd_c14n_location[];
+
     extern const char pyxser_xml_xsd_location[];
     extern const char pyxser_xml_xsd_c14n_location[];
+
+    extern const char pyxser_xml_attr_xml_xsd[]; /* = "xmlns:xsi" */
+    extern const char pyxser_xml_attr_xml_xsd_prfx[]; /* = "xmlns:xsi" */
+    extern const char pyxser_xml_attr_xml_xsi[]; /* = "xmlns:xsi" */
+    extern const char pyxser_xml_attr_xml_xsi_prfx[]; /* = "xsi" */
+    extern const char pyxser_xml_attr_xml_xsi_value[]; /* = "http://www.w3.org/2001/XMLSchema-instance" */
+    extern const char pyxser_xml_attr_xml_xloc[]; /* = "xsi:schemaLocation" */
+    extern const char pyxser_xml_attr_xml_xloc_value[]; /* = "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.xsd" */
     extern const char pyxser_xml_dtd[];
 
     extern PyObject *invalid_encoding_exception;
