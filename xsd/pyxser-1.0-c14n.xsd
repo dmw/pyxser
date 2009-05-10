@@ -18,18 +18,21 @@
   along with pyxser.  If not, see <http://www.gnu.org/licenses/>.
 
   <!DOCTYPE pyxs:obj
-            PUBLIC '-//coder.cl//DTD pyxser C14N 1.0//EN'
-            'http://projects.coder.cl/pyxser/dtd/pyxser-1.0-c14n.dtd'>
+            PUBLIC '-//coder.cl//DTD pyxser 1.0//EN'
+            'http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd'>
 
-  $Id: pyxser-1.0.dtd 16 2009-03-20 02:57:46Z damowe $
+  $Id: pyxser-1.0.dtd 40 2009-04-07 01:36:55Z damowe $
 -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://projects.coder.cl/pyxser/model/" xmlns:pyxs="http://projects.coder.cl/pyxser/model/">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	   targetNamespace="http://projects.coder.cl/pyxser/model/"
+	   xmlns="http://projects.coder.cl/pyxser/model/"
+	   elementFormDefault="qualified">
   <xs:element name="obj">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="pyxs:prop"/>
-        <xs:element ref="pyxs:col"/>
-        <xs:element ref="pyxs:obj"/>
+        <xs:element ref="prop"/>
+        <xs:element ref="col"/>
+        <xs:element ref="obj"/>
       </xs:choice>
       <xs:attribute name="version" default="1.0">
         <xs:simpleType>
@@ -38,29 +41,29 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
-      <xs:attribute name="objid"/>
-      <xs:attribute name="objref"/>
-      <xs:attribute name="type"/>
-      <xs:attribute name="name"/>
-      <xs:attribute name="module"/>
-      <xs:attribute name="size"/>
+      <xs:attribute name="objid" type="xs:CDATA"/>
+      <xs:attribute name="objref" type="xs:CDATA"/>
+      <xs:attribute name="type" type="xs:CDATA"/>
+      <xs:attribute name="name" type="xs:CDATA"/>
+      <xs:attribute name="module" type="xs:CDATA"/>
+      <xs:attribute name="size" type="xs:CDATA"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="col">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="pyxs:obj"/>
-        <xs:element ref="pyxs:prop"/>
+        <xs:element ref="obj"/>
+        <xs:element ref="prop"/>
       </xs:choice>
-      <xs:attribute name="type" use="required"/>
-      <xs:attribute name="name" use="required"/>
+      <xs:attribute name="type" use="required" type="xs:CDATA"/>
+      <xs:attribute name="name" use="required" type="xs:CDATA"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="prop">
     <xs:complexType mixed="true">
-      <xs:attribute name="type" use="required"/>
-      <xs:attribute name="name"/>
-      <xs:attribute name="size"/>
+      <xs:attribute name="type" use="required" type="xs:CDATA"/>
+      <xs:attribute name="name" type="xs:CDATA"/>
+      <xs:attribute name="size" type="xs:CDATA"/>
       <xs:attribute name="compress">
         <xs:simpleType>
           <xs:restriction base="xs:token">
@@ -70,12 +73,12 @@
         </xs:simpleType>
       </xs:attribute>
       <xs:attribute name="encoding">
-        <xs:simpleType>
-          <xs:restriction base="xs:token">
-            <xs:enumeration value="ascii"/>
-            <xs:enumeration value="base64"/>
-          </xs:restriction>
-        </xs:simpleType>
+	<xs:simpleType>
+	  <xs:restriction base="xs:token">
+	    <xs:enumeration value="ascii"/>
+	    <xs:enumeration value="base64"/>
+	  </xs:restriction>
+	</xs:simpleType>
       </xs:attribute>
     </xs:complexType>
   </xs:element>

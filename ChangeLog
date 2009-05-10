@@ -1,3 +1,4 @@
+
 0.2rc1 (2009.04.08):
 
 	Daniel Molina Wegener <dmw@coder.cl>
@@ -35,4 +36,22 @@
 	* Removed bugs concerning reference counting that was
 	crashing when trying to access unserialized objects attributes.
 	* This is an approach to a production environment release ;)
+
+1.0r (2009.05.09):
+
+	Daniel Molina Wegener <dmw@coder.cl>
+	* Set default validation to XML Schema validation, to allow
+	pyxser to work with WebServices and similar technologies,
+	without restricting the namespace prefix to pyxs.
+	* Removed memory leaks concerning XML Schema validation.
+	* Succeful tests with more than 1.200.000 pyxser operations.
+	* Added pyxser 1.0 XML Schema to allow imports of the pyxser
+	model into WebServices WSDL and similar technologies.
+	* Addded getxsd(), getxsd_c14n(), u_validate_c14n_dtd(),
+	u_validate_dtd(), validate_c14n_dtd(), validate_dtd()
+	functions.
+	* All *_dtd() related functions allows you to validate
+	pyxser documents using the pyxser 1.0 DTD, instead of
+	the pyxser 1.0 XML Schema.
+
 
