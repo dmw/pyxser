@@ -23,13 +23,16 @@
 
   $Id: pyxser-1.0.dtd 40 2009-04-07 01:36:55Z damowe $
 -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://projects.coder.cl/pyxser/model/" xmlns:pyxs="http://projects.coder.cl/pyxser/model/">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	   targetNamespace="http://projects.coder.cl/pyxser/model/"
+	   xmlns="http://projects.coder.cl/pyxser/model/"
+	   elementFormDefault="qualified">
   <xs:element name="obj">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="pyxs:prop"/>
-        <xs:element ref="pyxs:col"/>
-        <xs:element ref="pyxs:obj"/>
+        <xs:element ref="prop"/>
+        <xs:element ref="col"/>
+        <xs:element ref="obj"/>
       </xs:choice>
       <xs:attribute name="version" default="1.0">
         <xs:simpleType>
@@ -49,8 +52,8 @@
   <xs:element name="col">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="pyxs:obj"/>
-        <xs:element ref="pyxs:prop"/>
+        <xs:element ref="obj"/>
+        <xs:element ref="prop"/>
       </xs:choice>
       <xs:attribute name="type" use="required" type="xs:NMTOKEN"/>
       <xs:attribute name="name" use="required" type="xs:NMTOKEN"/>
@@ -70,12 +73,12 @@
         </xs:simpleType>
       </xs:attribute>
       <xs:attribute name="encoding">
-        <xs:simpleType>
-          <xs:restriction base="xs:token">
-            <xs:enumeration value="ascii"/>
-            <xs:enumeration value="base64"/>
-          </xs:restriction>
-        </xs:simpleType>
+	<xs:simpleType>
+	  <xs:restriction base="xs:token">
+	    <xs:enumeration value="ascii"/>
+	    <xs:enumeration value="base64"/>
+	  </xs:restriction>
+	</xs:simpleType>
       </xs:attribute>
     </xs:complexType>
   </xs:element>

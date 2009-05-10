@@ -54,25 +54,37 @@ const char pyxser_attr_module[] = "__module__";
 const char pyxser_attr_name[] = "__name__";
 const char pyxser_attr_all[] = "__all__";
 const char pyxser_version[] = PYXSER_VERSION;
+
 const char pyxser_xml_attr_id[] = "objid";
 const char pyxser_xml_attr_item[] = "prop";
 const char pyxser_xml_attr_module[] = "module";
 const char pyxser_xml_attr_name[] = "name";
-const char pyxser_xml_attr_ns[] = "http://projects.coder.cl/pyxser/model/";
 const char pyxser_xml_attr_ns_prefix[] = "pyxs";
 const char pyxser_xml_attr_ref[] = "objref";
 const char pyxser_xml_attr_size[] = "size";
 const char pyxser_xml_attr_type[] = "type";
 const char pyxser_xml_attr_version[] = "version";
 const char pyxser_xml_attr_key[] = "key";
-const char pyxser_xml_attr_xml_ns[] = "xmlns:pyxs";
+
 const char pyxser_xml_element_collection[] = "col";
 const char pyxser_xml_element_object[] = "obj";
 const char pyxser_xml_element_prop[] = "prop";
+
 const char pyxser_xml_encoding[] = "utf-8";
 const char pyxser_xml_encoding_mode[] = "strict";
+
+const char pyxser_xml_attr_xml_ns[] = "xmlns:pyxs";
+const char pyxser_xml_attr_xml_xsd_prfx[] = "xmlns";
+const char pyxser_xml_attr_xml_xsi[] = "xmlns:xsi";
+const char pyxser_xml_attr_xml_xloc[] = "xmlns:schemaLocation";
+
 const char pyxser_xml_version[] = "1.0";
-const char pyxser_ext_version[] = "0.2rc1";
+const char pyxser_ext_version[] = "1.0r";
+
+const char pyxser_xml_attr_ns[] = "http://projects.coder.cl/pyxser/model/";
+const char pyxser_xml_attr_xml_xsd[] = "http://www.w3.org/2000/xmlns/";
+const char pyxser_xml_attr_xml_xsi_value[] = "http://www.w3.org/2001/XMLSchema-instance";
+const char pyxser_xml_attr_xml_xloc_value[] = "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.xsd";
 
 const char pyxser_xml_dtd_location[] = PYXSER_DTD_FILE;
 const char pyxser_xml_dtd_c14n_location[] = PYXSER_DTD_C14N_FILE;
@@ -135,9 +147,10 @@ static const char serialize_documentation[] = \
     "   depth   ->      node navigation depth\n\n"
 	"Gets any object defined in a Python module as class as argument\n"
 	"and serializes it as XML. The serialization model is based on the\n"
-	"pyxser DTD 1.0. Objects are serialized as pyxs:obj element, collections\n"
-	"are serialized as pyxs:col element (tuples, lists and dictionaries)\n"
-	"and properties are serialized as pyxs:prop elements.\n\n"
+	"pyxser DTD/XML Schema 1.0. Objects are serialized as pyxs:obj\n"
+    "element, collections are serialized as pyxs:col element (tuples,\n"
+    "lists and dictionaries) and properties are serialized as pyxs:prop\n"
+    "elements.\n\n"
 	"The serialization algorithm is a O(n) one, this means which the\n"
 	"serializer runs over the object tree just one time and cross\n"
 	"refernces are serialized as XML references through the IDREF\n"
@@ -160,8 +173,10 @@ static const char serializec14n_documentation[] = \
 	"    <!DOCTYPE pyxs:obj\n"
     "              PUBLIC '-//coder.cl//DTD pyxser C14N 1.0//EN'\n"
     "              'http://projects.coder.cl/pyxser/dtd/pyxser-1.0-c14n.dtd'>\n\n"
-    "* Information about Canonical XML at:\n\thttp://www.w3.org/TR/xml-c14n\n"
-    "* Information about Exclusive Canonical XML at\n\thttp://www.w3.org/TR/xml-exc-c14n\n"
+    "* Information about Canonical XML at:\n"
+    "\thttp://www.w3.org/TR/xml-c14n\n"
+    "* Information about Exclusive Canonical XML at:\n"
+    "\thttp://www.w3.org/TR/xml-exc-c14n\n"
     "NOTE: The canonical DTD converts all ID, IDREF and NMTOKEN\n"
     "      attributes to CDATA attributes\n";
 
@@ -178,8 +193,10 @@ static const char serializec14n_documentation_strict[] = \
 	"    <!DOCTYPE pyxs:obj\n"
     "              PUBLIC '-//coder.cl//DTD pyxser C14N 1.0//EN'\n"
     "              'http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd'>\n\n"
-    "* Information about Canonical XML at:\n\thttp://www.w3.org/TR/xml-c14n\n"
-    "* Information about Exclusive Canonical XML at\n\thttp://www.w3.org/TR/xml-exc-c14n\n"
+    "* Information about Canonical XML at:\n"
+    "\thttp://www.w3.org/TR/xml-c14n\n"
+    "* Information about Exclusive Canonical XML at\n"
+    "\thttp://www.w3.org/TR/xml-exc-c14n\n"
     "NOTE: C14N serialized objects can not be deserialized because we\n"
     "      need the ID and IDREF attributes to suppor cross referenced\n"
     "      objects.\n";
@@ -210,7 +227,7 @@ static const char deserialize_documentation[] = \
 	"references are not supported because the first ocurrence of any object\n"
 	"it's serialized once and then referenced, but not referenced and then\n"
 	"serilized.\n\n"
-	"Every serilized object is validated against the pyxser DTD 1.0\n\n";
+	"Every serilized object is validated against the pyxser XML Schema 1.0\n\n";
 
 static const char u_deserialize_documentation[] = \
     "Same as unserialize() but uses an Python unicode object as input\n";
@@ -372,6 +389,7 @@ initpyxser(void)
 #else
     LIBXML_TEST_VERSION;
 #endif
+    xmlInitParser();
 }
 
 static PyObject *
@@ -433,24 +451,18 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 
 	if (serXml != (xmlNodePtr)NULL
 		&& docXml != (xmlDocPtr)NULL) {
-        if ((pyxser_ValidateDocumentXSD(docXml)) == 1) {
-            xmlDocDumpFormatMemoryEnc(docXml, &xmlBuff, &bufferSize,
-                                      py_enc, 1);
-            if (xmlBuff != BAD_CAST NULL) {
-                res = PyString_FromStringAndSize((const char *)xmlBuff,
-                                                 bufferSize);
-                if (PYTHON_IS_NOT_NONE(res)) {
-                    xmlFree(xmlBuff);
-                    xmlFreeDoc(docXml);
-                    PyErr_Clear();
-                    return res;
-                } else {
-                    xmlFree(xmlBuff);
-                    xmlFreeDoc(docXml);
-                    PyErr_SetString(PyExc_ValueError, msg_non_object);
-                    return NULL;
-                }
+        xmlDocDumpFormatMemoryEnc(docXml, &xmlBuff, &bufferSize,
+                                  py_enc, 1);
+        if (xmlBuff != BAD_CAST NULL) {
+            res = PyString_FromStringAndSize((const char *)xmlBuff,
+                                             bufferSize);
+            if (PYTHON_IS_NOT_NONE(res)) {
+                xmlFree(xmlBuff);
+                xmlFreeDoc(docXml);
+                PyErr_Clear();
+                return res;
             } else {
+                xmlFree(xmlBuff);
                 xmlFreeDoc(docXml);
                 PyErr_SetString(PyExc_ValueError, msg_non_object);
                 return NULL;
@@ -521,32 +533,30 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 
 	if (serXml != (xmlNodePtr)NULL
 		&& docXml != (xmlDocPtr)NULL) {
-        if ((pyxser_ValidateDocumentXSDC14N(docXml)) == 1) {
-            xmlBuff = xmlAllocOutputBuffer(NULL);
-            ret = xmlC14NExecute(docXml, pyxser_C14NRenderAllNodes, docXml,
-                                 py_exc, NULL, py_com, xmlBuff);
-            if (ret < 0) {
+        xmlBuff = xmlAllocOutputBuffer(NULL);
+        ret = xmlC14NExecute(docXml, pyxser_C14NRenderAllNodes, docXml,
+                             py_exc, NULL, py_com, xmlBuff);
+        if (ret < 0) {
+            xmlFree(docPtr);
+            xmlOutputBufferClose(xmlBuff);
+            PyErr_SetString(PyExc_ValueError, msg_non_object);
+            return NULL;
+        }
+        if (xmlBuff != NULL) {
+            ret = xmlBuff->buffer->use;
+            docPtr = BAD_CAST xmlStrndup(xmlBuff->buffer->content, ret);
+            res = PyString_FromStringAndSize((const char *)docPtr, ret);
+            xmlOutputBufferClose(xmlBuff);
+            if (PYTHON_IS_NOT_NONE(res)) {
                 xmlFree(docPtr);
-                xmlOutputBufferClose(xmlBuff);
-                PyErr_SetString(PyExc_ValueError, msg_non_object);
-                return NULL;
-            }
-            if (xmlBuff != NULL) {
-                ret = xmlBuff->buffer->use;
-                docPtr = BAD_CAST xmlStrndup(xmlBuff->buffer->content, ret);
-                res = PyString_FromStringAndSize((const char *)docPtr, ret);
-                xmlOutputBufferClose(xmlBuff);
-                if (PYTHON_IS_NOT_NONE(res)) {
-                    xmlFree(docPtr);
-                    xmlFreeDoc(docXml);
-                    PyErr_Clear();
-                    return res;
-                }
-            } else {
                 xmlFreeDoc(docXml);
-                PyErr_SetString(PyExc_ValueError, msg_non_object);
-                return NULL;
+                PyErr_Clear();
+                return res;
             }
+        } else {
+            xmlFreeDoc(docXml);
+            PyErr_SetString(PyExc_ValueError, msg_non_object);
+            return NULL;
         }
 	}
 	xmlFreeDoc(docXml);
@@ -609,33 +619,31 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 
 	if (serXml != (xmlNodePtr)NULL
 		&& docXml != (xmlDocPtr)NULL) {
-        if ((pyxser_ValidateDocumentXSDC14N(docXml)) == 1) {
-            ret = xmlC14NDocDumpMemory(docXml, NULL, py_exc, NULL,
-                                       py_com, &xmlBuff);
-            if (xmlBuff != NULL && ret > 0) {
-                res = PyString_FromStringAndSize((const char *)xmlBuff,
-                                                 ret);
-                if (PYTHON_IS_NOT_NONE(res)) {
-                    xmlFree(xmlBuff);
-                    xmlFreeDoc(docXml);
-                    PyErr_Clear();
-                    return res;
-                } else {
-                    xmlFree(xmlBuff);
-                    xmlFreeDoc(docXml);
-                    PyErr_SetString(PyExc_ValueError, msg_non_object);
-                    return NULL;
-                }
+        ret = xmlC14NDocDumpMemory(docXml, NULL, py_exc, NULL,
+                                   py_com, &xmlBuff);
+        if (xmlBuff != NULL && ret > 0) {
+            res = PyString_FromStringAndSize((const char *)xmlBuff,
+                                             ret);
+            if (PYTHON_IS_NOT_NONE(res)) {
+                xmlFree(xmlBuff);
+                xmlFreeDoc(docXml);
+                PyErr_Clear();
+                return res;
             } else {
-                if (xmlBuff != (xmlChar *)NULL) {
-                    xmlFree(xmlBuff);
-                }
+                xmlFree(xmlBuff);
                 xmlFreeDoc(docXml);
                 PyErr_SetString(PyExc_ValueError, msg_non_object);
                 return NULL;
             }
+        } else {
+            if (xmlBuff != (xmlChar *)NULL) {
+                xmlFree(xmlBuff);
+                }
+            xmlFreeDoc(docXml);
+            PyErr_SetString(PyExc_ValueError, msg_non_object);
+            return NULL;
         }
-	}
+    }
     PyErr_SetString(PyExc_ValueError, msg_non_object);
 	xmlFreeDoc(docXml);
 	return NULL;
@@ -701,24 +709,18 @@ u_pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 
 	if (serXml != (xmlNodePtr)NULL
 		&& docXml != (xmlDocPtr)NULL) {
-        if ((pyxser_ValidateDocumentXSD(docXml)) == 1) {
-            xmlDocDumpFormatMemoryEnc(docXml, &xmlBuff, &bufferSize,
-                                      py_enc, 1);
-            if (xmlBuff != BAD_CAST NULL) {
-                res = PyUnicode_Decode((const char *)xmlBuff, bufferSize,
-                                       (char *)py_enc, pyxser_xml_encoding_mode);
-                if (PYTHON_IS_NOT_NONE(res)) {
-                    xmlFree(xmlBuff);
-                    xmlFreeDoc(docXml);
-                    PyErr_Clear();
-                    return res;
-                } else {
-                    xmlFree(xmlBuff);
-                    xmlFreeDoc(docXml);
-                    PyErr_SetString(PyExc_ValueError, msg_non_object);
-                    return NULL;
-                }
+        xmlDocDumpFormatMemoryEnc(docXml, &xmlBuff, &bufferSize,
+                                  py_enc, 1);
+        if (xmlBuff != BAD_CAST NULL) {
+            res = PyUnicode_Decode((const char *)xmlBuff, bufferSize,
+                                   (char *)py_enc, pyxser_xml_encoding_mode);
+            if (PYTHON_IS_NOT_NONE(res)) {
+                xmlFree(xmlBuff);
+                xmlFreeDoc(docXml);
+                PyErr_Clear();
+                return res;
             } else {
+                xmlFree(xmlBuff);
                 xmlFreeDoc(docXml);
                 PyErr_SetString(PyExc_ValueError, msg_non_object);
                 return NULL;
@@ -728,6 +730,10 @@ u_pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
             PyErr_SetString(PyExc_ValueError, msg_non_object);
             return NULL;
         }
+    } else {
+        xmlFreeDoc(docXml);
+        PyErr_SetString(PyExc_ValueError, msg_non_object);
+        return NULL;
 	}
 	xmlFreeDoc(docXml);
 	return NULL;
@@ -789,34 +795,32 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 
 	if (serXml != (xmlNodePtr)NULL
 		&& docXml != (xmlDocPtr)NULL) {
-        if ((pyxser_ValidateDocumentXSDC14N(docXml)) == 1) {
-            xmlBuff = xmlAllocOutputBuffer(NULL);
-            ret = xmlC14NExecute(docXml, pyxser_C14NRenderAllNodes, docXml,
-                                 py_exc, NULL, py_com, xmlBuff);
-            if (ret < 0) {
+        xmlBuff = xmlAllocOutputBuffer(NULL);
+        ret = xmlC14NExecute(docXml, pyxser_C14NRenderAllNodes, docXml,
+                             py_exc, NULL, py_com, xmlBuff);
+        if (ret < 0) {
+            xmlFree(docPtr);
+            xmlOutputBufferClose(xmlBuff);
+            PyErr_SetString(PyExc_ValueError, msg_non_object);
+            return NULL;
+        }
+        if (xmlBuff != NULL) {
+            ret = xmlBuff->buffer->use;
+            docPtr = BAD_CAST xmlStrndup(xmlBuff->buffer->content, ret);
+            res = PyUnicode_Decode((const char *)docPtr, ret,
+                                   (char *)pyxser_xml_encoding,
+                                   pyxser_xml_encoding_mode);
+            xmlOutputBufferClose(xmlBuff);
+            if (PYTHON_IS_NOT_NONE(res)) {
                 xmlFree(docPtr);
-                xmlOutputBufferClose(xmlBuff);
-                PyErr_SetString(PyExc_ValueError, msg_non_object);
-                return NULL;
-            }
-            if (xmlBuff != NULL) {
-                ret = xmlBuff->buffer->use;
-                docPtr = BAD_CAST xmlStrndup(xmlBuff->buffer->content, ret);
-                res = PyUnicode_Decode((const char *)docPtr, ret,
-                                       (char *)pyxser_xml_encoding,
-                                       pyxser_xml_encoding_mode);
-                xmlOutputBufferClose(xmlBuff);
-                if (PYTHON_IS_NOT_NONE(res)) {
-                    xmlFree(docPtr);
-                    xmlFreeDoc(docXml);
-                    PyErr_Clear();
-                    return res;
-                }
-            } else {
                 xmlFreeDoc(docXml);
-                PyErr_SetString(PyExc_ValueError, msg_non_object);
-                return NULL;
+                PyErr_Clear();
+                return res;
             }
+        } else {
+            xmlFreeDoc(docXml);
+            PyErr_SetString(PyExc_ValueError, msg_non_object);
+            return NULL;
         }
 	}
 	xmlFreeDoc(docXml);
@@ -878,33 +882,31 @@ u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 
 	if (serXml != (xmlNodePtr)NULL
 		&& docXml != (xmlDocPtr)NULL) {
-        if ((pyxser_ValidateDocumentXSDC14N(docXml)) == 1) {
-            ret = xmlC14NDocDumpMemory(docXml, NULL, py_exc, NULL, py_com, &xmlBuff);
-            if (xmlBuff != NULL && ret > 0) {
-                res = PyUnicode_Decode((const char *)xmlBuff, ret,
-                                       (char *)pyxser_xml_encoding,
-                                       pyxser_xml_encoding_mode);
-                if (PYTHON_IS_NOT_NONE(res)) {
-                    xmlFree(xmlBuff);
-                    xmlFreeDoc(docXml);
-                    PyErr_Clear();
-                    return res;
-                } else {
-                    xmlFree(xmlBuff);
-                    xmlFreeDoc(docXml);
-                    PyErr_SetString(PyExc_ValueError, msg_non_object);
-                    return NULL;
-                }
+        ret = xmlC14NDocDumpMemory(docXml, NULL, py_exc, NULL, py_com, &xmlBuff);
+        if (xmlBuff != NULL && ret > 0) {
+            res = PyUnicode_Decode((const char *)xmlBuff, ret,
+                                   (char *)pyxser_xml_encoding,
+                                   pyxser_xml_encoding_mode);
+            if (PYTHON_IS_NOT_NONE(res)) {
+                xmlFree(xmlBuff);
+                xmlFreeDoc(docXml);
+                PyErr_Clear();
+                return res;
             } else {
-                if (xmlBuff != (xmlChar *)NULL) {
-                    xmlFree(xmlBuff);
-                }
+                xmlFree(xmlBuff);
                 xmlFreeDoc(docXml);
                 PyErr_SetString(PyExc_ValueError, msg_non_object);
                 return NULL;
             }
+        } else {
+            if (xmlBuff != (xmlChar *)NULL) {
+                xmlFree(xmlBuff);
+            }
+            xmlFreeDoc(docXml);
+            PyErr_SetString(PyExc_ValueError, msg_non_object);
+            return NULL;
         }
-	}
+    }
     PyErr_SetString(PyExc_ValueError, msg_non_object);
 	xmlFreeDoc(docXml);
 	return NULL;
@@ -1593,20 +1595,17 @@ xmlcleanup(PyObject *self, PyObject *args)
 {
     xmlFreeDtd(pyxser_dtd_object);
     pyxser_dtd_object = NULL;
+
     xmlFreeDtd(pyxser_dtd_c14n_object);
     pyxser_dtd_c14n_object = NULL;
-    xmlSchemaFreeParserCtxt(pyxser_xsd_parser_object);
-    pyxser_xsd_object = NULL;
-    xmlSchemaFreeParserCtxt(pyxser_xsd_parser_c14n_object);
-    pyxser_xsd_c14n_object = NULL;
-    xmlSchemaFree(pyxser_xsd_object);
-    pyxser_xsd_object = NULL;
-    xmlSchemaFree(pyxser_xsd_c14n_object);
-    pyxser_xsd_c14n_object = NULL;
-    xmlCleanupParser();
+
     xmlCleanupEncodingAliases();
+
+    xmlCleanupParser();
+
     Py_INCREF(Py_None);
     PyErr_Clear();
+
     return Py_None;
 }
 
@@ -1615,19 +1614,18 @@ void
 pyxser_unregister(void)
 {
     pyxser_version_obj = NULL;
+
     Py_XDECREF(pyxser_modules);
     pyxser_modules = NULL;
+
     xmlFreeDtd(pyxser_dtd_object);
+    pyxser_dtd_object = (xmlDtdPtr)NULL;
+
     xmlFreeDtd(pyxser_dtd_c14n_object);
-    xmlSchemaFreeParserCtxt(pyxser_xsd_parser_object);
-    pyxser_xsd_object = NULL;
-    xmlSchemaFreeParserCtxt(pyxser_xsd_parser_c14n_object);
-    pyxser_xsd_c14n_object = NULL;
-    xmlSchemaFree(pyxser_xsd_object);
-    pyxser_xsd_object = NULL;
-    xmlSchemaFree(pyxser_xsd_c14n_object);
-    pyxser_xsd_c14n_object = NULL;
+    pyxser_dtd_c14n_object = (xmlDtdPtr)NULL;
+
     xmlCleanupEncodingAliases();
+
     xmlCleanupParser();
 }
 

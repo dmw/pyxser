@@ -49,40 +49,40 @@ def test_normal(test):
         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2)
         print "Serilized Object:\n", serialized
         print "Serilized Object Validation:\n", \
-              pyxser.validate(serialized, enc = "utf-8"), \
-              pyxser.validate_dtd(serialized, enc = "utf-8")
+              pyxser.validate(obj = serialized, enc = "utf-8"), \
+              pyxser.validate_dtd(obj = serialized, enc = "utf-8")
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
         print "Unserialized Object (d.2):\n" + repr(unserialized) + "\n\n"
 
         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 3)
         print "Serilized Object:\n" + serialized
         print "Serilized Object Validation:\n", \
-              pyxser.validate(serialized, enc = "utf-8"), \
-              pyxser.validate_dtd(serialized, enc = "utf-8")
+              pyxser.validate(obj = serialized, enc = "utf-8"), \
+              pyxser.validate_dtd(obj = serialized, enc = "utf-8")
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
         print "Unserialized Object (d.3):\n" + repr(unserialized) + "\n\n"
 
         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 4)
         print "Serilized Object:\n" + serialized
         print "Serilized Object Validation:\n", \
-              pyxser.validate(serialized, enc = "utf-8"), \
-              pyxser.validate_dtd(serialized, enc = "utf-8")
+              pyxser.validate(obj = serialized, enc = "utf-8"), \
+              pyxser.validate_dtd(obj = serialized, enc = "utf-8")
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
         print "Unserialized Object (d.4):\n" + repr(unserialized) + "\n\n"
 
         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 5)
         print "Serilized Object:\n" + serialized
         print "Serilized Object Validation:\n", \
-              pyxser.validate(serialized, enc = "utf-8"), \
-              pyxser.validate_dtd(serialized, enc = "utf-8")
+              pyxser.validate(obj = serialized, enc = "utf-8"), \
+              pyxser.validate_dtd(obj = serialized, enc = "utf-8")
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
         print "Unserialized Object (d.5):\n" + repr(unserialized) + "\n\n"
 
         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0)
         print "Serilized Object:\n" + serialized
         print "Serilized Object Validation:\n", \
-              pyxser.validate(serialized, enc = "utf-8"), \
-              pyxser.validate_dtd(serialized, enc = "utf-8")
+              pyxser.validate(obj = serialized, enc = "utf-8"), \
+              pyxser.validate_dtd(obj = serialized, enc = "utf-8")
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
         print "Unserialized Object (d.0):\n" + repr(unserialized) + "\n\n"
 
@@ -124,40 +124,40 @@ def test_unicode(test):
         serialized = pyxser.u_serialize(obj = test, enc = "utf-8", depth = 2)
         print "Serilized Object:\n", serialized.encode("latin1")
         print "Serilized Object Validation:\n", \
-              pyxser.u_validate(serialized, enc = "utf-8"), \
-              pyxser.u_validate_dtd(serialized, enc = "utf-8")
+              pyxser.u_validate(obj = serialized, enc = "utf-8"), \
+              pyxser.u_validate_dtd(obj = serialized, enc = "utf-8")
         unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
         print "Unserialized Object (d.2):\n" + repr(unserialized) + "\n\n"
 
         serialized = pyxser.u_serialize(obj = test, enc = "utf-8", depth = 3)
         print "Serilized Object:\n" + serialized.encode("latin1")
         print "Serilized Object Validation:\n", \
-              pyxser.u_validate(serialized, enc = "utf-8"), \
-              pyxser.u_validate_dtd(serialized, enc = "utf-8")
+              pyxser.u_validate(obj = serialized, enc = "utf-8"), \
+              pyxser.u_validate_dtd(obj = serialized, enc = "utf-8")
         unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
         print "Unserialized Object (d.3):\n" + repr(unserialized) + "\n\n"
 
         serialized = pyxser.u_serialize(obj = test, enc = "utf-8", depth = 4)
         print "Serilized Object:\n" + serialized.encode("latin1")
         print "Serilized Object Validation:\n", \
-              pyxser.u_validate(serialized, enc = "utf-8"), \
-              pyxser.u_validate_dtd(serialized, enc = "utf-8")
+              pyxser.u_validate(obj = serialized, enc = "utf-8"), \
+              pyxser.u_validate_dtd(obj = serialized, enc = "utf-8")
         unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
         print "Unserialized Object (d.4):\n" + repr(unserialized) + "\n\n"
 
         serialized = pyxser.u_serialize(obj = test, enc = "utf-8", depth = 5)
         print "Serilized Object:\n" + serialized.encode("latin1")
         print "Serilized Object Validation:\n", \
-              pyxser.u_validate(serialized, enc = "utf-8"), \
-              pyxser.u_validate_dtd(serialized, enc = "utf-8")
+              pyxser.u_validate(obj = serialized, enc = "utf-8"), \
+              pyxser.u_validate_dtd(obj = serialized, enc = "utf-8")
         unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
         print "Unserialized Object (d.5):\n" + repr(unserialized) + "\n\n"
 
         serialized = pyxser.u_serialize(obj = test, enc = "utf-8", depth = 0)
         print "Serilized Object:\n" + serialized.encode("latin1")
         print "Serilized Object Validation:\n", \
-              pyxser.u_validate(serialized, enc = "utf-8"), \
-              pyxser.u_validate_dtd(serialized, enc = "utf-8")
+              pyxser.u_validate(obj = serialized, enc = "utf-8"), \
+              pyxser.u_validate_dtd(obj = serialized, enc = "utf-8")
         unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
         print "Unserialized Object (d.0):\n" + repr(unserialized) + "\n\n"
 
@@ -177,13 +177,13 @@ def test_unicode_c14n(test):
         print "Serilized Object Validation:\n", \
               pyxser.u_validate_c14n(obj = serialized, enc = "utf-8"), \
               pyxser.u_validate_c14n_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
-        print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
+        #unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
+        #print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
 
-        serialized = pyxser.u_serialize_c14n_strict(obj = test, depth = 0, exc = 0, com = 0)
-        print "Serilized Object:\n" + serialized.encode("latin1")
-        print "Serilized Object Validation:\n", pyxser.u_validate_c14n(obj = serialized, enc = "utf-8")
-        print "First Object:\n" + repr(test) + "\n\n"
+        #serialized = pyxser.u_serialize_c14n_strict(obj = test, depth = 0, exc = 0, com = 0)
+        #print "Serilized Object:\n" + serialized.encode("latin1")
+        #print "Serilized Object Validation:\n", pyxser.u_validate_c14n(obj = serialized, enc = "utf-8")
+        #print "First Object:\n" + repr(test) + "\n\n"
 
         pyxser.xmlcleanup()
 
@@ -235,8 +235,10 @@ if __name__ == "__main__":
 
     print pyxser.getdtd()
     print pyxser.getdtd_c14n()
-    print "x", pyxser.getxsd()
-    print "x", pyxser.getxsd_c14n()
+    print pyxser.getxsd()
+    print pyxser.getxsd_c14n()
+
+    pyxser.xmlcleanup()
 
     hps = h.heapu()
     display_heap(hps)
