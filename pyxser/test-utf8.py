@@ -171,19 +171,20 @@ def test_unicode(test):
 def test_unicode_c14n(test):
     try:
         print "---8<--- C14N ---8<---"
-        serialized = pyxser.u_serialize_c14n(obj = test, depth = 0, exc = 0, com = 0)
+        serialized = pyxser.u_serialize_c14n(obj = test, depth = 0, exc = 1, com = 1)
         print "Serilized Object:\n" + serialized.encode("latin1")
         print "First Object:\n" + repr(test) + "\n\n"
         print "Serilized Object Validation:\n", \
               pyxser.u_validate_c14n(obj = serialized, enc = "utf-8"), \
               pyxser.u_validate_c14n_dtd(obj = serialized, enc = "utf-8")
-        #unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
-        #print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
 
-        #serialized = pyxser.u_serialize_c14n_strict(obj = test, depth = 0, exc = 0, com = 0)
-        #print "Serilized Object:\n" + serialized.encode("latin1")
-        #print "Serilized Object Validation:\n", pyxser.u_validate_c14n(obj = serialized, enc = "utf-8")
-        #print "First Object:\n" + repr(test) + "\n\n"
+        unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
+        print "Unserialized Object:\n" + repr(unserialized) + "\n\n"
+
+        serialized = pyxser.u_serialize_c14n_strict(obj = test, depth = 0, exc = 0, com = 0)
+        print "Serilized Object:\n" + serialized.encode("latin1")
+        print "Serilized Object Validation:\n", pyxser.u_validate_c14n(obj = serialized, enc = "utf-8")
+        print "First Object:\n" + repr(test) + "\n\n"
 
         pyxser.xmlcleanup()
 

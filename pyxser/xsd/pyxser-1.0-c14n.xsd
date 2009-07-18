@@ -41,29 +41,30 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
-      <xs:attribute name="objid" type="xs:CDATA"/>
-      <xs:attribute name="objref" type="xs:CDATA"/>
-      <xs:attribute name="type" type="xs:CDATA"/>
-      <xs:attribute name="name" type="xs:CDATA"/>
-      <xs:attribute name="module" type="xs:CDATA"/>
-      <xs:attribute name="size" type="xs:CDATA"/>
+      <xs:attribute name="objid" type="xs:string"/>
+      <xs:attribute name="objref" type="xs:string"/>
+      <xs:attribute name="type" type="xs:string"/>
+      <xs:attribute name="name" type="xs:string"/>
+      <xs:attribute name="module" type="xs:string"/>
+      <xs:attribute name="size" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="col">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="obj"/>
         <xs:element ref="prop"/>
+        <xs:element ref="col"/>
+        <xs:element ref="obj"/>
       </xs:choice>
-      <xs:attribute name="type" use="required" type="xs:CDATA"/>
-      <xs:attribute name="name" use="required" type="xs:CDATA"/>
+      <xs:attribute name="type" use="required" type="xs:string"/>
+      <xs:attribute name="name" use="required" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="prop">
     <xs:complexType mixed="true">
-      <xs:attribute name="type" use="required" type="xs:CDATA"/>
-      <xs:attribute name="name" type="xs:CDATA"/>
-      <xs:attribute name="size" type="xs:CDATA"/>
+      <xs:attribute name="type" use="required" type="xs:string"/>
+      <xs:attribute name="name" type="xs:string"/>
+      <xs:attribute name="size" type="xs:string"/>
       <xs:attribute name="compress">
         <xs:simpleType>
           <xs:restriction base="xs:token">
