@@ -35,16 +35,28 @@ static const char Id[] = "$Id$";
 
 #include "include/pyxser.h"
 
+#ifdef PYXSER_DEBUG
+#warning USING DEBUG!
+#endif /* !PYXSER_DEBUG */
+
 const char msg_non_object[] = \
 	"Invalid arguments, please read the documentation.";
+
 const char msg_non_method[] = \
 	"Invalid call, been called as object.";
+
 const char msg_non_xml[] = \
 	"Invalid XML, please read the documentation.";
+
 const char msg_non_canon_encoding[] = \
 	"Invalid encoding, canonical XML uses UTF-8.";
+
+const char msg_invalid_encoding[] = \
+    "Invalid encoding, can not use this encoding.";
+
 const char xml_version[] = \
 	"1.0";
+
 const char xml_encoding[] = \
 	"utf-8";
 
@@ -79,7 +91,9 @@ const char pyxser_xml_attr_xml_xsi[] = "xmlns:xsi";
 const char pyxser_xml_attr_xml_xloc[] = "xmlns:schemaLocation";
 
 const char pyxser_xml_version[] = "1.0";
-const char pyxser_ext_version[] = "1.0r";
+const char pyxser_ext_version[] = "1.1r";
+const char pyxser_ext_author[] = "Daniel Molina Wegener <dmw@coder.cl>";
+const char pyxser_ext_site[] = "http://coder.cl/software/pyxser/";
 
 const char pyxser_xml_attr_ns[] = "http://projects.coder.cl/pyxser/model/";
 const char pyxser_xml_attr_xml_xsd[] = "http://www.w3.org/2000/xmlns/";
@@ -126,6 +140,8 @@ PyObject *invalid_encoding_exception;
 PyObject *invalid_xml_exception;
 PyObject *invalid_argument_exception;
 PyObject *pyxser_version_obj = (PyObject *)NULL;
+PyObject *pyxser_author_obj = (PyObject *)NULL;
+PyObject *pyxser_site_obj = (PyObject *)NULL;
 PyObject *pyxstr_dtd = (PyObject *)NULL;
 PyObject *pyxstr_dtd_c14n = (PyObject *)NULL;
 PyObject *pyxstr_xsd = (PyObject *)NULL;
@@ -144,7 +160,8 @@ static const char serialize_documentation[] = \
     "Uses the next keyword argumens:\n"
     "   obj     ->      python object to serialize\n"
     "   enc     ->      xml serialization encoding\n"
-    "   depth   ->      node navigation depth\n\n"
+    "   depth   ->      node navigation depth\n"
+    "                   [optional, default 50]\n\n"
 	"Gets any object defined in a Python module as class as argument\n"
 	"and serializes it as XML. The serialization model is based on the\n"
 	"pyxser DTD/XML Schema 1.0. Objects are serialized as pyxs:obj\n"
@@ -164,8 +181,11 @@ static const char serializec14n_documentation[] = \
     "Uses the next keyword argumens:\n"
     "   obj     ->      python object to serialize\n"
     "   depth   ->      node navigation depth\n"
+    "                   [optional, default 50]\n\n"
     "   exc     ->      exclusive canonization\n"
+    "                   [optional, default 0 (false)]\n\n"
     "   com     ->      with comments\n\n"
+    "                   [optional, default 0 (false)]\n\n"
     "Same as serialize(), but uses C14N canonization, to use exclusive\n"
     "canonization the 'exc' argument must differ from zero and to use\n"
     "comments 'com' must differ from zero. The encoding must be UTF-8\n"
@@ -184,8 +204,11 @@ static const char serializec14n_documentation_strict[] = \
     "Uses the next keyword argumens:\n"
     "   obj     ->      python object to serialize\n"
     "   depth   ->      node navigation depth\n"
+    "                   [optional, default 50]\n\n"
     "   exc     ->      exclusive canonization\n"
+    "                   [optional, default 0 (false)]\n\n"
     "   com     ->      with comments\n\n"
+    "                   [optional, default 0 (false)]\n\n"
     "Same as serialize_c14n(), but uses C14N canonization in a strict\n"
     "mode and rather than serializing NMTOKEN, ID, and IDREF attributes,\n"
     "uses the C14N canon to execute the XML tree rendering. The encoding\n"
@@ -382,13 +405,21 @@ initpyxser(void)
         return;
 	/* init module */
     Py_AtExit(pyxser_unregister);
+
+    /* we add the version */
     pyxser_version_obj = PyString_FromString(pyxser_ext_version);
     PyModule_AddObject(m, "__version__", pyxser_version_obj);
-#ifdef PYXSER_DEBUG
-#warning USING DEBUG!
-#else
+
+    /* we add the author */
+    pyxser_author_obj = PyString_FromString(pyxser_ext_author);
+    PyModule_AddObject(m, "__author__", pyxser_author_obj);
+
+    /* we add the site */
+    pyxser_site_obj = PyString_FromString(pyxser_ext_site);
+    PyModule_AddObject(m, "__site__", pyxser_site_obj);
+
     LIBXML_TEST_VERSION;
-#endif
+
     xmlInitParser();
 }
 
@@ -416,8 +447,10 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Osi", kwlist,
+
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os|i", kwlist,
                                      &input, &in_enc, &py_depth);
+
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -425,12 +458,13 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	}
 
     if (py_depth == 0) {
-        py_depth = 999999;
+        py_depth = 50;
     }
 
     py_enc = xmlgetencoding(xmlParseCharEncoding(in_enc));
+
     if (py_enc == (char *)NULL) {
-		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		PyErr_SetString(PyExc_ValueError, msg_invalid_encoding);
 		return NULL;
     }
 
@@ -504,7 +538,8 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Oiii", kwlist,
+
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|iii", kwlist,
                                      &input, &py_depth,
                                      &py_exc, &py_com);
 	if (!ok) {
@@ -519,7 +554,7 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
     }
 
     if (py_depth == 0) {
-        py_depth = 999999;
+        py_depth = 50;
     }
 
 	dupItems = (PyListObject *)PyList_New(0);
@@ -589,7 +624,7 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Oiii", kwlist,
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|iii", kwlist,
                                      &input, &py_depth,
                                      &py_exc, &py_com);
 	if (!ok) {
@@ -604,7 +639,7 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
     }
 
     if (py_depth == 0) {
-        py_depth = 999999;
+        py_depth = 50;
     }
 
 	dupItems = (PyListObject *)PyList_New(0);
@@ -674,8 +709,10 @@ u_pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Osi", kwlist,
+
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os|i", kwlist,
                                      &input, &in_enc, &py_depth);
+
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -683,12 +720,13 @@ u_pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	}
 
     if (py_depth == 0) {
-        py_depth = 999999;
+        py_depth = 50;
     }
 
     py_enc = xmlgetencoding(xmlParseCharEncoding(in_enc));
+
     if (py_enc == (char *)NULL) {
-		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		PyErr_SetString(PyExc_ValueError, msg_invalid_encoding);
 		return NULL;
     }
 
@@ -766,7 +804,7 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Oiii", kwlist,
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|iii", kwlist,
                                      &input, &py_depth,
                                      &py_exc, &py_com);
 	if (!ok) {
@@ -853,7 +891,7 @@ u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Oiii", kwlist,
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|iii", kwlist,
                                      &input, &py_depth,
                                      &py_exc, &py_com);
 	if (!ok) {
@@ -928,6 +966,7 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 
     static char *kwlist[] = {"obj", "enc", NULL};
     char *py_enc = (char *)NULL;
+    char *in_enc = (char *)NULL;
     int py_depth = 0;
 
 	PythonUnserializationArguments obj;
@@ -938,8 +977,9 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return res;
 	}
+
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os", kwlist,
-                                     &input, &py_enc);
+                                     &input, &in_enc);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -950,8 +990,9 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
         pyxser_modules = (PyDictObject *)PyDict_New();
     }
 
+    py_enc = xmlgetencoding(xmlParseCharEncoding(in_enc));
     if (py_enc == (char *)NULL) {
-		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		PyErr_SetString(PyExc_ValueError, msg_invalid_encoding);
 		return NULL;
     }
 
@@ -1000,6 +1041,7 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 
     static char *kwlist[] = {"obj", "enc", NULL};
     char *py_enc = (char *)NULL;
+    char *in_enc = (char *)NULL;
     int py_depth = 0;
 
 	PythonUnserializationArguments obj;
@@ -1011,7 +1053,7 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 		return res;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os", kwlist,
-                                     &input, &py_enc);
+                                     &input, &in_enc);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -1022,8 +1064,9 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
         pyxser_modules = (PyDictObject *)PyDict_New();
     }
 
+    py_enc = xmlgetencoding(xmlParseCharEncoding(in_enc));
     if (py_enc == (char *)NULL) {
-		PyErr_SetString(PyExc_ValueError, msg_non_object);
+		PyErr_SetString(PyExc_ValueError, msg_invalid_encoding);
 		return NULL;
     }
 
@@ -1121,6 +1164,7 @@ u_pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 
     static char *kwlist[] = {"obj", "enc", NULL};
     char *py_enc = (char *)NULL;
+    char *in_enc = (char *)NULL;
 
 	int ok = -1;
 	if (PYTHON_IS_NONE(args)) {
@@ -1129,16 +1173,18 @@ u_pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os", kwlist,
-                                     &input, &py_enc);
+                                     &input, &in_enc);
+
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
 
-    py_enc = xmlgetencoding(xmlParseCharEncoding(py_enc));
+    py_enc = xmlgetencoding(xmlParseCharEncoding(in_enc));
     if (py_enc == (char *)NULL) {
-        py_enc = (char *)xml_encoding;
+		PyErr_SetString(PyExc_ValueError, msg_invalid_encoding);
+		return NULL;
     }
 
     Py_XINCREF(input);
@@ -1190,6 +1236,7 @@ u_pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
 
     static char *kwlist[] = {"obj", "enc", NULL};
     char *py_enc = (char *)NULL;
+    char *in_enc = (char *)NULL;
 
 	int ok = -1;
 	if (PYTHON_IS_NONE(args)) {
@@ -1198,16 +1245,17 @@ u_pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os", kwlist,
-                                     &input, &py_enc);
+                                     &input, &in_enc);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
 
-    py_enc = xmlgetencoding(xmlParseCharEncoding(py_enc));
+    py_enc = xmlgetencoding(xmlParseCharEncoding(in_enc));
     if (py_enc == (char *)NULL) {
-        py_enc = (char *)xml_encoding;
+		PyErr_SetString(PyExc_ValueError, msg_invalid_encoding);
+		return NULL;
     }
 
     Py_INCREF(input);
@@ -1259,6 +1307,7 @@ u_pyxvalidatedtd(PyObject *self, PyObject *args, PyObject *keywds)
 
     static char *kwlist[] = {"obj", "enc", NULL};
     char *py_enc = (char *)NULL;
+    char *in_enc = (char *)NULL;
 
 	int ok = -1;
 	if (PYTHON_IS_NONE(args)) {
@@ -1267,16 +1316,17 @@ u_pyxvalidatedtd(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os", kwlist,
-                                     &input, &py_enc);
+                                     &input, &in_enc);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
 
-    py_enc = xmlgetencoding(xmlParseCharEncoding(py_enc));
+    py_enc = xmlgetencoding(xmlParseCharEncoding(in_enc));
     if (py_enc == (char *)NULL) {
-        py_enc = (char *)xml_encoding;
+		PyErr_SetString(PyExc_ValueError, msg_invalid_encoding);
+		return NULL;
     }
 
     Py_XINCREF(input);
@@ -1328,6 +1378,7 @@ u_pyxvalidatec14ndtd(PyObject *self, PyObject *args, PyObject *keywds)
 
     static char *kwlist[] = {"obj", "enc", NULL};
     char *py_enc = (char *)NULL;
+    char *in_enc = (char *)NULL;
 
 	int ok = -1;
 	if (PYTHON_IS_NONE(args)) {
@@ -1336,16 +1387,17 @@ u_pyxvalidatec14ndtd(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os", kwlist,
-                                     &input, &py_enc);
+                                     &input, &in_enc);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
 
-    py_enc = xmlgetencoding(xmlParseCharEncoding(py_enc));
+    py_enc = xmlgetencoding(xmlParseCharEncoding(in_enc));
     if (py_enc == (char *)NULL) {
-        py_enc = (char *)xml_encoding;
+		PyErr_SetString(PyExc_ValueError, msg_invalid_encoding);
+		return NULL;
     }
 
     Py_INCREF(input);
@@ -1395,6 +1447,7 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 
     static char *kwlist[] = {"obj", "enc", NULL};
     char *py_enc = (char *)NULL;
+    char *in_enc = (char *)NULL;
 
 	int ok = -1;
 	if (PYTHON_IS_NONE(args)) {
@@ -1403,16 +1456,17 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os", kwlist,
-                                     &input, &py_enc);
+                                     &input, &in_enc);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
 
-    py_enc = xmlgetencoding(xmlParseCharEncoding(py_enc));
+    py_enc = xmlgetencoding(xmlParseCharEncoding(in_enc));
     if (py_enc == (char *)NULL) {
-        py_enc = (char *)xml_encoding;
+		PyErr_SetString(PyExc_ValueError, msg_invalid_encoding);
+		return NULL;
     }
 
     Py_XINCREF(input);
@@ -1446,6 +1500,7 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
 
     static char *kwlist[] = {"obj", "enc", NULL};
     char *py_enc = (char *)NULL;
+    char *in_enc = (char *)NULL;
 
 	int ok = -1;
 	if (PYTHON_IS_NONE(args)) {
@@ -1454,16 +1509,17 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os", kwlist,
-                                     &input, &py_enc);
+                                     &input, &in_enc);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
 
-    py_enc = xmlgetencoding(xmlParseCharEncoding(py_enc));
+    py_enc = xmlgetencoding(xmlParseCharEncoding(in_enc));
     if (py_enc == (char *)NULL) {
-        py_enc = (char *)xml_encoding;
+		PyErr_SetString(PyExc_ValueError, msg_invalid_encoding);
+		return NULL;
     }
 
     Py_INCREF(input);
@@ -1498,6 +1554,7 @@ pyxvalidatedtd(PyObject *self, PyObject *args, PyObject *keywds)
 
     static char *kwlist[] = {"obj", "enc", NULL};
     char *py_enc = (char *)NULL;
+    char *in_enc = (char *)NULL;
 
 	int ok = -1;
 	if (PYTHON_IS_NONE(args)) {
@@ -1506,16 +1563,17 @@ pyxvalidatedtd(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os", kwlist,
-                                     &input, &py_enc);
+                                     &input, &in_enc);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
 
-    py_enc = xmlgetencoding(xmlParseCharEncoding(py_enc));
+    py_enc = xmlgetencoding(xmlParseCharEncoding(in_enc));
     if (py_enc == (char *)NULL) {
-        py_enc = (char *)xml_encoding;
+		PyErr_SetString(PyExc_ValueError, msg_invalid_encoding);
+		return NULL;
     }
 
     Py_XINCREF(input);
@@ -1549,6 +1607,7 @@ pyxvalidatec14ndtd(PyObject *self, PyObject *args, PyObject *keywds)
 
     static char *kwlist[] = {"obj", "enc", NULL};
     char *py_enc = (char *)NULL;
+    char *in_enc = (char *)NULL;
 
 	int ok = -1;
 	if (PYTHON_IS_NONE(args)) {
@@ -1557,16 +1616,17 @@ pyxvalidatec14ndtd(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os", kwlist,
-                                     &input, &py_enc);
+                                     &input, &in_enc);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
 
-    py_enc = xmlgetencoding(xmlParseCharEncoding(py_enc));
+    py_enc = xmlgetencoding(xmlParseCharEncoding(in_enc));
     if (py_enc == (char *)NULL) {
-        py_enc = (char *)xml_encoding;
+		PyErr_SetString(PyExc_ValueError, msg_invalid_encoding);
+		return NULL;
     }
 
     Py_INCREF(input);
@@ -1676,6 +1736,7 @@ xmlgetencoding(int id)
     case XML_CHAR_ENCODING_EUC_JP:
         return "euc-jp";
     default:
+        /* we use utf-8 as default */
         return (char *)NULL;
     }
 }

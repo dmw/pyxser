@@ -1745,16 +1745,9 @@ pyxser_ValidateDocument(xmlDocPtr doc)
 	if ((cvp = xmlNewValidCtxt()) == NULL) {
 		return 0;
 	}
-#ifdef PYXSER_DEBUG
-#warning USING DEBUG!
 	cvp->userData = (void *) stderr;
 	cvp->error = (xmlValidityErrorFunc) fprintf;
 	cvp->warning = (xmlValidityWarningFunc) fprintf;
-#else
-	cvp->userData = (void *) NULL;
-	cvp->error = (xmlValidityErrorFunc) pyxser_validity_exception;
-	cvp->warning = (xmlValidityWarningFunc) pyxser_validity_exception;
-#endif
 	if (!xmlValidateDtd(cvp, doc, dtd)) {
         xmlFreeValidCtxt(cvp);
         return 0;
