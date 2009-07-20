@@ -525,7 +525,7 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
     xmlOutputBufferPtr xmlBuff = (xmlOutputBufferPtr)NULL;
     xmlChar *docPtr = (xmlChar *)NULL;
 
-    static char *kwlist[] = {"obj", "depth", "exc", "com", NULL};
+    static char *kwlist[] = {"obj", "depth", "com", NULL};
     int py_depth = 999999;
     int py_depth_cnt = 1;
     int py_exc = 0;
@@ -539,9 +539,9 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
 	}
 
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|iii", kwlist,
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|ii", kwlist,
                                      &input, &py_depth,
-                                     &py_exc, &py_com);
+                                     &py_com);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -611,7 +611,7 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 	xmlDocPtr docXml = (xmlDocPtr)NULL;
     xmlChar *xmlBuff = (xmlChar *)NULL;
 
-    static char *kwlist[] = {"obj", "depth", "exc", "com", NULL};
+    static char *kwlist[] = {"obj", "depth", "com", NULL};
     int py_depth = 999999;
     int py_depth_cnt = 1;
     int py_exc = 0;
@@ -624,9 +624,9 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|iii", kwlist,
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|ii", kwlist,
                                      &input, &py_depth,
-                                     &py_exc, &py_com);
+                                     &py_com);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -791,7 +791,7 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
     xmlOutputBufferPtr xmlBuff = (xmlOutputBufferPtr)NULL;
     xmlChar *docPtr = (xmlChar *)NULL;
 
-    static char *kwlist[] = {"obj", "depth", "exc", "com", NULL};
+    static char *kwlist[] = {"obj", "depth", "com", NULL};
     int py_depth = 999999;
     int py_depth_cnt = 1;
     int py_exc = 0;
@@ -804,7 +804,7 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|iii", kwlist,
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|ii", kwlist,
                                      &input, &py_depth,
                                      &py_exc, &py_com);
 	if (!ok) {
@@ -878,7 +878,7 @@ u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 	xmlDocPtr docXml = (xmlDocPtr)NULL;
     xmlChar *xmlBuff = (xmlChar *)NULL;
 
-    static char *kwlist[] = {"obj", "depth", "exc", "com", NULL};
+    static char *kwlist[] = {"obj", "depth", "com", NULL};
     int py_depth = 999999;
     int py_depth_cnt = 1;
     int py_exc = 0;
@@ -891,7 +891,7 @@ u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|iii", kwlist,
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|ii", kwlist,
                                      &input, &py_depth,
                                      &py_exc, &py_com);
 	if (!ok) {
