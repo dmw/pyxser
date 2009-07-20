@@ -305,6 +305,7 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docptr, xmlNodePtr *rootNode,
                                      BAD_CAST pyxser_xml_attr_xml_ns,
                                      BAD_CAST pyxser_xml_attr_ns);
 
+#if 0 /* invalid namespaces */
 			pyxserNsXsi = xmlNewProp(*rootNode,
                                      BAD_CAST pyxser_xml_attr_xml_xsi,
                                      BAD_CAST pyxser_xml_attr_xml_xsi_value);
@@ -312,6 +313,7 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docptr, xmlNodePtr *rootNode,
 			pyxserNsXsd = xmlNewProp(*rootNode,
                                      BAD_CAST pyxser_xml_attr_xml_xloc,
                                      BAD_CAST pyxser_xml_attr_xml_xloc_value);
+#endif /* invlid namespace */
 
 			pyxserVersion = xmlNewProp(*rootNode,
                                        BAD_CAST pyxser_xml_attr_version,
@@ -1879,4 +1881,4 @@ pyxser_C14NRenderAllNodes(void * user_data,
     return 1;
 }
 
-/* pyserx_tools.h ends here */
+/* pyxser_tools.h ends here */
