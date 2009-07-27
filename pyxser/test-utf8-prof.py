@@ -82,13 +82,13 @@ def test_normal(test):
 
 def test_normal_c14n(test):
     try:
-        serialized = pyxser.serialize_c14n(obj = test, depth = 0, exc = 0, com = 0)
+        serialized = pyxser.serialize_c14n(obj = test, depth = 0, com = 0)
         pyxser.validate_c14n(obj = serialized, enc = "utf-8")
         pyxser.validate_c14n_dtd(obj = serialized, enc = "utf-8")
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
         repr(unserialized)
 
-        serialized = pyxser.serialize_c14n_strict(obj = test, depth = 0, exc = 0, com = 0)
+        serialized = pyxser.serialize_c14n_strict(obj = test, depth = 0, com = 0)
         pyxser.validate_c14n(obj = serialized, enc = "utf-8")
 
         pyxser.xmlcleanup()
@@ -139,13 +139,13 @@ def test_unicode(test):
 
 def test_unicode_c14n(test):
     try:
-        serialized = pyxser.u_serialize_c14n(obj = test, depth = 0, exc = 0, com = 0)
+        serialized = pyxser.u_serialize_c14n(obj = test, depth = 0, com = 0)
         pyxser.u_validate_c14n(obj = serialized, enc = "utf-8")
         pyxser.u_validate_c14n_dtd(obj = serialized, enc = "utf-8")
         unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
         repr(unserialized)
 
-        serialized = pyxser.u_serialize_c14n_strict(obj = test, depth = 0, exc = 0, com = 0)
+        serialized = pyxser.u_serialize_c14n_strict(obj = test, depth = 0, com = 0)
         pyxser.u_validate_c14n(obj = serialized, enc = "utf-8")
 
         pyxser.xmlcleanup()

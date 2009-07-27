@@ -54,4 +54,19 @@
 	pyxser documents using the pyxser 1.0 DTD, instead of
 	the pyxser 1.0 XML Schema.
 
+1.1r (2009.05.09):
+
+	Daniel Molina Wegener <dmw@coder.cl>
+	* Removed bugs concerning XML schema declaration for output
+	documents.
+	* Removed bugs concerning XML schema design for C14N
+	serialization.
+	* Removed exc argument from C14N serialization functions,
+	because they have no sense.
+	* Code cleanup with function arguments (C code).
+	* All changes seems to be transparent for previous versions.
+
+
+
+
 

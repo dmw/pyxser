@@ -40,10 +40,13 @@ static xmlChar *pyxser_ConvertInput(const char *in, const char *encoding);
 
 
 xmlNodePtr
-pyxser_SerializeUnicode(PyObject *o, char *name,
-						PyListObject *dupItems, xmlDocPtr doc,
-                        int *depth, int *depthcnt)
+pyxser_SerializeUnicode(PyxSerializationArgsPtr args)
 {
+
+    PyObject *o = *args->o;
+    char *name = args->name;
+    xmlDocPtr doc = *args->docptr;
+
 	xmlNodePtr nen = (xmlNodePtr)NULL;
 	xmlNodePtr ntxt = (xmlNodePtr)NULL;
 	xmlAttrPtr typeAttr = (xmlAttrPtr)NULL;
@@ -113,19 +116,19 @@ pyxser_SerializeUnicode(PyObject *o, char *name,
 }
 
 xmlNodePtr
-pyxser_SerializeExactUnicode(PyObject *o, char *name,
-							 PyListObject *dupItems, xmlDocPtr doc,
-                             int *depth, int *depthcnt)
+pyxser_SerializeExactUnicode(PyxSerializationArgsPtr args)
 {
-	return pyxser_SerializeUnicode(o, name, (PyListObject *)NULL, doc,
-                                   depth, depthcnt);
+	return pyxser_SerializeUnicode(args);
 }
 
 xmlNodePtr
-pyxser_SerializeString(PyObject *o, char *name,
-					   PyListObject *dupItems, xmlDocPtr doc,
-                       int *depth, int *depthcnt)
+pyxser_SerializeString(PyxSerializationArgsPtr args)
 {
+
+    PyObject *o = *args->o;
+    char *name = args->name;
+    xmlDocPtr doc = *args->docptr;
+
 	xmlNodePtr nen = (xmlNodePtr)NULL;
 	xmlNodePtr ntxt = (xmlNodePtr)NULL;
 	xmlAttrPtr typeAttr = (xmlAttrPtr)NULL;
@@ -182,20 +185,15 @@ pyxser_SerializeString(PyObject *o, char *name,
 }
 
 xmlNodePtr
-pyxser_SerializeExactString(PyObject *o, char *name,
-                            PyListObject *dupItems, xmlDocPtr doc,
-                            int *depth, int *depthcnt)
+pyxser_SerializeExactString(PyxSerializationArgsPtr args)
 {
-	return pyxser_SerializeString(o, name, (PyListObject *)NULL, doc,
-                                  depth, depthcnt);
+	return pyxser_SerializeString(args);
 }
 
 xmlNodePtr
-pyxser_SerializeBuffer(PyObject *o, char *name, PyListObject *dupItems,
-                       xmlDocPtr doc, int *depth, int *depthcnt)
+pyxser_SerializeBuffer(PyxSerializationArgsPtr args)
 {
-	return pyxser_SerializePrimitiveType(o, name, (PyListObject *)NULL,
-                                         doc, depth, depthcnt);
+	return pyxser_SerializePrimitiveType(args);
 }
 
 
@@ -269,7 +267,7 @@ pyxunser_SerializeExactUnicode(PyxSerDeserializationArgsPtr obj)
 PyObject *
 pyxunser_SerializeBuffer(PyxSerDeserializationArgsPtr obj)
 {
-    return NULL;
+    return obj;
 }
 
 static xmlChar *
