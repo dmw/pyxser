@@ -435,6 +435,8 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	xmlDocPtr docXml = (xmlDocPtr)NULL;
 	xmlChar *xmlBuff = (xmlChar *)NULL;
 
+    PythonSerializationArguments sargs;
+
     static char *kwlist[] = {"obj", "enc", "depth", NULL};
     char *py_enc = (char *)NULL;
     char *in_enc = (char *)NULL;
@@ -476,9 +478,16 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	dupItems = (PyListObject *)PyList_New(0);
     Py_XINCREF(input);
 
-	serXml = pyxser_SerializeXml(input, &docXml, &rootNode,
-								 (xmlNodePtr *)NULL, dupItems,
-                                 py_enc, &py_depth, &py_depth_cnt);
+    sargs.o = &input;
+    sargs.docptr = &docXml;
+    sargs.rootNode = &rootNode;
+    sargs.currentNode = &rootNode;
+    sargs.dupSrcItems = &dupItems;
+    sargs.enc = py_enc;
+    sargs.depth = &py_depth;
+    sargs.depthcnt = &py_depth_cnt;
+
+	serXml = pyxser_SerializeXml(&sargs);
 
     Py_XDECREF(input);
     Py_XDECREF(dupItems);
@@ -525,6 +534,8 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
     xmlOutputBufferPtr xmlBuff = (xmlOutputBufferPtr)NULL;
     xmlChar *docPtr = (xmlChar *)NULL;
 
+    PythonSerializationArguments sargs;
+
     static char *kwlist[] = {"obj", "depth", "com", NULL};
     int py_depth = 999999;
     int py_depth_cnt = 1;
@@ -540,8 +551,7 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 	}
 
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|ii", kwlist,
-                                     &input, &py_depth,
-                                     &py_com);
+                                     &input, &py_depth, &py_com);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -560,9 +570,18 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 	dupItems = (PyListObject *)PyList_New(0);
     Py_XINCREF(input);
 
-	serXml = pyxser_SerializeXml(input, &docXml, &rootNode,
-								 (xmlNodePtr *)NULL, dupItems,
-                                 xml_encoding, &py_depth, &py_depth_cnt);
+    sargs.o = &input;
+    sargs.item = &input;
+    sargs.docptr = &docXml;
+    sargs.rootNode = &rootNode;
+    sargs.currentNode = &rootNode;
+    sargs.dupSrcItems = &dupItems;
+    sargs.enc = pyxser_xml_encoding;
+    sargs.depth = &py_depth;
+    sargs.depthcnt = &py_depth_cnt;
+
+	serXml = pyxser_SerializeXml(&sargs);
+
     Py_XDECREF(input);
     Py_XDECREF(dupItems);
 
@@ -611,6 +630,8 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 	xmlDocPtr docXml = (xmlDocPtr)NULL;
     xmlChar *xmlBuff = (xmlChar *)NULL;
 
+    PythonSerializationArguments sargs;
+
     static char *kwlist[] = {"obj", "depth", "com", NULL};
     int py_depth = 999999;
     int py_depth_cnt = 1;
@@ -625,8 +646,7 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|ii", kwlist,
-                                     &input, &py_depth,
-                                     &py_com);
+                                     &input, &py_depth, &py_com);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -645,10 +665,17 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 	dupItems = (PyListObject *)PyList_New(0);
     Py_XINCREF(input);
 
-	serXml = pyxser_SerializeXml(input, &docXml, &rootNode,
-								 (xmlNodePtr *)NULL, dupItems,
-                                 xml_encoding, &py_depth,
-                                 &py_depth_cnt);
+    sargs.o = &input;
+    sargs.docptr = &docXml;
+    sargs.rootNode = &rootNode;
+    sargs.currentNode = &rootNode;
+    sargs.dupSrcItems = &dupItems;
+    sargs.enc = pyxser_xml_encoding;
+    sargs.depth = &py_depth;
+    sargs.depthcnt = &py_depth_cnt;
+
+	serXml = pyxser_SerializeXml(&sargs);
+
     Py_XINCREF(input);
     Py_XDECREF(dupItems);
 
@@ -697,6 +724,8 @@ u_pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	xmlDocPtr docXml = (xmlDocPtr)NULL;
 	xmlChar *xmlBuff = (xmlChar *)NULL;
 
+    PythonSerializationArguments sargs;
+
     static char *kwlist[] = {"obj", "enc", "depth", NULL};
     char *py_enc = (char *)NULL;
     char *in_enc = (char *)NULL;
@@ -738,9 +767,16 @@ u_pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	dupItems = (PyListObject *)PyList_New(0);
     Py_XINCREF(input);
 
-	serXml = pyxser_SerializeXml(input, &docXml, &rootNode,
-								 (xmlNodePtr *)NULL, dupItems,
-                                 py_enc, &py_depth, &py_depth_cnt);
+    sargs.o = &input;
+    sargs.docptr = &docXml;
+    sargs.rootNode = &rootNode;
+    sargs.currentNode = &rootNode;
+    sargs.dupSrcItems = &dupItems;
+    sargs.enc = py_enc;
+    sargs.depth = &py_depth;
+    sargs.depthcnt = &py_depth_cnt;
+
+	serXml = pyxser_SerializeXml(&sargs);
 
     Py_XDECREF(input);
     Py_XDECREF(dupItems);
@@ -791,6 +827,8 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
     xmlOutputBufferPtr xmlBuff = (xmlOutputBufferPtr)NULL;
     xmlChar *docPtr = (xmlChar *)NULL;
 
+    PythonSerializationArguments sargs;
+
     static char *kwlist[] = {"obj", "depth", "com", NULL};
     int py_depth = 999999;
     int py_depth_cnt = 1;
@@ -806,7 +844,7 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|ii", kwlist,
                                      &input, &py_depth,
-                                     &py_exc, &py_com);
+                                     &py_com);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -825,9 +863,17 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 	dupItems = (PyListObject *)PyList_New(0);
     Py_XINCREF(input);
 
-	serXml = pyxser_SerializeXml(input, &docXml, &rootNode,
-								 (xmlNodePtr *)NULL, dupItems,
-                                 xml_encoding, &py_depth, &py_depth_cnt);
+    sargs.o = &input;
+    sargs.docptr = &docXml;
+    sargs.rootNode = &rootNode;
+    sargs.currentNode = &rootNode;
+    sargs.dupSrcItems = &dupItems;
+    sargs.enc = pyxser_xml_encoding;
+    sargs.depth = &py_depth;
+    sargs.depthcnt = &py_depth_cnt;
+
+	serXml = pyxser_SerializeXml(&sargs);
+
     Py_XDECREF(input);
     Py_XDECREF(dupItems);
 
@@ -878,6 +924,8 @@ u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 	xmlDocPtr docXml = (xmlDocPtr)NULL;
     xmlChar *xmlBuff = (xmlChar *)NULL;
 
+    PythonSerializationArguments sargs;
+
     static char *kwlist[] = {"obj", "depth", "com", NULL};
     int py_depth = 999999;
     int py_depth_cnt = 1;
@@ -893,7 +941,7 @@ u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|ii", kwlist,
                                      &input, &py_depth,
-                                     &py_exc, &py_com);
+                                     &py_com);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -912,9 +960,16 @@ u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 	dupItems = (PyListObject *)PyList_New(0);
     Py_XINCREF(input);
 
-	serXml = pyxser_SerializeXml(input, &docXml, &rootNode,
-								 (xmlNodePtr *)NULL, dupItems,
-                                 xml_encoding, &py_depth, &py_depth_cnt);
+    sargs.o = &input;
+    sargs.docptr = &docXml;
+    sargs.rootNode = &rootNode;
+    sargs.currentNode = &rootNode;
+    sargs.dupSrcItems = &dupItems;
+    sargs.enc = pyxser_xml_encoding;
+    sargs.depth = &py_depth;
+    sargs.depthcnt = &py_depth_cnt;
+
+	serXml = pyxser_SerializeXml(&sargs);
     Py_XINCREF(input);
     Py_XDECREF(dupItems);
 

@@ -1,5 +1,5 @@
 /* -*- mode: c; indent-tabs-mode: nil; tab-width: 4; c-file-style: "python" -*- */
-/* vim:set ft=c ff=unix ts=4 sw=4 enc=latin1 noexpandtab: */
+/* vim:set ft=c ff=unix ts=4 sw=4 enc=latin1 expandtab: */
 /* kate: space-indent off; indent-width 4; mixedindent off; indent-mode cstyle; */
 /*
   Copyright (c) 2009 Daniel Molina Wegener <dmw@coder.cl>
@@ -20,8 +20,8 @@
   along with pyxser.  If not, see <http://www.gnu.org/licenses/>.
 
   <!DOCTYPE pyxs:obj
-  PUBLIC "-//coder.cl//DTD pyxser 1.0//EN"
-  "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd">
+            PUBLIC "-//coder.cl//DTD pyxser 1.0//EN"
+            "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd">
 */
 #ifndef lint
 static const char Id[] = "$Id$";
@@ -40,70 +40,48 @@ static const char pyxser_false_char_value[] = "False";
 
 
 xmlNodePtr
-pyxser_SerializeInt(PyObject *o, char *name,
-					PyListObject *dupItems, xmlDocPtr doc,
-                    int *depth, int *depthcnt)
+pyxser_SerializeInt(PyxSerializationArgsPtr args)
 {
-	return pyxser_SerializePrimitiveType(o, name,
-										 dupItems, doc,
-                                         depth, depthcnt);
+	return pyxser_SerializePrimitiveType(args);
 }
 
 xmlNodePtr
-pyxser_SerializeExactInt(PyObject *o, char *name,
-						 PyListObject *dupItems, xmlDocPtr doc,
-                         int *depth, int *depthcnt)
+pyxser_SerializeExactInt(PyxSerializationArgsPtr args)
 {
-	return pyxser_SerializePrimitiveType(o, name,
-										 dupItems, doc,
-                                         depth, depthcnt);
+	return pyxser_SerializePrimitiveType(args);
 }
 
 xmlNodePtr
-pyxser_SerializeBoolean(PyObject *o, char *name,
-						PyListObject *dupItems, xmlDocPtr doc,
-                        int *depth, int *depthcnt)
+pyxser_SerializeBoolean(PyxSerializationArgsPtr args)
 {
-	return pyxser_SerializePrimitiveType(o, name,
-										 dupItems, doc,
-                                         depth, depthcnt);
+	return pyxser_SerializePrimitiveType(args);
 }
 
 xmlNodePtr
-pyxser_SerializeLong(PyObject *o, char *name,
-					 PyListObject *dupItems, xmlDocPtr doc,
-                     int *depth, int *depthcnt)
+pyxser_SerializeLong(PyxSerializationArgsPtr args)
 {
-	return pyxser_SerializePrimitiveType(o, name,
-										 dupItems, doc,
-                                         depth, depthcnt);
+	return pyxser_SerializePrimitiveType(args);
 }
 
 xmlNodePtr
-pyxser_SerializeFloat(PyObject *o, char *name,
-					  PyListObject *dupItems, xmlDocPtr doc,
-                      int *depth, int *depthcnt)
+pyxser_SerializeFloat(PyxSerializationArgsPtr args)
 {
-	return pyxser_SerializePrimitiveType(o, name,
-										 dupItems, doc,
-                                         depth, depthcnt);
+	return pyxser_SerializePrimitiveType(args);
 }
 
 xmlNodePtr
-pyxser_SerializeExactFloat(PyObject *o, char *name,
-						   PyListObject *dupItems, xmlDocPtr doc,
-                           int *depth, int *depthcnt)
+pyxser_SerializeExactFloat(PyxSerializationArgsPtr args)
 {
-	return pyxser_SerializePrimitiveType(o, name,
-										 dupItems, doc,
-                                         depth, depthcnt);
+	return pyxser_SerializePrimitiveType(args);
 }
 
 xmlNodePtr
-pyxser_SerializeComplex(PyObject *o, char *name,
-						PyListObject *dupItems, xmlDocPtr doc,
-                        int *depth, int *depthcnt)
+pyxser_SerializeComplex(PyxSerializationArgsPtr args)
 {
+    PyObject *o = *args->o;
+    char *name = args->name;
+    xmlDocPtr doc = *args->docptr;
+
 	PyObject *classPtr = (PyObject *)NULL;
 	PyObject *className = (PyObject *)NULL;
     Py_complex cx;
@@ -162,12 +140,9 @@ pyxser_SerializeComplex(PyObject *o, char *name,
 }
 
 xmlNodePtr
-pyxser_SerializeExactComplex(PyObject *o, char *name,
-							 PyListObject *dupItems, xmlDocPtr doc,
-                             int *depth, int *depthcnt)
+pyxser_SerializeExactComplex(PyxSerializationArgsPtr args)
 {
-	return pyxser_SerializeComplex(o, name,
-                                   dupItems, doc, depth, depthcnt);
+	return pyxser_SerializeComplex(args);
 }
 
 PyObject *

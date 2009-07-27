@@ -33,25 +33,11 @@
 extern "C" {
 #endif /* !__cplusplus */
 
-    xmlNodePtr pyxser_SerializeString(PyObject *o, char *name,
-                                      PyListObject *dupItems, xmlDocPtr doc,
-                                      int *depth, int *depthcnt);
-
-    xmlNodePtr pyxser_SerializeExactString(PyObject *o, char *name,
-                                           PyListObject *dupItems, xmlDocPtr doc,
-                                           int *depth, int *depthcnt);
-
-    xmlNodePtr pyxser_SerializeUnicode(PyObject *o, char *name,
-                                       PyListObject *dupItems, xmlDocPtr doc,
-                                       int *depth, int *depthcnt);
-
-    xmlNodePtr pyxser_SerializeExactUnicode(PyObject *o, char *name,
-                                            PyListObject *dupItems, xmlDocPtr doc,
-                                            int *depth, int *depthcnt);
-
-    xmlNodePtr pyxser_SerializeBuffer(PyObject *o, char *name,
-                                      PyListObject *dupItems, xmlDocPtr doc,
-                                      int *depth, int *depthcnt);
+    xmlNodePtr pyxser_SerializeString(PyxSerializationArgsPtr args);
+    xmlNodePtr pyxser_SerializeExactString(PyxSerializationArgsPtr args);
+    xmlNodePtr pyxser_SerializeUnicode(PyxSerializationArgsPtr args);
+    xmlNodePtr pyxser_SerializeExactUnicode(PyxSerializationArgsPtr args);
+    xmlNodePtr pyxser_SerializeBuffer(PyxSerializationArgsPtr args);
 
     PyObject *pyxunser_SerializeString(PyxSerDeserializationArgsPtr obj);
     PyObject *pyxunser_SerializeExactString(PyxSerDeserializationArgsPtr obj);

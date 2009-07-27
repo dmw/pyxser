@@ -252,13 +252,26 @@ const PythonTypeDeserialize unserxConcreteTypes[] = {
 
 
 xmlNodePtr
-pyxser_SerializeXml(PyObject *o, xmlDocPtr *docptr, xmlNodePtr *rootNode,
-					xmlNodePtr *currentNode, PyListObject *dupSrcItems,
-                    const char *enc, int *depth, int *depthcnt)
+pyxser_SerializeXml(PyxSerializationArgsPtr args)
 {
+    PyObject *o = *args->o;
+    PyObject **oold;
+    xmlDocPtr *docptr = args->docptr;
+    xmlDocPtr *docptrold = args->docptr;
+    xmlNodePtr *rootNode = args->rootNode;
+    xmlNodePtr *rootNodeOld = args->rootNode;
+    xmlNodePtr *currentNode = args->currentNode;
+    xmlNodePtr *currentNodeOld = args->currentNode;
+
+    PyListObject *dupSrcItems = *args->dupSrcItems;
+    const char *enc = args->enc;
+    int *depth = args->depth;
+    int *depthcnt = args->depthcnt;
+
 	PyListObject *dupItems = dupSrcItems;
 	PyObject *lstItems = (PyObject *)NULL;
 	PyObject *item = (PyObject *)o;
+	PyObject *itemOld = (PyObject *)NULL;
 	PyObject *objKeys = Py_None;
 	PyObject *currentKey = Py_None;
 
@@ -305,7 +318,7 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docptr, xmlNodePtr *rootNode,
                                      BAD_CAST pyxser_xml_attr_xml_ns,
                                      BAD_CAST pyxser_xml_attr_ns);
 
-#if 0 /* invalid namespaces */
+#if 0
 			pyxserNsXsi = xmlNewProp(*rootNode,
                                      BAD_CAST pyxser_xml_attr_xml_xsi,
                                      BAD_CAST pyxser_xml_attr_xml_xsi_value);
@@ -313,7 +326,7 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docptr, xmlNodePtr *rootNode,
 			pyxserNsXsd = xmlNewProp(*rootNode,
                                      BAD_CAST pyxser_xml_attr_xml_xloc,
                                      BAD_CAST pyxser_xml_attr_xml_xloc_value);
-#endif /* invlid namespace */
+#endif
 
 			pyxserVersion = xmlNewProp(*rootNode,
                                        BAD_CAST pyxser_xml_attr_version,
@@ -360,11 +373,30 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docptr, xmlNodePtr *rootNode,
 			}
             (*depthcnt)++;
             if (*depthcnt <= *depth) {
-                newSerializedNode = pyxser_RunSerialization(item, o,
-                                                            currentKey, dupItems,
-                                                            docptr, rootNode,
-                                                            currentNode,
-                                                            depth, depthcnt);
+
+                oold = &o;
+                docptrold = docptr;
+                currentNodeOld = currentNode;
+                rootNodeOld = rootNode;
+
+                args->o = &item;
+                args->item = &item;
+                args->ck = &currentKey;
+                args->dupSrcItems = &dupItems;
+                args->rootNode = rootNode;
+                args->currentNode = currentNode;
+                args->dupSrcItems = &dupItems;
+                itemOld = item;
+
+                newSerializedNode = pyxser_RunSerialization(args);
+
+                args->docptr = docptrold;
+                args->rootNode = rootNodeOld;
+                args->currentNode = currentNodeOld;
+                args->o = oold;
+                args->item = oold;
+                item = itemOld;
+
             }
             Py_XDECREF(currentKey);
             Py_XDECREF(item);
@@ -380,14 +412,24 @@ pyxser_SerializeXml(PyObject *o, xmlDocPtr *docptr, xmlNodePtr *rootNode,
 }
 
 xmlNodePtr
-pyxser_RunSerialization(PyObject *item, PyObject *o, PyObject *currentKey,
-						PyListObject *dupItems, xmlDocPtr *docptr,
-						xmlNodePtr *rootNode, xmlNodePtr *currentNode,
-                        int *depth, int *depthcnt)
+pyxser_RunSerialization(PyxSerializationArgsPtr args)
 {
 	PythonTypeSerialize cs;
 
-	xmlNodePtr csn = (xmlNodePtr)NULL;
+    PyObject *item = *args->item;
+    PyObject *o = *args->o;
+    PyObject **oold = args->o;
+    PyObject *currentKey = *args->ck;
+
+    xmlDocPtr *docptr = args->docptr;
+    xmlNodePtr currentNode = *args->currentNode;
+    xmlNodePtr *currentNodeOld = args->currentNode;
+    xmlNodePtr rootNode = *args->currentNode;
+    xmlNodePtr *rootNodeOld = args->currentNode;
+
+    int *depthcnt = args->depthcnt;
+
+	xmlNodePtr csn;
 	xmlNodePtr newSerializedNode = (xmlNodePtr)NULL;
 	xmlAttrPtr pyxserType = (xmlAttrPtr)NULL;
 	xmlAttrPtr pxsnam = (xmlAttrPtr)NULL;
@@ -398,14 +440,14 @@ pyxser_RunSerialization(PyObject *item, PyObject *o, PyObject *currentKey,
 	cs = serxConcreteTypes[c];
 	while (cs.available == 1) {
 		if (cs.checker(item)) {
-			newSerializedNode = cs.serializer(
-				item,
-				PyString_AS_STRING(currentKey),
-				dupItems,
-				*docptr,
-                depth, depthcnt);
+            args->o = &item;
+            args->name = PyString_AS_STRING(currentKey);
+			newSerializedNode = cs.serializer(args);
+            currentNode = *currentNodeOld;
+            args->o = oold;
+            args->item = oold;
 			if (newSerializedNode != (xmlNodePtr)NULL) {
-				xmlAddChild(*currentNode, newSerializedNode);
+				xmlAddChild(currentNode, newSerializedNode);
 				break;
 			}
 		}
@@ -425,14 +467,21 @@ pyxser_RunSerialization(PyObject *item, PyObject *o, PyObject *currentKey,
                                     BAD_CAST pyxser_xml_attr_name,
                                     BAD_CAST PyString_AS_STRING(currentKey));
 			}
-			xmlAddChild(*currentNode, csn);
+			xmlAddChild(currentNode, csn);
             (*depthcnt)++;
-			newSerializedNode = pyxser_SerializeXml(item, docptr,
-													rootNode,
-													&csn,
-													dupItems,
-                                                    (char *)(*docptr)->encoding,
-                                                    depth, depthcnt);
+
+            args->o = &item;
+            args->item = &item;
+            args->currentNode = &csn;
+            args->rootNode = &rootNode;
+
+			newSerializedNode = pyxser_SerializeXml(args);
+
+            args->currentNode = currentNodeOld;
+            args->rootNode = rootNodeOld;
+            args->o = oold;
+            args->item = oold;
+
             (*depthcnt)--;
 			c = 0;
 			break;
@@ -791,11 +840,13 @@ pyxser_GetClassName(PyObject *obj)
 
 
 xmlNodePtr
-pyxser_SerializePrimitiveType(PyObject *o, char *name,
-							  PyListObject *dupItems,
-							  xmlDocPtr doc,
-                              int *depth, int *depthcnt)
+pyxser_SerializePrimitiveType(PyxSerializationArgsPtr args)
 {
+
+    PyObject *o = *args->o;
+    char *name = args->name;
+    xmlDocPtr doc = *args->docptr;
+
 	PyObject *str = (PyObject *)NULL;
 	PyObject *classPtr = (PyObject *)NULL;
 	PyObject *className = (PyObject *)NULL;
@@ -1881,4 +1932,4 @@ pyxser_C14NRenderAllNodes(void * user_data,
     return 1;
 }
 
-/* pyxser_tools.h ends here */
+/* pyserx_tools.h ends here */

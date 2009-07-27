@@ -36,33 +36,25 @@ extern "C" {
 #endif /* !__cplusplus */
 
 /* Tuples */
-    xmlNodePtr pyxser_SerializeTuple(PyObject *o, char *name,
-                                     PyListObject *dupItems, xmlDocPtr docPtr,
-                                     int *depth, int *depthcnt);
+    xmlNodePtr pyxser_SerializeTuple(PyxSerializationArgsPtr args);
 
-    xmlNodePtr pyxser_SerializeExactTuple(PyObject *o, char *name,
-                                          PyListObject *dupItems, xmlDocPtr docPtr,
-                                          int *depth, int *depthcnt);
+    xmlNodePtr pyxser_SerializeExactTuple(PyxSerializationArgsPtr args);
+
 /* Lists */
-    xmlNodePtr pyxser_SerializeList(PyObject *o, char *name,
-                                    PyListObject *dupItems, xmlDocPtr docPtr,
-                                    int *depth, int *depthcnt);
+    xmlNodePtr pyxser_SerializeList(PyxSerializationArgsPtr args);
 
-    xmlNodePtr pyxser_SerializeExactList(PyObject *o, char *name,
-                                         PyListObject *dupItems, xmlDocPtr docPtr,
-                                         int *depth, int *depthcnt);
+    xmlNodePtr pyxser_SerializeExactList(PyxSerializationArgsPtr args);
 
 /* Dictionaries */
-    xmlNodePtr pyxser_SerializeDict(PyObject *o, char *name,
-                                    PyListObject *dupItems, xmlDocPtr docPtr,
-                                    int *depth, int *depthcnt);
+    xmlNodePtr pyxser_SerializeDict(PyxSerializationArgsPtr args);
 
-    xmlNodePtr pyxser_SerializeExactDict(PyObject *o, char *name,
-                                         PyListObject *dupItems, xmlDocPtr docPtr,
-                                         int *depth, int *depthcnt);
+    xmlNodePtr pyxser_SerializeExactDict(PyxSerializationArgsPtr args);
 
+/* Deserialization */
     PyObject *pyxunser_SerializeTuple(PyxSerDeserializationArgsPtr obj);
+
     PyObject *pyxunser_SerializeList(PyxSerDeserializationArgsPtr obj);
+
     PyObject *pyxunser_SerializeDict(PyxSerDeserializationArgsPtr obj);
 
 #ifdef __cplusplus

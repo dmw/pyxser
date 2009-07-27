@@ -37,7 +37,7 @@
 extern "C" {
 #endif /* !__cplusplus */
 
-#define PYXSER_VERSION					"1.0r"
+#define PYXSER_VERSION					"1.1r"
 
 #define PYTHON_IS_NOT_NONE(o)                   \
 	(((PyObject *)o != Py_None) &&              \
@@ -60,7 +60,7 @@ extern "C" {
 
 
 /* lol code xD */
-#define PYTHON_HAZ_KLASS(o)                             \
+#define PYTHON_HAZ_KLASS(o)                     \
 	(PyObject_HasAttrString(o, PYTHON_CLASS_ATTR) == 1)
 
 #define PYTHON_SERX_PHASE_NONE			0
@@ -85,14 +85,27 @@ extern "C" {
         int depthcnt;
     } PythonUnserializationArguments;
 
+    typedef struct pythonSerializationArguments_ {
+        PyObject **item;
+        PyObject **ck;
+        PyObject **o;
+        xmlDocPtr *docptr;
+        xmlNodePtr *rootNode;
+        xmlNodePtr *currentNode;
+        PyListObject **dupSrcItems;
+        char *enc;
+        char *name;
+        int *depth;
+        int *depthcnt;
+    } PythonSerializationArguments;
+
     typedef PythonUnserializationArguments *PyxSerDeserializationArgsPtr;
+    typedef PythonSerializationArguments *PyxSerializationArgsPtr;
 
     typedef struct pythonTypeSerialize_ {
         int available;
         int (*checker)(PyObject *o);
-        xmlNodePtr (*serializer)(PyObject *o, char *name,
-                                 PyListObject *dupItems, xmlDocPtr doc,
-                                 int *depth, int *depthcnt);
+        xmlNodePtr (*serializer)(PyxSerializationArgsPtr args);
     } PythonTypeSerialize;
 
     typedef struct pythonTypeDeserialize_ {

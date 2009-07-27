@@ -35,37 +35,14 @@
 extern "C" {
 #endif /* !__cplusplus */
 
-    xmlNodePtr pyxser_SerializeInt(PyObject *o, char *name,
-                                   PyListObject *dupItems, xmlDocPtr doc,
-                                   int *depth, int *depthcnt);
-
-    xmlNodePtr pyxser_SerializeExactInt(PyObject *o, char *name,
-                                        PyListObject *dupItems, xmlDocPtr doc,
-                                        int *depth, int *depthcnt);
-
-    xmlNodePtr pyxser_SerializeBoolean(PyObject *o, char *name,
-                                       PyListObject *dupItems, xmlDocPtr doc,
-                                       int *depth, int *depthcnt);
-
-    xmlNodePtr pyxser_SerializeLong(PyObject *o, char *name,
-                                    PyListObject *dupItems, xmlDocPtr doc,
-                                    int *depth, int *depthcnt);
-
-    xmlNodePtr pyxser_SerializeFloat(PyObject *o, char *name,
-                                     PyListObject *dupItems, xmlDocPtr doc,
-                                     int *depth, int *depthcnt);
-
-    xmlNodePtr pyxser_SerializeExactFloat(PyObject *o, char *name,
-                                          PyListObject *dupItems, xmlDocPtr doc,
-                                          int *depth, int *depthcnt);
-
-    xmlNodePtr pyxser_SerializeComplex(PyObject *o, char *name,
-                                       PyListObject *dupItems, xmlDocPtr doc,
-                                       int *depth, int *depthcnt);
-
-    xmlNodePtr pyxser_SerializeExactComplex(PyObject *o, char *name,
-                                            PyListObject *dupItems, xmlDocPtr doc,
-                                            int *depth, int *depthcnt);
+    xmlNodePtr pyxser_SerializeInt(PyxSerializationArgsPtr args);
+    xmlNodePtr pyxser_SerializeExactInt(PyxSerializationArgsPtr args);
+    xmlNodePtr pyxser_SerializeBoolean(PyxSerializationArgsPtr args);
+    xmlNodePtr pyxser_SerializeLong(PyxSerializationArgsPtr args);
+    xmlNodePtr pyxser_SerializeFloat(PyxSerializationArgsPtr args);
+    xmlNodePtr pyxser_SerializeExactFloat(PyxSerializationArgsPtr args);
+    xmlNodePtr pyxser_SerializeComplex(PyxSerializationArgsPtr args);
+    xmlNodePtr pyxser_SerializeExactComplex(PyxSerializationArgsPtr args);
 
     PyObject *pyxunser_SerializeInt(PyxSerDeserializationArgsPtr obj);
     PyObject *pyxunser_SerializeExactInt(PyxSerDeserializationArgsPtr obj);
