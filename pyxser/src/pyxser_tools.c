@@ -162,31 +162,31 @@ xmlDtdPtr pyxser_dtd_c14n_object = (xmlDtdPtr)NULL;
 
 const PythonTypeSerialize serxConcreteTypes[] = {
 	/* Numeric Types */
-	{1, pyxserInt_Check, pyxser_SerializeInt},
 	{1, pyxserInt_CheckExact, pyxser_SerializeExactInt},
-	{1, pyxserBool_Check, pyxser_SerializeBoolean},
+	{1, pyxserInt_Check, pyxser_SerializeInt},
 	{1, pyxserLong_CheckExact, pyxser_SerializeLong},
-	{1, pyxserFloat_Check, pyxser_SerializeFloat},
+	{1, pyxserBool_Check, pyxser_SerializeBoolean},
 	{1, pyxserFloat_CheckExact, pyxser_SerializeExactFloat},
-	{1, pyxserComplex_Check, pyxser_SerializeComplex},
+	{1, pyxserFloat_Check, pyxser_SerializeFloat},
 	{1, pyxserComplex_CheckExact, pyxser_SerializeExactComplex},
+	{1, pyxserComplex_Check, pyxser_SerializeComplex},
 	/* Strings */
 	{1, pyxserString_Check, pyxser_SerializeString},
 	{1, pyxserString_CheckExact, pyxser_SerializeExactString},
-	{1, pyxserUnicode_Check, pyxser_SerializeUnicode},
 	{1, pyxserUnicodeExact_CheckExact, pyxser_SerializeExactUnicode},
-	{1, pyxserBuffer_Check, pyxser_SerializeBuffer},
+	{1, pyxserUnicode_Check, pyxser_SerializeUnicode},
+	/* {1, pyxserBuffer_Check, pyxser_SerializeBuffer}, */
 	/* Tuples */
 	{1, pyxserTuple_Check, pyxser_SerializeTuple},
 	/* Lists */
 	{1, pyxserList_Check, pyxser_SerializeList},
 	/* Dictionaries */
 	{1, pyxserDict_Check, pyxser_SerializeDict},
+	/* Files */
 #if 0 /* I near future, according to user proposals we will
          join a better representation of those objects */
-	/* Files */
-	{1, pyxserFile_Check, pyxser_SerializeFile},
 	{1, pyxserFile_CheckExact, pyxser_SerializeExactFile},
+	{1, pyxserFile_Check, pyxser_SerializeFile},
 	/* Instrospection */
 	{1, pyxserInstance_Check, pyxser_SerializeInstance},
 	{1, pyxserFunction_Check, pyxser_SerializeFunction},
