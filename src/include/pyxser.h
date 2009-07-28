@@ -118,6 +118,7 @@ extern "C" {
 #include "include/pyxser_strings.h"
 #include "include/pyxser_collections.h"
 #include "include/pyxser_tools.h"
+#include "include/pyxser_file.h"
 
     extern const char msg_non_object[];
     extern const char msg_non_method[];
