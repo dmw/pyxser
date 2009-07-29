@@ -280,8 +280,6 @@ pyxser_SerializeXml(PyxSerializationArgsPtr args)
 	xmlNodePtr *xmlRootNode = (xmlNodePtr *)NULL;
 
 	xmlAttrPtr pyxserNsXml = (xmlAttrPtr)NULL;
-	xmlAttrPtr pyxserNsXsi = (xmlAttrPtr)NULL;
-	xmlAttrPtr pyxserNsXsd = (xmlAttrPtr)NULL;
 
 	xmlAttrPtr pyxserVersion = (xmlAttrPtr)NULL;
 	xmlAttrPtr pyxserType = (xmlAttrPtr)NULL;
@@ -317,16 +315,6 @@ pyxser_SerializeXml(PyxSerializationArgsPtr args)
 			pyxserNsXml = xmlNewProp(*rootNode,
                                      BAD_CAST pyxser_xml_attr_xml_ns,
                                      BAD_CAST pyxser_xml_attr_ns);
-
-#if 0
-			pyxserNsXsi = xmlNewProp(*rootNode,
-                                     BAD_CAST pyxser_xml_attr_xml_xsi,
-                                     BAD_CAST pyxser_xml_attr_xml_xsi_value);
-
-			pyxserNsXsd = xmlNewProp(*rootNode,
-                                     BAD_CAST pyxser_xml_attr_xml_xloc,
-                                     BAD_CAST pyxser_xml_attr_xml_xloc_value);
-#endif
 
 			pyxserVersion = xmlNewProp(*rootNode,
                                        BAD_CAST pyxser_xml_attr_version,
@@ -1564,6 +1552,7 @@ pyxser_SearchObjectInMain(const char *name)
 	PyObject *currentKey = (PyObject *)NULL;
 	PyObject *dictKeys = (PyObject *)NULL;
 	PyObject *ct = (PyObject *)NULL;
+    char *ck = (char *)NULL;
 	int counter = 0;
 	long tupleSize = 0;
 	if (PYTHON_IS_NONE(dictMod)) {
@@ -1576,16 +1565,17 @@ pyxser_SearchObjectInMain(const char *name)
 	}
 	for (counter = 0; counter < tupleSize; counter++) {
 		currentKey = PyList_GetItem(dictKeys, counter);
-		if ((strncmp(PyString_AS_STRING(currentKey),
-					 type_main,
-					 strlen(type_main))) == 0) {
-			item = PyDict_GetItem(dictMod, currentKey);
-			if (PYTHON_IS_NOT_NONE(item)) {
-				ct = (PyObject *)pyxser_SearchModuleType(item,
-                                                         name);
-                Py_XDECREF(item);
-			}
-		}
+        ck = PyString_AS_STRING(currentKey);
+        if (ck != (char *)NULL) {
+            if ((strncmp(ck, type_main, strlen(type_main))) == 0) {
+                item = PyDict_GetItem(dictMod, currentKey);
+                if (PYTHON_IS_NOT_NONE(item)) {
+                    ct = (PyObject *)pyxser_SearchModuleType(item,
+                                                             name);
+                    Py_XDECREF(item);
+                }
+            }
+        }
 	}
     Py_XDECREF(dictKeys);
 	return ct;

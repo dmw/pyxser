@@ -267,7 +267,7 @@ pyxunser_SerializeExactUnicode(PyxSerDeserializationArgsPtr obj)
 PyObject *
 pyxunser_SerializeBuffer(PyxSerDeserializationArgsPtr obj)
 {
-    return obj;
+    return Py_None;
 }
 
 static xmlChar *
