@@ -33,6 +33,12 @@ import pyxser
 import testpkg.sample
 from guppy import hpy
 
+class TestTea():
+    prop_x = None
+    def __init__(self, w):
+        self.prop_x = w
+
+
 def display_heap(hp):
     print hp
     c = 10
@@ -90,6 +96,7 @@ def test_normal(test):
 
     except Exception, e:
         print "-" * 60
+        print e
         traceback.print_exc(file=sys.stdout)
         print "-" * 60
 
@@ -196,6 +203,7 @@ def test_unicode_c14n(test):
 
 if __name__ == "__main__":
     h = hpy()
+
     another = testpkg.sample.TestAnotherObject()
     another.first_element = 123
     another.second_element = 456

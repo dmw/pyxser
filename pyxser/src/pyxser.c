@@ -142,6 +142,7 @@ PyObject *invalid_argument_exception;
 PyObject *pyxser_version_obj = (PyObject *)NULL;
 PyObject *pyxser_author_obj = (PyObject *)NULL;
 PyObject *pyxser_site_obj = (PyObject *)NULL;
+PyObject *pyxser_doc_obj = (PyObject *)NULL;
 PyObject *pyxstr_dtd = (PyObject *)NULL;
 PyObject *pyxstr_dtd_c14n = (PyObject *)NULL;
 PyObject *pyxstr_xsd = (PyObject *)NULL;
@@ -155,6 +156,16 @@ typedef struct pyxser_encodings_s {
     const char *enc_f;
     const char *enc_t;
 } pyxser_encodings_t;
+
+
+static const char pyxser_module_doc[] = \
+    "This module serializes Python Objects into XML. It uses a model\n"
+    "based serialization. The serialization model is written under\n"
+    "a XML Schema definition and Document Type Definition (DTD).\n"
+    "\n"
+    "It have one known bug, it can not serialize and deserialize\n"
+    "objects that has been declared inside teh __main__ module.\n"
+    "\n";
 
 static const char serialize_documentation[] = \
     "Uses the next keyword argumens:\n"
@@ -182,8 +193,6 @@ static const char serializec14n_documentation[] = \
     "   obj     ->      python object to serialize\n"
     "   depth   ->      node navigation depth\n"
     "                   [optional, default 50]\n\n"
-    "   exc     ->      exclusive canonization\n"
-    "                   [optional, default 0 (false)]\n\n"
     "   com     ->      with comments\n\n"
     "                   [optional, default 0 (false)]\n\n"
     "Same as serialize(), but uses C14N canonization, to use exclusive\n"
@@ -205,8 +214,6 @@ static const char serializec14n_documentation_strict[] = \
     "   obj     ->      python object to serialize\n"
     "   depth   ->      node navigation depth\n"
     "                   [optional, default 50]\n\n"
-    "   exc     ->      exclusive canonization\n"
-    "                   [optional, default 0 (false)]\n\n"
     "   com     ->      with comments\n\n"
     "                   [optional, default 0 (false)]\n\n"
     "Same as serialize_c14n(), but uses C14N canonization in a strict\n"
@@ -418,6 +425,10 @@ initpyxser(void)
     pyxser_site_obj = PyString_FromString(pyxser_ext_site);
     PyModule_AddObject(m, "__site__", pyxser_site_obj);
 
+    /* we add the site */
+    pyxser_doc_obj = PyString_FromString(pyxser_module_doc);
+    PyModule_AddObject(m, "__doc__", pyxser_doc_obj);
+
     LIBXML_TEST_VERSION;
 
     xmlInitParser();
@@ -576,7 +587,7 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
     sargs.rootNode = &rootNode;
     sargs.currentNode = &rootNode;
     sargs.dupSrcItems = &dupItems;
-    sargs.enc = pyxser_xml_encoding;
+    sargs.enc = (char *)pyxser_xml_encoding;
     sargs.depth = &py_depth;
     sargs.depthcnt = &py_depth_cnt;
 
@@ -670,7 +681,7 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
     sargs.rootNode = &rootNode;
     sargs.currentNode = &rootNode;
     sargs.dupSrcItems = &dupItems;
-    sargs.enc = pyxser_xml_encoding;
+    sargs.enc = (char *)pyxser_xml_encoding;
     sargs.depth = &py_depth;
     sargs.depthcnt = &py_depth_cnt;
 
@@ -868,7 +879,7 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
     sargs.rootNode = &rootNode;
     sargs.currentNode = &rootNode;
     sargs.dupSrcItems = &dupItems;
-    sargs.enc = pyxser_xml_encoding;
+    sargs.enc = (char *)pyxser_xml_encoding;
     sargs.depth = &py_depth;
     sargs.depthcnt = &py_depth_cnt;
 
@@ -965,7 +976,7 @@ u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
     sargs.rootNode = &rootNode;
     sargs.currentNode = &rootNode;
     sargs.dupSrcItems = &dupItems;
-    sargs.enc = pyxser_xml_encoding;
+    sargs.enc = (char *)pyxser_xml_encoding;
     sargs.depth = &py_depth;
     sargs.depthcnt = &py_depth_cnt;
 
