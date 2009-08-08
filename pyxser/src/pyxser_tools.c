@@ -251,6 +251,27 @@ const PythonTypeDeserialize unserxConcreteTypes[] = {
 };
 
 
+inline void
+pyxser_SetupXmlRootElement(xmlNodePtr *rootNode, const char *objnam)
+{
+	xmlAttrPtr pyxserNsXml = (xmlAttrPtr)NULL;
+	xmlAttrPtr pyxserVersion = (xmlAttrPtr)NULL;
+	xmlAttrPtr pyxserType = (xmlAttrPtr)NULL;
+
+    pyxserNsXml = xmlNewProp(*rootNode,
+                             BAD_CAST pyxser_xml_attr_xml_ns,
+                             BAD_CAST pyxser_xml_attr_ns);
+
+    pyxserVersion = xmlNewProp(*rootNode,
+                               BAD_CAST pyxser_xml_attr_version,
+                               BAD_CAST pyxser_xml_version);
+
+    pyxserType = xmlNewProp(*rootNode,
+                            BAD_CAST pyxser_xml_attr_type,
+                            BAD_CAST objnam);
+}
+
+
 xmlNodePtr
 pyxser_SerializeXml(PyxSerializationArgsPtr args)
 {
@@ -279,11 +300,6 @@ pyxser_SerializeXml(PyxSerializationArgsPtr args)
 	xmlNodePtr newSerializedNode = (xmlNodePtr)NULL;
 	xmlNodePtr *xmlRootNode = (xmlNodePtr *)NULL;
 
-	xmlAttrPtr pyxserNsXml = (xmlAttrPtr)NULL;
-
-	xmlAttrPtr pyxserVersion = (xmlAttrPtr)NULL;
-	xmlAttrPtr pyxserType = (xmlAttrPtr)NULL;
-
 	char *objnam = (char *)NULL;
 	long listIterator = 0;
 	long listSize = 0;
@@ -311,19 +327,7 @@ pyxser_SerializeXml(PyxSerializationArgsPtr args)
 			*rootNode = xmlNewDocNode(doc, pyxser_GetDefaultNs(),
 									  BAD_CAST pyxser_xml_element_object,
 									  NULL);
-
-			pyxserNsXml = xmlNewProp(*rootNode,
-                                     BAD_CAST pyxser_xml_attr_xml_ns,
-                                     BAD_CAST pyxser_xml_attr_ns);
-
-			pyxserVersion = xmlNewProp(*rootNode,
-                                       BAD_CAST pyxser_xml_attr_version,
-                                       BAD_CAST pyxser_xml_version);
-
-			pyxserType = xmlNewProp(*rootNode,
-									BAD_CAST pyxser_xml_attr_type,
-									BAD_CAST objnam);
-
+            pyxser_SetupXmlRootElement(rootNode, objnam);
 			pyxser_AddModuleAttr(o, *rootNode);
 			currentNode = rootNode;
 			xmlRootNode = rootNode;
@@ -526,6 +530,41 @@ pyxser_UnserializeElement(PyObject *ct, PyObject **current,
     return unser;
 }
 
+inline void
+pyxser_RunDeserializationMachine(xmlNodePtr ron,
+                                 PyObject **current,
+                                 PyxSerDeserializationArgsPtr obj)
+{
+    PyObject *unser;
+	PythonTypeDeserialize *machine = (PythonTypeDeserialize *)unserxConcreteTypes;
+    char *attr_name;
+    int c, ctrl;
+
+    c = 0;
+    while (machine[c].available == 1
+           && ron != (xmlNodePtr)NULL) {
+        if ((machine[c].check(ron)) == 1) {
+            unser = machine[c].deserializer(obj);
+            if (PYTHON_IS_NONE(unser)) {
+                c++;
+                continue;
+            }
+            attr_name = pyxser_ExtractPropertyName(
+                pyxser_xml_attr_name,
+                ron);
+            if (attr_name != (char *)NULL) {
+                ctrl = PyObject_SetAttrString(*current,
+                                              attr_name,
+                                              unser);
+                PYXSER_XMLFREE(attr_name);
+                Py_XDECREF(unser);
+                break;
+            }
+        }
+        c++;
+    }
+}
+
 PyObject *
 pyxser_UnserializeBlock(PyxSerDeserializationArgsPtr obj)
 {
@@ -539,10 +578,8 @@ pyxser_UnserializeBlock(PyxSerDeserializationArgsPtr obj)
 	xmlNodePtr ron = (xmlNodePtr)NULL;
 	xmlNodePtr cacheCurrentNode = (xmlNodePtr)NULL;
 
-	PythonTypeDeserialize *machine = (PythonTypeDeserialize *)unserxConcreteTypes;
-
 	char *attr_name = (char *)NULL;
-	int c = 0, ctrl = 0;
+	int ctrl = 0;
 	char *n_type = (char *)NULL;
 	char *n_module = (char *)NULL;
 	char *n_id = (char *)NULL;
@@ -562,29 +599,13 @@ pyxser_UnserializeBlock(PyxSerDeserializationArgsPtr obj)
 				|| (strncmp((char *)ron->name,
 							(char *)pyxser_xml_element_collection,
 							len_collection))	== 0) {
-				c = 0;
-				while (machine[c].available == 1
-					   && ron != (xmlNodePtr)NULL) {
-					if ((machine[c].check(ron)) == 1) {
-						unser = machine[c].deserializer(obj);
-						if (PYTHON_IS_NOT_NONE(unser)) {
-							attr_name = pyxser_ExtractPropertyName(
-								pyxser_xml_attr_name,
-								ron);
-							if (attr_name != (char *)NULL) {
-								ctrl = PyObject_SetAttrString(*current,
-															  attr_name, unser);
-                                PYXSER_XMLFREE(attr_name);
-                                Py_XDECREF(unser);
- 								break;
-							}
-						}
-					}
-					c++;
-				}
+
+                pyxser_RunDeserializationMachine(ron, current, obj);
+
 			} else if ((strncmp((char *)ron->name,
 								(char *)pyxser_xml_element_object,
 								len_object)) == 0) {
+
 				n_type = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_type);
 				n_module = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_module);
 				n_id = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_id);
