@@ -140,6 +140,15 @@ inline PyObject *pyxser_UnserializeElement(PyObject *ct,
                                            const char *n_id,
                                            PyxSerDeserializationArgsPtr obj);
 
+void pyxser_CreateDocument(xmlDocPtr doc, xmlDocPtr *docptr,
+                           xmlNodePtr *rootNode,
+                           xmlNodePtr *xmlRootNode,
+                           const char *enc,
+                           PyObject *o,
+                           char *objnam,
+                           xmlNodePtr *currentNode);
+
+
 void pyxser_validity_exception(void *ctx, const char *msg, va_list args);
 
 
@@ -272,6 +281,30 @@ pyxser_SetupXmlRootElement(xmlNodePtr *rootNode, const char *objnam)
 }
 
 
+void
+pyxser_CreateDocument(xmlDocPtr doc, xmlDocPtr *docptr,
+                      xmlNodePtr *rootNode,
+                      xmlNodePtr *xmlRootNode,
+                      const char *enc,
+                      PyObject *o,
+                      char *objnam,
+                      xmlNodePtr *currentNode)
+{
+    doc = xmlNewDoc(BAD_CAST pyxser_xml_version);
+    doc->encoding = BAD_CAST xmlStrdup((BAD_CAST enc));
+    doc->charset = xmlParseCharEncoding(enc);
+    *docptr = doc;
+    *rootNode = xmlNewDocNode(doc, pyxser_GetDefaultNs(),
+                              BAD_CAST pyxser_xml_element_object,
+                              NULL);
+    pyxser_SetupXmlRootElement(rootNode, objnam);
+    pyxser_AddModuleAttr(o, *rootNode);
+    currentNode = rootNode;
+    xmlRootNode = rootNode;
+    xmlDocSetRootElement(doc, *xmlRootNode);
+}
+
+
 xmlNodePtr
 pyxser_SerializeXml(PyxSerializationArgsPtr args)
 {
@@ -316,22 +349,12 @@ pyxser_SerializeXml(PyxSerializationArgsPtr args)
 		if (objnam == (char *)NULL) {
 			return (xmlNodePtr)NULL;
 		}
-		if (docptr != (xmlDocPtr *)NULL &&
-			*docptr == (xmlDocPtr)NULL
-			&& rootNode != (xmlNodePtr *)NULL
-			&& *rootNode == (xmlNodePtr)NULL) {
-			doc = xmlNewDoc(BAD_CAST pyxser_xml_version);
-            doc->encoding = BAD_CAST xmlStrdup((BAD_CAST enc));
-            doc->charset = xmlParseCharEncoding(enc);
-			*docptr = doc;
-			*rootNode = xmlNewDocNode(doc, pyxser_GetDefaultNs(),
-									  BAD_CAST pyxser_xml_element_object,
-									  NULL);
-            pyxser_SetupXmlRootElement(rootNode, objnam);
-			pyxser_AddModuleAttr(o, *rootNode);
-			currentNode = rootNode;
-			xmlRootNode = rootNode;
-			xmlDocSetRootElement(doc, *xmlRootNode);
+		if (docptr != (xmlDocPtr *)NULL
+            && *docptr == (xmlDocPtr)NULL
+            && rootNode != (xmlNodePtr *)NULL
+            && *rootNode == (xmlNodePtr)NULL) {
+            pyxser_CreateDocument(doc, docptr, rootNode, xmlRootNode,
+                                  enc, o, objnam, currentNode);
 		}
 		pyxser_AddIdentifier(o, *currentNode);
 		lstItems = PyObject_GetAttrString(o, pyxser_attr_dict);
@@ -536,7 +559,8 @@ pyxser_RunDeserializationMachine(xmlNodePtr ron,
                                  PyxSerDeserializationArgsPtr obj)
 {
     PyObject *unser;
-	PythonTypeDeserialize *machine = (PythonTypeDeserialize *)unserxConcreteTypes;
+	PythonTypeDeserialize *machine =
+        (PythonTypeDeserialize *)unserxConcreteTypes;
     char *attr_name;
     int c, ctrl;
 
@@ -616,29 +640,15 @@ pyxser_UnserializeBlock(PyxSerDeserializationArgsPtr obj)
 					&& n_module != (char *)NULL
 					&& n_id != (char *)NULL
 					&& unser == (PyObject *)NULL) {
-                    ct = pyxser_SearchTypesInModules(n_module,
-                                                     n_type,
-                                                     modules);
+                    ct = pyxser_SearchTypesInModules(n_module, n_type, modules);
 					if (PYTHON_IS_NOT_NONE(ct)) {
-                        unser = pyxser_UnserializeElement(ct,
-                                                          current,
-                                                          dups,
-                                                          cacheCurrent,
-                                                          cacheCurrentNode,
-                                                          ron,
-                                                          n_id,
-                                                          obj);
+                        unser = pyxser_UnserializeElement(ct, current, dups, cacheCurrent,
+                                                          cacheCurrentNode, ron, n_id, obj);
 					} else {
 						ct = pyxser_SearchObjectInMain(n_type);
 						if (PYTHON_IS_NOT_NONE(ct)) {
-                            unser = pyxser_UnserializeElement(ct,
-                                                              current,
-                                                              dups,
-                                                              cacheCurrent,
-                                                              cacheCurrentNode,
-                                                              ron,
-                                                              n_id,
-                                                              obj);
+                            unser = pyxser_UnserializeElement(ct, current, dups, cacheCurrent,
+                                                              cacheCurrentNode, ron, n_id, obj);
                         }
 					}
                     PYXSER_XMLFREE(n_type);
@@ -646,8 +656,7 @@ pyxser_UnserializeBlock(PyxSerDeserializationArgsPtr obj)
                     PYXSER_XMLFREE(n_id);
                     PYXSER_XMLFREE(n_ref);
 				} else {
-					attr_name = pyxser_ExtractPropertyName(pyxser_xml_attr_name,
-                                                           ron);
+					attr_name = pyxser_ExtractPropertyName(pyxser_xml_attr_name, ron);
 					if (attr_name != (char *)NULL
 						&& PYTHON_IS_NOT_NONE(unser)) {
 						ctrl = PyObject_SetAttrString(*current, attr_name, unser);
@@ -1737,7 +1746,7 @@ pyxser_GetPyxserDTDC14N()
 {
 	if (pyxser_dtd_c14n_object == (xmlDtdPtr)NULL) {
 		pyxser_dtd_c14n_object = xmlParseDTD(BAD_CAST NULL,
-										BAD_CAST pyxser_xml_dtd_c14n_location);
+                                             BAD_CAST pyxser_xml_dtd_c14n_location);
 	}
 	return pyxser_dtd_c14n_object;
 }
@@ -1894,7 +1903,6 @@ pyxser_ValidateDocumentXSD(xmlDocPtr doc)
 int
 pyxser_ValidateDocumentXSDC14N(xmlDocPtr doc)
 {
-    /* remember scheme? software configuration management? xD */
     xmlDocPtr pyxser_xsd_c14n_doc = (xmlDocPtr)NULL;
     xmlSchemaPtr pyxser_xsd_c14n_object = (xmlSchemaPtr)NULL;
     xmlSchemaParserCtxtPtr pyxser_xsd_parser_c14n_object = (xmlSchemaParserCtxtPtr)NULL;
