@@ -89,7 +89,7 @@ pyxser_mod = Extension('pyxser',
                        **pyxser_params)
 
 setup (name = 'pyxser',
-       version = '1.0r',
+       version = '1.2r',
        description = 'Python XML Serialization Extension',
        author = 'Daniel Molina Wegener',
        author_email = 'dmw@coder.cl',
