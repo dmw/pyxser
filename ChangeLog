@@ -66,7 +66,10 @@
 	* Code cleanup with function arguments (C code).
 	* All changes seems to be transparent for previous versions.
 
+1.2r (2009.08.23):
 
-
-
-
+	Daniel Molina Wegener <dmw@coder.cl>
+	* Added encoded serialization of Unicode strings by using
+	the user defined encoding as is passed to the serialization
+	functions as enc parameter
+	* Refactored some functions to allow more ordered code.
