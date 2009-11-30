@@ -73,3 +73,19 @@
 	the user defined encoding as is passed to the serialization
 	functions as enc parameter
 	* Refactored some functions to allow more ordered code.
+
+1.3r (2009.11.30):
+
+	Daniel Molina Wegener <dmw@coder.cl>
+	* pyxser_tools.c: Removed bug concerning deserialization of
+	collection elements; pyxser now can handle extension declared
+	classes, such as boost::python ones --- thanks to the
+	suggestions made by Daniel Filonik.
+	* pyxser.c: Added /selector/ as optional argument used as
+	callback to select object attributes to being serialized.
+	* pyxser_string.c: Removed bug concerning unicode serialization.
+
+	Thanks pyxser users for your feedback...
+
+
+
