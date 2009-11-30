@@ -89,6 +89,7 @@ extern "C" {
         PyObject **item;
         PyObject **ck;
         PyObject **o;
+        PyObject **selector;
         xmlDocPtr *docptr;
         xmlNodePtr *rootNode;
         xmlNodePtr *currentNode;

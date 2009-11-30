@@ -31,7 +31,18 @@ import traceback
 
 import pyxser
 import testpkg.sample
-from guppy import hpy
+import inspect
+#from guppy import hpy
+
+def sel_filter(v):
+    r = ((not callable(v[1])) and (not v[0].startswith("__")))
+    return r
+
+def sel(o):
+    print repr(o)
+    r = dict(filter(sel_filter, inspect.getmembers(o)))
+    print repr(r)
+    return r
 
 class TestTea():
     prop_x = None
@@ -50,6 +61,7 @@ def display_heap(hp):
 
 def test_normal(test):
     try:
+        print "-----8<----------8<----------8<----------8<----------8<----------8<----- test_normal()"
         print "First Object:\n" + repr(test) + "\n\n"
 
         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2)
@@ -100,9 +112,66 @@ def test_normal(test):
         traceback.print_exc(file=sys.stdout)
         print "-" * 60
 
+def test_selector(test):
+    try:
+        print "-----8<----------8<----------8<----------8<----------8<----------8<----- test_selector()"
+        print "First Object:\n" + repr(test) + "\n\n"
+
+        x = sel(test)
+        print repr(x)
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2, selector = sel)
+        print "Serilized Object:\n", serialized
+        print "Serilized Object Validation:\n", \
+              pyxser.validate(obj = serialized, enc = "utf-8"), \
+              pyxser.validate_dtd(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+        print "Unserialized Object (d.2):\n" + repr(unserialized) + "\n\n"
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 3, selector = sel)
+        print "Serilized Object:\n" + serialized
+        print "Serilized Object Validation:\n", \
+              pyxser.validate(obj = serialized, enc = "utf-8"), \
+              pyxser.validate_dtd(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+        print "Unserialized Object (d.3):\n" + repr(unserialized) + "\n\n"
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 4, selector = sel)
+        print "Serilized Object:\n" + serialized
+        print "Serilized Object Validation:\n", \
+              pyxser.validate(obj = serialized, enc = "utf-8"), \
+              pyxser.validate_dtd(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+        print "Unserialized Object (d.4):\n" + repr(unserialized) + "\n\n"
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 5, selector = sel)
+        print "Serilized Object:\n" + serialized
+        print "Serilized Object Validation:\n", \
+              pyxser.validate(obj = serialized, enc = "utf-8"), \
+              pyxser.validate_dtd(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+        print "Unserialized Object (d.5):\n" + repr(unserialized) + "\n\n"
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0, selector = sel)
+        print "Serilized Object:\n" + serialized
+        print "Serilized Object Validation:\n", \
+              pyxser.validate(obj = serialized, enc = "utf-8"), \
+              pyxser.validate_dtd(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+        print "Unserialized Object (d.0):\n" + repr(unserialized) + "\n\n"
+
+        pyxser.xmlcleanup()
+
+    except Exception, e:
+        print "-" * 60
+        print e
+        traceback.print_exc(file=sys.stdout)
+        print "-" * 60
+
 def test_normal_c14n(test):
     try:
-        print "---8<--- C14N ---8<---"
+        print "-----8<----------8<----------8<----------8<----------8<----------8<----- test_normal_c14n()"
+        print "First Object:\n" + repr(test) + "\n\n"
         serialized = pyxser.serialize_c14n(obj = test, depth = 0, com = 0)
         print "Serilized Object:\n" + serialized
         print "First Object:\n" + repr(test) + "\n\n"
@@ -126,6 +195,7 @@ def test_normal_c14n(test):
 
 def test_unicode(test):
     try:
+        print "-----8<----------8<----------8<----------8<----------8<----------8<----- test_unicode()"
         print "First Object:\n" + repr(test) + "\n\n"
 
         serialized = pyxser.u_serialize(obj = test, enc = "utf-8", depth = 2)
@@ -177,7 +247,7 @@ def test_unicode(test):
 
 def test_unicode_c14n(test):
     try:
-        print "---8<--- C14N ---8<---"
+        print "-----8<----------8<----------8<----------8<----------8<----------8<----- test_unicode_c14n()"
         serialized = pyxser.u_serialize_c14n(obj = test, depth = 0, com = 1)
         print "Serilized Object:\n" + serialized.encode("latin1")
         print "First Object:\n" + repr(test) + "\n\n"
@@ -202,7 +272,7 @@ def test_unicode_c14n(test):
 
 
 if __name__ == "__main__":
-    h = hpy()
+#    h = hpy()
 
     another = testpkg.sample.TestAnotherObject()
     another.first_element = 123
@@ -241,6 +311,7 @@ if __name__ == "__main__":
     test_normal_c14n(test)
     test_unicode(test)
     test_unicode_c14n(test)
+    test_selector(test)
 
     print pyxser.getdtd()
     print pyxser.getdtd_c14n()
@@ -249,6 +320,6 @@ if __name__ == "__main__":
 
     pyxser.xmlcleanup()
 
-    hps = h.heapu()
-    display_heap(hps)
+#    hps = h.heapu()
+#    display_heap(hps)
 

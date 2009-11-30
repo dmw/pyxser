@@ -318,6 +318,8 @@ pyxser_SerializeXml(PyxSerializationArgsPtr args)
     xmlNodePtr *currentNodeOld = args->currentNode;
 
     PyListObject *dupSrcItems = *args->dupSrcItems;
+    PyObject *select = *args->selector;
+    PyObject *arglist = (PyObject *)NULL;
     const char *enc = args->enc;
     int *depth = args->depth;
     int *depthcnt = args->depthcnt;
@@ -357,7 +359,16 @@ pyxser_SerializeXml(PyxSerializationArgsPtr args)
                                   enc, o, objnam, currentNode);
 		}
 		pyxser_AddIdentifier(o, *currentNode);
-		lstItems = PyObject_GetAttrString(o, pyxser_attr_dict);
+
+        if (PYTHON_IS_NONE(select)) {
+            lstItems = PyObject_GetAttrString(o, pyxser_attr_dict);
+        } else {
+            /* selector must return NULL if there are errors... */
+            arglist = Py_BuildValue("(O)", o);
+            lstItems = PyObject_CallObject(select, arglist);
+            Py_XDECREF(arglist);
+        }
+
 		if (PYTHON_IS_NONE(lstItems)
 			|| (PYTHON_IS_NOT_NONE(lstItems)
 				&& (long)(PyDict_Size((PyObject *)lstItems)) <= 0)) {
@@ -527,9 +538,8 @@ pyxser_UnserializeElement(PyObject *ct, PyObject **current,
     PyObject *ndict = (PyObject *)NULL;
     char *attr_name = (char *)NULL;
     int ctrl = 0;
-    ndict = PyDict_New();
-    unser = PyInstance_NewRaw(ct, ndict);
-    Py_XDECREF(ndict);
+    unser = PyObject_CallFunctionObjArgs(ct, NULL);
+
     attr_name = pyxser_ExtractPropertyName(pyxser_xml_attr_name,
                                            ron);
     if (PYTHON_IS_NOT_NONE(unser)) {
@@ -565,6 +575,9 @@ pyxser_RunDeserializationMachine(xmlNodePtr ron,
     int c, ctrl;
 
     c = 0;
+    if (PYTHON_IS_NONE(*current)) {
+        return;
+    }
     while (machine[c].available == 1
            && ron != (xmlNodePtr)NULL) {
         if ((machine[c].check(ron)) == 1) {
@@ -800,8 +813,8 @@ pyxser_SearchModuleType(PyObject *mod, const char *name)
 		|| name == (const char *)NULL) {
 		return Py_None;
 	}
-	objKeys = PyObject_GetAttrString(mod, pyxser_attr_all);
 	dict = PyObject_GetAttrString(mod, pyxser_attr_dict);
+	objKeys = PyDict_Keys(dict);
 	if (PYTHON_IS_NOT_NONE(objKeys)
 		&& (long)(PyList_Size((PyObject *)objKeys)) > 0
 		&& PYTHON_IS_NOT_NONE(dict)) {
@@ -1602,7 +1615,6 @@ pyxser_SearchObjectInMain(const char *name)
                 if (PYTHON_IS_NOT_NONE(item)) {
                     ct = (PyObject *)pyxser_SearchModuleType(item,
                                                              name);
-                    Py_XDECREF(item);
                 }
             }
         }
