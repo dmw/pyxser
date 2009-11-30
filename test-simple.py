@@ -31,7 +31,7 @@ import traceback
 
 import pyxser
 import testpkg.sample
-from guppy import hpy
+#from guppy import hpy
 
 def display_heap(hp):
     print hp
@@ -44,7 +44,7 @@ def display_heap(hp):
 
 
 if __name__ == "__main__":
-    h = hpy()
+#    h = hpy()
     another = testpkg.sample.TestAnotherObject()
     another.first_element = 123
     another.second_element = 456
@@ -86,6 +86,6 @@ if __name__ == "__main__":
         traceback.print_exc(file=sys.stdout)
         print "-" * 60
 
-    hps = h.heapu()
-    display_heap(hps)
+#    hps = h.heapu()
+#    display_heap(hps)
 
