@@ -32,6 +32,16 @@ import traceback
 import pyxser
 import testpkg.sample
 
+def sel_filter(v):
+    r = ((not callable(v[1])) and (not v[0].startswith("__")))
+    return r
+
+def sel(o):
+    print repr(o)
+    r = dict(filter(sel_filter, inspect.getmembers(o)))
+    print repr(r)
+    return r
+
 def display_heap(hp):
     print hp
     c = 10
@@ -77,6 +87,44 @@ def test_normal(test):
 
     except Exception, e:
         print "-" * 60
+        traceback.print_exc(file=sys.stdout)
+        print "-" * 60
+
+def test_selector(test):
+    try:
+        x = sel(test)
+        print repr(x)
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2, selector = sel)
+        pyxser.validate(obj = serialized, enc = "utf-8")
+        pyxser.validate_dtd(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 3, selector = sel)
+        pyxser.validate(obj = serialized, enc = "utf-8")
+        pyxser.validate_dtd(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 4, selector = sel)
+        pyxser.validate(obj = serialized, enc = "utf-8")
+        pyxser.validate_dtd(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 5, selector = sel)
+        pyxser.validate(obj = serialized, enc = "utf-8")
+        pyxser.validate_dtd(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0, selector = sel)
+        pyxser.validate(obj = serialized, enc = "utf-8")
+        pyxser.validate_dtd(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+
+        pyxser.xmlcleanup()
+
+    except Exception, e:
+        print "-" * 60
+        print e
         traceback.print_exc(file=sys.stdout)
         print "-" * 60
 

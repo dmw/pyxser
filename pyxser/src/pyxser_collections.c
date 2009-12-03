@@ -113,7 +113,7 @@ pyxser_RunSerializationCol(PyxSerializationArgsPtr args)
                 args->o = &item;
                 args->item = &item;
                 name = (char *)NULL;
-                *args->name = name;
+                args->name = name;
 				newSerNode = currentSerialization.serializer(args);
                 args->o = oold;
                 args->currentNode = currentNodeOld;
