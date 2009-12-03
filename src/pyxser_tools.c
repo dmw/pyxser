@@ -318,7 +318,7 @@ pyxser_SerializeXml(PyxSerializationArgsPtr args)
     xmlNodePtr *currentNodeOld = args->currentNode;
 
     PyListObject *dupSrcItems = *args->dupSrcItems;
-    PyObject *select = *args->selector;
+    PyObject *sel = *args->selector;
     PyObject *arglist = (PyObject *)NULL;
     const char *enc = args->enc;
     int *depth = args->depth;
@@ -360,12 +360,12 @@ pyxser_SerializeXml(PyxSerializationArgsPtr args)
 		}
 		pyxser_AddIdentifier(o, *currentNode);
 
-        if (PYTHON_IS_NONE(select)) {
+        if (PYTHON_IS_NONE(sel)) {
             lstItems = PyObject_GetAttrString(o, pyxser_attr_dict);
         } else {
             /* selector must return NULL if there are errors... */
             arglist = Py_BuildValue("(O)", o);
-            lstItems = PyObject_CallObject(select, arglist);
+            lstItems = PyObject_CallObject(sel, arglist);
             Py_XDECREF(arglist);
         }
 
@@ -539,6 +539,11 @@ pyxser_UnserializeElement(PyObject *ct, PyObject **current,
     char *attr_name = (char *)NULL;
     int ctrl = 0;
     unser = PyObject_CallFunctionObjArgs(ct, NULL);
+    PyErr_Clear();
+    if (PYTHON_IS_NONE(unser)) {
+        ndict = PyDict_New();
+        unser = PyInstance_NewRaw(ct, ndict);
+    }
 
     attr_name = pyxser_ExtractPropertyName(pyxser_xml_attr_name,
                                            ron);
@@ -560,6 +565,7 @@ pyxser_UnserializeElement(PyObject *ct, PyObject **current,
         *(obj->currentNode) = cacheCurrentNode;
         ron = cacheCurrentNode;
     }
+    Py_XDECREF(ndict);
     return unser;
 }
 
@@ -756,8 +762,12 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
                                                      modules);
                     if (PYTHON_IS_NOT_NONE(ct)) {
                         if (*tree == (PyObject *)NULL) {
-                            ndict = PyDict_New();
-                            *tree = PyInstance_NewRaw(ct, ndict);
+                            *tree = PyObject_CallFunctionObjArgs(ct, NULL);
+                            PyErr_Clear();
+                            if (PYTHON_IS_NONE(*tree)) {
+                                ndict = PyDict_New();
+                                *tree = PyInstance_NewRaw(ct, ndict);
+                            }
                             *current = *tree;
                             obj->current = current;
                             obj->tree = tree;
@@ -772,8 +782,12 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
                     ct = pyxser_SearchObjectInMain(n_type);
                     if (PYTHON_IS_NOT_NONE(ct)) {
                         if (*tree == (PyObject *)NULL) {
-                            ndict = PyDict_New();
-                            *tree = PyInstance_NewRaw(ct, ndict);
+                            *tree = PyObject_CallFunctionObjArgs(ct, NULL);
+                            PyErr_Clear();
+                            if (PYTHON_IS_NONE(*tree)) {
+                                ndict = PyDict_New();
+                                *tree = PyInstance_NewRaw(ct, ndict);
+                            }
                             *current = *tree;
                             obj->current = current;
                             obj->tree = tree;
