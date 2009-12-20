@@ -115,10 +115,11 @@ extern "C" {
         PyObject *(*deserializer)(PyxSerDeserializationArgsPtr obj);
     } PythonTypeDeserialize;
 
+#include "include/pyxser_tools.h"
+#include "include/pyxser_serializer.h"
 #include "include/pyxser_numbers.h"
 #include "include/pyxser_strings.h"
 #include "include/pyxser_collections.h"
-#include "include/pyxser_tools.h"
 #include "include/pyxser_file.h"
 
     extern const char msg_non_object[];

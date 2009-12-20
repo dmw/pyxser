@@ -46,22 +46,6 @@ extern "C" {
 
     char *pyxser_GetClassName(PyObject *obj);
 
-    xmlNodePtr pyxser_SerializePrimitiveType(PyxSerializationArgsPtr args);
-
-    xmlNodePtr pyxser_SerializeXml(PyxSerializationArgsPtr args);
-
-    xmlNodePtr pyxser_SerializeXmlNonStd(PyObject *o, xmlDocPtr *docPtr,
-                                         xmlNodePtr *rootNode, xmlNodePtr *currentNode,
-                                         PyListObject *dupSrcItems);
-
-    xmlNodePtr pyxser_RunSerialization(PyxSerializationArgsPtr args);
-
-    PyObject *pyxser_SearchTypesInModules(const char *n_module,
-                                          const char *n_type,
-                                          PyDictObject **modules);
-
-    PyObject *pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj);
-
     PyObject *pyxser_SearchModuleType(PyObject *mod, const char *name);
 
     PyObject *pyxser_GetNonCallableAttributes(PyObject *obj);
