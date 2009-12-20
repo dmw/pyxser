@@ -34,6 +34,7 @@ static const char Id[] = "$Id$";
 #include <libxml/c14n.h>
 
 #include "include/pyxser.h"
+#include "include/pyxser_serializer.h"
 
 #ifdef PYXSER_DEBUG
 #warning USING DEBUG!
