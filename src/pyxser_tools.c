@@ -962,7 +962,7 @@ pyxunserDict_Check(xmlNodePtr node)
 }
 
 xmlNsPtr
-pyxser_GetDefaultNs()
+pyxser_GetDefaultNs(void)
 {
 	if (pyxser_default_ns != (xmlNsPtr)NULL) {
 		return pyxser_default_ns;
@@ -975,7 +975,7 @@ pyxser_GetDefaultNs()
 }
 
 xmlNsPtr
-pyxser_GetXsiNs()
+pyxser_GetXsiNs(void)
 {
 	if (pyxser_xsi_ns != (xmlNsPtr)NULL) {
 		return pyxser_xsi_ns;
@@ -987,7 +987,8 @@ pyxser_GetXsiNs()
 	}
 }
 
-xmlNsPtr pyxser_GetXsdNs()
+xmlNsPtr
+pyxser_GetXsdNs(void)
 {
 	if (pyxser_xsd_ns != (xmlNsPtr)NULL) {
 		return pyxser_xsi_ns;
@@ -1044,6 +1045,7 @@ pyxser_SearchObjectInMain(const char *name)
     Py_XDECREF(dictKeys);
 	return ct;
 }
+
 
 PyObject *
 pyxser_SearchModule(const char *name)
