@@ -40,8 +40,9 @@ static const char Id[] = "$Id$";
 
 PyObject *
 pyxser_TypeMapSearchAndGet(PyObject *tmap, PyObject *tval,
-                           xmlNodePtr ron)
+                           xmlNodePtr node)
 {
+    xmlNodePtr ron;
     PyObject *stype = (PyObject *)NULL;
     PyObject *cb = (PyObject *)NULL;
     PyObject *args = (PyObject *)NULL;
@@ -52,21 +53,31 @@ pyxser_TypeMapSearchAndGet(PyObject *tmap, PyObject *tval,
     if (PYTHON_IS_NONE(tval)) {
         return (PyObject *)NULL;
     }
+    char *tmapc = PyString_AS_STRING(tval);
     cb = PyDict_GetItem(tmap, tval);
     PyErr_Clear();
     if (PYTHON_IS_NONE(cb)) {
         return (PyObject *)NULL;
     }
-    stype = PyString_FromString((char *)ron->content);
-    PyErr_Clear();
-    if (PYTHON_IS_NONE(stype)) {
-        return (PyObject *)NULL;
+	if (node != (xmlNodePtr)NULL) {
+		for (ron = node->children;
+			 ron;
+			 ron = ron->next) {
+			if (ron->type == XML_TEXT_NODE
+				&& ron->content != BAD_CAST NULL) {
+                stype = PyString_FromString((char *)ron->content);
+                PyErr_Clear();
+                if (PYTHON_IS_NONE(stype)) {
+                    return (PyObject *)NULL;
+                }
+                args = Py_BuildValue("(O)", stype);
+                res = PyObject_CallObject(cb, args);
+                Py_XDECREF(args);
+                Py_XDECREF(stype);
+                PyErr_Clear();
+            }
+        }
     }
-    args = PyBuildValue("(O)", stype);
-    res = PyObject_CallObject(cb, args);
-    Py_XDECREF(args);
-    Py_XDECREF(stype);
-    PyErr_Clear();
     return res;
 }
 

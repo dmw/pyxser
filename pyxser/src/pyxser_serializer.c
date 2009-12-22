@@ -349,6 +349,8 @@ pyxser_RunDeserializationMachine(xmlNodePtr ron,
                                  PyxSerDeserializationArgsPtr obj)
 {
     PyObject *unser;
+    char *tvalc;
+    PyObject *tval;
 	PythonTypeDeserialize *machine =
         (PythonTypeDeserialize *)unserxConcreteTypes;
     char *attr_name;
@@ -357,6 +359,25 @@ pyxser_RunDeserializationMachine(xmlNodePtr ron,
     c = 0;
     if (PYTHON_IS_NONE(*current)) {
         return;
+    }
+    tvalc = pyxser_ExtractPropertyName(pyxser_xml_attr_type,
+                                       ron);
+    tval = PyString_FromString(tvalc);
+    unser = pyxser_TypeMapSearchAndGet(obj->typemap, tval, *(obj->currentNode));
+    PYXSER_XMLFREE(tvalc);
+    Py_XDECREF(tval);
+    if (PYTHON_IS_NOT_NONE(unser)) {
+        attr_name = pyxser_ExtractPropertyName(
+            pyxser_xml_attr_name,
+            ron);
+        if (attr_name != (char *)NULL) {
+            ctrl = PyObject_SetAttrString(*current,
+                                          attr_name,
+                                          unser);
+            PYXSER_XMLFREE(attr_name);
+            Py_XDECREF(unser);
+            return;
+        }
     }
     while (machine[c].available == 1
            && ron != (xmlNodePtr)NULL) {
@@ -415,7 +436,7 @@ pyxser_UnserializeBlock(PyxSerDeserializationArgsPtr obj)
 						 len_element)) == 0
 				|| (strncmp((char *)ron->name,
 							(char *)pyxser_xml_element_collection,
-							len_collection))	== 0) {
+							len_collection)) == 0) {
 
                 pyxser_RunDeserializationMachine(ron, current, obj);
 
