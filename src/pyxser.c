@@ -92,7 +92,7 @@ const char pyxser_xml_attr_xml_xsi[] = "xmlns:xsi";
 const char pyxser_xml_attr_xml_xloc[] = "xmlns:schemaLocation";
 
 const char pyxser_xml_version[] = "1.0";
-const char pyxser_ext_version[] = "1.2r";
+const char pyxser_ext_version[] = "1.4r";
 const char pyxser_ext_author[] = "Daniel Molina Wegener <dmw@coder.cl>";
 const char pyxser_ext_site[] = "http://coder.cl/software/pyxser/";
 
@@ -270,6 +270,7 @@ static const char deserialize_documentation[] = \
     "Uses the next keyword argumens:\n"
     "   obj     ->      the serialized python object\n"
     "   enc     ->      xml serialization encoding\n"
+    "   typemap ->      the custom type map\n"
 	"Takes an XML string as arguments to deserialize it and be converted\n"
 	"back to it's original Python object. The deserialization algorithm\n"
 	"supports automatic module loading, but searches for them in the module\n"
@@ -280,6 +281,11 @@ static const char deserialize_documentation[] = \
 	"references are not supported because the first ocurrence of any object\n"
 	"it's serialized once and then referenced, but not referenced and then\n"
 	"serilized.\n\n"
+    "The typemap argument, holds a dictionary with {'type': callback_contructor}\n"
+    "which uses the XML node content as argument for callback_constructor\n"
+    "so you can create a map for serialized types which needs a special\n"
+    "constructor. The callback_constructor is called as:\n"
+    "   callback_constructor(node->content, current_deserialized_object)\n\n"
 	"Every serilized object is validated against the pyxser XML Schema 1.0\n\n";
 
 static const char u_deserialize_documentation[] = \
@@ -1064,13 +1070,14 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	PyObject *input = (PyObject *)NULL;
 	PyObject *tree = (PyObject *)NULL;
 	PyObject *current = (PyObject *)NULL;
+    PyObject *typemap = (PyObject *)NULL;
 	PyDictObject *dupItems = (PyDictObject *)NULL;
 
 	xmlNodePtr rootNode = (xmlNodePtr)NULL;
 	xmlNodePtr currentNode = (xmlNodePtr)NULL;
 	xmlDocPtr docXml = (xmlDocPtr)NULL;
 
-    static char *kwlist[] = {"obj", "enc", NULL};
+    static char *kwlist[] = {"obj", "enc", "typemap", NULL};
     char *py_enc = (char *)NULL;
     char *in_enc = (char *)NULL;
     int py_depth = 0;
@@ -1084,8 +1091,8 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 		return res;
 	}
 
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os", kwlist,
-                                     &input, &in_enc);
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os|O", kwlist,
+                                     &input, &in_enc, &typemap);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -1119,6 +1126,7 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
     obj.encoding = py_enc;
     obj.depth = py_depth;
     obj.depthcnt = 0;
+    obj.typemap = typemap;
     res = pyxser_UnserializeXml(&obj);
 
     if (res == NULL) {
@@ -1139,6 +1147,7 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	PyObject *input = (PyObject *)NULL;
 	PyObject *tree = (PyObject *)NULL;
 	PyObject *current = (PyObject *)NULL;
+    PyObject *typemap = (PyObject *)NULL;
 	PyDictObject *dupItems = (PyDictObject *)NULL;
 
 	xmlNodePtr rootNode = (xmlNodePtr)NULL;
@@ -1158,8 +1167,8 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return res;
 	}
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os", kwlist,
-                                     &input, &in_enc);
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os|O", kwlist,
+                                     &input, &in_enc, &typemap);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -1204,6 +1213,7 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
         obj.encoding = py_enc;
         obj.depth = py_depth;
         obj.depthcnt = 0;
+        obj.typemap = typemap;
 
         res = pyxser_UnserializeXml(&obj);
         if (res == NULL) {

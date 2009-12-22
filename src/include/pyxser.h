@@ -37,7 +37,7 @@
 extern "C" {
 #endif /* !__cplusplus */
 
-#define PYXSER_VERSION					"1.2r"
+#define PYXSER_VERSION					"1.4r"
 
 #define PYTHON_IS_NOT_NONE(o)                   \
 	(((PyObject *)o != Py_None) &&              \
@@ -75,6 +75,7 @@ extern "C" {
         PyObject **doc;
         PyObject **current;
         PyObject **tree;
+        PyObject *typemap;
         PyDictObject **dups;
         PyDictObject **modules;
         xmlDocPtr *docPtr;
@@ -121,6 +122,7 @@ extern "C" {
 #include "include/pyxser_strings.h"
 #include "include/pyxser_collections.h"
 #include "include/pyxser_file.h"
+#include "include/pyxser_typem.h"
 
     extern const char msg_non_object[];
     extern const char msg_non_method[];

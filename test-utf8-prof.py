@@ -51,6 +51,14 @@ def display_heap(hp):
         more = more.more
         c += 10
 
+def fallback_to_string(o):
+    try:
+        return str(o)
+    except:
+        return ""
+
+test_typemap_map = { 'str': fallback_to_string }
+
 def test_normal(test):
     try:
         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2)
@@ -203,6 +211,31 @@ def test_unicode_c14n(test):
         traceback.print_exc(file=sys.stdout)
         print "-" * 60
 
+def test_typemap(test):
+    try:
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2)
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 3)
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 4)
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 5)
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
+
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0)
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
+
+        pyxser.xmlcleanup()
+
+    except Exception, e:
+        print "-" * 60
+        print e
+        traceback.print_exc(file=sys.stdout)
+        print "-" * 60
+
 
 if __name__ == "__main__":
     another = testpkg.sample.TestAnotherObject()
@@ -245,6 +278,7 @@ if __name__ == "__main__":
             test_normal_c14n(test)
             test_unicode(test)
             test_unicode_c14n(test)
+            test_typemap(test)
             pyxser.getdtd()
             pyxser.getdtd_c14n()
             pyxser.xmlcleanup()
