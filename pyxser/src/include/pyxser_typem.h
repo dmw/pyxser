@@ -20,8 +20,8 @@
   along with pyxser.  If not, see <http://www.gnu.org/licenses/>.
 
   <!DOCTYPE pyxs:obj
-  PUBLIC "-//coder.cl//DTD pyxser 1.0//EN"
-  "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd">
+            PUBLIC "-//coder.cl//DTD pyxser 1.0//EN"
+            "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd">
 */
 
 #ifndef PYXSER_TYPEM_H
@@ -38,8 +38,14 @@
 extern "C" {
 #endif /* !__cplusplus */
 
-PyObject *pyxser_TypeMapSearchAndGet(PyObject *tmap, PyObject *tval,
-                                     xmlNodePtr ron);
+    xmlNodePtr pyxser_TypeMapSearchAndGetNode(PyObject *tmap, PyObject *tval,
+                                              PyObject *targ, xmlDocPtr doc);
+
+    xmlNodePtr pyxser_TypeMapSearchAndGet(PyxSerializationArgsPtr args,
+                                          xmlNodePtr added);
+
+    PyObject *pyxunser_TypeMapSearchAndGet(PyObject *tmap, PyObject *tval,
+                                           xmlNodePtr node);
 
 #ifdef __cplusplus
 };

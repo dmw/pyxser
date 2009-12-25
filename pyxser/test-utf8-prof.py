@@ -213,19 +213,19 @@ def test_unicode_c14n(test):
 
 def test_typemap(test):
     try:
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2)
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2, typemap = test_typemap_map)
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
 
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 3)
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 3, typemap = test_typemap_map)
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
 
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 4)
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 4, typemap = test_typemap_map)
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
 
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 5)
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 5, typemap = test_typemap_map)
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
 
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0)
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0, typemap = test_typemap_map)
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
 
         pyxser.xmlcleanup()
