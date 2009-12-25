@@ -38,22 +38,130 @@ static const char Id[] = "$Id$";
 #include "include/pyxser_tools.h"
 #include "include/pyxser.h"
 
+
+xmlNodePtr
+pyxser_TypeMapSearchAndGetNode(PyObject *tmap, PyObject *tval,
+                               PyObject *targ, xmlDocPtr doc)
+{
+    xmlNodePtr txtNode = (xmlNodePtr)NULL;
+    PyObject *cb = (PyObject *)NULL;
+    PyObject *args = (PyObject *)NULL;
+    PyObject *res = (PyObject *)NULL;
+    char *tmapc = (char *)NULL;
+    char *resc = (char *)NULL;
+    if (PYTHON_IS_NONE(tmap)) {
+        return txtNode;
+    }
+    if (PYTHON_IS_NONE(tval)) {
+        return txtNode;
+    }
+    if (PYTHON_IS_NONE(targ)) {
+        return txtNode;
+    }
+    if (doc == (xmlDocPtr)NULL) {
+        return txtNode;
+    }
+    tmapc = PyString_AS_STRING(tval);
+    cb = PyDict_GetItem(tmap, tval);
+    PyErr_Clear();
+    if (PYTHON_IS_NONE(cb)) {
+        return (xmlNodePtr)NULL;
+    }
+    args = Py_BuildValue("(O)", targ);
+    res = PyObject_CallObject(cb, args);
+    if (PYTHON_IS_NONE(res)) {
+        return (xmlNodePtr)NULL;
+    }
+    resc = PyString_AS_STRING(res);
+    txtNode = xmlNewDocText(doc, BAD_CAST resc);
+    Py_XDECREF(args);
+    Py_XDECREF(res);
+    return txtNode;
+}
+
+
+xmlNodePtr
+pyxser_TypeMapSearchAndGet(PyxSerializationArgsPtr args,
+                           xmlNodePtr added)
+{
+
+    PyObject *o = *args->o;
+    char *name = args->name;
+    xmlDocPtr doc = *args->docptr;
+
+	xmlNodePtr nen = (xmlNodePtr)NULL;
+	xmlNodePtr ntxt = (xmlNodePtr)NULL;
+	xmlAttrPtr typeAttr = (xmlAttrPtr)NULL;
+	xmlAttrPtr nameAttr = (xmlAttrPtr)NULL;
+
+	PyObject *classPtr = (PyObject *)NULL;
+	PyObject *className = (PyObject *)NULL;
+
+	char *nptr = (char *)NULL;
+
+	if (PYTHON_IS_NONE(o)) {
+        return (xmlNodePtr)NULL;
+    }
+
+    classPtr = PyObject_GetAttrString(o, pyxser_attr_class);
+
+    if (PYTHON_IS_NONE(classPtr)) {
+        PyErr_Clear();
+        return (xmlNodePtr)NULL;
+    }
+
+    className = PyObject_GetAttrString(classPtr,
+                                       pyxser_attr_name);
+
+    if (PYTHON_IS_NOT_NONE(className)) {
+        nen = xmlNewDocNode(doc,
+                            pyxser_GetDefaultNs(),
+                            BAD_CAST pyxser_xml_attr_item,
+                            NULL);
+        if (added == (xmlNodePtr)NULL) {
+            ntxt = pyxser_TypeMapSearchAndGetNode(args->typemap,
+                                                  className,
+                                                  o,
+                                                  doc);
+        } else {
+            ntxt = added;
+        }
+        if (ntxt != (xmlNodePtr)NULL) {
+            nptr = PyString_AS_STRING(className);
+            typeAttr = xmlNewProp(nen,
+                                  BAD_CAST pyxser_xml_attr_type,
+                                  BAD_CAST nptr);
+            if (name != (char *)NULL) {
+                nameAttr = xmlNewProp(nen,
+                                      BAD_CAST pyxser_xml_attr_name,
+                                      BAD_CAST name);
+            }
+            xmlAddChild(nen, ntxt);
+        }
+    }
+    PYXSER_FREE_OBJECT(className);
+    PYXSER_FREE_OBJECT(classPtr);
+	return nen;
+}
+
+
 PyObject *
-pyxser_TypeMapSearchAndGet(PyObject *tmap, PyObject *tval,
-                           xmlNodePtr node)
+pyxunser_TypeMapSearchAndGet(PyObject *tmap, PyObject *tval,
+                             xmlNodePtr node)
 {
     xmlNodePtr ron;
     PyObject *stype = (PyObject *)NULL;
     PyObject *cb = (PyObject *)NULL;
     PyObject *args = (PyObject *)NULL;
     PyObject *res = (PyObject *)NULL;
+    char *tmapc = (char *)NULL;
     if (PYTHON_IS_NONE(tmap)) {
         return (PyObject *)NULL;
     }
     if (PYTHON_IS_NONE(tval)) {
         return (PyObject *)NULL;
     }
-    char *tmapc = PyString_AS_STRING(tval);
+    tmapc = PyString_AS_STRING(tval);
     cb = PyDict_GetItem(tmap, tval);
     PyErr_Clear();
     if (PYTHON_IS_NONE(cb)) {
@@ -80,5 +188,6 @@ pyxser_TypeMapSearchAndGet(PyObject *tmap, PyObject *tval,
     }
     return res;
 }
+
 
 /* pyserx_typem.h ends here */

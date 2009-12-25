@@ -469,6 +469,7 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	PyObject *res = (PyObject *)NULL;
 	PyObject *input = (PyObject *)NULL;
     PyObject *selector = (PyObject *)NULL;
+    PyObject *typemap = (PyObject *)NULL;
 	PyListObject *dupItems = (PyListObject *)NULL;
 
 	xmlNodePtr serXml = (xmlNodePtr)NULL;
@@ -478,7 +479,8 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 
     PythonSerializationArguments sargs;
 
-    static char *kwlist[] = {"obj", "enc", "depth", "selector", NULL};
+    static char *kwlist[] = {"obj", "enc", "depth", "selector",
+                             "typemap", NULL};
     char *py_enc = (char *)NULL;
     char *in_enc = (char *)NULL;
     int py_depth = 0;
@@ -491,9 +493,9 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
 	}
 
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os|iO", kwlist,
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os|iOO", kwlist,
                                      &input, &in_enc, &py_depth,
-                                     &selector);
+                                     &selector, &typemap);
 
 	if (!ok) {
 		/* error! don't have arguments */
@@ -529,6 +531,7 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
     sargs.depth = &py_depth;
     sargs.depthcnt = &py_depth_cnt;
     sargs.selector = &selector;
+    sargs.typemap = typemap;
 
 	serXml = pyxser_SerializeXml(&sargs);
 
@@ -571,6 +574,7 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 	PyObject *res = (PyObject *)NULL;
 	PyObject *input = (PyObject *)NULL;
     PyObject *selector = (PyObject *)NULL;
+    PyObject *typemap = (PyObject *)NULL;
 	PyListObject *dupItems = (PyListObject *)NULL;
 
 	xmlNodePtr serXml = (xmlNodePtr)NULL;
@@ -581,7 +585,8 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 
     PythonSerializationArguments sargs;
 
-    static char *kwlist[] = {"obj", "depth", "com", "selector", NULL};
+    static char *kwlist[] = {"obj", "depth", "com", "selector",
+                             "typemap", NULL};
     int py_depth = 999999;
     int py_depth_cnt = 1;
     int py_exc = 0;
@@ -597,7 +602,7 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|iiO", kwlist,
                                      &input, &py_depth, &py_com,
-                                     &selector);
+                                     &selector, &typemap);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -626,6 +631,7 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
     sargs.depth = &py_depth;
     sargs.depthcnt = &py_depth_cnt;
     sargs.selector = &selector;
+    sargs.typemap = typemap;
 
 	serXml = pyxser_SerializeXml(&sargs);
 
@@ -671,6 +677,7 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 	PyObject *res = (PyObject *)NULL;
 	PyObject *input = (PyObject *)NULL;
     PyObject *selector = (PyObject *)NULL;
+    PyObject *typemap = (PyObject *)NULL;
 	PyListObject *dupItems = (PyListObject *)NULL;
 
 	xmlNodePtr serXml = (xmlNodePtr)NULL;
@@ -680,7 +687,8 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 
     PythonSerializationArguments sargs;
 
-    static char *kwlist[] = {"obj", "depth", "com", "selector", NULL};
+    static char *kwlist[] = {"obj", "depth", "com", "selector",
+                             "typemap", NULL};
     int py_depth = 999999;
     int py_depth_cnt = 1;
     int py_exc = 0;
@@ -693,9 +701,9 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|iiO", kwlist,
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|iiOO", kwlist,
                                      &input, &py_depth, &py_com,
-                                     &selector);
+                                     &selector, &typemap);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -723,6 +731,7 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
     sargs.depth = &py_depth;
     sargs.depthcnt = &py_depth_cnt;
     sargs.selector = &selector;
+    sargs.typemap = typemap;
 
 	serXml = pyxser_SerializeXml(&sargs);
 
@@ -768,6 +777,7 @@ u_pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	PyObject *res = Py_None;
 	PyObject *input = (PyObject *)NULL;
     PyObject *selector = (PyObject *)NULL;
+    PyObject *typemap = (PyObject *)NULL;
 	PyListObject *dupItems = (PyListObject *)NULL;
 
 	xmlNodePtr serXml = (xmlNodePtr)NULL;
@@ -777,7 +787,8 @@ u_pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 
     PythonSerializationArguments sargs;
 
-    static char *kwlist[] = {"obj", "enc", "depth", "selector", NULL};
+    static char *kwlist[] = {"obj", "enc", "depth", "selector",
+                             "typemap", NULL};
     char *py_enc = (char *)NULL;
     char *in_enc = (char *)NULL;
     int py_depth = 0;
@@ -790,9 +801,9 @@ u_pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
 	}
 
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os|iO", kwlist,
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os|iOO", kwlist,
                                      &input, &in_enc, &py_depth,
-                                     &selector);
+                                     &selector, &typemap);
 
 	if (!ok) {
 		/* error! don't have arguments */
@@ -873,6 +884,7 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 	PyObject *res = Py_None;
 	PyObject *input = (PyObject *)NULL;
     PyObject *selector = (PyObject *)NULL;
+    PyObject *typemap = (PyObject *)NULL;
 	PyListObject *dupItems = (PyListObject *)NULL;
 
 	xmlNodePtr serXml = (xmlNodePtr)NULL;
@@ -883,7 +895,8 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 
     PythonSerializationArguments sargs;
 
-    static char *kwlist[] = {"obj", "depth", "com", "selector", NULL};
+    static char *kwlist[] = {"obj", "depth", "com", "selector",
+                             "typemap", NULL};
     int py_depth = 999999;
     int py_depth_cnt = 1;
     int py_exc = 0;
@@ -896,9 +909,10 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|iiO", kwlist,
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|iiOO", kwlist,
                                      &input, &py_depth,
-                                     &py_com, &selector);
+                                     &py_com, &selector,
+                                     &typemap);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -926,6 +940,7 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
     sargs.depth = &py_depth;
     sargs.depthcnt = &py_depth_cnt;
     sargs.selector = &selector;
+    sargs.typemap = typemap;
 
 	serXml = pyxser_SerializeXml(&sargs);
 
@@ -973,6 +988,7 @@ u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 	PyObject *res = Py_None;
 	PyObject *input = (PyObject *)NULL;
     PyObject *selector = (PyObject *)NULL;
+    PyObject *typemap = (PyObject *)NULL;
 	PyListObject *dupItems = (PyListObject *)NULL;
 
 	xmlNodePtr serXml = (xmlNodePtr)NULL;
@@ -982,7 +998,8 @@ u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 
     PythonSerializationArguments sargs;
 
-    static char *kwlist[] = {"obj", "depth", "com", "selector", NULL};
+    static char *kwlist[] = {"obj", "depth", "com", "selector",
+                             "typemap", NULL};
     int py_depth = 999999;
     int py_depth_cnt = 1;
     int py_exc = 0;
@@ -995,9 +1012,9 @@ u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
 	}
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|iiO", kwlist,
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "O|iiOO", kwlist,
                                      &input, &py_depth,
-                                     &py_com, &selector);
+                                     &py_com, &selector, &typemap);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -1025,6 +1042,7 @@ u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
     sargs.depth = &py_depth;
     sargs.depthcnt = &py_depth_cnt;
     sargs.selector = &selector;
+    sargs.typemap = typemap;
 
 	serXml = pyxser_SerializeXml(&sargs);
     Py_XINCREF(input);

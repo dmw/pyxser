@@ -284,7 +284,7 @@ def test_typemap(test):
         print "-----8<----------8<----------8<----------8<----------8<----------8<----- test_typemap()"
         print "First Object:\n" + repr(test) + "\n\n"
 
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2)
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2, typemap = test_typemap_map)
         print "Serilized Object:\n", serialized
         print "Serilized Object Validation:\n", \
               pyxser.validate(obj = serialized, enc = "utf-8"), \
@@ -292,7 +292,7 @@ def test_typemap(test):
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
         print "Unserialized Object (d.2):\n" + repr(unserialized) + "\n\n"
 
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 3)
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 3, typemap = test_typemap_map)
         print "Serilized Object:\n" + serialized
         print "Serilized Object Validation:\n", \
               pyxser.validate(obj = serialized, enc = "utf-8"), \
@@ -300,7 +300,7 @@ def test_typemap(test):
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
         print "Unserialized Object (d.3):\n" + repr(unserialized) + "\n\n"
 
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 4)
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 4, typemap = test_typemap_map)
         print "Serilized Object:\n" + serialized
         print "Serilized Object Validation:\n", \
               pyxser.validate(obj = serialized, enc = "utf-8"), \
@@ -308,7 +308,7 @@ def test_typemap(test):
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
         print "Unserialized Object (d.4):\n" + repr(unserialized) + "\n\n"
 
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 5)
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 5, typemap = test_typemap_map)
         print "Serilized Object:\n" + serialized
         print "Serilized Object Validation:\n", \
               pyxser.validate(obj = serialized, enc = "utf-8"), \
@@ -316,7 +316,7 @@ def test_typemap(test):
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
         print "Unserialized Object (d.5):\n" + repr(unserialized) + "\n\n"
 
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0)
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0, typemap = test_typemap_map)
         print "Serilized Object:\n" + serialized
         print "Serilized Object Validation:\n", \
               pyxser.validate(obj = serialized, enc = "utf-8"), \

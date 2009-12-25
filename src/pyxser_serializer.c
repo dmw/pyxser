@@ -220,7 +220,9 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
     PyObject *o = *args->o;
     PyObject **oold = args->o;
     PyObject *currentKey = *args->ck;
+    PyObject *className;
 
+    xmlNodePtr txtNode = (xmlNodePtr)NULL;
     xmlDocPtr *docptr = args->docptr;
     xmlNodePtr currentNode = *args->currentNode;
     xmlNodePtr *currentNodeOld = args->currentNode;
@@ -237,57 +239,76 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
 	char *objnam = (char *)NULL;
 	int c = 0;
 
-	cs = serxConcreteTypes[c];
-	while (cs.available == 1) {
-		if (cs.checker(item)) {
-            args->o = &item;
-            args->name = PyString_AS_STRING(currentKey);
-			newSerializedNode = cs.serializer(args);
-            currentNode = *currentNodeOld;
-            args->o = oold;
-            args->item = oold;
-			if (newSerializedNode != (xmlNodePtr)NULL) {
-				xmlAddChild(currentNode, newSerializedNode);
-				break;
-			}
-		}
-		cs = serxConcreteTypes[++c];
-		if (cs.available == 0) {
-			objnam = pyxser_GetClassName(item);
-			csn = xmlNewDocNode(*docptr,
-                                pyxser_GetDefaultNs(),
-                                BAD_CAST pyxser_xml_element_object,
-                                NULL);
-			pyxser_AddModuleAttr(o, csn);
-			pyxserType = xmlNewProp(csn,
-									BAD_CAST pyxser_xml_attr_type,
-									BAD_CAST objnam);
-			if (PYTHON_IS_NOT_NONE(currentKey)) {
-				pxsnam = xmlNewProp(csn,
-                                    BAD_CAST pyxser_xml_attr_name,
-                                    BAD_CAST PyString_AS_STRING(currentKey));
-			}
-			xmlAddChild(currentNode, csn);
-            (*depthcnt)++;
+    if (PYTHON_IS_NOT_NONE(args->typemap)) {
+        className = PyObject_GetAttrString(o, pyxser_attr_class);
+        className = PyObject_GetAttrString(className, pyxser_attr_name);
 
-            args->o = &item;
-            args->item = &item;
-            args->currentNode = &csn;
-            args->rootNode = &rootNode;
+        txtNode = pyxser_TypeMapSearchAndGetNode(args->typemap, className,
+                                                 o, *docptr);
+    }
 
-			newSerializedNode = pyxser_SerializeXml(args);
+    if (txtNode != (xmlNodePtr)NULL) {
+        args->o = &item;
+        txtNode = pyxser_TypeMapSearchAndGet(args, txtNode);
+        currentNode = *currentNodeOld;
+        args->o = oold;
+        args->item = oold;
+        if (txtNode != (xmlNodePtr)NULL) {
+            xmlAddChild(currentNode, txtNode);
+            return txtNode;
+        }
+    } else {
+        cs = serxConcreteTypes[c];
+        while (cs.available == 1) {
+            if (cs.checker(item)) {
+                args->o = &item;
+                args->name = PyString_AS_STRING(currentKey);
+                newSerializedNode = cs.serializer(args);
+                currentNode = *currentNodeOld;
+                args->o = oold;
+                args->item = oold;
+                if (newSerializedNode != (xmlNodePtr)NULL) {
+                    xmlAddChild(currentNode, newSerializedNode);
+                    break;
+                }
+            }
+            cs = serxConcreteTypes[++c];
+            if (cs.available == 0) {
+                objnam = pyxser_GetClassName(item);
+                csn = xmlNewDocNode(*docptr,
+                                    pyxser_GetDefaultNs(),
+                                    BAD_CAST pyxser_xml_element_object,
+                                    NULL);
+                pyxser_AddModuleAttr(o, csn);
+                pyxserType = xmlNewProp(csn,
+                                        BAD_CAST pyxser_xml_attr_type,
+                                        BAD_CAST objnam);
+                if (PYTHON_IS_NOT_NONE(currentKey)) {
+                    pxsnam = xmlNewProp(csn,
+                                        BAD_CAST pyxser_xml_attr_name,
+                                        BAD_CAST PyString_AS_STRING(currentKey));
+                }
+                xmlAddChild(currentNode, csn);
+                (*depthcnt)++;
 
-            args->currentNode = currentNodeOld;
-            args->rootNode = rootNodeOld;
-            args->o = oold;
-            args->item = oold;
+                args->o = &item;
+                args->item = &item;
+                args->currentNode = &csn;
+                args->rootNode = &rootNode;
 
-            (*depthcnt)--;
-			c = 0;
-			break;
-		}
-	}
+                newSerializedNode = pyxser_SerializeXml(args);
 
+                args->currentNode = currentNodeOld;
+                args->rootNode = rootNodeOld;
+                args->o = oold;
+                args->item = oold;
+
+                (*depthcnt)--;
+                c = 0;
+                break;
+            }
+        }
+    }
 	return newSerializedNode;
 }
 
@@ -363,7 +384,8 @@ pyxser_RunDeserializationMachine(xmlNodePtr ron,
     tvalc = pyxser_ExtractPropertyName(pyxser_xml_attr_type,
                                        ron);
     tval = PyString_FromString(tvalc);
-    unser = pyxser_TypeMapSearchAndGet(obj->typemap, tval, *(obj->currentNode));
+    unser = pyxunser_TypeMapSearchAndGet(obj->typemap, tval,
+                                         *(obj->currentNode));
     PYXSER_XMLFREE(tvalc);
     Py_XDECREF(tval);
     if (PYTHON_IS_NOT_NONE(unser)) {
