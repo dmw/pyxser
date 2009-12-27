@@ -87,5 +87,17 @@
 
 	Thanks pyxser users for your feedback...
 
+1.4r (2009.12.26):
+
+	Daniel Molina Wegener <dmw@coder.cl>
+	* pyxser_typem.c: Added type map serialization and deserialization
+	routines and arguments. Now pyxser is able to serialize and
+	deserialize objects using custom serialization functions, but
+	preserving the pyxser XML schema and the serialization model.
+
+
+
+
+
 
 
