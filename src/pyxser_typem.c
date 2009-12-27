@@ -73,7 +73,9 @@ pyxser_TypeMapSearchAndGetNode(PyObject *tmap, PyObject *tval,
         return (xmlNodePtr)NULL;
     }
     resc = PyString_AS_STRING(res);
-    txtNode = xmlNewDocText(doc, BAD_CAST resc);
+    if (resc != (char *)NULL) {
+        txtNode = xmlNewDocText(doc, BAD_CAST resc);
+    }
     Py_XDECREF(args);
     Py_XDECREF(res);
     return txtNode;
