@@ -22,7 +22,7 @@
 ##               PUBLIC "-//coder.cl//DTD pyxser 1.0//EN"
 ##               "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd">
 ##
-## $Id: test-utf8.py 53 2009-04-16 02:46:15Z damowe $
+## $Id$
 ##
 
 
