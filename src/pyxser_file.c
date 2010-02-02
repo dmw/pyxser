@@ -24,7 +24,7 @@
             "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd">
 */
 #ifndef lint
-static const char Id[] = "$Id: pyxser_numbers.c 88 2009-07-27 02:27:23Z damowe $";
+static const char Id[] = "$Id$";
 #endif /* !lint */
 
 #include <Python.h>

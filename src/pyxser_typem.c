@@ -115,31 +115,34 @@ pyxser_TypeMapSearchAndGet(PyxSerializationArgsPtr args,
     className = PyObject_GetAttrString(classPtr,
                                        pyxser_attr_name);
 
-    if (PYTHON_IS_NOT_NONE(className)) {
-        nen = xmlNewDocNode(doc,
-                            pyxser_GetDefaultNs(),
-                            BAD_CAST pyxser_xml_attr_item,
-                            NULL);
-        if (added == (xmlNodePtr)NULL) {
-            ntxt = pyxser_TypeMapSearchAndGetNode(args->typemap,
-                                                  className,
-                                                  o,
-                                                  doc);
-        } else {
-            ntxt = added;
+    if (PYTHON_IS_NONE(className)) {
+        Py_XDECREF(classPtr);
+        return (xmlNodePtr)NULL;
+    }
+
+    nen = xmlNewDocNode(doc,
+                        pyxser_GetDefaultNs(),
+                        BAD_CAST pyxser_xml_attr_item,
+                        NULL);
+    if (added == (xmlNodePtr)NULL) {
+        ntxt = pyxser_TypeMapSearchAndGetNode(args->typemap,
+                                              className,
+                                              o,
+                                              doc);
+    } else {
+        ntxt = added;
+    }
+    if (ntxt != (xmlNodePtr)NULL) {
+        nptr = PyString_AS_STRING(className);
+        typeAttr = xmlNewProp(nen,
+                              BAD_CAST pyxser_xml_attr_type,
+                              BAD_CAST nptr);
+        if (name != (char *)NULL) {
+            nameAttr = xmlNewProp(nen,
+                                  BAD_CAST pyxser_xml_attr_name,
+                                  BAD_CAST name);
         }
-        if (ntxt != (xmlNodePtr)NULL) {
-            nptr = PyString_AS_STRING(className);
-            typeAttr = xmlNewProp(nen,
-                                  BAD_CAST pyxser_xml_attr_type,
-                                  BAD_CAST nptr);
-            if (name != (char *)NULL) {
-                nameAttr = xmlNewProp(nen,
-                                      BAD_CAST pyxser_xml_attr_name,
-                                      BAD_CAST name);
-            }
-            xmlAddChild(nen, ntxt);
-        }
+        xmlAddChild(nen, ntxt);
     }
     PYXSER_FREE_OBJECT(className);
     PYXSER_FREE_OBJECT(classPtr);
@@ -169,23 +172,24 @@ pyxunser_TypeMapSearchAndGet(PyObject *tmap, PyObject *tval,
     if (PYTHON_IS_NONE(cb)) {
         return (PyObject *)NULL;
     }
-	if (node != (xmlNodePtr)NULL) {
-		for (ron = node->children;
-			 ron;
-			 ron = ron->next) {
-			if (ron->type == XML_TEXT_NODE
-				&& ron->content != BAD_CAST NULL) {
-                stype = PyString_FromString((char *)ron->content);
-                PyErr_Clear();
-                if (PYTHON_IS_NONE(stype)) {
-                    return (PyObject *)NULL;
-                }
-                args = Py_BuildValue("(O)", stype);
-                res = PyObject_CallObject(cb, args);
-                Py_XDECREF(args);
-                Py_XDECREF(stype);
-                PyErr_Clear();
+    if (node == (xmlNodePtr)NULL) {
+        return (PyObject *)NULL;
+    }
+    for (ron = node->children;
+         ron;
+         ron = ron->next) {
+        if (ron->type == XML_TEXT_NODE
+            && ron->content != BAD_CAST NULL) {
+            stype = PyString_FromString((char *)ron->content);
+            PyErr_Clear();
+            if (PYTHON_IS_NONE(stype)) {
+                return (PyObject *)NULL;
             }
+            args = Py_BuildValue("(O)", stype);
+            res = PyObject_CallObject(cb, args);
+            Py_XDECREF(args);
+            Py_XDECREF(stype);
+            PyErr_Clear();
         }
     }
     return res;
