@@ -106,6 +106,11 @@ pyxser_RunSerializationCol(PyxSerializationArgsPtr args)
     xmlDocPtr *docPtr = args->docptr;
     int *depthcnt = args->depthcnt;
 
+    if (item == (PyObject *)NULL
+        || dupItems == (PyObject *)NULL) {
+        return NULL;
+    }
+
 	currentSerialization = serxConcreteTypes[d];
 	while (currentSerialization.available == 1) {
 		if (currentSerialization.checker(item)) {
