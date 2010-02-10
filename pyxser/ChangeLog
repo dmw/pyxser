@@ -95,9 +95,18 @@
 	deserialize objects using custom serialization functions, but
 	preserving the pyxser XML schema and the serialization model.
 
+1.4.2r (2010.02.10):
 
+	Daniel Molina Wegener <dmw@coder.cl>
+	* pyxser_collections.c: Added constraint checks for NULL
+	pointers removing nested statements.
+	* pyxser.c: Removed nested statements.
+	* pyxser_tools.c: Added constratints checks for NULL pointers,
+	removed nested statements and added strict checking for lists
+	since it was crashing with an ambigous list definition that
+	can not be handled by PyList_Check().
+	* test-utf8.py: Added tests to determine if it continue
+	crashing with module serialization.
 
-
-
-
+	Thanks to pyxser users for their feedback.
 
