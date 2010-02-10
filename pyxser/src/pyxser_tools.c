@@ -267,27 +267,29 @@ pyxser_GetClassName(PyObject *obj)
 
 	char *cn = (char *)NULL;
 
-	if (PYTHON_IS_NOT_NONE(obj)) {
-		klass = PyObject_GetAttrString(obj, pyxser_attr_class);
-		if (PYTHON_IS_NONE(klass)) {
-            PyErr_Clear();
-			return cn;
-		}
-		cname = PyObject_GetAttrString(klass, pyxser_attr_name);
-		if (PYTHON_IS_NONE(cname)) {
-            PyErr_Clear();
-			Py_DECREF(klass);
-			return cn;
-		}
-		if (!PyString_Check(cname)) {
-            PYXSER_FREE_OBJECT(klass);
-            PYXSER_FREE_OBJECT(cname);
-		}
-		cn = PyString_AS_STRING(cname);
+    if (PYTHON_IS_NONE(obj)) {
+        return cn;
+    }
+
+    klass = PyObject_GetAttrString(obj, pyxser_attr_class);
+    if (PYTHON_IS_NONE(klass)) {
+        PyErr_Clear();
+        return cn;
+    }
+    cname = PyObject_GetAttrString(klass, pyxser_attr_name);
+    if (PYTHON_IS_NONE(cname)) {
+        PyErr_Clear();
+        Py_DECREF(klass);
+        return cn;
+    }
+    if (!PyString_Check(cname)) {
         PYXSER_FREE_OBJECT(klass);
         PYXSER_FREE_OBJECT(cname);
-        PyErr_Clear();
-	}
+    }
+    cn = PyString_AS_STRING(cname);
+    PYXSER_FREE_OBJECT(klass);
+    PYXSER_FREE_OBJECT(cname);
+    PyErr_Clear();
 	return cn;
 }
 
@@ -469,8 +471,9 @@ pyxser_PyListContains(PyListObject *lst, PyObject *o)
 	PyObject *iterLst = (PyObject *)NULL;
 	PyObject *item = (PyObject *)NULL;
 
-	if (PYTHON_IS_NONE(lst) ||
-		PYTHON_IS_NONE(o)) {
+	if (PYTHON_IS_NONE(lst)
+        || PYTHON_IS_NONE(o)
+        || !pyxserList_CheckExact(lst)) {
 		return PYXSER_INVALID_ARGUMENT;
 	}
 	iterLst = PyObject_GetIter((PyObject *)lst);
