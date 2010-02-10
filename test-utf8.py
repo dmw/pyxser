@@ -332,18 +332,6 @@ def test_typemap(test):
         traceback.print_exc(file=sys.stdout)
         print "-" * 60
 
-def test_failure():
-    xml = pyxser.serialize(obj = sys, enc = "utf-8", depth = 5)
-    print "Serialized sys module:"
-    print xml
-    xml = pyxser.serialize(obj = traceback, enc = "utf-8", depth = 0)
-    print "Serialized traceback module:"
-    print xml
-    xml = pyxser.serialize(obj = pyxser, enc = "utf-8", depth = 3)
-    print "Serialized pyxser module:"
-    print xml
-
-
 if __name__ == "__main__":
 #    h = hpy()
 
@@ -386,7 +374,6 @@ if __name__ == "__main__":
     test_unicode_c14n(test)
     test_selector(test)
     test_typemap(test)
-    test_failure()
 
     print pyxser.getdtd()
     print pyxser.getdtd_c14n()
