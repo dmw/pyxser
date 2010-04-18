@@ -20,6 +20,11 @@ if not (vi[0] == 2 and (vi[1] == 4 or vi[1] == 5 or vi[1] == 6)):
     print "Unsupported Python version"
     sys.exit()
 
+outversion = commands.getoutput("pkg-config --version")
+if outversion == None or len(outversion) == 0:
+    print "pkg-config not found"
+    sys.exit(0)
+
 for scheme in INSTALL_SCHEMES.values():
     scheme['data'] = scheme['purelib']
 
@@ -92,12 +97,12 @@ pyxser_mod = Extension('pyxser',
                        **pyxser_params)
 
 setup (name = 'pyxser',
-       version = '1.2r',
+       version = '1.4.4r',
        description = 'Python XML Serialization Extension',
        author = 'Daniel Molina Wegener',
        author_email = 'dmw@coder.cl',
        url = 'http://coder.cl/software/pyxser/',
-       download_url = 'http://sourceforge.net/project/showfiles.php?group_id=256386',
+       download_url = 'https://sourceforge.net/projects/pyxser/files/pyxser-1.4.4r/pyxser-1.4.4r.tar.gz/download',
        data_files = [(pyxser_dtd_file_dir, ['xsd/pyxser-1.0.dtd',
                                             'xsd/pyxser-1.0-c14n.dtd',
                                             'xsd/pyxser-1.0.xsd',
