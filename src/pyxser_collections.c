@@ -107,7 +107,7 @@ pyxser_RunSerializationCol(PyxSerializationArgsPtr args)
     int *depthcnt = args->depthcnt;
 
     if (item == (PyObject *)NULL
-        || dupItems == (PyObject *)NULL) {
+        || (PyObject *)dupItems == (PyObject *)NULL) {
         return NULL;
     }
 
