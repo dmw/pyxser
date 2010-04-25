@@ -99,9 +99,9 @@ const char pyxser_xml_attr_xml_xsi[] = "xmlns:xsi";
 const char pyxser_xml_attr_xml_xloc[] = "xmlns:schemaLocation";
 
 const char pyxser_xml_version[] = "1.0";
-const char pyxser_ext_version[] = "1.4r";
+const char pyxser_ext_version[] = "1.4.4r";
 const char pyxser_ext_author[] = "Daniel Molina Wegener <dmw@coder.cl>";
-const char pyxser_ext_site[] = "http://coder.cl/software/pyxser/";
+const char pyxser_ext_site[] = "http://coder.cl/products/pyxser/";
 
 const char pyxser_xml_attr_ns[] = "http://projects.coder.cl/pyxser/model/";
 const char pyxser_xml_attr_xml_xsd[] = "http://www.w3.org/2000/xmlns/";
@@ -171,7 +171,7 @@ static const char pyxser_module_doc[] = \
     "based serialization. The serialization model is written under\n"
     "a XML Schema definition and Document Type Definition (DTD).\n"
     "\n"
-    "It have one known bug, it can not serialize and deserialize\n"
+    "It has one known bug, it can not serialize and deserialize\n"
     "classes that has been declared inside the __main__ module since\n"
     "the module can not handle the class declaration in the __main__\n"
     "module.\n"

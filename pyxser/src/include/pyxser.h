@@ -37,7 +37,7 @@
 extern "C" {
 #endif /* !__cplusplus */
 
-#define PYXSER_VERSION					"1.4r"
+#define PYXSER_VERSION					"1.4.4r"
 
 #define PYTHON_IS_NOT_NONE(o)                   \
 	(((PyObject *)o != Py_None) &&              \
@@ -84,6 +84,7 @@ extern "C" {
         char *encoding;
         int depth;
         int depthcnt;
+        int error;
     } PythonUnserializationArguments;
 
     typedef struct pythonSerializationArguments_ {
@@ -100,6 +101,7 @@ extern "C" {
         char *name;
         int *depth;
         int *depthcnt;
+        int error;
     } PythonSerializationArguments;
 
     typedef PythonUnserializationArguments *PyxSerDeserializationArgsPtr;

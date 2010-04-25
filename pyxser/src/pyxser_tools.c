@@ -1041,6 +1041,7 @@ pyxser_SearchObjectInMain(const char *name)
                 if (PYTHON_IS_NOT_NONE(item)) {
                     ct = (PyObject *)pyxser_SearchModuleType(item,
                                                              name);
+                    break;
                 }
             }
         }
@@ -1073,6 +1074,7 @@ pyxser_SearchModule(const char *name)
 					 name,
 					 strlen(type_main))) == 0) {
 			item = PyDict_GetItem(dictMod, currentKey);
+            break;
 		}
 	}
     Py_XDECREF(dictKeys);
@@ -1127,6 +1129,7 @@ pyxser_CacheModule(PyObject *d, const char *name)
 						 name,
 						 strlen(type_main))) == 0) {
 				item = PyDict_GetItem(dictMod, currentKey);
+                break;
 			}
 		}
         Py_XDECREF(dictKeys);
