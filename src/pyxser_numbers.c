@@ -151,14 +151,15 @@ pyxunser_SerializeInt(PyxSerDeserializationArgsPtr obj)
 	xmlNodePtr node = *(obj->currentNode);
 	xmlNodePtr ron;
 	PyObject *res = Py_None;
-	if (node != (xmlNodePtr)NULL) {
-		for (ron = node->children;
-			 ron;
-			 ron = ron->next) {
-			if (ron->type == XML_TEXT_NODE) {
-				res = PyInt_FromString((char *)ron->content, NULL, 10);
-			}
-		}
+	if (node == (xmlNodePtr)NULL) {
+        return res;
+    }
+    for (ron = node->children;
+         ron;
+         ron = ron->next) {
+        if (ron->type == XML_TEXT_NODE) {
+            res = PyInt_FromString((char *)ron->content, NULL, 10);
+        }
 	}
 	return res;
 }
@@ -169,15 +170,16 @@ pyxunser_SerializeExactInt(PyxSerDeserializationArgsPtr obj)
 	xmlNodePtr node = *(obj->currentNode);
 	xmlNodePtr ron;
 	PyObject *res = Py_None;
-	if (node != (xmlNodePtr)NULL) {
-		for (ron = node->children;
-			 ron;
-			 ron = ron->next) {
-			if (ron->type == XML_TEXT_NODE) {
-				res = PyInt_FromString((char *)ron->content, NULL, 10);
-			}
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return res;
+    }
+    for (ron = node->children;
+         ron;
+         ron = ron->next) {
+        if (ron->type == XML_TEXT_NODE) {
+            res = PyInt_FromString((char *)ron->content, NULL, 10);
+        }
+    }
 	return res;
 }
 
@@ -187,25 +189,26 @@ pyxunser_SerializeBoolean(PyxSerDeserializationArgsPtr obj)
 	xmlNodePtr node = *(obj->currentNode);
 	xmlNodePtr ron;
 	PyObject *res = Py_None;
-	if (node != (xmlNodePtr)NULL) {
-		for (ron = node->children;
-			 ron;
-			 ron = ron->next) {
-			if (ron->type == XML_TEXT_NODE) {
-				if (strncmp((char *)ron->content,
-							pyxser_true_char_value,
-							strlen(pyxser_true_char_value)) == 0) {
-                    Py_INCREF(Py_True);
-					return Py_True;
-				} else if (strncmp((char *)ron->content,
-								   pyxser_false_char_value,
-								   strlen(pyxser_false_char_value)) == 0) {
-                    Py_INCREF(Py_False);
-					return Py_False;
-				}
-			}
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return res;
+    }
+    for (ron = node->children;
+         ron;
+         ron = ron->next) {
+        if (ron->type == XML_TEXT_NODE) {
+            if (strncmp((char *)ron->content,
+                        pyxser_true_char_value,
+                        strlen(pyxser_true_char_value)) == 0) {
+                Py_INCREF(Py_True);
+                return Py_True;
+            } else if (strncmp((char *)ron->content,
+                               pyxser_false_char_value,
+                               strlen(pyxser_false_char_value)) == 0) {
+                Py_INCREF(Py_False);
+                return Py_False;
+            }
+        }
+    }
 	return res;
 }
 
@@ -215,15 +218,16 @@ pyxunser_SerializeLong(PyxSerDeserializationArgsPtr obj)
 	xmlNodePtr node = *(obj->currentNode);
 	xmlNodePtr ron;
 	PyObject *res = Py_None;
-	if (node != (xmlNodePtr)NULL) {
-		for (ron = node->children;
-			 ron;
-			 ron = ron->next) {
-			if (ron->type == XML_TEXT_NODE) {
-				res = PyInt_FromString((char *)ron->content, NULL, 10);
-			}
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return res;
+    }
+    for (ron = node->children;
+         ron;
+         ron = ron->next) {
+        if (ron->type == XML_TEXT_NODE) {
+            res = PyInt_FromString((char *)ron->content, NULL, 10);
+        }
+    }
 	return res;
 }
 
@@ -234,21 +238,22 @@ pyxunser_SerializeFloat(PyxSerDeserializationArgsPtr obj)
 	xmlNodePtr ron;
 	PyObject *str = Py_None;
 	PyObject *res = Py_None;
-	if (node != (xmlNodePtr)NULL) {
-		for (ron = node->children;
-			 ron;
-			 ron = ron->next) {
-			if (ron->type == XML_TEXT_NODE) {
-				if (ron->content != (xmlChar *)NULL) {
-					str = PyString_FromString((char *)ron->content);
-					if (PYTHON_IS_NOT_NONE(str)) {
-						res = PyFloat_FromString(str, NULL);
-                        Py_DECREF(str);
-					}
-				}
-			}
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return res;
+    }
+    for (ron = node->children;
+         ron;
+         ron = ron->next) {
+        if (ron->type == XML_TEXT_NODE) {
+            if (ron->content != (xmlChar *)NULL) {
+                str = PyString_FromString((char *)ron->content);
+                if (PYTHON_IS_NOT_NONE(str)) {
+                    res = PyFloat_FromString(str, NULL);
+                    Py_DECREF(str);
+                }
+            }
+        }
+    }
 	return res;
 }
 
@@ -259,21 +264,22 @@ pyxunser_SerializeExactFloat(PyxSerDeserializationArgsPtr obj)
 	xmlNodePtr ron;
 	PyObject *str = Py_None;
 	PyObject *res = Py_None;
-	if (node != (xmlNodePtr)NULL) {
-		for (ron = node->children;
-			 ron;
-			 ron = ron->next) {
-			if (ron->type == XML_TEXT_NODE) {
-				if (ron->content != (xmlChar *)NULL) {
-					str = PyString_FromString((char *)ron->content);
-					if (PYTHON_IS_NOT_NONE(str)) {
-						res = PyFloat_FromString(str, NULL);
-                        Py_DECREF(str);
-					}
-				}
-			}
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return res;
+    }
+    for (ron = node->children;
+         ron;
+         ron = ron->next) {
+        if (ron->type == XML_TEXT_NODE) {
+            if (ron->content != (xmlChar *)NULL) {
+                str = PyString_FromString((char *)ron->content);
+                if (PYTHON_IS_NOT_NONE(str)) {
+                    res = PyFloat_FromString(str, NULL);
+                    Py_DECREF(str);
+                }
+            }
+        }
+    }
 	return res;
 }
 
@@ -285,23 +291,23 @@ pyxunser_SerializeComplex(PyxSerDeserializationArgsPtr obj)
 	xmlNodePtr ron;
 	PyObject *res = Py_None;
     Py_complex cx;
-
-	if (node != (xmlNodePtr)NULL) {
-		for (ron = node->children;
-			 ron;
-			 ron = ron->next) {
-			if (ron->type == XML_TEXT_NODE) {
-				if (ron->content != (xmlChar *)NULL) {
-                    sscanf((char *)ron->content, "%lf:%lf", &cx.real, &cx.imag);
-                    cxo = PyComplex_FromCComplex(cx);
-					if (PYTHON_IS_NOT_NONE(cxo)) {
-						res = cxo;
-                    }
-				}
-			}
-		}
-	}
-	return res;
+	if (node == (xmlNodePtr)NULL) {
+        return res;
+    }
+    for (ron = node->children;
+         ron;
+         ron = ron->next) {
+        if (ron->type == XML_TEXT_NODE) {
+            if (ron->content != (xmlChar *)NULL) {
+                sscanf((char *)ron->content, "%lf:%lf", &cx.real, &cx.imag);
+                cxo = PyComplex_FromCComplex(cx);
+                if (PYTHON_IS_NOT_NONE(cxo)) {
+                    res = cxo;
+                }
+            }
+        }
+    }
+    return res;
 }
 
 PyObject *
