@@ -37,7 +37,7 @@ static const char Id[] = "$Id$";
 
 static const char pyxser_true_char_value[] = "True";
 static const char pyxser_false_char_value[] = "False";
-
+static const char pyxser_complex_format[] = "%lf:%lf";
 
 xmlNodePtr
 pyxser_SerializeInt(PyxSerializationArgsPtr args)
@@ -100,7 +100,7 @@ pyxser_SerializeComplex(PyxSerializationArgsPtr args)
     }
     cx = PyComplex_AsCComplex(o);
     memset((void *)sptr, 0, 128);
-    sprintf(sptr, "%lf:%lf", cx.real, cx.imag);
+    sprintf(sptr, pyxser_complex_format, cx.real, cx.imag);
 	classPtr = PyObject_GetAttrString(o, pyxser_attr_class);
 	if (PYTHON_IS_NONE(classPtr)
 		|| sptr == (char *)NULL) {
@@ -159,6 +159,7 @@ pyxunser_SerializeInt(PyxSerDeserializationArgsPtr obj)
          ron = ron->next) {
         if (ron->type == XML_TEXT_NODE) {
             res = PyInt_FromString((char *)ron->content, NULL, 10);
+            break;
         }
 	}
 	return res;
@@ -176,8 +177,10 @@ pyxunser_SerializeExactInt(PyxSerDeserializationArgsPtr obj)
     for (ron = node->children;
          ron;
          ron = ron->next) {
-        if (ron->type == XML_TEXT_NODE) {
+        if (ron->type == XML_TEXT_NODE
+            && ron->content != BAD_CAST NULL) {
             res = PyInt_FromString((char *)ron->content, NULL, 10);
+            break;
         }
     }
 	return res;
@@ -226,6 +229,7 @@ pyxunser_SerializeLong(PyxSerDeserializationArgsPtr obj)
          ron = ron->next) {
         if (ron->type == XML_TEXT_NODE) {
             res = PyInt_FromString((char *)ron->content, NULL, 10);
+            break;
         }
     }
 	return res;
@@ -244,13 +248,13 @@ pyxunser_SerializeFloat(PyxSerDeserializationArgsPtr obj)
     for (ron = node->children;
          ron;
          ron = ron->next) {
-        if (ron->type == XML_TEXT_NODE) {
-            if (ron->content != (xmlChar *)NULL) {
-                str = PyString_FromString((char *)ron->content);
-                if (PYTHON_IS_NOT_NONE(str)) {
-                    res = PyFloat_FromString(str, NULL);
-                    Py_DECREF(str);
-                }
+        if (ron->type == XML_TEXT_NODE
+            && ron->content != BAD_CAST NULL) {
+            str = PyString_FromString((char *)ron->content);
+            if (PYTHON_IS_NOT_NONE(str)) {
+                res = PyFloat_FromString(str, NULL);
+                Py_DECREF(str);
+                break;
             }
         }
     }
@@ -270,13 +274,13 @@ pyxunser_SerializeExactFloat(PyxSerDeserializationArgsPtr obj)
     for (ron = node->children;
          ron;
          ron = ron->next) {
-        if (ron->type == XML_TEXT_NODE) {
-            if (ron->content != (xmlChar *)NULL) {
-                str = PyString_FromString((char *)ron->content);
-                if (PYTHON_IS_NOT_NONE(str)) {
-                    res = PyFloat_FromString(str, NULL);
-                    Py_DECREF(str);
-                }
+        if (ron->type == XML_TEXT_NODE
+            && ron->content != BAD_CAST NULL) {
+            str = PyString_FromString((char *)ron->content);
+            if (PYTHON_IS_NOT_NONE(str)) {
+                res = PyFloat_FromString(str, NULL);
+                Py_DECREF(str);
+                break;
             }
         }
     }
@@ -297,13 +301,14 @@ pyxunser_SerializeComplex(PyxSerDeserializationArgsPtr obj)
     for (ron = node->children;
          ron;
          ron = ron->next) {
-        if (ron->type == XML_TEXT_NODE) {
-            if (ron->content != (xmlChar *)NULL) {
-                sscanf((char *)ron->content, "%lf:%lf", &cx.real, &cx.imag);
-                cxo = PyComplex_FromCComplex(cx);
-                if (PYTHON_IS_NOT_NONE(cxo)) {
-                    res = cxo;
-                }
+        if (ron->type == XML_TEXT_NODE
+            && ron->content != BAD_CAST NULL) {
+            sscanf((char *)ron->content, pyxser_complex_format,
+                   &cx.real, &cx.imag);
+            cxo = PyComplex_FromCComplex(cx);
+            if (PYTHON_IS_NOT_NONE(cxo)) {
+                res = cxo;
+                break;
             }
         }
     }

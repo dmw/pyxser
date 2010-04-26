@@ -113,7 +113,7 @@ pyxser_RunSerializationCol(PyxSerializationArgsPtr args)
 
 	currentSerialization = serxConcreteTypes[d];
 	while (currentSerialization.available == 1) {
-		if (currentSerialization.checker(item)) {
+		if (currentSerialization.check(item)) {
 			if (PYTHON_IS_NONE(currentKey)) {
                 args->o = &item;
                 args->item = &item;

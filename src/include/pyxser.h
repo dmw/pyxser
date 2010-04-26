@@ -72,6 +72,9 @@ extern "C" {
 #define PYXSER_FOUND					1
 
     typedef struct pythonUnserializationArguments_ {
+        int depth;
+        int depthcnt;
+        int error;
         PyObject **doc;
         PyObject **current;
         PyObject **tree;
@@ -82,12 +85,10 @@ extern "C" {
         xmlNodePtr *rootNode;
         xmlNodePtr *currentNode;
         char *encoding;
-        int depth;
-        int depthcnt;
-        int error;
     } PythonUnserializationArguments;
 
     typedef struct pythonSerializationArguments_ {
+        int error;
         PyObject **item;
         PyObject **ck;
         PyObject **o;
@@ -101,7 +102,6 @@ extern "C" {
         char *name;
         int *depth;
         int *depthcnt;
-        int error;
     } PythonSerializationArguments;
 
     typedef PythonUnserializationArguments *PyxSerDeserializationArgsPtr;
@@ -109,7 +109,7 @@ extern "C" {
 
     typedef struct pythonTypeSerialize_ {
         int available;
-        int (*checker)(PyObject *o);
+        int (*check)(PyObject *o);
         xmlNodePtr (*serializer)(PyxSerializationArgsPtr args);
     } PythonTypeSerialize;
 

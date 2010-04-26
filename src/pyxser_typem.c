@@ -190,6 +190,7 @@ pyxunser_TypeMapSearchAndGet(PyObject *tmap, PyObject *tval,
             Py_XDECREF(args);
             Py_XDECREF(stype);
             PyErr_Clear();
+            break;
         }
     }
     return res;

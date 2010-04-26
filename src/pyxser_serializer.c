@@ -260,7 +260,7 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
     } else {
         cs = serxConcreteTypes[c];
         while (cs.available == 1) {
-            if (cs.checker(item)) {
+            if (cs.check(item)) {
                 args->o = &item;
                 args->name = PyString_AS_STRING(currentKey);
                 newSerializedNode = cs.serializer(args);
