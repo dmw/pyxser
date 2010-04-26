@@ -20,8 +20,8 @@
   along with pyxser.  If not, see <http://www.gnu.org/licenses/>.
 
   <!DOCTYPE pyxs:obj
-  PUBLIC "-//coder.cl//DTD pyxser 1.0//EN"
-  "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd">
+            PUBLIC "-//coder.cl//DTD pyxser 1.0//EN"
+            "http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd">
 */
 #ifndef lint
 static const char Id[] = "$Id$";
@@ -29,6 +29,7 @@ static const char Id[] = "$Id$";
 
 #include <Python.h>
 #include <datetime.h>
+
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <libxml/c14n.h>
