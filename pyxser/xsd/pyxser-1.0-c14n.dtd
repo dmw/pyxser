@@ -20,7 +20,7 @@
               PUBLIC '-//coder.cl//DTD pyxser 1.0//EN'
               'http://projects.coder.cl/pyxser/dtd/pyxser-1.0.dtd'>
 
-    $Id: pyxser-1.0.dtd 16 2009-03-20 02:57:46Z damowe $
+    $Id$
   -->
 
 <!ENTITY % xml.xmlns 'xmlns' >
