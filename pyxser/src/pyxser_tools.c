@@ -706,16 +706,18 @@ int
 pyxunserInt_Check(xmlNodePtr node)
 {
 	char *prop;
-	if (node != (xmlNodePtr)NULL) {
-		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
-		if (prop != (char *)NULL) {
-			if ((strncmp(prop, type_int, strlen(type_int))) == 0) {
-                PYXSER_XMLFREE(prop);
-				return 1;
-			}
-            PYXSER_XMLFREE(prop);
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return 0;
+    }
+    prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
+    if (prop == (char *)NULL) {
+        return 0;
+    }
+    if ((strncmp(prop, type_int, strlen(type_int))) == 0) {
+        PYXSER_XMLFREE(prop);
+        return 1;
+    }
+    PYXSER_XMLFREE(prop);
 	return 0;
 }
 
@@ -730,16 +732,18 @@ int
 pyxunserBool_Check(xmlNodePtr node)
 {
 	char *prop;
-	if (node != (xmlNodePtr)NULL) {
-		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
-		if (prop != (char *)NULL) {
-			if ((strncmp(prop, type_bool, strlen(type_bool))) == 0) {
-                PYXSER_XMLFREE(prop);
-                return 1;
-			}
-            PYXSER_XMLFREE(prop);
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return 0;
+    }
+    prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
+    if (prop == (char *)NULL) {
+        return 0;
+    }
+    if ((strncmp(prop, type_bool, strlen(type_bool))) == 0) {
+        PYXSER_XMLFREE(prop);
+        return 1;
+    }
+    PYXSER_XMLFREE(prop);
 	return 0;
 }
 
@@ -747,16 +751,18 @@ int
 pyxunserLong_CheckExact(xmlNodePtr node)
 {
 	char *prop;
-	if (node != (xmlNodePtr)NULL) {
-		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
-		if (prop != (char *)NULL) {
-			if ((strncmp(prop, type_long, strlen(type_long))) == 0) {
-                PYXSER_XMLFREE(prop);
-				return 1;
-			}
-            PYXSER_XMLFREE(prop);
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return 0;
+    }
+    prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
+    if (prop == (char *)NULL) {
+        return 0;
+    }
+    if ((strncmp(prop, type_long, strlen(type_long))) == 0) {
+        PYXSER_XMLFREE(prop);
+        return 1;
+    }
+    PYXSER_XMLFREE(prop);
 	return 0;
 }
 
@@ -764,16 +770,18 @@ int
 pyxunserFloat_Check(xmlNodePtr node)
 {
 	char *prop;
-	if (node != (xmlNodePtr)NULL) {
-		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
-		if (prop != (char *)NULL) {
-			if ((strncmp(prop, type_float, strlen(type_float))) == 0) {
-                PYXSER_XMLFREE(prop);
-				return 1;
-			}
-            PYXSER_XMLFREE(prop);
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return 0;
+    }
+    prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
+    if (prop == (char *)NULL) {
+        return 0;
+    }
+    if ((strncmp(prop, type_float, strlen(type_float))) == 0) {
+        PYXSER_XMLFREE(prop);
+        return 1;
+    }
+    PYXSER_XMLFREE(prop);
 	return 0;
 }
 
@@ -781,16 +789,18 @@ int
 pyxunserFloat_CheckExact(xmlNodePtr node)
 {
 	char *prop;
-	if (node != (xmlNodePtr)NULL) {
-		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
-		if (prop != (char *)NULL) {
-			if ((strncmp(prop, type_float, strlen(type_float))) == 0) {
-                PYXSER_XMLFREE(prop);
-				return 1;
-			}
-            PYXSER_XMLFREE(prop);
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return 0;
+    }
+    prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
+    if (prop == (char *)NULL) {
+        return 0;
+    }
+    if ((strncmp(prop, type_float, strlen(type_float))) == 0) {
+        PYXSER_XMLFREE(prop);
+        return 1;
+    }
+    PYXSER_XMLFREE(prop);
 	return 0;
 }
 
@@ -798,16 +808,18 @@ int
 pyxunserComplex_Check(xmlNodePtr node)
 {
 	char *prop;
-	if (node != (xmlNodePtr)NULL) {
-		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
-		if (prop != (char *)NULL) {
-			if ((strncmp(prop, type_complex, strlen(type_complex))) == 0) {
-                PYXSER_XMLFREE(prop);
-				return 1;
-			}
-            PYXSER_XMLFREE(prop);
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return 0;
+    }
+    prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
+    if (prop == (char *)NULL) {
+        return 0;
+    }
+    if ((strncmp(prop, type_complex, strlen(type_complex))) == 0) {
+        PYXSER_XMLFREE(prop);
+        return 1;
+    }
+    PYXSER_XMLFREE(prop);
 	return 0;
 }
 
@@ -815,16 +827,18 @@ int
 pyxunserComplex_CheckExact(xmlNodePtr node)
 {
 	char *prop;
-	if (node != (xmlNodePtr)NULL) {
-		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
-		if (prop != (char *)NULL) {
-			if ((strncmp(prop, type_complex, strlen(type_complex))) == 0) {
-                PYXSER_XMLFREE(prop);
-				return 1;
-			}
-            PYXSER_XMLFREE(prop);
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return 0;
+    }
+    prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
+    if (prop == (char *)NULL) {
+        return 0;
+    }
+    if ((strncmp(prop, type_complex, strlen(type_complex))) == 0) {
+        PYXSER_XMLFREE(prop);
+        return 1;
+    }
+    PYXSER_XMLFREE(prop);
 	return 0;
 }
 
@@ -832,16 +846,18 @@ int
 pyxunserString_Check(xmlNodePtr node)
 {
 	char *prop;
-	if (node != (xmlNodePtr)NULL) {
-		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
-		if (prop != (char *)NULL) {
-			if ((strncmp(prop, type_str, strlen(type_str))) == 0) {
-                PYXSER_XMLFREE(prop);
-				return 1;
-			}
-            PYXSER_XMLFREE(prop);
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return 0;
+    }
+    prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
+    if (prop == (char *)NULL) {
+        return 0;
+    }
+    if ((strncmp(prop, type_str, strlen(type_str))) == 0) {
+        PYXSER_XMLFREE(prop);
+        return 1;
+    }
+    PYXSER_XMLFREE(prop);
 	return 0;
 }
 
@@ -849,16 +865,18 @@ int
 pyxunserString_CheckExact(xmlNodePtr node)
 {
 	char *prop;
-	if (node != (xmlNodePtr)NULL) {
-		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
-		if (prop != (char *)NULL) {
-			if ((strncmp(prop, type_str, strlen(type_str))) == 0) {
-                PYXSER_XMLFREE(prop);
-				return 1;
-			}
-            PYXSER_XMLFREE(prop);
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return 0;
+    }
+    prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
+    if (prop == (char *)NULL) {
+        return 0;
+    }
+    if ((strncmp(prop, type_str, strlen(type_str))) == 0) {
+        PYXSER_XMLFREE(prop);
+        return 1;
+    }
+    PYXSER_XMLFREE(prop);
 	return 0;
 }
 
@@ -866,16 +884,18 @@ int
 pyxunserUnicode_Check(xmlNodePtr node)
 {
 	char *prop;
-	if (node != (xmlNodePtr)NULL) {
-		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
-		if (prop != (char *)NULL) {
-			if ((strncmp(prop, type_unicode, strlen(type_unicode))) == 0) {
-                PYXSER_XMLFREE(prop);
-				return 1;
-			}
-            PYXSER_XMLFREE(prop);
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return 0;
+    }
+    prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
+    if (prop == (char *)NULL) {
+        return 0;
+    }
+    if ((strncmp(prop, type_unicode, strlen(type_unicode))) == 0) {
+        PYXSER_XMLFREE(prop);
+        return 1;
+    }
+    PYXSER_XMLFREE(prop);
 	return 0;
 }
 
@@ -883,16 +903,18 @@ int
 pyxunserUnicodeExact_CheckExact(xmlNodePtr node)
 {
 	char *prop;
-	if (node != (xmlNodePtr)NULL) {
-		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
-		if (prop != (char *)NULL) {
-			if ((strncmp(prop, type_unicode, strlen(type_unicode))) == 0) {
-                PYXSER_XMLFREE(prop);
-				return 1;
-			}
-            PYXSER_XMLFREE(prop);
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return 0;
+    }
+    prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
+    if (prop == (char *)NULL) {
+        return 0;
+    }
+    if ((strncmp(prop, type_unicode, strlen(type_unicode))) == 0) {
+        PYXSER_XMLFREE(prop);
+        return 1;
+    }
+    PYXSER_XMLFREE(prop);
 	return 0;
 }
 
@@ -900,16 +922,18 @@ int
 pyxunserBuffer_Check(xmlNodePtr node)
 {
 	char *prop;
-	if (node != (xmlNodePtr)NULL) {
-		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
-		if (prop != (char *)NULL) {
-			if ((strncmp(prop, type_buffer, strlen(type_buffer))) == 0) {
-                PYXSER_XMLFREE(prop);
-				return 1;
-			}
-            PYXSER_XMLFREE(prop);
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return 0;
+    }
+    prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
+    if (prop == (char *)NULL) {
+        return 0;
+    }
+    if ((strncmp(prop, type_buffer, strlen(type_buffer))) == 0) {
+        PYXSER_XMLFREE(prop);
+        return 1;
+    }
+    PYXSER_XMLFREE(prop);
 	return 0;
 }
 
@@ -917,16 +941,18 @@ int
 pyxunserTuple_Check(xmlNodePtr node)
 {
 	char *prop;
-	if (node != (xmlNodePtr)NULL) {
-		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
-		if (prop != (char *)NULL) {
-			if ((strncmp(prop, type_tuple, strlen(type_tuple))) == 0) {
-                PYXSER_XMLFREE(prop);
-				return 1;
-			}
-            PYXSER_XMLFREE(prop);
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return 0;
+    }
+    prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
+    if (prop == (char *)NULL) {
+        return 0;
+    }
+    if ((strncmp(prop, type_tuple, strlen(type_tuple))) == 0) {
+        PYXSER_XMLFREE(prop);
+        return 1;
+    }
+    PYXSER_XMLFREE(prop);
 	return 0;
 }
 
@@ -934,16 +960,18 @@ int
 pyxunserList_Check(xmlNodePtr node)
 {
 	char *prop;
-	if (node != (xmlNodePtr)NULL) {
-		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
-		if (prop != (char *)NULL) {
-			if ((strncmp(prop, type_list, strlen(type_list))) == 0) {
-                PYXSER_XMLFREE(prop);
-				return 1;
-			}
-            PYXSER_XMLFREE(prop);
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return 0;
+    }
+    prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
+    if (prop == (char *)NULL) {
+        return 0;
+    }
+    if ((strncmp(prop, type_list, strlen(type_list))) == 0) {
+        PYXSER_XMLFREE(prop);
+        return 1;
+    }
+    PYXSER_XMLFREE(prop);
 	return 0;
 }
 
@@ -951,16 +979,18 @@ int
 pyxunserDict_Check(xmlNodePtr node)
 {
 	char *prop;
-	if (node != (xmlNodePtr)NULL) {
-		prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
-		if (prop != (char *)NULL) {
-			if ((strncmp(prop, type_dict, strlen(type_dict))) == 0) {
-                PYXSER_XMLFREE(prop);
-				return 1;
-			}
-            PYXSER_XMLFREE(prop);
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return 0;
+    }
+    prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
+    if (prop == (char *)NULL) {
+        return 0;
+    }
+    if ((strncmp(prop, type_dict, strlen(type_dict))) == 0) {
+        PYXSER_XMLFREE(prop);
+        return 1;
+    }
+    PYXSER_XMLFREE(prop);
 	return 0;
 }
 
