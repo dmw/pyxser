@@ -592,22 +592,24 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
     xmlDocDumpFormatMemoryEnc(docXml, &xmlBuff, &bufferSize,
                               py_enc, 1);
 
-    if (xmlBuff != BAD_CAST NULL) {
-        res = PyString_FromStringAndSize((const char *)xmlBuff,
-                                         bufferSize);
-        if (PYTHON_IS_NOT_NONE(res)) {
-            xmlFree(xmlBuff);
-            xmlFreeDoc(docXml);
-            PyErr_Clear();
-            return res;
-        } else {
-            xmlFree(xmlBuff);
-            xmlFreeDoc(docXml);
-            PyErr_SetString(PyExc_ValueError, msg_non_object);
-            return NULL;
-        }
+    if (xmlBuff == BAD_CAST NULL) {
+        xmlFreeDoc(docXml);
+        PyErr_SetString(PyExc_ValueError, msg_non_object);
+        return NULL;
+    }
+    res = PyString_FromStringAndSize((const char *)xmlBuff,
+                                     bufferSize);
+    if (PYTHON_IS_NOT_NONE(res)) {
+        xmlFree(xmlBuff);
+        xmlFreeDoc(docXml);
+        PyErr_Clear();
+        return res;
+    } else {
+        xmlFree(xmlBuff);
+        xmlFreeDoc(docXml);
+        PyErr_SetString(PyExc_ValueError, msg_non_object);
+        return NULL;
 	}
-    return NULL;
 }
 
 static PyObject *
@@ -700,23 +702,25 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
         PyErr_SetString(PyExc_ValueError, msg_non_object);
         return NULL;
     }
-    if (xmlBuff != NULL) {
-        ret = xmlBuff->buffer->use;
-        docPtr = BAD_CAST xmlStrndup(xmlBuff->buffer->content, ret);
-        res = PyString_FromStringAndSize((const char *)docPtr, ret);
-        xmlOutputBufferClose(xmlBuff);
-        if (PYTHON_IS_NOT_NONE(res)) {
-            xmlFree(docPtr);
-            xmlFreeDoc(docXml);
-            PyErr_Clear();
-            return res;
-        }
+    if (xmlBuff == NULL) {
+        xmlFree(docPtr);
+        PyErr_SetString(PyExc_ValueError, msg_non_object);
+        return NULL;
+    }
+    ret = xmlBuff->buffer->use;
+    docPtr = BAD_CAST xmlStrndup(xmlBuff->buffer->content, ret);
+    res = PyString_FromStringAndSize((const char *)docPtr, ret);
+    xmlOutputBufferClose(xmlBuff);
+    if (PYTHON_IS_NOT_NONE(res)) {
+        xmlFree(docPtr);
+        xmlFreeDoc(docXml);
+        PyErr_Clear();
+        return res;
     } else {
         xmlFreeDoc(docXml);
         PyErr_SetString(PyExc_ValueError, msg_non_object);
         return NULL;
     }
-    return NULL;
 	/* error! not created */
 }
 
@@ -800,20 +804,20 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 
     ret = xmlC14NDocDumpMemory(docXml, NULL, py_exc, NULL,
                                py_com, &xmlBuff);
-    if (xmlBuff != NULL && ret > 0) {
-        res = PyString_FromStringAndSize((const char *)xmlBuff,
-                                         ret);
-        if (PYTHON_IS_NOT_NONE(res)) {
+    if (xmlBuff == NULL || ret <= 0) {
+        if (xmlBuff != (xmlChar *)NULL) {
             xmlFree(xmlBuff);
-            xmlFreeDoc(docXml);
-            PyErr_Clear();
-            return res;
-        } else {
-            xmlFree(xmlBuff);
-            xmlFreeDoc(docXml);
-            PyErr_SetString(PyExc_ValueError, msg_non_object);
-            return NULL;
         }
+        xmlFreeDoc(docXml);
+        PyErr_SetString(PyExc_ValueError, msg_non_object);
+        return NULL;
+    }
+    res = PyString_FromStringAndSize((const char *)xmlBuff, ret);
+    if (PYTHON_IS_NOT_NONE(res)) {
+        xmlFree(xmlBuff);
+        xmlFreeDoc(docXml);
+        PyErr_Clear();
+        return res;
     } else {
         if (xmlBuff != (xmlChar *)NULL) {
             xmlFree(xmlBuff);
