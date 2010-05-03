@@ -86,33 +86,38 @@ pyxser_SerializeUnicode(PyxSerializationArgsPtr args)
                             PyUnicode_GET_DATA_SIZE(o), enc,
                             pyxser_xml_encoding_mode);
     data_size = PyString_Size(unic);
-    if (PYTHON_IS_NOT_NONE(unic)) {
-        nptr = PyString_AS_STRING(className);
-        sptr = PyString_AS_STRING(unic);
-        if (sptr != (char *)NULL
-            && nptr != (char *)NULL) {
-            nen = xmlNewDocNode(doc,
-                                pyxser_GetDefaultNs(),
-                                BAD_CAST pyxser_xml_attr_item,
-                                NULL);
-            ntxt = xmlNewDocText(doc, BAD_CAST sptr);
-            typeAttr = xmlNewProp(nen,
-                                  BAD_CAST pyxser_xml_attr_type,
-                                  BAD_CAST nptr);
-            if (name != (char *)NULL) {
-                nameAttr = xmlNewProp(nen,
-                                      BAD_CAST pyxser_xml_attr_name,
-                                      BAD_CAST name);
-            }
-            memset(sz_attr, 0, 30);
-            sprintf(sz_attr, "%ld", (long)data_size);
-            typeAttr = xmlNewProp(nen,
-                                  BAD_CAST pyxser_xml_attr_size,
-                                  BAD_CAST sz_attr);
-            xmlAddChild(nen, ntxt);
-        }
-        PYXSER_FREE_OBJECT(unic);
+
+    if (PYTHON_IS_NONE(unic)) {
+        PYXSER_FREE_OBJECT(className);
+        PYXSER_FREE_OBJECT(classPtr);
+        return (xmlNodePtr)NULL;
     }
+
+    nptr = PyString_AS_STRING(className);
+    sptr = PyString_AS_STRING(unic);
+    if (sptr != (char *)NULL
+        && nptr != (char *)NULL) {
+        nen = xmlNewDocNode(doc,
+                            pyxser_GetDefaultNs(),
+                            BAD_CAST pyxser_xml_attr_item,
+                            NULL);
+        ntxt = xmlNewDocText(doc, BAD_CAST sptr);
+        typeAttr = xmlNewProp(nen,
+                              BAD_CAST pyxser_xml_attr_type,
+                              BAD_CAST nptr);
+        if (name != (char *)NULL) {
+            nameAttr = xmlNewProp(nen,
+                                  BAD_CAST pyxser_xml_attr_name,
+                                  BAD_CAST name);
+        }
+        memset(sz_attr, 0, 30);
+        sprintf(sz_attr, "%ld", (long)data_size);
+        typeAttr = xmlNewProp(nen,
+                              BAD_CAST pyxser_xml_attr_size,
+                              BAD_CAST sz_attr);
+        xmlAddChild(nen, ntxt);
+    }
+    PYXSER_FREE_OBJECT(unic);
     PYXSER_FREE_OBJECT(className);
     PYXSER_FREE_OBJECT(classPtr);
 	return nen;
@@ -256,6 +261,7 @@ pyxunser_SerializeUnicode(PyxSerDeserializationArgsPtr obj)
                                         enc,
                                         pyxser_xml_encoding_mode);
                 res = unic;
+                break;
             }
         }
         PYXSER_XMLFREE(propSize);
