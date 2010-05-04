@@ -221,6 +221,7 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
     PyObject **oold = args->o;
     PyObject *currentKey = *args->ck;
     PyObject *className;
+    PyObject *unic;
 
     xmlNodePtr txtNode = (xmlNodePtr)NULL;
     xmlDocPtr *docptr = args->docptr;
@@ -237,6 +238,7 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
 	xmlAttrPtr pxsnam = (xmlAttrPtr)NULL;
 
 	char *objnam = (char *)NULL;
+    char *enc = *args->enc;
 	int c = 0;
 
     if (PYTHON_IS_NOT_NONE(args->typemap)) {
@@ -262,7 +264,15 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
         while (cs.available == 1) {
             if (cs.check(item)) {
                 args->o = &item;
-                args->name = PyString_AS_STRING(currentKey);
+                if (pyxserUnicode_Check(currentKey) == 1) {
+                    unic = PyUnicode_Encode(PyUnicode_AS_UNICODE(currentKey),
+                                            PyUnicode_GET_DATA_SIZE(currentKey),
+                                            enc, pyxser_xml_encoding_mode);
+                    args->name = PyString_AS_STRING(unic);
+                    PYXSER_FREE_OBJECT(unic);
+                } else {
+                    args->name = PyString_AS_STRING(currentKey);
+                }
                 newSerializedNode = cs.serializer(args);
                 currentNode = *currentNodeOld;
                 args->o = oold;

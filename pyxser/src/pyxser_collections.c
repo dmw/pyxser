@@ -102,6 +102,8 @@ pyxser_RunSerializationCol(PyxSerializationArgsPtr args)
     PyObject *item = *args->item;
     PyObject **oold = args->o;
     PyObject *currentKey = *args->ck;
+    PyObject *unic = (PyObject *)NULL;
+    const char *enc = *args->enc;
     PyListObject *dupItems = *args->dupSrcItems;
     xmlDocPtr *docPtr = args->docptr;
     int *depthcnt = args->depthcnt;
@@ -126,7 +128,15 @@ pyxser_RunSerializationCol(PyxSerializationArgsPtr args)
 			} else {
                 args->o = &item;
                 args->item = &item;
-                name = PyString_AS_STRING(currentKey);
+                if (pyxserUnicode_Check(currentKey) == 1) {
+                    unic = PyUnicode_Encode(PyUnicode_AS_UNICODE(currentKey),
+                                            PyUnicode_GET_DATA_SIZE(currentKey),
+                                            enc, pyxser_xml_encoding_mode);
+                    args->name = PyString_AS_STRING(unic);
+                    PYXSER_FREE_OBJECT(unic);
+                } else {
+                    name = PyString_AS_STRING(currentKey);
+                }
                 args->name = name;
 				newSerNode = currentSerialization.serializer(args);
                 args->o = oold;
