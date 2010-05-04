@@ -265,7 +265,7 @@ if __name__ == "__main__":
     another.dyn_prop1 = thisa
     test.dyn_prop1 = [u'holá', u'chaó', another]
     test.dyn_prop2 = (u'hol`', u'sïn', 'trip', other)
-    test.dyn_prop3 = {'saludo1': u'hólà', 'saludo2': u'chäó', 'saludo4': 'goodbye', 'saludo5': thisc}
+    test.dyn_prop3 = {'sáludó1': u'hólà', 'sàludà2': u'chäó', 'sáludò4': 'gòódbye', 'saludo5': thisc}
     test.dyn_prop4 = u'sómé tèxtè ïñ Unicodè'
     test.dyn_prop5 = u'Añother Texé Iñ ÜnìcóDËc'
     test.dyn_prop6 = 1.5
