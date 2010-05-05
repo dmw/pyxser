@@ -266,15 +266,15 @@ pyxser_AddReference(PyObject *o, xmlNodePtr currentNode)
 	xmlNodePtr refNode = (xmlNodePtr)NULL;
 
 	char *charpRepr = (char *)NULL;
-	char newRef[33] = "id-";
-	long hash = -1;
+	char newRef[33] = "id";
+	unsigned long hash = 0;
 	if (PYTHON_IS_NONE(o)
 		|| currentNode == (xmlNodePtr)NULL) {
 		return (xmlNodePtr)NULL;
 	}
-	hash = (long)o;
-	if (hash != -1) {
-		longIdentifier = PyLong_FromLong(hash);
+	hash = (unsigned long)o;
+	if (hash != 0) {
+		longIdentifier = PyLong_FromUnsignedLong(hash);
 		stringRepr = PyObject_Str(longIdentifier);
 		charpRepr = PyString_AS_STRING(stringRepr);
 		if (charpRepr != (char *)NULL) {
@@ -299,18 +299,17 @@ pyxser_AddIdentifier(PyObject *o, xmlNodePtr currentNode)
 	xmlAttrPtr idAttr = (xmlAttrPtr)NULL;
 
 	char *charpRepr = (char *)NULL;
-	char newRef[33] = "id-";
-	long hash = -1;
+	char newRef[40] = "id";
+	unsigned long hash = 0;
 
-	if (PYTHON_IS_NONE(o)
-		|| currentNode == (xmlNodePtr)NULL) {
+	if (PYTHON_IS_NONE(o) || currentNode == (xmlNodePtr)NULL) {
 		return;
 	}
 
-	hash = (long)o;
+	hash = (unsigned long)o;
 
-	if (hash != -1) {
-		longIdentifier = PyLong_FromLong(hash);
+	if (hash != 0) {
+		longIdentifier = PyLong_FromUnsignedLong(hash);
 		stringRepr = PyObject_Str(longIdentifier);
 		charpRepr = PyString_AS_STRING(stringRepr);
 		strncat(newRef, charpRepr, 32);
