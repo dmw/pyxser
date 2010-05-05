@@ -352,24 +352,28 @@ pyxser_UnserializeElement(PyObject *ct, PyObject **current,
 
     attr_name = pyxser_ExtractPropertyName(pyxser_xml_attr_name,
                                            ron);
-    if (PYTHON_IS_NOT_NONE(unser)) {
-        if (attr_name != (char *)NULL) {
-            ctrl = PyObject_SetAttrString(*current,
-                                          attr_name, unser);
-            PYXSER_XMLFREE(attr_name);
-            Py_XDECREF(unser);
-        }
-        pyxser_AddAvailableObject((PyObject *)*dups,
-                                  (char *)n_id, unser);
-        cacheCurrent = *(obj->current);
-        cacheCurrentNode = ron;
-        *(obj->current) = unser;
-        *(obj->currentNode) = ron;
-        unser = pyxser_UnserializeBlock(obj);
-        *(obj->current) = cacheCurrent;
-        *(obj->currentNode) = cacheCurrentNode;
-        ron = cacheCurrentNode;
+
+    if (PYTHON_IS_NONE(unser)) {
+        Py_XDECREF(ndict);
+        return (PyObject *)NULL;
     }
+
+    if (attr_name != (char *)NULL) {
+        ctrl = PyObject_SetAttrString(*current,
+                                      attr_name, unser);
+        PYXSER_XMLFREE(attr_name);
+        Py_XDECREF(unser);
+    }
+    pyxser_AddAvailableObject((PyObject *)*dups,
+                              (char *)n_id, unser);
+    cacheCurrent = *(obj->current);
+    cacheCurrentNode = ron;
+    *(obj->current) = unser;
+    *(obj->currentNode) = ron;
+    unser = pyxser_UnserializeBlock(obj);
+    *(obj->current) = cacheCurrent;
+    *(obj->currentNode) = cacheCurrentNode;
+    ron = cacheCurrentNode;
     Py_XDECREF(ndict);
     return unser;
 }
@@ -462,59 +466,60 @@ pyxser_UnserializeBlock(PyxSerDeserializationArgsPtr obj)
 		 ron != (xmlNodePtr)NULL;
 		 ron = ron->next) {
 		*currentNode = ron;
-		if (ron->type == XML_ELEMENT_NODE) {
-			if ((strncmp((char *)ron->name,
-						 (char *)pyxser_xml_element_prop,
-						 len_element)) == 0
-				|| (strncmp((char *)ron->name,
-							(char *)pyxser_xml_element_collection,
-							len_collection)) == 0) {
+        if (ron->type != XML_ELEMENT_NODE) {
+            continue;
+        }
+        if ((strncmp((char *)ron->name,
+                     (char *)pyxser_xml_element_prop,
+                     len_element)) == 0
+            || (strncmp((char *)ron->name,
+                        (char *)pyxser_xml_element_collection,
+                        len_collection)) == 0) {
 
-                pyxser_RunDeserializationMachine(ron, current, obj);
+            pyxser_RunDeserializationMachine(ron, current, obj);
 
-			} else if ((strncmp((char *)ron->name,
-								(char *)pyxser_xml_element_object,
-								len_object)) == 0) {
+        } else if ((strncmp((char *)ron->name,
+                            (char *)pyxser_xml_element_object,
+                            len_object)) == 0) {
 
-				n_type = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_type);
-				n_module = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_module);
-				n_id = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_id);
-				n_ref = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_ref);
-				unser = pyxser_CheckAvailableObject((PyObject *)*dups,
-													(char *)n_ref);
-				if (n_type != (char *)NULL
-					&& n_module != (char *)NULL
-					&& n_id != (char *)NULL
-					&& unser == (PyObject *)NULL) {
-                    ct = pyxser_SearchTypesInModules(n_module, n_type, modules);
-					if (PYTHON_IS_NOT_NONE(ct)) {
+            n_type = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_type);
+            n_module = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_module);
+            n_id = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_id);
+            n_ref = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_ref);
+            unser = pyxser_CheckAvailableObject((PyObject *)*dups,
+                                                (char *)n_ref);
+            if (n_type != (char *)NULL
+                && n_module != (char *)NULL
+                && n_id != (char *)NULL
+                && unser == (PyObject *)NULL) {
+                ct = pyxser_SearchTypesInModules(n_module, n_type, modules);
+                if (PYTHON_IS_NOT_NONE(ct)) {
+                    unser = pyxser_UnserializeElement(ct, current, dups, cacheCurrent,
+                                                      cacheCurrentNode, ron, n_id, obj);
+                } else {
+                    ct = pyxser_SearchObjectInMain(n_type);
+                    if (PYTHON_IS_NOT_NONE(ct)) {
                         unser = pyxser_UnserializeElement(ct, current, dups, cacheCurrent,
                                                           cacheCurrentNode, ron, n_id, obj);
-					} else {
-						ct = pyxser_SearchObjectInMain(n_type);
-						if (PYTHON_IS_NOT_NONE(ct)) {
-                            unser = pyxser_UnserializeElement(ct, current, dups, cacheCurrent,
-                                                              cacheCurrentNode, ron, n_id, obj);
-                        }
-					}
-                    PYXSER_XMLFREE(n_type);
-                    PYXSER_XMLFREE(n_module);
-                    PYXSER_XMLFREE(n_id);
-                    PYXSER_XMLFREE(n_ref);
-				} else {
-					attr_name = pyxser_ExtractPropertyName(pyxser_xml_attr_name, ron);
-					if (attr_name != (char *)NULL
-						&& PYTHON_IS_NOT_NONE(unser)) {
-						ctrl = PyObject_SetAttrString(*current, attr_name, unser);
-                        PYXSER_XMLFREE(attr_name);
-					}
-				}
+                    }
+                }
                 PYXSER_XMLFREE(n_type);
                 PYXSER_XMLFREE(n_module);
                 PYXSER_XMLFREE(n_id);
                 PYXSER_XMLFREE(n_ref);
-			}
-		}
+            } else {
+                attr_name = pyxser_ExtractPropertyName(pyxser_xml_attr_name, ron);
+                if (attr_name != (char *)NULL
+                    && PYTHON_IS_NOT_NONE(unser)) {
+                    ctrl = PyObject_SetAttrString(*current, attr_name, unser);
+                    PYXSER_XMLFREE(attr_name);
+                }
+            }
+            PYXSER_XMLFREE(n_type);
+            PYXSER_XMLFREE(n_module);
+            PYXSER_XMLFREE(n_id);
+            PYXSER_XMLFREE(n_ref);
+        }
 	}
 	return *(obj->current);
 }
@@ -565,72 +570,79 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
 
     validity = pyxser_ValidateDocumentXSD(*docptr);
 
-    if (validity == 1) {
-        if (*docptr != (xmlDocPtr)NULL) {
-            *rootNode = xmlDocGetRootElement(*docptr);
-            currentNode = rootNode;
-            *currentNode = *rootNode;
-            obj->currentNode = currentNode;
-            n_type = (char *)xmlGetProp(*currentNode,
-                                        BAD_CAST pyxser_xml_attr_type);
-            n_module = (char *)xmlGetProp(*currentNode,
-                                          BAD_CAST pyxser_xml_attr_module);
-            n_id = (char *)xmlGetProp(*currentNode,
-                                      BAD_CAST pyxser_xml_attr_id);
-            if (*dups == (PyDictObject *)NULL) {
-                *dups = (PyDictObject *)PyDict_New();
-            }
-            if (n_type != (char *)NULL
-                && n_module != (char *)NULL
-                && n_id != (char *)NULL) {
-                if ((pyxser_ModuleNotMain(n_module)) == 1) {
-                    ct = pyxser_SearchTypesInModules(n_module,
-                                                     n_type,
-                                                     modules);
-                    if (PYTHON_IS_NOT_NONE(ct)) {
-                        if (*tree == (PyObject *)NULL) {
-                            *tree = PyObject_CallFunctionObjArgs(ct, NULL);
-                            PyErr_Clear();
-                            if (PYTHON_IS_NONE(*tree)) {
-                                ndict = PyDict_New();
-                                *tree = PyInstance_NewRaw(ct, ndict);
-                            }
-                            *current = *tree;
-                            obj->current = current;
-                            obj->tree = tree;
-                            pyxser_UnserializeBlock(obj);
-                            *(obj->current) = cacheCurrent;
-                            *(obj->currentNode) = cacheCurrentNode;
-                            obj->tree = tree;
-                            Py_XDECREF(ndict);
-                        }
+    if (validity != 1) {
+		PyErr_SetString(PyExc_ValueError, "Invalid XML");
+        return NULL;
+    }
+
+    if (*docptr == (xmlDocPtr)NULL) {
+		PyErr_SetString(PyExc_ValueError, "Invalid XML");
+        return NULL;
+    }
+
+    *rootNode = xmlDocGetRootElement(*docptr);
+    currentNode = rootNode;
+    *currentNode = *rootNode;
+    obj->currentNode = currentNode;
+    n_type = (char *)xmlGetProp(*currentNode,
+                                BAD_CAST pyxser_xml_attr_type);
+    n_module = (char *)xmlGetProp(*currentNode,
+                                  BAD_CAST pyxser_xml_attr_module);
+    n_id = (char *)xmlGetProp(*currentNode,
+                              BAD_CAST pyxser_xml_attr_id);
+    if (*dups == (PyDictObject *)NULL) {
+        *dups = (PyDictObject *)PyDict_New();
+    }
+    if (n_type != (char *)NULL
+        && n_module != (char *)NULL
+        && n_id != (char *)NULL) {
+        if ((pyxser_ModuleNotMain(n_module)) == 1) {
+            ct = pyxser_SearchTypesInModules(n_module,
+                                             n_type,
+                                             modules);
+            if (PYTHON_IS_NOT_NONE(ct)) {
+                if (*tree == (PyObject *)NULL) {
+                    *tree = PyObject_CallFunctionObjArgs(ct, NULL);
+                    PyErr_Clear();
+                    if (PYTHON_IS_NONE(*tree)) {
+                        ndict = PyDict_New();
+                        *tree = PyInstance_NewRaw(ct, ndict);
                     }
-                } else {
-                    ct = pyxser_SearchObjectInMain(n_type);
-                    if (PYTHON_IS_NOT_NONE(ct)) {
-                        if (*tree == (PyObject *)NULL) {
-                            *tree = PyObject_CallFunctionObjArgs(ct, NULL);
-                            PyErr_Clear();
-                            if (PYTHON_IS_NONE(*tree)) {
-                                ndict = PyDict_New();
-                                *tree = PyInstance_NewRaw(ct, ndict);
-                            }
-                            *current = *tree;
-                            obj->current = current;
-                            obj->tree = tree;
-                            pyxser_UnserializeBlock(obj);
-                            *(obj->current) = cacheCurrent;
-                            *(obj->currentNode) = cacheCurrentNode;
-                            Py_XDECREF(ndict);
-                        }
-                    }
+                    *current = *tree;
+                    obj->current = current;
+                    obj->tree = tree;
+                    pyxser_UnserializeBlock(obj);
+                    *(obj->current) = cacheCurrent;
+                    *(obj->currentNode) = cacheCurrentNode;
+                    obj->tree = tree;
+                    Py_XDECREF(ndict);
                 }
             }
-            PYXSER_XMLFREE(n_type);
-            PYXSER_XMLFREE(n_module);
-            PYXSER_XMLFREE(n_id);
+        } else {
+            ct = pyxser_SearchObjectInMain(n_type);
+            if (PYTHON_IS_NOT_NONE(ct)) {
+                if (*tree == (PyObject *)NULL) {
+                    *tree = PyObject_CallFunctionObjArgs(ct, NULL);
+                    PyErr_Clear();
+                    if (PYTHON_IS_NONE(*tree)) {
+                        ndict = PyDict_New();
+                        *tree = PyInstance_NewRaw(ct, ndict);
+                    }
+                    *current = *tree;
+                    obj->current = current;
+                    obj->tree = tree;
+                    pyxser_UnserializeBlock(obj);
+                    *(obj->current) = cacheCurrent;
+                    *(obj->currentNode) = cacheCurrentNode;
+                    Py_XDECREF(ndict);
+                }
+            }
         }
     }
+    PYXSER_XMLFREE(n_type);
+    PYXSER_XMLFREE(n_module);
+    PYXSER_XMLFREE(n_id);
+
 	if (*docptr != (xmlDocPtr)NULL) {
 		xmlFreeDoc(*docptr);
 	}
