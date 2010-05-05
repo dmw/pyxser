@@ -44,7 +44,7 @@
       <xs:attribute name="objid" type="xs:ID"/>
       <xs:attribute name="objref" type="xs:IDREF"/>
       <xs:attribute name="type" type="xs:NMTOKEN"/>
-      <xs:attribute name="name" type="xs:NMTOKEN"/>
+      <xs:attribute name="name" type="xs:string"/>
       <xs:attribute name="module" type="xs:NMTOKEN"/>
       <xs:attribute name="size" type="xs:NMTOKEN"/>
     </xs:complexType>
@@ -57,13 +57,13 @@
         <xs:element ref="obj"/>
       </xs:choice>
       <xs:attribute name="type" use="required" type="xs:NMTOKEN"/>
-      <xs:attribute name="name" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="name" use="required" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="prop">
     <xs:complexType mixed="true">
       <xs:attribute name="type" use="required" type="xs:NMTOKEN"/>
-      <xs:attribute name="name" type="xs:NMTOKEN"/>
+      <xs:attribute name="name" type="xs:string"/>
       <xs:attribute name="size" type="xs:NMTOKEN"/>
       <xs:attribute name="compress">
         <xs:simpleType>

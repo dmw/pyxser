@@ -238,7 +238,7 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
 	xmlAttrPtr pxsnam = (xmlAttrPtr)NULL;
 
 	char *objnam = (char *)NULL;
-    char *enc = *args->enc;
+    char *enc = args->enc;
 	int c = 0;
 
     if (PYTHON_IS_NOT_NONE(args->typemap)) {

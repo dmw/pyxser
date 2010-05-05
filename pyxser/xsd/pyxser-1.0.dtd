@@ -57,7 +57,7 @@
           %pyxser.attr.id;              ID              #IMPLIED
           %pyxser.attr.reference;       IDREF           #IMPLIED
           %pyxser.attr.type;            NMTOKEN         #IMPLIED
-          %pyxser.attr.name;            NMTOKEN         #IMPLIED
+          %pyxser.attr.name;            CDATA           #IMPLIED
           %pyxser.attr.module;          NMTOKEN         #IMPLIED
           %pyxser.attr.size;            NMTOKEN         #IMPLIED
           >
@@ -68,7 +68,7 @@
 
 <!ATTLIST %pyxser.element.collection;
           %pyxser.attr.type;            NMTOKEN         #REQUIRED
-          %pyxser.attr.name;            NMTOKEN         #REQUIRED
+          %pyxser.attr.name;            CDATA           #REQUIRED
           >
 
 <!ELEMENT %pyxser.element.prop;
@@ -77,7 +77,7 @@
 
 <!ATTLIST %pyxser.element.prop;
           %pyxser.attr.type;            NMTOKEN         #REQUIRED
-          %pyxser.attr.name;            NMTOKEN         #IMPLIED
+          %pyxser.attr.name;            CDATA           #IMPLIED
           %pyxser.attr.size;            NMTOKEN         #IMPLIED
           %pyxser.attr.compress;        (yes|no)        #IMPLIED
           %pyxser.attr.encoding;        (ascii|base64)  #IMPLIED
