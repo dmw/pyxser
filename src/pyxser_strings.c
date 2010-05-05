@@ -212,18 +212,19 @@ pyxunser_SerializeString(PyxSerDeserializationArgsPtr obj)
 	xmlNodePtr ron;
 	PyObject *str = Py_None;
 	PyObject *res = Py_None;
-	if (node != (xmlNodePtr)NULL) {
-		for (ron = node->children;
-			 ron;
-			 ron = ron->next) {
-			if (ron->type == XML_TEXT_NODE
-				&& ron->content != BAD_CAST NULL) {
-				str = PyString_FromString((char *)ron->content);
-				res = str;
-                break;
-			}
-		}
-	}
+	if (node == (xmlNodePtr)NULL) {
+        return res;
+    }
+    for (ron = node->children;
+         ron;
+         ron = ron->next) {
+        if (ron->type == XML_TEXT_NODE
+            && ron->content != BAD_CAST NULL) {
+            str = PyString_FromString((char *)ron->content);
+            res = str;
+            break;
+        }
+    }
 	return res;
 }
 
@@ -250,23 +251,24 @@ pyxunser_SerializeUnicode(PyxSerDeserializationArgsPtr obj)
     }
 
     propSize = xmlGetProp(node, BAD_CAST pyxser_xml_attr_size);
-    if (propSize != (xmlChar *)NULL) {
-        for (ron = node->children;
-             ron;
-             ron = ron->next) {
-            tsz = (Py_ssize_t)strtol((const char *)propSize,
-                                     (char **)NULL, 10);
-            if (ron->type == XML_TEXT_NODE) {
-                unic = PyUnicode_Decode((char *)ron->content,
-                                        tsz,
-                                        enc,
-                                        pyxser_xml_encoding_mode);
-                res = unic;
-                break;
-            }
-        }
-        PYXSER_XMLFREE(propSize);
+    if (propSize == (xmlChar *)NULL) {
+        return res;
     }
+    for (ron = node->children;
+         ron;
+         ron = ron->next) {
+        tsz = (Py_ssize_t)strtol((const char *)propSize,
+                                 (char **)NULL, 10);
+        if (ron->type == XML_TEXT_NODE) {
+            unic = PyUnicode_Decode((char *)ron->content,
+                                    tsz,
+                                    enc,
+                                    pyxser_xml_encoding_mode);
+            res = unic;
+            break;
+        }
+    }
+    PYXSER_XMLFREE(propSize);
 	return res;
 }
 
