@@ -179,20 +179,23 @@ pyxunser_TypeMapSearchAndGet(PyObject *tmap, PyObject *tval,
     for (ron = node->children;
          ron;
          ron = ron->next) {
-        if (ron->type == XML_TEXT_NODE
-            && ron->content != BAD_CAST NULL) {
-            stype = PyString_FromString((char *)ron->content);
-            PyErr_Clear();
-            if (PYTHON_IS_NONE(stype)) {
-                return (PyObject *)NULL;
-            }
-            args = Py_BuildValue("(O)", stype);
-            res = PyObject_CallObject(cb, args);
-            Py_XDECREF(args);
-            Py_XDECREF(stype);
-            PyErr_Clear();
-            break;
+        if (ron->type != XML_TEXT_NODE) {
+            continue;
         }
+        if (ron->content == BAD_CAST NULL) {
+            continue;
+        }
+        stype = PyString_FromString((char *)ron->content);
+        PyErr_Clear();
+        if (PYTHON_IS_NONE(stype)) {
+            return (PyObject *)NULL;
+        }
+        args = Py_BuildValue("(O)", stype);
+        res = PyObject_CallObject(cb, args);
+        Py_XDECREF(args);
+        Py_XDECREF(stype);
+        PyErr_Clear();
+        break;
     }
     return res;
 }
