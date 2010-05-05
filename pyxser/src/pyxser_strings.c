@@ -220,6 +220,7 @@ pyxunser_SerializeString(PyxSerDeserializationArgsPtr obj)
 				&& ron->content != BAD_CAST NULL) {
 				str = PyString_FromString((char *)ron->content);
 				res = str;
+                break;
 			}
 		}
 	}
