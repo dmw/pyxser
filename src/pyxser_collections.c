@@ -596,13 +596,15 @@ pyxunser_SerializeList(PyxSerDeserializationArgsPtr obj)
                      strlen((char *)pyxser_xml_element_prop))) == 0) {
             c = 0;
             while (machine[c].available == 1) {
-                if ((machine[c].check(ron)) == 1) {
-                    unser = machine[c].deserializer(obj);
-                    if (PYTHON_IS_NOT_NONE(unser)) {
-                        PyList_Append(list, unser);
-                        Py_XDECREF(unser);
-                        break;
-                    }
+                if ((machine[c].check(ron)) != 1) {
+                    c++;
+                    continue;
+                }
+                unser = machine[c].deserializer(obj);
+                if (PYTHON_IS_NOT_NONE(unser)) {
+                    PyList_Append(list, unser);
+                    Py_XDECREF(unser);
+                    break;
                 }
                 c++;
             }
@@ -716,17 +718,19 @@ pyxunser_SerializeDict(PyxSerDeserializationArgsPtr obj)
                      strlen((char *)pyxser_xml_element_prop)))	== 0) {
             c = 0;
 				while (machine[c].available == 1) {
-					if ((machine[c].check(ron))	== 1) {
-						unser = machine[c].deserializer(obj);
-						if (PYTHON_IS_NOT_NONE(unser)) {
-							key = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_name);
-							PyDict_SetItemString(dict, key, unser);
-                            PYXSER_XMLFREE(key);
-                            Py_XDECREF(unser);
-							break;
-						}
-					}
-					c++;
+					if ((machine[c].check(ron))	!= 1) {
+                        c++;
+                        continue;
+                    }
+                    unser = machine[c].deserializer(obj);
+                    if (PYTHON_IS_NOT_NONE(unser)) {
+                        key = (char *)xmlGetProp(ron, BAD_CAST pyxser_xml_attr_name);
+                        PyDict_SetItemString(dict, key, unser);
+                        PYXSER_XMLFREE(key);
+                        Py_XDECREF(unser);
+                        break;
+                    }
+                    c++;
 				}
         } else if ((strncmp((char *)ron->name,
                             (char *)pyxser_xml_element_object,

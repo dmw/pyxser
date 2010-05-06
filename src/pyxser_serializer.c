@@ -262,61 +262,62 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
     } else {
         cs = serxConcreteTypes[c];
         while (cs.available == 1) {
-            if (cs.check(item)) {
-                args->o = &item;
-                if (pyxserUnicode_Check(currentKey) == 1) {
-                    unic = PyUnicode_Encode(PyUnicode_AS_UNICODE(currentKey),
-                                            PyUnicode_GET_DATA_SIZE(currentKey),
-                                            enc, pyxser_xml_encoding_mode);
-                    args->name = PyString_AS_STRING(unic);
-                    PYXSER_FREE_OBJECT(unic);
-                } else {
-                    args->name = PyString_AS_STRING(currentKey);
-                }
-                newSerializedNode = cs.serializer(args);
-                currentNode = *currentNodeOld;
-                args->o = oold;
-                args->item = oold;
-                if (newSerializedNode != (xmlNodePtr)NULL) {
-                    xmlAddChild(currentNode, newSerializedNode);
-                    break;
-                }
+            if (cs.check(item) != 1) {
+                cs = serxConcreteTypes[++c];
+                continue;
             }
-            cs = serxConcreteTypes[++c];
-            if (cs.available == 0) {
-                objnam = pyxser_GetClassName(item);
-                csn = xmlNewDocNode(*docptr,
-                                    pyxser_GetDefaultNs(),
-                                    BAD_CAST pyxser_xml_element_object,
-                                    NULL);
-                pyxser_AddModuleAttr(o, csn);
-                pyxserType = xmlNewProp(csn,
-                                        BAD_CAST pyxser_xml_attr_type,
-                                        BAD_CAST objnam);
-                if (PYTHON_IS_NOT_NONE(currentKey)) {
-                    pxsnam = xmlNewProp(csn,
-                                        BAD_CAST pyxser_xml_attr_name,
-                                        BAD_CAST PyString_AS_STRING(currentKey));
-                }
-                xmlAddChild(currentNode, csn);
-                (*depthcnt)++;
-
-                args->o = &item;
-                args->item = &item;
-                args->currentNode = &csn;
-                args->rootNode = &rootNode;
-
-                newSerializedNode = pyxser_SerializeXml(args);
-
-                args->currentNode = currentNodeOld;
-                args->rootNode = rootNodeOld;
-                args->o = oold;
-                args->item = oold;
-
-                (*depthcnt)--;
-                c = 0;
+            args->o = &item;
+            if (pyxserUnicode_Check(currentKey) == 1) {
+                unic = PyUnicode_Encode(PyUnicode_AS_UNICODE(currentKey),
+                                        PyUnicode_GET_DATA_SIZE(currentKey),
+                                        enc, pyxser_xml_encoding_mode);
+                args->name = PyString_AS_STRING(unic);
+                PYXSER_FREE_OBJECT(unic);
+            } else {
+                args->name = PyString_AS_STRING(currentKey);
+            }
+            newSerializedNode = cs.serializer(args);
+            currentNode = *currentNodeOld;
+            args->o = oold;
+            args->item = oold;
+            if (newSerializedNode != (xmlNodePtr)NULL) {
+                xmlAddChild(currentNode, newSerializedNode);
                 break;
             }
+            cs = serxConcreteTypes[++c];
+        }
+        if (cs.available == 0) {
+            objnam = pyxser_GetClassName(item);
+            csn = xmlNewDocNode(*docptr,
+                                pyxser_GetDefaultNs(),
+                                BAD_CAST pyxser_xml_element_object,
+                                NULL);
+            pyxser_AddModuleAttr(o, csn);
+            pyxserType = xmlNewProp(csn,
+                                    BAD_CAST pyxser_xml_attr_type,
+                                    BAD_CAST objnam);
+            if (PYTHON_IS_NOT_NONE(currentKey)) {
+                pxsnam = xmlNewProp(csn,
+                                    BAD_CAST pyxser_xml_attr_name,
+                                    BAD_CAST PyString_AS_STRING(currentKey));
+            }
+            xmlAddChild(currentNode, csn);
+            (*depthcnt)++;
+
+            args->o = &item;
+            args->item = &item;
+            args->currentNode = &csn;
+            args->rootNode = &rootNode;
+
+            newSerializedNode = pyxser_SerializeXml(args);
+
+            args->currentNode = currentNodeOld;
+            args->rootNode = rootNodeOld;
+            args->o = oold;
+            args->item = oold;
+
+            (*depthcnt)--;
+            c = 0;
         }
     }
 	return newSerializedNode;
@@ -417,23 +418,25 @@ pyxser_RunDeserializationMachine(xmlNodePtr ron,
     }
     while (machine[c].available == 1
            && ron != (xmlNodePtr)NULL) {
-        if ((machine[c].check(ron)) == 1) {
-            unser = machine[c].deserializer(obj);
-            if (PYTHON_IS_NONE(unser)) {
-                c++;
-                continue;
-            }
-            attr_name = pyxser_ExtractPropertyName(
-                pyxser_xml_attr_name,
-                ron);
-            if (attr_name != (char *)NULL) {
-                ctrl = PyObject_SetAttrString(*current,
-                                              attr_name,
-                                              unser);
-                PYXSER_XMLFREE(attr_name);
-                Py_XDECREF(unser);
-                break;
-            }
+        if ((machine[c].check(ron)) != 1) {
+            c++;
+            continue;
+        }
+        unser = machine[c].deserializer(obj);
+        if (PYTHON_IS_NONE(unser)) {
+            c++;
+            continue;
+        }
+        attr_name = pyxser_ExtractPropertyName(
+            pyxser_xml_attr_name,
+            ron);
+        if (attr_name != (char *)NULL) {
+            ctrl = PyObject_SetAttrString(*current,
+                                          attr_name,
+                                          unser);
+            PYXSER_XMLFREE(attr_name);
+            Py_XDECREF(unser);
+            break;
         }
         c++;
     }
