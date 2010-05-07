@@ -297,9 +297,19 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
                                     BAD_CAST pyxser_xml_attr_type,
                                     BAD_CAST objnam);
             if (PYTHON_IS_NOT_NONE(currentKey)) {
+                if (pyxserUnicode_Check(currentKey) == 1) {
+                    unic = PyUnicode_Encode(PyUnicode_AS_UNICODE(currentKey),
+                                            PyUnicode_GET_DATA_SIZE(currentKey),
+                                            enc, pyxser_xml_encoding_mode);
+                    args->name = PyString_AS_STRING(unic);
+                } else {
+                    args->name = PyString_AS_STRING(currentKey);
+                    unic = (PyObject *)NULL;
+                }
                 pxsnam = xmlNewProp(csn,
                                     BAD_CAST pyxser_xml_attr_name,
-                                    BAD_CAST PyString_AS_STRING(currentKey));
+                                    BAD_CAST args->name);
+                PYXSER_FREE_OBJECT(unic);
             }
             xmlAddChild(currentNode, csn);
             (*depthcnt)++;
