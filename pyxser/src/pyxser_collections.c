@@ -173,10 +173,21 @@ pyxser_RunSerializationCol(PyxSerializationArgsPtr args)
                                 BAD_CAST pyxser_xml_attr_type,
                                 BAD_CAST objectName);
         if (PYTHON_IS_NOT_NONE(currentKey)) {
+            if (pyxserUnicode_Check(currentKey) == 1) {
+                unic = PyUnicode_Encode(PyUnicode_AS_UNICODE(currentKey),
+                                        PyUnicode_GET_DATA_SIZE(currentKey),
+                                        enc, pyxser_xml_encoding_mode);
+                name = PyString_AS_STRING(unic);
+                args->name = name;
+            } else {
+                name = PyString_AS_STRING(currentKey);
+                args->name = name;
+                unic = (PyObject *)NULL;
+            }
             nameAttr = xmlNewProp(csn,
                                   BAD_CAST pyxser_xml_attr_name,
-                                  BAD_CAST PyString_AS_STRING(currentKey));
-            }
+                                  BAD_CAST name);
+        }
         pyxser_AddModuleAttr(item, csn);
         (*depthcnt)++;
         args->o = &item;
@@ -184,6 +195,7 @@ pyxser_RunSerializationCol(PyxSerializationArgsPtr args)
         args->rootNode = &csn;
         args->currentNode = &csn;
         newSerNode = pyxser_SerializeXml(args);
+        PYXSER_FREE_OBJECT(unic);
         args->o = oold;
         args->item = oold;
         args->currentNode = currentNodeOld;
