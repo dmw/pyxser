@@ -35,6 +35,13 @@
 extern "C" {
 #endif /* !__cplusplus */
 
+/* Sets */
+    xmlNodePtr pyxser_SerializeSet(PyxSerializationArgsPtr args);
+
+    xmlNodePtr pyxser_SerializeExactSet(PyxSerializationArgsPtr args);
+
+    xmlNodePtr pyxser_SerializeFrozenSet(PyxSerializationArgsPtr args);
+
 /* Tuples */
     xmlNodePtr pyxser_SerializeTuple(PyxSerializationArgsPtr args);
 
@@ -51,6 +58,8 @@ extern "C" {
     xmlNodePtr pyxser_SerializeExactDict(PyxSerializationArgsPtr args);
 
 /* Deserialization */
+    PyObject *pyxunser_SerializeSet(PyxSerDeserializationArgsPtr obj);
+
     PyObject *pyxunser_SerializeTuple(PyxSerDeserializationArgsPtr obj);
 
     PyObject *pyxunser_SerializeList(PyxSerDeserializationArgsPtr obj);

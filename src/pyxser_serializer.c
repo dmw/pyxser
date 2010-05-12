@@ -272,14 +272,15 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
                                         PyUnicode_GET_DATA_SIZE(currentKey),
                                         enc, pyxser_xml_encoding_mode);
                 args->name = PyString_AS_STRING(unic);
-                PYXSER_FREE_OBJECT(unic);
             } else {
                 args->name = PyString_AS_STRING(currentKey);
+                unic = (PyObject *)NULL;
             }
             newSerializedNode = cs.serializer(args);
             currentNode = *currentNodeOld;
             args->o = oold;
             args->item = oold;
+            PYXSER_FREE_OBJECT(unic);
             if (newSerializedNode != (xmlNodePtr)NULL) {
                 xmlAddChild(currentNode, newSerializedNode);
                 break;
