@@ -59,6 +59,7 @@ static const char type_buffer[] = "buffer";
 static const char type_list[] = "list";
 static const char type_tuple[] = "tuple";
 static const char type_dict[] = "dict";
+static const char type_set[] = "set";
 static const char type_main[] = "__main__";
 
 xmlDtdPtr pyxser_dtd_object = (xmlDtdPtr)NULL;
@@ -86,9 +87,13 @@ const PythonTypeSerialize serxConcreteTypes[] = {
 	{1, pyxserList_Check, pyxser_SerializeList},
 	/* Dictionaries */
 	{1, pyxserDict_Check, pyxser_SerializeDict},
-	/* Files */
 #if 0 /* I near future, according to user proposals we will
          join a better representation of those objects */
+    /* Sets */
+	{1, pyxserAnySet_Check, pyxser_SerializeSet},
+	{1, pyxserAnySet_CheckExact, pyxser_SerializeSet},
+	{1, pyxserFrozenSet_CheckExact, pyxser_SerializeSet},
+	/* Files */
 	{1, pyxserFile_CheckExact, pyxser_SerializeExactFile},
 	{1, pyxserFile_Check, pyxser_SerializeFile},
 	/* Instrospection */
@@ -101,10 +106,7 @@ const PythonTypeSerialize serxConcreteTypes[] = {
 	{1, pyxserSlice_Check, pyxser_SerializeSlice},
 	{1, pyxserCell_Check, pyxser_SerializeCell},
 	{1, pyxserGen_Check, pyxser_SerializeGenerator},
-	{1, pyxserDate_CheckExact, pyxser_SerializeGenerator},
-	{1, pyxserAnySet_Check, pyxser_SerializeSet},
-	{1, pyxserAnySet_CheckExact, pyxser_SerializeExactSet},
-	{1, pyxserFrozenSet_CheckExact, pyxser_SerializeFrozenSet},
+	{1, pyxserDate_CheckExact, pyxser_SerializeGenerator}
 #endif /* !0 */
 	{0, NULL, NULL}
 };
@@ -133,6 +135,10 @@ const PythonTypeDeserialize unserxConcreteTypes[] = {
 #if 0 /* I near future, according to user proposals we will
          join a better representation of those objects */
 	{1, pyxunserBuffer_Check, pyxunser_SerializeBuffer},
+    /* Sets */
+	{1, pyxunserAnySet_Check, pyxunser_SerializeSet},
+	{1, pyxunserAnySet_CheckExact, pyxunser_SerializeSet},
+	{1, pyxunserFrozenSet_CheckExact, pyxunser_SerializeSet},
 	/* Files */
 	{1, pyxunserFile_Check, pyxunser_SerializeFile},
 	{1, pyxunserFile_CheckExact, pyxunser_SerializeExactFile},
@@ -147,9 +153,6 @@ const PythonTypeDeserialize unserxConcreteTypes[] = {
 	{1, pyxunserCell_Check, pyxunser_SerializeCell},
 	{1, pyxunserGen_Check, pyxunser_SerializeGenerator},
 	{1, pyxunserDate_CheckExact, pyxunser_SerializeGenerator},
-	{1, pyxunserAnySet_Check, pyxunser_SerializeSet},
-	{1, pyxunserAnySet_CheckExact, pyxunser_SerializeExactSet},
-	{1, pyxunserFrozenSet_CheckExact, pyxunser_SerializeFrozenSet},
 #endif /* !0 */
 	{0, NULL, NULL}
 };
@@ -266,7 +269,7 @@ pyxser_AddReference(PyObject *o, xmlNodePtr currentNode)
 	xmlNodePtr refNode = (xmlNodePtr)NULL;
 
 	char *charpRepr = (char *)NULL;
-	char newRef[33] = "id";
+	char newRef[40] = "id";
 	unsigned long hash = 0;
 	if (PYTHON_IS_NONE(o)
 		|| currentNode == (xmlNodePtr)NULL) {
@@ -884,6 +887,43 @@ pyxunserDict_Check(xmlNodePtr node)
     }
     PYXSER_XMLFREE(prop);
 	return 0;
+}
+
+int
+pyxunserSet_Check(xmlNodePtr node)
+{
+	char *prop;
+	if (node == (xmlNodePtr)NULL) {
+        return 0;
+    }
+    prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
+    if (prop == (char *)NULL) {
+        return 0;
+    }
+    if ((strncmp(prop, type_set, strlen(type_set))) == 0) {
+        PYXSER_XMLFREE(prop);
+        return 1;
+    }
+    PYXSER_XMLFREE(prop);
+	return 0;
+}
+
+int
+pyxunserAnySet_Check(xmlNodePtr node)
+{
+    return pyxunserSet_Check(node);
+}
+
+int
+pyxunserAnySet_CheckExact(xmlNodePtr node)
+{
+    return pyxunserSet_Check(node);
+}
+
+int
+pyxunserFrozenSet_CheckExact(xmlNodePtr node)
+{
+    return pyxunserSet_Check(node);
 }
 
 xmlNsPtr
