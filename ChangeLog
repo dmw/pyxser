@@ -110,3 +110,33 @@
 
 	Thanks to pyxser users for their feedback.
 
+1.4.4r (2010.02.10):
+
+	Daniel Molina Wegener <dmw@coder.cl>
+
+	* src/include/pyxser_collections.h - added set handling
+	function prototypes. Added support for unicode
+	key names, which are converted to the user settings
+	encoding (ie utf-8) inside the XML output.
+	* src/pyxser_serializer.c - removed memory leak. Addded
+	support for unicode object names in dictionary/list types.
+	* src/pyxser_collections.c - added set handling function
+	prototypes. added name property handling algorithm, so
+	non string name properties are not serialized. I shall
+	extend it to other modules.
+	* src/pyxser_tools.c - added set handling prototypes and
+	set type checking function.
+	* test-utf8-leak.py - added serialization of SQL Alchemy
+	objects, so we can test more complex Python objects
+	serialization.
+	* test-utf8-sqlalchemy.py - added sql alchemy object
+	serialization test.
+	* src/pyxser_serializer.c - reduced serialization algorithms,
+	replacing deep nested if statements by flatten ones.
+	* src/pyxser_collections.c - reduced serialization algorithms
+	replacing deep nested if statements by flatten ones.
+	* src/pyxser_typem.c - reduced serialization algorithms,
+	replacing deep nested if statements by flatten ones.
+
+	Thanks to pyxser users for their feedback.
+
