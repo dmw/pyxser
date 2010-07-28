@@ -275,7 +275,7 @@ pyxser_AddReference(PyObject *o, xmlNodePtr currentNode)
 		|| currentNode == (xmlNodePtr)NULL) {
 		return (xmlNodePtr)NULL;
 	}
-	hash = (unsigned long)o;
+	hash = (unsigned long)PyObject_Hash(o);
 	if (hash != 0) {
 		longIdentifier = PyLong_FromUnsignedLong(hash);
 		stringRepr = PyObject_Str(longIdentifier);
