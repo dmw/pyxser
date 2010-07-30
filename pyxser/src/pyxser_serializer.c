@@ -119,6 +119,9 @@ pyxser_SerializeXml(PyxSerializationArgsPtr args)
 	if (PYTHON_IS_NONE(o)) {
 		return (xmlNodePtr)NULL;
 	}
+    if (PyWeakref_CheckRef(o)) {
+		return (xmlNodePtr)NULL;
+    }
 	if ((pyxser_PyListContains(dupItems, o)) == PYXSER_NOT_FOUND) {
 		PyList_Append((PyObject *)dupItems, o);
 		objnam = pyxser_GetClassName(o);
@@ -222,6 +225,7 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
     PyObject *currentKey = *args->ck;
     PyObject *className;
     PyObject *unic;
+    PyListObject *dups = *args->dupSrcItems;
 
     xmlNodePtr txtNode = (xmlNodePtr)NULL;
     xmlDocPtr *docptr = args->docptr;
@@ -287,7 +291,8 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
             }
             cs = serxConcreteTypes[++c];
         }
-        if (cs.available == 0) {
+        if (cs.available == 0
+            && pyxser_CheckBuiltInModule(item) == 0) {
             objnam = pyxser_GetClassName(item);
             csn = xmlNewDocNode(*docptr,
                                 pyxser_GetDefaultNs(),
@@ -672,7 +677,8 @@ pyxser_SearchModuleType(PyObject *mod, const char *name)
 	PyObject *objKeys = (PyObject *)NULL;
 	PyObject *currentKey = (PyObject *)NULL;
 
-	long listIterator = 0;
+    int found = 0;
+    long listIterator = 0;
 	long listSize = 0;
 	char *keyName = (char *)NULL;
 
@@ -692,15 +698,36 @@ pyxser_SearchModuleType(PyObject *mod, const char *name)
 			keyName = PyString_AS_STRING(currentKey);
 			if ((strncmp(keyName, name, strlen(keyName))) == 0) {
 				item = PyDict_GetItem(dict, currentKey);
+                found = 1;
 				break;
 			}
 			listIterator++;
 		}
     }
-    Py_XDECREF(objKeys);
-    Py_XDECREF(dict);
-    PyErr_Clear();
-	return item;
+    if (found == 0) {
+        dict = PyObject_GetAttrString(mod, "__builtins__");
+        objKeys = PyDict_Keys(dict);
+        if (PYTHON_IS_NOT_NONE(objKeys)
+            && (long)(PyList_Size((PyObject *)objKeys)) > 0
+            && PYTHON_IS_NOT_NONE(dict)) {
+            listIterator = 0;
+            listSize = (long)(PyList_Size((PyObject *)objKeys));
+            while (listIterator < listSize) {
+                currentKey = PyList_GetItem(objKeys, listIterator);
+                keyName = PyString_AS_STRING(currentKey);
+                if ((strncmp(keyName, name, strlen(keyName))) == 0) {
+                    item = PyDict_GetItem(dict, currentKey);
+                    found = 1;
+                    break;
+                }
+                listIterator++;
+            }
+        }
+        Py_XDECREF(objKeys);
+        Py_XDECREF(dict);
+        PyErr_Clear();
+    }
+    return item;
 }
 
 
