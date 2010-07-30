@@ -60,7 +60,9 @@ static const char type_list[] = "list";
 static const char type_tuple[] = "tuple";
 static const char type_dict[] = "dict";
 static const char type_set[] = "set";
+static const char type_sequence[] = "list";
 static const char type_main[] = "__main__";
+static const char type_builtin[] = "__builtin__";
 
 xmlDtdPtr pyxser_dtd_object = (xmlDtdPtr)NULL;
 xmlDtdPtr pyxser_dtd_c14n_object = (xmlDtdPtr)NULL;
@@ -87,12 +89,16 @@ const PythonTypeSerialize serxConcreteTypes[] = {
 	{1, pyxserList_Check, pyxser_SerializeList},
 	/* Dictionaries */
 	{1, pyxserDict_Check, pyxser_SerializeDict},
+    /* Weakrefs */
+    {1, pyxserWeakref_Check, pyxser_SerializeWeakref},
 #if 0 /* I near future, according to user proposals we will
          join a better representation of those objects */
     /* Sets */
 	{1, pyxserAnySet_Check, pyxser_SerializeSet},
 	{1, pyxserAnySet_CheckExact, pyxser_SerializeSet},
 	{1, pyxserFrozenSet_CheckExact, pyxser_SerializeSet},
+    /* Sequences */
+    {1, pyxserSequence_Check, pyxser_SerializeSequence},
 	/* Files */
 	{1, pyxserFile_CheckExact, pyxser_SerializeExactFile},
 	{1, pyxserFile_Check, pyxser_SerializeFile},
@@ -139,6 +145,8 @@ const PythonTypeDeserialize unserxConcreteTypes[] = {
 	{1, pyxunserAnySet_Check, pyxunser_SerializeSet},
 	{1, pyxunserAnySet_CheckExact, pyxunser_SerializeSet},
 	{1, pyxunserFrozenSet_CheckExact, pyxunser_SerializeSet},
+    /* Sequences */
+    {1, pyxunserSequence_Check, pyxunser_SerializeSequence},
 	/* Files */
 	{1, pyxunserFile_Check, pyxunser_SerializeFile},
 	{1, pyxunserFile_CheckExact, pyxunser_SerializeExactFile},
@@ -264,24 +272,25 @@ pyxser_AddReference(PyObject *o, xmlNodePtr currentNode)
 {
 	PyObject *longIdentifier = (PyObject *)NULL;
 	PyObject *stringRepr = (PyObject *)NULL;
-
 	xmlAttrPtr refAttr = (xmlAttrPtr)NULL;
 	xmlNodePtr refNode = (xmlNodePtr)NULL;
-
 	char *charpRepr = (char *)NULL;
-	char newRef[40] = "id";
+	char newRef[41] = "id";
 	unsigned long hash = 0;
 	if (PYTHON_IS_NONE(o)
 		|| currentNode == (xmlNodePtr)NULL) {
 		return (xmlNodePtr)NULL;
 	}
+    if (PyWeakref_CheckRef(o)) {
+		return (xmlNodePtr)NULL;
+    }
 	hash = (unsigned long)PyObject_Hash(o);
 	if (hash != 0) {
 		longIdentifier = PyLong_FromUnsignedLong(hash);
 		stringRepr = PyObject_Str(longIdentifier);
 		charpRepr = PyString_AS_STRING(stringRepr);
 		if (charpRepr != (char *)NULL) {
-			strncat(newRef, charpRepr, 32);
+			strncat(newRef, charpRepr, 38);
 			refAttr = xmlNewProp(currentNode,
 								 BAD_CAST pyxser_xml_attr_ref,
 								 BAD_CAST newRef);
@@ -298,24 +307,19 @@ pyxser_AddIdentifier(PyObject *o, xmlNodePtr currentNode)
 {
 	PyObject *longIdentifier = (PyObject *)NULL;
 	PyObject *stringRepr = (PyObject *)NULL;
-
 	xmlAttrPtr idAttr = (xmlAttrPtr)NULL;
-
 	char *charpRepr = (char *)NULL;
-	char newRef[40] = "id";
+	char newRef[41] = "id";
 	unsigned long hash = 0;
-
 	if (PYTHON_IS_NONE(o) || currentNode == (xmlNodePtr)NULL) {
 		return;
 	}
-
-	hash = (unsigned long)o;
-
+	hash = (unsigned long)PyObject_Hash(o);
 	if (hash != 0) {
 		longIdentifier = PyLong_FromUnsignedLong(hash);
 		stringRepr = PyObject_Str(longIdentifier);
 		charpRepr = PyString_AS_STRING(stringRepr);
-		strncat(newRef, charpRepr, 32);
+		strncat(newRef, charpRepr, 38);
 		idAttr = xmlNewProp(currentNode,
 							BAD_CAST pyxser_xml_attr_id,
 							BAD_CAST newRef);
@@ -324,6 +328,39 @@ pyxser_AddIdentifier(PyObject *o, xmlNodePtr currentNode)
     }
 }
 
+
+int
+pyxser_CheckBuiltInModule(PyObject *o)
+{
+    int r = 0;
+	char *cn = (char *)NULL;
+	PyObject *klass = Py_None;
+	PyObject *mname = Py_None;
+	xmlAttrPtr moduleAttr = (xmlAttrPtr)NULL;
+	if (PYTHON_IS_NONE(o)) {
+		return;
+	}
+	klass = PyObject_GetAttrString(o, pyxser_attr_class);
+	if (PYTHON_IS_NONE(klass)) {
+        PyErr_Clear();
+		return;
+	}
+	mname = PyObject_GetAttrString(klass, pyxser_attr_module);
+	if (PYTHON_IS_NONE(mname)) {
+        PyErr_Clear();
+        PYXSER_FREE_OBJECT(klass);
+        return;
+	}
+	if (!PyString_Check(mname)) {
+        PYXSER_FREE_OBJECT(klass);
+        PYXSER_FREE_OBJECT(mname);
+	}
+	cn = PyString_AS_STRING(mname);
+    r = (!strncmp(cn, type_builtin, strlen(type_builtin)));
+    PYXSER_FREE_OBJECT(klass);
+    PYXSER_FREE_OBJECT(mname);
+    return r;
+}
 
 void
 pyxser_AddModuleAttr(PyObject *o, xmlNodePtr currentNode)
@@ -377,14 +414,28 @@ pyxser_PyListContains(PyListObject *lst, PyObject *o)
 	}
 	while ((item = PyIter_Next(iterLst))
 		   != (PyObject *)NULL) {
-		if (item == o) {
+        if (PyWeakref_CheckRef(o)) {
+            if (item == (PyWeakref_GetObject(o))) {
+                return PYXSER_FOUND;
+            } else if (PyObject_Hash(item)
+                       == PyObject_Hash((PyWeakref_GetObject(o)))) {
+                return PYXSER_FOUND;
+            }
+        } else if (item == o) {
 			return PYXSER_FOUND;
-		}
+        } else if (PyObject_Hash(item) == PyObject_Hash(o)) {
+			return PYXSER_FOUND;
+        }
 	}
     PYXSER_FREE_OBJECT(iterLst);
 	return PYXSER_NOT_FOUND;
 }
 
+xmlNodePtr
+pyxser_SerializeWeakref(PyxSerializationArgsPtr args)
+{
+    return NULL;
+}
 
 /* numbers */
 int
@@ -596,6 +647,17 @@ pyxserFrozenSet_CheckExact(PyObject *o)
 	return PyFrozenSet_CheckExact(o);
 }
 
+int
+pyxserWeakref_Check(PyObject *o)
+{
+    return (PyWeakref_Check(o));
+}
+
+int
+pyxserSequence_Check(PyObject *o)
+{
+    return PySequence_Check(o);
+}
 
 int
 pyxunserInt_Check(xmlNodePtr node)
@@ -901,6 +963,25 @@ pyxunserSet_Check(xmlNodePtr node)
         return 0;
     }
     if ((strncmp(prop, type_set, strlen(type_set))) == 0) {
+        PYXSER_XMLFREE(prop);
+        return 1;
+    }
+    PYXSER_XMLFREE(prop);
+	return 0;
+}
+
+int
+pyxunserSequence_Check(xmlNodePtr node)
+{
+	char *prop;
+	if (node == (xmlNodePtr)NULL) {
+        return 0;
+    }
+    prop = (char *)xmlGetProp(node, BAD_CAST pyxser_xml_attr_type);
+    if (prop == (char *)NULL) {
+        return 0;
+    }
+    if ((strncmp(prop, type_sequence, strlen(type_sequence))) == 0) {
         PYXSER_XMLFREE(prop);
         return 1;
     }

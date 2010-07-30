@@ -8,6 +8,14 @@ __all__ = [
     'ParentObject',
     'TestAnotherObject']
 
+from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey
+from sqlalchemy.orm import mapper
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+
+Base = declarative_base()
+
 class TestAnotherObject:
     first_element = "123"
     second_element = "456"
@@ -63,4 +71,20 @@ class ParentObject:
     def __repr__(self):
         return "\n-> " + repr(self.__dict__)
 
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    fullname = Column(String)
+    password = Column(String)
 
+    def __init__(self, name, fullname, password):
+        self.name = name
+        self.fullname = fullname
+        self.password = password
+
+    def get_set(self):
+        return (self.name, self.fullname, self.password)
+
+    def __repr__(self):
+        return "<User('%s','%s', '%s')>" % self.get_set()

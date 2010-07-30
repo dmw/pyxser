@@ -56,6 +56,8 @@ extern "C" {
 
     void pyxser_AddIdentifier(PyObject *o, xmlNodePtr currentNode);
 
+    int pyxser_CheckBuiltInModule(PyObject *o);
+
     void pyxser_AddModuleAttr(PyObject *o, xmlNodePtr currentNode);
 
     xmlNsPtr pyxser_GetDefaultNs(void);
@@ -102,6 +104,8 @@ extern "C" {
                                   xmlNodePtr node,
                                   xmlNodePtr parent);
 
+    xmlNodePtr pyxser_SerializeWeakref(PyxSerializationArgsPtr args);
+
 /* numbers */
     int pyxserInt_Check(PyObject *o);
     int pyxserInt_CheckExact(PyObject *o);
@@ -134,6 +138,12 @@ extern "C" {
 /* files */
     int pyxserFile_Check(PyObject *o);
     int pyxserFile_CheckExact(PyObject *o);
+
+/* weakref */
+    int pyxserWeakref_Check(PyObject *o);
+
+/* sequences */
+    int pyxserSequence_Check(PyObject *o);
 
 /* instrospection */
     int pyxserInstance_Check(PyObject *o);
@@ -182,6 +192,9 @@ extern "C" {
 /* files */
     int pyxunserFile_Check(xmlNodePtr node);
     int pyxunserFile_CheckExact(xmlNodePtr node);
+
+/* sequences */
+    int pyxunserSequence_Check(xmlNodePtr node);
 
 /* instrospection */
     int pyxunserInstance_Check(xmlNodePtr node);

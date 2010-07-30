@@ -35,7 +35,7 @@ static const char Id[] = "$Id$";
 #include "include/pyxser.h"
 #include "include/pyxser_tools.h"
 
-
+static xmlNodePtr pyxser_GlobalSequenceSerialization(PyxSerializationArgsPtr args);
 static xmlNodePtr pyxser_GlobalTupleSerialization(PyxSerializationArgsPtr args);
 static xmlNodePtr pyxser_GlobalListSerialization(PyxSerializationArgsPtr args);
 static xmlNodePtr pyxser_GlobalDictSerialization(PyxSerializationArgsPtr args);
@@ -58,6 +58,13 @@ xmlNodePtr
 pyxser_SerializeFrozenSet(PyxSerializationArgsPtr args)
 {
 	return (xmlNodePtr)NULL;
+}
+
+/* Sequences */
+xmlNodePtr
+pyxser_SerializeSequence(PyxSerializationArgsPtr args)
+{
+	return pyxser_GlobalSequenceSerialization(args);
 }
 
 /* Tuples */
@@ -223,6 +230,7 @@ pyxser_RunSerializationCol(PyxSerializationArgsPtr args)
         args->item = &item;
         args->rootNode = &csn;
         args->currentNode = &csn;
+        PyList_Append(dupItems, item);
         newSerNode = pyxser_SerializeXml(args);
         args->o = oold;
         args->item = oold;
@@ -235,9 +243,14 @@ pyxser_RunSerializationCol(PyxSerializationArgsPtr args)
 }
 
 static xmlNodePtr
+pyxser_GlobalSequenceSerialization(PyxSerializationArgsPtr args)
+{
+	return NULL;
+}
+
+static xmlNodePtr
 pyxser_GlobalListSerialization(PyxSerializationArgsPtr args)
 {
-
     PyObject *o = *args->o;
     PyObject **oold = args->o;
     char *name = args->name;
@@ -720,6 +733,12 @@ pyxunser_SerializeList(PyxSerDeserializationArgsPtr obj)
 }
 
 PyObject *
+pyxunser_SerializeSequence(PyxSerDeserializationArgsPtr obj)
+{
+    return pyxunser_SerializeList(obj);
+}
+
+PyObject *
 pyxunser_SerializeDict(PyxSerDeserializationArgsPtr obj)
 {
 	xmlNodePtr node = *(obj->currentNode);
@@ -850,6 +869,7 @@ pyxunser_SerializeDict(PyxSerDeserializationArgsPtr obj)
 	}
 	return dict;
 }
+
 
 /* pyserx_collections.c ends here */
 
