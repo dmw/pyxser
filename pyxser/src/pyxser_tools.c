@@ -284,7 +284,7 @@ pyxser_AddReference(PyObject *o, xmlNodePtr currentNode)
     if (PyWeakref_CheckRef(o)) {
 		return (xmlNodePtr)NULL;
     }
-	hash = (unsigned long)PyObject_Hash(o);
+	hash = (unsigned long)(o);
 	if (hash != 0) {
 		longIdentifier = PyLong_FromUnsignedLong(hash);
 		stringRepr = PyObject_Str(longIdentifier);
@@ -314,7 +314,7 @@ pyxser_AddIdentifier(PyObject *o, xmlNodePtr currentNode)
 	if (PYTHON_IS_NONE(o) || currentNode == (xmlNodePtr)NULL) {
 		return;
 	}
-	hash = (unsigned long)PyObject_Hash(o);
+	hash = (unsigned long)(o);
 	if (hash != 0) {
 		longIdentifier = PyLong_FromUnsignedLong(hash);
 		stringRepr = PyObject_Str(longIdentifier);
@@ -336,20 +336,20 @@ pyxser_CheckBuiltInModule(PyObject *o)
 	char *cn = (char *)NULL;
 	PyObject *klass = Py_None;
 	PyObject *mname = Py_None;
-	xmlAttrPtr moduleAttr = (xmlAttrPtr)NULL;
+
 	if (PYTHON_IS_NONE(o)) {
-		return;
+		return r;
 	}
 	klass = PyObject_GetAttrString(o, pyxser_attr_class);
 	if (PYTHON_IS_NONE(klass)) {
         PyErr_Clear();
-		return;
+		return r;
 	}
 	mname = PyObject_GetAttrString(klass, pyxser_attr_module);
 	if (PYTHON_IS_NONE(mname)) {
         PyErr_Clear();
         PYXSER_FREE_OBJECT(klass);
-        return;
+        return r;
 	}
 	if (!PyString_Check(mname)) {
         PYXSER_FREE_OBJECT(klass);
@@ -1297,6 +1297,12 @@ pyxser_validity_exception(void *ctx, const char *msg, va_list args)
     PyErr_SetString(invalid_xml_exception, error_buffer);
 }
 
+static int
+px_printf(FILE *in, const char *pt, ...)
+{
+    return 0;
+}
+
 int
 pyxser_ValidateDocument(xmlDocPtr doc)
 {
@@ -1306,8 +1312,8 @@ pyxser_ValidateDocument(xmlDocPtr doc)
 		return 0;
 	}
 	cvp->userData = (void *) stderr;
-	cvp->error = (xmlValidityErrorFunc) fprintf;
-	cvp->warning = (xmlValidityWarningFunc) fprintf;
+	cvp->error = (xmlValidityErrorFunc) px_printf;
+	cvp->warning = (xmlValidityWarningFunc) px_printf;
 	if (!xmlValidateDtd(cvp, doc, dtd)) {
         xmlFreeValidCtxt(cvp);
         return 0;
@@ -1327,8 +1333,8 @@ pyxser_ValidateDocumentC14N(xmlDocPtr doc)
 #ifdef PYXSER_DEBUG
 #warning USING DEBUG!
 	cvp->userData = (void *) stderr;
-	cvp->error = (xmlValidityErrorFunc) fprintf;
-	cvp->warning = (xmlValidityWarningFunc) fprintf;
+	cvp->error = (xmlValidityErrorFunc) px_printf;
+	cvp->warning = (xmlValidityWarningFunc) px_printf;
 #else
 	cvp->userData = (void *) NULL;
 	cvp->error = (xmlValidityErrorFunc) pyxser_validity_exception;
@@ -1356,8 +1362,8 @@ pyxser_ValidateDocumentXSD(xmlDocPtr doc)
     pyxser_xsd_doc = (xmlDocPtr)xmlParseFile(pyxser_xml_xsd_location);
     pyxser_xsd_parser_object = xmlSchemaNewDocParserCtxt(pyxser_xsd_doc);
     xmlSchemaSetParserErrors(pyxser_xsd_parser_object,
-                             (xmlSchemaValidityErrorFunc) fprintf,
-                             (xmlSchemaValidityWarningFunc) fprintf,
+                             (xmlSchemaValidityErrorFunc) px_printf,
+                             (xmlSchemaValidityWarningFunc) px_printf,
                              stderr);
     pyxser_xsd_object = xmlSchemaParse(pyxser_xsd_parser_object);
     scm = pyxser_xsd_object;
@@ -1366,8 +1372,8 @@ pyxser_ValidateDocumentXSD(xmlDocPtr doc)
         if (ctx != (xmlSchemaValidCtxtPtr)NULL) {
             xmlSchemaSetValidOptions(ctx, 0);
             xmlSchemaSetValidErrors(ctx,
-                                    (xmlSchemaValidityErrorFunc) fprintf,
-                                    (xmlSchemaValidityWarningFunc) fprintf,
+                                    (xmlSchemaValidityErrorFunc) px_printf,
+                                    (xmlSchemaValidityWarningFunc) px_printf,
                                     stderr);
             ctrl = xmlSchemaValidateDoc(ctx, doc);
             if (ctrl == 0) {
@@ -1399,8 +1405,8 @@ pyxser_ValidateDocumentXSDC14N(xmlDocPtr doc)
     pyxser_xsd_c14n_doc = (xmlDocPtr)xmlParseFile(pyxser_xml_xsd_c14n_location);
     pyxser_xsd_parser_c14n_object = xmlSchemaNewDocParserCtxt(pyxser_xsd_c14n_doc);
     xmlSchemaSetParserErrors(pyxser_xsd_parser_c14n_object,
-                             (xmlSchemaValidityErrorFunc) fprintf,
-                             (xmlSchemaValidityWarningFunc) fprintf,
+                             (xmlSchemaValidityErrorFunc) px_printf,
+                             (xmlSchemaValidityWarningFunc) px_printf,
                              stderr);
     pyxser_xsd_c14n_object = xmlSchemaParse(pyxser_xsd_parser_c14n_object);
     scm = pyxser_xsd_c14n_object;
@@ -1409,8 +1415,8 @@ pyxser_ValidateDocumentXSDC14N(xmlDocPtr doc)
         if (ctx != (xmlSchemaValidCtxtPtr)NULL) {
             xmlSchemaSetValidOptions(ctx, 0);
             xmlSchemaSetValidErrors(ctx,
-                                    (xmlSchemaValidityErrorFunc) fprintf,
-                                    (xmlSchemaValidityWarningFunc) fprintf,
+                                    (xmlSchemaValidityErrorFunc) px_printf,
+                                    (xmlSchemaValidityWarningFunc) px_printf,
                                     stderr);
             ctrl = xmlSchemaValidateDoc(ctx, doc);
             if (ctrl == 0) {
