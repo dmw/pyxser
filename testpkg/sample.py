@@ -78,10 +78,10 @@ class User(Base):
     fullname = Column(String)
     password = Column(String)
 
-    def __init__(self, name, fullname, password):
-        self.name = name
-        self.fullname = fullname
-        self.password = password
+    def __init__(self):
+        self.name = None
+        self.fullname = None
+        self.password = None
 
     def get_set(self):
         return (self.name, self.fullname, self.password)

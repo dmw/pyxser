@@ -414,19 +414,13 @@ pyxser_PyListContains(PyListObject *lst, PyObject *o)
 	}
 	while ((item = PyIter_Next(iterLst))
 		   != (PyObject *)NULL) {
-        if (PyWeakref_CheckRef(o)) {
-            if (item == (PyWeakref_GetObject(o))) {
-                return PYXSER_FOUND;
-            } else if (PyObject_Hash(item)
-                       == PyObject_Hash((PyWeakref_GetObject(o)))) {
-                return PYXSER_FOUND;
-            }
-        } else if (item == o) {
-			return PYXSER_FOUND;
-        } else if (PyObject_Hash(item) == PyObject_Hash(o)) {
-			return PYXSER_FOUND;
+        if (PYTHON_IS_NOT_NONE(item) && item == o) {
+            PYXSER_FREE_OBJECT(item);
+            PYXSER_FREE_OBJECT(iterLst);
+            return PYXSER_FOUND;
         }
 	}
+    PYXSER_FREE_OBJECT(item);
     PYXSER_FREE_OBJECT(iterLst);
 	return PYXSER_NOT_FOUND;
 }
