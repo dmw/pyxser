@@ -1,149 +1,929 @@
+2010-08-03 13:38  damowe
 
-0.2rc1 (2009.04.08):
+	* ChangeLog, src/pyxser_collections.c, src/pyxser_serializer.c,
+	  src/pyxser_tools.c, test-utf8-sqlalchemy.py, testpkg/sample.py,
+	  testpkg/sample.pyc: * testpkg/sample.py: changed User class
+	  constructor, so it
+	  will be serialized and deserialized by pyxser. It requires
+	  an empty constructor.
+	  * src/pyxser_serializer.c: added module_builtins constant,
+	  and added constraint check which was causing a segfault
+	  error on certain 'extreme' conditions.
+	  * src/pyxser_collections.c: refactored code using the
+	  Zen of Python, the code looks more elegant and flat.
+	  also, algorithm paths were reduced.
+	  * src/pyxser_tools.c: removed memory leak bug.
+	  * test-utf8-sqlalchemy.py: added the proper arguments
+	  to the serialization test, and now it is deserializing
+	  the SqlAlchemy object thanks to the changes made above.
 
-	Daniel Molina Wegener <dmw@coder.cl>
-	* Added serialize_c14n()
-	* Added serialize_c14n_strict()
-	* Added validate_c14n()
-	* Added encodings support
-	* Added serialization depth support
+2010-08-03 01:19  damowe
 
+	* src/pyxser_collections.c, src/pyxser_serializer.c,
+	  src/pyxser_tools.c, testpkg/sample.pyc, valgrind-python.supp,
+	  vlg.sh: * src/pyxser_serializer.c:
+	  - added PYXSER_GET_ATTR_NAME macro.
+	  - reduced nested statements on pyxser_SetupXmlRootElement
+	  and various other routines.
+	  - added checking for the __builtin__ module.
+	  * src/pyxser_collections.c:
+	  - reduced nested statements on various functions.
+	  - optimized code paths, so pyxser is running
+	  faster.
+	  * src/pyxser_tools.c:
+	  - added more checks for more types.
 
-0.2r (2009.04.18):
+2010-07-30 18:09  damowe
 
-	Daniel Molina Wegener <dmw@coder.cl>
-	* Removed memory leaks concerning libxml2 usage.
-	* Removed memory leaks concerning Python C/API usage.
-	* Improved fault detection.
-	* Improved pointer checking deallocations.
-	* Added unit test test-utf8-prof.py with 50.000 cilces ;)
-	* Every serilization is made into unicode objects.
+	* src/include/pyxser_collections.h, src/include/pyxser_tools.h,
+	  src/pyxser_collections.c, src/pyxser_serializer.c,
+	  src/pyxser_tools.c, test-utf8-sqlalchemy.py, testpkg/sample.py: *
+	  testpkg/sample.py: moved User class into this module due to
+	  problems serializing it as is stored in the __main__ module
+	  (remember that pyxser still can't serialize objects with a
+	  class declared on __main__).
+	  * src/include/pyxser_tools.h: added weak reference and sequence
+	  checking prototypes.
+	  * src/include/pyxser_collections.h: added sequence serialization
+	  prototypes.
+	  * src/pyxser_serializer.c: ommited __builtin__ objects, due to
+	  problems deserializing them and enhanced the memoization used
+	  to add object references when an object has been already
+	  serialized.
+	  * src/pyxser_collections.c: added sequence serialization
+	  routines.
+	  * src/pyxser_tools.c: added sequence checking and weakref
+	  checking routines. Enhanced components related to the object
+	  reference memoization --- this add refs and ommits the
+	  reserialization of those objects that were serialized
+	  previously.
+	  * test-utf8-sqlalchemy.py: added more modules as imports,
+	  so more classes are recognized by pyxser.
 
+2010-07-28 19:28  damowe
 
-1.0rc1 (2009.04.26):
+	* src/pyxser_tools.c: * src/pyxser_tools.c: changed the way that
+	  object
+	  hash is computed, now it is using the native
+	  PyObject_Hash functions.
 
-	Daniel Molina Wegener <dmw@coder.cl>
-	* Added both byte string and unicode returning and procesing
-	functions. This means that we have serialize(),
-	serialize_c14n(), serialize_c14n_strict(), unserialize(),
-	validate() and validate_c14n() functions for byte strings
-	and u_serialize(), u_serialize_c14n(), u_serialize_c14n_strict(),
-	u_unserialize(), u_validate() and u_validate_c14n() for
-	unicode strings.
-	* Removed memory leaks, now it runs over 1400000 pyxser
-	operations without crashing (100000 cicles testing every
-	function).
-	* Removed bugs concerning reference counting that was
-	crashing when trying to access unserialized objects attributes.
-	* This is an approach to a production environment release ;)
+2010-06-20 15:56  damowe
 
-1.0r (2009.05.09):
+	* ChangeLog: * renewed ChangeLog
 
-	Daniel Molina Wegener <dmw@coder.cl>
-	* Set default validation to XML Schema validation, to allow
-	pyxser to work with WebServices and similar technologies,
-	without restricting the namespace prefix to pyxs.
-	* Removed memory leaks concerning XML Schema validation.
-	* Succeful tests with more than 1.200.000 pyxser operations.
-	* Added pyxser 1.0 XML Schema to allow imports of the pyxser
-	model into WebServices WSDL and similar technologies.
-	* Addded getxsd(), getxsd_c14n(), u_validate_c14n_dtd(),
-	u_validate_dtd(), validate_c14n_dtd(), validate_dtd()
-	functions.
-	* All *_dtd() related functions allows you to validate
-	pyxser documents using the pyxser 1.0 DTD, instead of
-	the pyxser 1.0 XML Schema.
+2010-05-12 12:44  damowe
 
-1.1r (2009.05.09):
+	* AUTHORS, COPYING, ChangeLog, INSTALLING, ISSUES, PKG-INFO,
+	  README, build-debug.sh, build-normal.sh, setup.py, src,
+	  src/cscope.out, src/include, src/include/pyxser.h,
+	  src/include/pyxser_collections.h, src/include/pyxser_file.h,
+	  src/include/pyxser_numbers.h, src/include/pyxser_serializer.h,
+	  src/include/pyxser_strings.h, src/include/pyxser_tools.h,
+	  src/include/pyxser_typem.h, src/pyxser.c,
+	  src/pyxser_collections.c, src/pyxser_file.c,
+	  src/pyxser_numbers.c, src/pyxser_serializer.c,
+	  src/pyxser_strings.c, src/pyxser_tools.c, src/pyxser_typem.c,
+	  test-errors.py, test-simple.py, test-utf8-leak.py,
+	  test-utf8-profiling.py, test-utf8-sqlalchemy.py, test-utf8.py,
+	  testpkg, valgrind-python.supp, xsd: * added svn keywords on all
+	  files.
 
-	Daniel Molina Wegener <dmw@coder.cl>
-	* Removed bugs concerning XML schema declaration for output
-	documents.
-	* Removed bugs concerning XML schema design for C14N
-	serialization.
-	* Removed exc argument from C14N serialization functions,
-	because they have no sense.
-	* Code cleanup with function arguments (C code).
-	* All changes seems to be transparent for previous versions.
+2010-05-12 12:40  damowe
 
-1.2r (2009.08.23):
+	* src/include/pyxser_collections.h, src/pyxser_collections.c,
+	  src/pyxser_serializer.c, src/pyxser_tools.c, test-utf8-leak.py,
+	  test-utf8-sqlalchemy.py: * src/include/pyxser_collections.h -
+	  added set handling
+	  function prototypes.
+	  * src/pyxser_serializer.c - removed memory leak.
+	  * src/pyxser_collections.c - added set handling function
+	  prototypes. added name property handling algorithm, so
+	  non string name properties are not serialized. I shall
+	  extend it to other modules.
+	  * src/pyxser_tools.c - added set handling prototypes and
+	  set type checking function.
+	  * test-utf8-leak.py - added serialization of SQL Alchemy
+	  objects, so we can test more complex Python objects
+	  serialization.
+	  * test-utf8-sqlalchemy.py - added sql alchemy object
+	  serialization test.
 
-	Daniel Molina Wegener <dmw@coder.cl>
-	* Added encoded serialization of Unicode strings by using
-	the user defined encoding as is passed to the serialization
-	functions as enc parameter
-	* Refactored some functions to allow more ordered code.
+2010-05-10 14:19  damowe
 
-1.3r (2009.11.30):
+	* src/pyxser_collections.c: * src/pyxser_collections.c - added
+	  support for unicode
+	  key names, which are converted to the user settings
+	  encoding (ie utf-8) inside the XML output.
 
-	Daniel Molina Wegener <dmw@coder.cl>
-	* pyxser_tools.c: Removed bug concerning deserialization of
-	collection elements; pyxser now can handle extension declared
-	classes, such as boost::python ones --- thanks to the
-	suggestions made by Daniel Filonik.
-	* pyxser.c: Added /selector/ as optional argument used as
-	callback to select object attributes to being serialized.
-	* pyxser_string.c: Removed bug concerning unicode serialization.
+2010-05-07 14:29  damowe
 
-	Thanks pyxser users for your feedback...
+	* src/pyxser_serializer.c: * src/pyxser_serializer.c - addded
+	  support for unicode
+	  object names in dictionary/list types.
 
-1.4r (2009.12.26):
+2010-05-06 17:34  damowe
 
-	Daniel Molina Wegener <dmw@coder.cl>
-	* pyxser_typem.c: Added type map serialization and deserialization
-	routines and arguments. Now pyxser is able to serialize and
-	deserialize objects using custom serialization functions, but
-	preserving the pyxser XML schema and the serialization model.
+	* src/pyxser_collections.c, src/pyxser_serializer.c: *
+	  src/pyxser_serializer.c - reduced serialization algorithms,
+	  replacing deep nested if statements by flatten ones.
+	  * src/pyxser_collections.c - reduced serialization algorithms,
+	  replacing deep nested if statements by flatten ones.
 
-1.4.2r (2010.02.10):
+2010-05-05 22:10  damowe
 
-	Daniel Molina Wegener <dmw@coder.cl>
-	* pyxser_collections.c: Added constraint checks for NULL
-	pointers removing nested statements.
-	* pyxser.c: Removed nested statements.
-	* pyxser_tools.c: Added constratints checks for NULL pointers,
-	removed nested statements and added strict checking for lists
-	since it was crashing with an ambigous list definition that
-	can not be handled by PyList_Check().
-	* test-utf8.py: Added tests to determine if it continue
-	crashing with module serialization.
+	* src/pyxser_strings.c, src/pyxser_typem.c: * src/pyxser_strings.c
+	  - reduced serialization algorithms,
+	  replacing deep nested if statements by flatten ones.
+	  * src/pyxser_typem.c - reduced serialization algorithms,
+	  replacing deep nested if statements by flatten ones.
 
-	Thanks to pyxser users for their feedback.
+2010-05-05 14:51  damowe
 
-1.4.4r (2010.02.10):
+	* test-utf8-leak.py: * test-utf8-leak.py - added utf-8 dictionary
+	  keys to
+	  test memory leaks related to those routines.
 
-	Daniel Molina Wegener <dmw@coder.cl>
+2010-05-05 13:55  damowe
 
-	* src/include/pyxser_collections.h - added set handling
-	function prototypes. Added support for unicode
-	key names, which are converted to the user settings
-	encoding (ie utf-8) inside the XML output.
-	* src/pyxser_serializer.c - removed memory leak. Addded
-	support for unicode object names in dictionary/list types.
-	* src/pyxser_collections.c - added set handling function
-	prototypes. added name property handling algorithm, so
-	non string name properties are not serialized. I shall
-	extend it to other modules.
-	* src/pyxser_tools.c - added set handling prototypes and
-	set type checking function.
-	* test-utf8-leak.py - added serialization of SQL Alchemy
-	objects, so we can test more complex Python objects
-	serialization.
-	* test-utf8-sqlalchemy.py - added sql alchemy object
-	serialization test.
-	* src/pyxser_serializer.c - reduced serialization algorithms,
-	replacing deep nested if statements by flatten ones.
-	* src/pyxser_collections.c - reduced serialization algorithms
-	replacing deep nested if statements by flatten ones.
-	* src/pyxser_typem.c - reduced serialization algorithms,
-	replacing deep nested if statements by flatten ones.
+	* src/pyxser_collections.c, src/pyxser_serializer.c,
+	  src/pyxser_tools.c, test-utf8.py, xsd/pyxser-1.0.dtd,
+	  xsd/pyxser-1.0.xsd: * src/pyxser_serializer.c - reduced
+	  serialization algorithms,
+	  replacing deep nested if statements by flatten ones.
+	  * src/pyxser_collections.c - reduced serialization algorithms,
+	  replacing deep nested if statements by flatten ones. also
+	  was added support for unicode dictionary keys.
+	  * src/pyxser_tools.c - reduced serialization algorithms,
+	  replacing deep nested if statements by flatten ones. changed
+	  identifier generators by more XML compatible identifiers,
+	  removed the dash on the generated ID and IDREF attributes.
+	  * test-utf8.py - added unicode keys to the test.
+	  * xsd/pyxser-1.0.dtd - changed name attribute from NMTOKEN to
+	  CDATA.
+	  * xsd/pyxser-1.0.xsd - changed name attribute from NMTOKEN to
+	  xs:string.
 
-	Thanks to pyxser users for their feedback.
+2010-05-05 02:18  damowe
 
+	* src/pyxser_collections.c, src/pyxser_serializer.c,
+	  src/pyxser_strings.c: * src/pyxser_string.c - reduced
+	  serialization algorithms,
+	  replacing deep nested if statements by flatten ones.
+	  * src/pyxser_serializer.c - reduced serialization algorithms,
+	  replacing deep nested if statements by flatten ones.
+	  * src/pyxser_collections - reduced serialization algorithms,
+	  replacing deep nested if statements by flatten ones.
 
-1.4.6r (2010.02.10):
+2010-05-04 15:05  damowe
 
-	Daniel Molina Wegener <dmw@coder.cl>
+	* test-utf8-leak.py: * test-utf8-leak.py - added unicode dictionary
+	  keys
+	  to test new features and bug correction.
 
-	Thanks to pyxser users for their feedback.
+2010-05-04 14:01  damowe
+
+	* src/include/pyxser_tools.h, src/pyxser_collections.c,
+	  src/pyxser_serializer.c, src/pyxser_tools.c, test-utf8.py: *
+	  src/include/pyxser_tools.h - added some function prototypes.
+	  * src/pyxser_serializer.c - added checks for unicode attribute
+	  or dictionary key names, so unicode is encoded to the user
+	  selected encoding and now is creating encoded attributes
+	  'name' for each unicode named object.
+	  * src/pyxser_collections.c - added checks for unicode attribute
+	  or dictionary key names, so unicode is encoded to the user
+	  selected encoding and now is creating encoded attributes
+	  'name' for each unicode named object.
+	  * src/pyxser_tools.c - removed some function prototypes.
+	  * test-utf8.py - added some unicode dictionary keys.
+
+2010-05-04 01:50  damowe
+
+	* src/pyxser_tools.c: * src/pyxser_tools.c - reduced serialization
+	  algorithms,
+	  replacing deep nested if statements by flatten ones.
+
+2010-05-03 23:34  damowe
+
+	* src/pyxser_numbers.c, src/pyxser_strings.c: *
+	  src/pyxser_strings.c - reduced serialization algorithms,
+	  replacing deep nested if statements by flatten ones.
+	  * src/pyxser_numbers.c - reduced serialization algorithms,
+	  replacing deep nested if statements by flatten ones.
+
+2010-05-03 01:34  damowe
+
+	* src/pyxser.c: * src/pyxser.c - reduced serialization algorithms,
+	  replacing deep nested if statements by flatten
+	  ones.
+
+2010-05-03 00:17  damowe
+
+	* src/pyxser.c: * src/pyxser.c - reduced serialization algorithms,
+	  replacing deep nested if statements by flatten
+	  ones.
+
+2010-05-01 19:20  damowe
+
+	* src/pyxser.c, xsd/pyxser-1.0-c14n.dtd, xsd/pyxser-1.0-c14n.xsd,
+	  xsd/pyxser-1.0.dtd, xsd/pyxser-1.0.xsd: * src/pyxser.c - enhanced
+	  documentation and related stuff.
+	  * xsd/pyxser-1.0.dtd - added svn keywords.
+	  * xsd/pyxser-1.0-c14n.dtd - added svn keywords.
+	  * xsd/pyxser-1.0.xsd - added svn keywords.
+	  * xsd/pyxser-1.0-c14n.xsd - added svn keywords.
+
+2010-05-01 00:32  damowe
+
+	* src/pyxser_tools.c: * src/pyxser_tools.c - replaced deep nested
+	  if statements
+	  by flatten ones. also those changes will make more
+	  shorten steps and make pyxser more faster.
+
+2010-04-26 20:07  damowe
+
+	* src/pyxser.c, src/pyxser_collections.c, src/pyxser_serializer.c,
+	  src/pyxser_strings.c, src/pyxser_tools.c, src/pyxser_typem.c: -
+	  just aligned the DOCTYPE comment on C files.
+
+2010-04-26 14:40  damowe
+
+	* src/include/pyxser.h, src/pyxser_collections.c,
+	  src/pyxser_numbers.c, src/pyxser_serializer.c,
+	  src/pyxser_typem.c: * src/include/pyxser.h - realigned structure
+	  member for speed
+	  and renamed on both structures the serialization and
+	  deserialization one the callback member for type checking.
+	  * src/pyxser_numbers.h - short hand on nested if statements
+	  replaced by &&. also break statement is being used on node
+	  searching algorithms.
+	  * src/pyxser_collections.c - replaced the callback name by
+	  the one on pyxser.h.
+	  * src/pyxser_typem.c - added break statement on node searching
+	  algorithm, to increase pyxser speed.
+
+2010-04-25 21:35  damowe
+
+	* build-normal.sh, src/include/pyxser.h, src/pyxser.c,
+	  src/pyxser_numbers.c, src/pyxser_tools.c: * src/include/pyxser.h
+	  - added error status for serialization
+	  and deserialization storage structures, so we can add an
+	  error status through the serialization and deserialization
+	  process.
+	  * src/pyxser_numbers.c - added break statements when the XML
+	  node is found, this implies a faster serialization and
+	  deserialization algorithm. Also, nested conditional nodes
+	  were changed for flat ones.
+	  * src/pyxser.c - changed online documentation and also added
+	  break statements on XML node searching algorithms, this
+	  implies a faster algorithm.
+	  * src/pyxser_tools.c - added break statements so we can have
+	  faster algorithms on XML node searching.
+
+2010-04-18 17:07  damowe
+
+	* setup.py, src/pyxser.c, src/pyxser_collections.c,
+	  src/pyxser_tools.c: - removed minor bugs.
+	  - enhanced error messages.
+	  - XXX: enhance error message inside the serialization
+	  algorithm.
+
+2010-02-10 19:15  damowe
+
+	* ChangeLog: * XXX: ready to release 1.4.2r
+
+2010-02-10 18:52  damowe
+
+	* test-utf8.py: * test-utf8.py, removed failure testing.
+
+2010-02-10 16:30  damowe
+
+	* src/pyxser.c, src/pyxser_collections.c, src/pyxser_tools.c,
+	  test-utf8.py: * pyxser_collections.c, added constraint checks for
+	  NULL
+	  pointers removing nested statements.
+	  * pyxser.c, removed nested statements.
+	  * pyxser_tools.c, added constratints checks for NULL
+	  pointers, removed nested statements and added strict
+	  checking for lists since it was crashing with an
+	  ambigous list definition.
+	  * test-utf8.py, added tests to determine if it continue
+	  crashing with module serialization.
+
+2010-02-02 11:47  damowe
+
+	* build-debug.sh, build-normal.sh, setup.py, src/cscope.out,
+	  src/include/pyxser.h, src/include/pyxser_collections.h,
+	  src/include/pyxser_file.h, src/include/pyxser_numbers.h,
+	  src/include/pyxser_serializer.h, src/include/pyxser_strings.h,
+	  src/include/pyxser_tools.h, src/include/pyxser_typem.h,
+	  src/pyxser.c, src/pyxser_collections.c, src/pyxser_file.c,
+	  src/pyxser_numbers.c, src/pyxser_serializer.c,
+	  src/pyxser_strings.c, src/pyxser_tools.c, src/pyxser_typem.c,
+	  test-errors.py, test-simple.py, test-utf8-leak.py,
+	  test-utf8-prof.py, test-utf8-profiling.py, test-utf8.py,
+	  valgrind-python.supp: - added keywords.
+	  - refactored code.
+
+2009-12-27 00:52  damowe
+
+	* ChangeLog: - added ChangeLog entry.
+
+2009-12-27 00:40  damowe
+
+	* src/pyxser.c, src/pyxser_typem.c, test-utf8-profiling.py,
+	  test-utf8-profiling.txt: - ready to release pyxser-1.4r
+
+2009-12-25 18:20  damowe
+
+	* src/include/pyxser.h, src/include/pyxser_typem.h, src/pyxser.c,
+	  src/pyxser_serializer.c, src/pyxser_typem.c, test-utf8-prof.py,
+	  test-utf8.py, valgrind-python.supp: - finished type maps for
+	  serialize and deserialize
+	  functions, now pyxser is allowing the user to
+	  setup custom serilizing and deserializing functions.
+
+2009-12-22 23:09  damowe
+
+	* src/include/pyxser.h, src/pyxser.c, src/pyxser_serializer.c,
+	  src/pyxser_typem.c, test-utf8-prof.py, test-utf8.py: - finished
+	  integration of deserialization typemap.
+	  - XXX: create serialization typemap, and optimize
+	  both deserialization and serialization typemap
+	  functionallity.
+
+2009-12-21 22:47  damowe
+
+	* setup.py, src/include/pyxser_tools.h, src/include/pyxser_typem.h,
+	  src/pyxser_tools.c, src/pyxser_typem.c: - added type map
+	  processing, pending integration ;)
+
+2009-12-20 04:38  damowe
+
+	* setup.py, src/include/pyxser.h, src/include/pyxser_serializer.h,
+	  src/include/pyxser_tools.h, src/pyxser.c,
+	  src/pyxser_serializer.c, src/pyxser_tools.c: - splited
+	  pyxser_tools module into pyxser_serializer
+	  and pyxser_tools.
+	  - preparing the code for type map as:
+	  typemap = {'type':
+	  {'out': 'name',
+	  'callback': if_any_callback}}
+
+2009-12-03 12:48  damowe
+
+	* src/pyxser.c, src/pyxser_collections.c, src/pyxser_tools.c,
+	  test-utf8-prof.py: - removed bug concerning object instantiation
+	  and
+	  restored the old method of using PyInstance_NewRaw()
+	  as fallback when there is no default constructor.
+	  - ready to release pyxser-1.3r-p1.
+
+2009-11-30 17:52  damowe
+
+	* ChangeLog: - modified ChangeLog
+
+2009-11-30 17:46  damowe
+
+	* src/include/pyxser.h, src/pyxser.c, src/pyxser_collections.c,
+	  src/pyxser_tools.c, test-simple.py, test-utf8.py,
+	  testpkg/__init__.pyc, testpkg/sample.pyc: - ready to release 1.3r
+	  ;)
+	  - changed default raw instantiation to method call.
+	  - added selector attribute as callback to select
+	  object attributes to being serialized.
+	  - removed bug concerning serialization names of
+	  dictionary elements.
+	  - removed bug concerning deserialization of
+	  collection elements.
+
+2009-08-23 15:43  damowe
+
+	* PKG-INFO, setup.py, src/include/pyxser.h, src/pyxser.c: - added
+	  revision tags on code.
+
+2009-08-23 15:29  damowe
+
+	* ChangeLog: - added ChangeLog issues
+
+2009-08-23 15:12  damowe
+
+	* src/pyxser_strings.c, src/pyxser_tools.c: - added unicode string
+	  encoding to user selected
+	  encoding by using the enc parameter on the
+	  output xml.
+	  - refactored some functions, now have a little
+	  bit more ordered code.
+
+2009-08-08 19:15  damowe
+
+	* src/pyxser_tools.c: - refactored one of all those state machine
+	  running
+	  algorithms. ;)
+
+2009-07-29 01:59  damowe
+
+	* src/cscope.out, src/pyxser.c, src/pyxser_strings.c,
+	  src/pyxser_tools.c, test-utf8.py: - removed some small bugs.
+
+2009-07-28 02:22  damowe
+
+	* src/include/pyxser_file.h, src/pyxser_file.c: - added
+	  serialization functions for files.
+
+2009-07-28 02:21  damowe
+
+	* src/include/pyxser.h, src/include/pyxser_tools.h,
+	  src/pyxser_tools.c, testpkg/__init__.pyc, testpkg/sample.pyc: -
+	  changed serialization order on the serialization state
+	  machine.
+	  - minor changes by adding the first file serialization
+	  functions.
+
+2009-07-27 02:27  damowe
+
+	* ChangeLog, src/cscope.out, src/include/pyxser.h,
+	  src/include/pyxser_collections.h, src/include/pyxser_numbers.h,
+	  src/include/pyxser_strings.h, src/include/pyxser_tools.h,
+	  src/pyxser.c, src/pyxser_collections.c, src/pyxser_numbers.c,
+	  src/pyxser_strings.c, src/pyxser_tools.c, test-utf8-prof.py: -
+	  XXX: removed a lot of bugs. see the ChangeLog
+	  - ready to build file and buffer serialization!
+	  - 1.1R on 02.08.2009
+
+2009-07-20 20:02  damowe
+
+	* src/pyxser.c, src/pyxser_tools.c, test-utf8.py,
+	  testpkg/__init__.pyc, testpkg/sample.pyc: - removed bugs
+	  concerning XML namespace declaration
+	  on C14N serialization.
+	  - removed bugs concerning unnecesary namespace declaration.
+
+2009-07-18 02:24  damowe
+
+	* src/cscope.out, src/pyxser.c, src/pyxser_tools.c, test-utf8.py,
+	  xsd/pyxser-1.0-c14n.xsd, xsd/pyxser-1.0.xsd: - removed bugs
+	  concerning C14N schema.
+	  - removed bugs concerning error handling (messages).
+	  - removed bugs concerning argument handling (optionals).
+
+2009-05-10 03:19  damowe
+
+	* ChangeLog, xsd/pyxser-1.0-c14n.xsd: - XXX: tag as 1.0r. ready to
+	  release...
+
+2009-05-10 02:31  damowe
+
+	* build-debug.sh, setup.py, src/cscope.out, src/include/pyxser.h,
+	  src/include/pyxser_tools.h, src/pyxser.c, src/pyxser_tools.c,
+	  test-utf8-prof.py, test-utf8.py, testpkg/__init__.pyc,
+	  testpkg/sample.pyc, xsd/pyxser-1.0.xsd: - fixed XML schema
+	  validation.
+	  - XML schema validation is the natural way of validation.
+	  - XML schema validation allows to use pyxser with WebServices.
+	  - removed memory leaks regarding XML schema validation.
+	  - cicle test success.
+	  - XXX: ready to release 1.0r ;)
+
+2009-05-09 15:00  damowe
+
+	* build-debug.sh, build-normal.sh, setup.py, src/cscope.out,
+	  src/include/pyxser.h, src/include/pyxser_tools.h, src/pyxser.c,
+	  src/pyxser_tools.c, test-utf8.py, testpkg/__init__.pyc,
+	  testpkg/sample.pyc: - added schema validation.
+	  - still buggy, enhance this way of validation.
+
+2009-05-09 01:31  damowe
+
+	* build-debug.sh, testpkg/__init__.pyc, testpkg/sample.pyc: - added
+	  py25 to the build script.
+
+2009-04-28 04:32  damowe
+
+	* src/pyxser.c, src/pyxser_strings.c: - removed bug on string
+	  length.
+	  - removed bugs on type casting.
+
+2009-04-26 23:21  damowe
+
+	* ChangeLog: - ready to tag!
+
+2009-04-26 23:13  damowe
+
+	* test-utf8-profiling.py, test-utf8-profiling.txt: - good run on
+	  profiling tests.
+
+2009-04-26 21:34  damowe
+
+	* src/pyxser.c, src/pyxser_collections.c, src/pyxser_numbers.c,
+	  src/pyxser_tools.c, test-utf8-prof.py, testpkg/__init__.pyc,
+	  testpkg/sample.pyc: - removed most memory leaks.
+	  - ready for pyxser-0.3rc1.
+	  - now it does up to 1.400.000 pyxser operations ;)
+
+2009-04-25 23:31  damowe
+
+	* src/pyxser.c, test-utf8-prof.py, testpkg/__init__.pyc,
+	  testpkg/sample.pyc: - remove most bugs regarding reference
+	  counting.
+	  - XXX: still have memory leaks, but isn't crashing now ;)
+
+2009-04-25 00:49  damowe
+
+	* setup.py, src/pyxser.c, src/pyxser_collections.c,
+	  src/pyxser_numbers.c, src/pyxser_strings.c, src/pyxser_tools.c,
+	  test-utf8-prof.py, testpkg/sample.py, testpkg/sample.pyc: -
+	  removed bugs concerning bad allocations.
+	  - still have memory leaks.
+
+2009-04-24 03:06  damowe
+
+	* build-debug.sh, setup.py, src/cscope.out, src/pyxser.c,
+	  src/pyxser_collections.c, src/pyxser_strings.c,
+	  src/pyxser_tools.c, test-utf8-prof.py, test-utf8-prof.txt,
+	  test-utf8.py, test.output.errors.txt, test.output.latin1.txt,
+	  test.output.utf8.txt, testpkg/sample.py, testpkg/sample.pyc: -
+	  back to safe unicode version (non human
+	  redeable interpretable).
+	  - XXX: fix the huge bug with dicts.
+
+2009-04-22 12:28  damowe
+
+	* build-debug.sh, build-normal.sh, src/pyxser.c,
+	  src/pyxser_tools.c, test-utf8-prof.py, test-utf8.py: - added
+	  building scripts.
+	  - XXX: still crashes!
+
+2009-04-22 04:52  damowe
+
+	* test-utf8-prof.py: - XXX: profiling test still crashes... why? D:
+
+2009-04-22 04:28  damowe
+
+	* src/pyxser.c, src/pyxser_collections.c, src/pyxser_tools.c,
+	  test-latin1-prof.py, test-latin1.py, test-utf8-prof.py,
+	  test-utf8.py: - created proper functions for both unicode and
+	  byte strings.
+
+2009-04-22 03:09  damowe
+
+	* src/pyxser.c, test-utf8-prof.py: - added more clone functions.
+
+2009-04-21 20:41  damowe
+
+	* src/cscope.out, src/pyxser.c: - added byte string and unicode
+	  serializing functions.
+	  - ready for 0.2.1r
+
+2009-04-19 05:24  damowe
+
+	* src/pyxser.c: - changed documentation.
+
+2009-04-19 05:22  damowe
+
+	* ChangeLog: - changed ChangeLog
+
+2009-04-19 05:17  damowe
+
+	* test-utf8-prof.py: - removed bug from test-utf8-prof.py unit test
+
+2009-04-19 05:10  damowe
+
+	* src/pyxser.c: - removed bugs conerning string lengths. ;)
+
+2009-04-19 04:01  damowe
+
+	* src/pyxser.c, test-utf8-prof.py, test-utf8.py: - made to work
+	  with unicode strings ;)
+	  - ready for 0.2r ;)
+
+2009-04-19 02:57  damowe
+
+	* COPYING, ChangeLog, ISSUES, LICENSE, PKG-INFO: - XXX ready for
+	  0.2r
+
+2009-04-19 02:30  damowe
+
+	* src/include/pyxser.h, src/include/pyxser_collections.h,
+	  src/include/pyxser_numbers.h, src/include/pyxser_strings.h,
+	  src/include/pyxser_tools.h, src/pyxser.c,
+	  src/pyxser_collections.c, src/pyxser_numbers.c,
+	  src/pyxser_strings.c, src/pyxser_tools.c, test-latin1-prof.py,
+	  test-simple.py, test-utf8-prof.py, test-utf8.py: - removed all
+	  momory leaks ;)
+	  - XXX: ready for 0.2r ;)
+
+2009-04-18 08:26  damowe
+
+	* src/include/pyxser.h, src/pyxser_collections.c,
+	  src/pyxser_numbers.c, src/pyxser_strings.c, src/pyxser_tools.c: -
+	  removed many memory leaks on python ;)
+
+2009-04-18 07:28  damowe
+
+	* src/pyxser.c, src/pyxser_collections.c, src/pyxser_strings.c,
+	  src/pyxser_tools.c, test-utf8-prof.py: - removed memory leaks
+	  concerning libxml2.
+	  - XXX: go for python leaks now!
+
+2009-04-16 03:38  damowe
+
+	* valgrind-python.supp: - added valgrind suppressions to help
+	  debuging.
+
+2009-04-16 03:10  damowe
+
+	* valgrind-python.supp: - added valgrind suppressions ;)
+
+2009-04-16 02:46  damowe
+
+	* PKG-INFO, README, setup.py, src/pyxser.c, src/pyxser_numbers.c,
+	  test-latin1-prof.py, test-latin1.py, test-utf8-prof.py,
+	  test-utf8.py: - removed memory leaks bugs.
+	  - XXX: try to detect most memory bugs.
+
+2009-04-10 22:30  damowe
+
+	* src/include/pyxser.h, src/pyxser-1.0-c14n.dtd,
+	  src/pyxser-1.0.dtd, src/pyxser.c, src/pyxser_tools.c,
+	  test-latin1.py, test-utf8.py, xsd, xsd/pyxser-1.0-c14n.dtd,
+	  xsd/pyxser-1.0-c14n.xsd, xsd/pyxser-1.0.dtd, xsd/pyxser-1.0.xsd:
+	  - ready for rc2 ;)
+
+2009-04-10 04:17  damowe
+
+	* setup.py: - removed bugs from setup.py file
+
+2009-04-09 03:43  damowe
+
+	* src/include/pyxser.h, src/pyxser.c, src/pyxser_collections.c,
+	  src/pyxser_strings.c, src/pyxser_tools.c, test-latin1-prof.py,
+	  test-latin1-prof.txt, test-utf8-prof.py, test-utf8-prof.txt,
+	  testpkg/__init__.pyc, testpkg/sample.pyc: - pyxser-0.2rc1 is
+	  ready!
+	  - removed memory allocation bugs.
+	  - removed bugs in refcnt of Py_None.
+
+2009-04-08 18:29  damowe
+
+	* src/include/pyxser_tools.h, src/pyxser.c,
+	  src/pyxser_collections.c, src/pyxser_strings.c,
+	  src/pyxser_tools.c, test-latin1-prof.py, test-utf8-prof.py,
+	  testpkg/__init__.pyc, testpkg/sample.pyc: - removed refcnt bug.
+	  - XXX: ready for RC1, can run over 10000 times w/o
+	  crashing ;)
+
+2009-04-08 05:31  damowe
+
+	* test-errors.py, test-latin1-prof.py, test-latin1-prof.txt,
+	  test-latin1.py, test-utf8-prof.py, test-utf8-prof.txt,
+	  test.output.errors.txt, test.output.latin1.txt,
+	  test.output.utf8.txt: - added keywords
+
+2009-04-08 05:30  damowe
+
+	* ChangeLog: - added keywords
+
+2009-04-08 05:28  damowe
+
+	* ChangeLog, src/pyxser.c, src/pyxser_tools.c, test-latin1-prof.py,
+	  test-latin1-prof.txt, test-latin1.py, test-utf8-prof.py,
+	  test-utf8-prof.txt, test-utf8.py, test.output.latin1.txt,
+	  test.output.utf8.txt: - made code cleanup. ready for 0.2rc1?
+	  - XXX: test changes under Linux
+
+2009-04-07 01:58  damowe
+
+	* src/pyxser.c: - added the proper documentation.
+
+2009-04-07 01:46  damowe
+
+	* src/pyxser.c, src/pyxser_tools.c: - small code cleanup.
+
+2009-04-07 01:36  damowe
+
+	* setup.py, src/include/pyxser.h, src/include/pyxser_tools.h,
+	  src/pyxser-1.0-c14n.dtd, src/pyxser-1.0.dtd, src/pyxser.c,
+	  src/pyxser_tools.c, test-latin1.py, test-utf8.py: - added C14N
+	  validation and DTD.
+	  - removed bugs in the C14N implementation.
+
+2009-04-06 02:25  damowe
+
+	* src/pyxser.c, test-errors.py, test-utf8.py,
+	  test.output.errors.txt, test.output.latin1.txt,
+	  test.output.utf8.txt: - removed depth from deserialization
+	  function.
+
+2009-04-06 02:19  damowe
+
+	* src/include/pyxser.h, src/pyxser.c, src/pyxser_strings.c,
+	  src/pyxser_tools.c, test-errors.py, test-latin1.py, test-utf8.py,
+	  test.output.errors.txt, test.output.latin1.txt, test.output.txt,
+	  test.output.utf8.txt: - finished adding support for XML
+	  encodings.
+	  - finished adding support for C14N XML.
+	  - XXX: code cleanup and prepare the next release. ;)
+
+2009-04-05 00:18  damowe
+
+	* src/include/pyxser.h, src/pyxser.c, src/pyxser_strings.c,
+	  src/pyxser_tools.c, test-latin1.py, test-utf8.py, test.py: -
+	  solved some encoding problems. still I can't generate
+	  latin1 encoded xml.
+
+2009-04-01 03:49  damowe
+
+	* src/include/pyxser.h, src/include/pyxser_collections.h,
+	  src/include/pyxser_numbers.h, src/include/pyxser_strings.h,
+	  src/include/pyxser_tools.h, src/pyxser.c,
+	  src/pyxser_collections.c, src/pyxser_numbers.c,
+	  src/pyxser_strings.c, src/pyxser_tools.c, test.py: - added depth
+	  and encoding arguments for the
+	  serialization function as keyword arguments.
+	  XXX: update the documentation and refactor
+	  the code. ;)
+
+2009-03-28 16:13  damowe
+
+	* setup.py, src/pyxser_numbers.c, test.output.txt, test.py: - added
+	  complex serialization/deserialization.
+
+2009-03-27 02:17  damowe
+
+	* src/pyxser.c, test.output.txt, test.py: - added cleanup function.
+	  - ready to tag release ;)
+
+2009-03-27 01:59  damowe
+
+	* ISSUES, README, src/pyxser_strings.c, src/pyxser_tools.c: -
+	  applied refactoring to the pyxser_strings.c file
+	  and pyxser_tools.c
+	  - updated ISSUES and README files.
+
+2009-03-27 01:17  damowe
+
+	* AUTHORS, INSTALLING, ISSUES, LICENSE, README, setup.py: - added
+	  svn keywords on some files.
+
+2009-03-26 03:26  damowe
+
+	* setup.py, setupext, testpkg/__init__.pyc, testpkg/sample.pyc: -
+	  remove setupext, and corrected problem with Mac OS X
+	  install.
+
+2009-03-26 02:58  damowe
+
+	* INSTALLING, setup.py, testpkg/__init__.pyc, testpkg/sample.pyc: -
+	  before checking dependencies on certain platforms, I've
+	  noticed that some users do not have the required development
+	  packages to build pyxser. now users are notified when are
+	  trying to install this extension.
+
+2009-03-26 02:03  damowe
+
+	* ISSUES, setup.py, setupext, setupext/__init__.py,
+	  setupext/__init__.pyc, setupext/install_data.py,
+	  setupext/install_data.pyc, src/pyxser_collections.c,
+	  src/pyxser_numbers.c, src/pyxser_strings.c: - added some more
+	  friendly data files setup.
+
+2009-03-26 01:00  damowe
+
+	* setup.py: - bored of poor portability of pkg-config, I've decided
+	  to remove distutils setup script and replace it with
+	  CMake distribution system.
+
+2009-03-26 00:48  damowe
+
+	* setup.py: - added --silence-errors to the pkgconfig command line.
+	  XXX: too many problems on some Linux distributions.
+
+2009-03-26 00:34  damowe
+
+	* setup.py: - removed bugs in the setup.py script.
+
+2009-03-26 00:15  damowe
+
+	* setup.py: - remove bug in the pyxser installer.
+
+2009-03-25 00:47  damowe
+
+	* LICENCE, LICENSE: - moved LICENCE to LICENSE
+
+2009-03-24 03:41  damowe
+
+	* setup.py: - modified setup.py, yet we can't install under OS X.
+	  XXX: look for more friendly alternatives on python
+	  setup scripts. yet we can't install the pyxser dtd
+	  and reach it from C code in OS X.
+
+2009-03-24 01:03  damowe
+
+	* src/include/pyxser_tools.h, src/pyxser_collections.c,
+	  src/pyxser_tools.c: - applied refactoring over deserialization
+	  functions.
+	  the pattern used was dependency inyection.
+
+2009-03-24 00:16  damowe
+
+	* src/cscope.out, src/include/pyxser.h,
+	  src/include/pyxser_collections.h, src/include/pyxser_numbers.h,
+	  src/include/pyxser_strings.h, src/include/pyxser_tools.h,
+	  src/pyxser.c, src/pyxser_collections.c, src/pyxser_numbers.c,
+	  src/pyxser_strings.c, src/pyxser_tools.c: - changed indentation.
+
+2009-03-20 02:57  damowe
+
+	* src/pyxser-1.0.dtd: - removed the key attribute from the pyxser
+	  DTD.
+
+2009-03-20 02:30  damowe
+
+	* src/cscope.out, src/include/pyxser.h, src/pyxser-1.0.dtd,
+	  src/pyxser.c, src/pyxser_collections.c, src/pyxser_numbers.c,
+	  src/pyxser_strings.c, src/pyxser_tools.c: - applied refactoring
+	  to the serialization routines for collections.
+	  - removed key attribute from the serialization, now name
+	  attribute is
+	  used.
+	  - XXX: update the pyxser DTD too.
+
+2009-03-20 00:37  damowe
+
+	* src/cscope.out, src/include/pyxser_tools.h, src/pyxser_tools.c: -
+	  applied refactoring over serialization routine.
+
+2009-03-19 04:37  damowe
+
+	* src/pyxser_tools.c: - removed some nested statements and replaced
+	  state
+	  checking variables by continue/break statements.
+
+2009-03-19 04:11  damowe
+
+	* src/cscope.out, src/pyxser_collections.c, src/pyxser_numbers.c,
+	  src/pyxser_strings.c, src/pyxser_tools.c: - removed some code
+	  (state checking variables) and replaced with
+	  break/continue statements.
+
+2009-03-19 03:47  damowe
+
+	* AUTHORS, INSTALLING, README, testpkg/__init__.pyc,
+	  testpkg/sample.pyc: - added a better readme file, the AUTHORS
+	  file and INSTALLING
+	  instructions.
+
+2009-03-18 02:25  damowe
+
+	* setup.py, src/pyxser-1.0.dtd, test.py, testpkg/__init__.py,
+	  testpkg/sample.py: - added svn keywords to files.
+
+2009-03-18 02:23  damowe
+
+	* setup.py, src/include/pyxser.h, src/include/pyxser_collections.h,
+	  src/include/pyxser_numbers.h, src/include/pyxser_strings.h,
+	  src/include/pyxser_tools.h, src/pyxser.c,
+	  src/pyxser_collections.c, src/pyxser_numbers.c,
+	  src/pyxser_strings.c, src/pyxser_tools.c, test.py: - added svn
+	  keywords.
+
+2009-03-18 02:16  damowe
+
+	* src/cscope.out, src/include/pyxser_tools.h, src/pyxser.c,
+	  src/pyxser_collections.c, src/pyxser_tools.c: - applied
+	  refactoring to some functions and added documentation
+
+2009-03-17 04:55  damowe
+
+	* src/include/pyxser_tools.h, src/pyxser.c, src/pyxser_tools.c,
+	  test.py: - added /real/ validation against the pyxser DTD
+
+2009-03-17 03:33  damowe
+
+	* LICENCE, setup.py, src/include/pyxser.h,
+	  src/include/pyxser_collections.h, src/include/pyxser_numbers.h,
+	  src/include/pyxser_strings.h, src/include/pyxser_tools.h,
+	  src/pyxser-1.0.dtd, src/pyxser.c, src/pyxser_collections.c,
+	  src/pyxser_numbers.c, src/pyxser_strings.c, src/pyxser_tools.c,
+	  test.py, testpkg/__init__.pyc, testpkg/sample.pyc: - added DTD
+	  validation.
+
+2009-03-15 21:21  damowe
+
+	* README: - added README
+
+2009-03-15 21:07  damowe
+
+	* LICENCE, README: - added readme and licence
+
+2009-03-15 19:35  damowe
+
+	* ., setup.py, src, src/include, src/include/pyxser.h,
+	  src/include/pyxser_collections.h, src/include/pyxser_numbers.h,
+	  src/include/pyxser_strings.h, src/include/pyxser_tools.h,
+	  src/pyxser-1.0.dtd, src/pyxser.c, src/pyxser_collections.c,
+	  src/pyxser_numbers.c, src/pyxser_strings.c, src/pyxser_tools.c,
+	  test.py, testpkg, testpkg/__init__.py, testpkg/__init__.pyc,
+	  testpkg/index.html, testpkg/sample.py, testpkg/sample.pyc: -
+	  added beta release.
 
