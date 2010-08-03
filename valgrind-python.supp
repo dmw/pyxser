@@ -388,10 +388,4 @@
    fun:SHA1_Update
 }
 
-{
-   from test_socket_ssl
-   Memcheck:Value4
-   fun:SHA1_Update
-}
-
 
