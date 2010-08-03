@@ -33,6 +33,7 @@ static const char Id[] = "$Id$";
 #include "include/pyxser.h"
 
 static const char type_main[] = "__main__";
+static const char module_builtins[] = "__builtins__";
 
 #define PYXSER_GET_ATTR_NAME(currentKey, enc, unic, args)               \
     unic = (PyObject *)NULL;                                            \
@@ -363,11 +364,17 @@ pyxser_UnserializeElement(PyObject *ct, PyObject **current,
     PyObject *ndict = (PyObject *)NULL;
     char *attr_name = (char *)NULL;
     int ctrl = 0;
+
+    if (PYTHON_IS_NONE(*current)) {
+        return (PyObject *)NULL;
+    }
+
     unser = PyObject_CallFunctionObjArgs(ct, NULL);
     PyErr_Clear();
     if (PYTHON_IS_NONE(unser)) {
         ndict = PyDict_New();
         unser = PyInstance_NewRaw(ct, ndict);
+        PyErr_Clear();
     }
 
     attr_name = pyxser_ExtractPropertyName(pyxser_xml_attr_name,
@@ -647,6 +654,7 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
             if (PYTHON_IS_NONE(*tree)) {
                 ndict = PyDict_New();
                 *tree = PyInstance_NewRaw(ct, ndict);
+                PyErr_Clear();
             }
             *current = *tree;
             obj->current = current;
@@ -671,6 +679,7 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
             if (PYTHON_IS_NONE(*tree)) {
                 ndict = PyDict_New();
                 *tree = PyInstance_NewRaw(ct, ndict);
+                PyErr_Clear();
             }
             *current = *tree;
             obj->current = current;
@@ -733,7 +742,7 @@ pyxser_SearchModuleType(PyObject *mod, const char *name)
         Py_XDECREF(dict);
         return item;
     }
-    dict = PyObject_GetAttrString(mod, "__builtins__");
+    dict = PyObject_GetAttrString(mod, module_builtins);
     objKeys = PyDict_Keys(dict);
     if (PYTHON_IS_NOT_NONE(objKeys)
         && (long)(PyList_Size((PyObject *)objKeys)) > 0
