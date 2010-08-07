@@ -270,12 +270,9 @@ pyxser_SerializePrimitiveType(PyxSerializationArgsPtr args)
 xmlNodePtr
 pyxser_AddReference(PyObject *o, xmlNodePtr currentNode)
 {
-	PyObject *longIdentifier = (PyObject *)NULL;
-	PyObject *stringRepr = (PyObject *)NULL;
 	xmlAttrPtr refAttr = (xmlAttrPtr)NULL;
 	xmlNodePtr refNode = (xmlNodePtr)NULL;
-	char *charpRepr = (char *)NULL;
-	char newRef[41] = "id";
+	char newRef[41];
 	unsigned long hash = 0;
 	if (PYTHON_IS_NONE(o)
 		|| currentNode == (xmlNodePtr)NULL) {
@@ -284,20 +281,12 @@ pyxser_AddReference(PyObject *o, xmlNodePtr currentNode)
     if (PyWeakref_CheckRef(o)) {
 		return (xmlNodePtr)NULL;
     }
-	hash = (unsigned long)(o);
-	if (hash != 0) {
-		longIdentifier = PyLong_FromUnsignedLong(hash);
-		stringRepr = PyObject_Str(longIdentifier);
-		charpRepr = PyString_AS_STRING(stringRepr);
-		if (charpRepr != (char *)NULL) {
-			strncat(newRef, charpRepr, 38);
-			refAttr = xmlNewProp(currentNode,
-								 BAD_CAST pyxser_xml_attr_ref,
-								 BAD_CAST newRef);
-		}
-        PYXSER_FREE_OBJECT(longIdentifier);
-        PYXSER_FREE_OBJECT(stringRepr);
-	}
+	hash = (unsigned long)o;
+    memset(newRef, 0, 41);
+    snprintf(newRef, 41, "id%lu", hash);
+    refAttr = xmlNewProp(currentNode,
+                         BAD_CAST pyxser_xml_attr_ref,
+                         BAD_CAST newRef);
 	return refNode;
 }
 
@@ -305,27 +294,18 @@ pyxser_AddReference(PyObject *o, xmlNodePtr currentNode)
 void
 pyxser_AddIdentifier(PyObject *o, xmlNodePtr currentNode)
 {
-	PyObject *longIdentifier = (PyObject *)NULL;
-	PyObject *stringRepr = (PyObject *)NULL;
 	xmlAttrPtr idAttr = (xmlAttrPtr)NULL;
-	char *charpRepr = (char *)NULL;
-	char newRef[41] = "id";
+	char newRef[41];
 	unsigned long hash = 0;
 	if (PYTHON_IS_NONE(o) || currentNode == (xmlNodePtr)NULL) {
 		return;
 	}
-	hash = (unsigned long)(o);
-	if (hash != 0) {
-		longIdentifier = PyLong_FromUnsignedLong(hash);
-		stringRepr = PyObject_Str(longIdentifier);
-		charpRepr = PyString_AS_STRING(stringRepr);
-		strncat(newRef, charpRepr, 38);
-		idAttr = xmlNewProp(currentNode,
-							BAD_CAST pyxser_xml_attr_id,
-							BAD_CAST newRef);
-        PYXSER_FREE_OBJECT(stringRepr);
-        PYXSER_FREE_OBJECT(longIdentifier);
-    }
+	hash = (unsigned long)o;
+    memset(newRef, 0, 41);
+    snprintf(newRef, 41, "id%lu", hash);
+    idAttr = xmlNewProp(currentNode,
+                        BAD_CAST pyxser_xml_attr_id,
+                        BAD_CAST newRef);
 }
 
 
@@ -350,10 +330,6 @@ pyxser_CheckBuiltInModule(PyObject *o)
         PyErr_Clear();
         PYXSER_FREE_OBJECT(klass);
         return r;
-	}
-	if (!PyString_Check(mname)) {
-        PYXSER_FREE_OBJECT(klass);
-        PYXSER_FREE_OBJECT(mname);
 	}
 	cn = PyString_AS_STRING(mname);
     r = (!strncmp(cn, type_builtin, strlen(type_builtin)));
@@ -384,10 +360,6 @@ pyxser_AddModuleAttr(PyObject *o, xmlNodePtr currentNode)
         PYXSER_FREE_OBJECT(klass);
         return;
 	}
-	if (!PyString_Check(mname)) {
-        PYXSER_FREE_OBJECT(klass);
-        PYXSER_FREE_OBJECT(mname);
-	}
 	cn = PyString_AS_STRING(mname);
 	moduleAttr = xmlNewProp(currentNode,
 							BAD_CAST pyxser_xml_attr_module,
@@ -414,7 +386,10 @@ pyxser_PyListContains(PyListObject *lst, PyObject *o)
 	}
 	while ((item = PyIter_Next(iterLst))
 		   != (PyObject *)NULL) {
-        if (PYTHON_IS_NOT_NONE(item) && item == o) {
+        if (PYTHON_IS_NONE(item)) {
+            break;
+        }
+        if (item == o) {
             PYXSER_FREE_OBJECT(item);
             PYXSER_FREE_OBJECT(iterLst);
             return PYXSER_FOUND;

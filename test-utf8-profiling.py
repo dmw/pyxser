@@ -28,28 +28,28 @@
 
 import sys
 import traceback
-
+import inspect
 import pyxser
+
 import testpkg.sample
 
 def sel_filter(v):
-    r = ((not callable(v[1])) and (not v[0].startswith("__")))
-    return r
+    try:
+        r = ((not callable(v[1])) and (not v[0].startswith("__")))
+        return r
+    except Exception, e:
+        print "-" * 60
+        traceback.print_exc(file=sys.stdout)
+        print "-" * 60
 
 def sel(o):
-    print repr(o)
-    r = dict(filter(sel_filter, inspect.getmembers(o)))
-    print repr(r)
-    return r
-
-def display_heap(hp):
-    print hp
-    c = 10
-    more = hp.more
-    while c <= len(hp):
-        print more
-        more = more.more
-        c += 10
+    try:
+        r = dict(filter(sel_filter, inspect.getmembers(o)))
+        return r
+    except Exception, e:
+        print "-" * 60
+        traceback.print_exc(file=sys.stdout)
+        print "-" * 60
 
 def fallback_to_string(o):
     try:
@@ -59,151 +59,28 @@ def fallback_to_string(o):
 
 test_typemap_map = { 'str': fallback_to_string }
 
-def test_normal(test):
+def test_all(test):
     try:
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2)
-        pyxser.validate(obj = serialized, enc = "utf-8")
-        pyxser.validate_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
-        repr(unserialized);
-
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 3)
-        pyxser.validate(obj = serialized, enc = "utf-8")
-        pyxser.validate_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
-        repr(unserialized)
-
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 4)
-        pyxser.validate(obj = serialized, enc = "utf-8")
-        pyxser.validate_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
-        repr(unserialized)
-
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 5)
-        pyxser.validate(obj = serialized, enc = "utf-8")
-        pyxser.validate_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
-        repr(unserialized)
-
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0)
-        pyxser.validate(obj = serialized, enc = "utf-8")
-        pyxser.validate_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
-        repr(unserialized)
-
-        pyxser.xmlcleanup()
-
-    except Exception, e:
-        print "-" * 60
-        traceback.print_exc(file=sys.stdout)
-        print "-" * 60
-
-def test_selector(test):
-    try:
-        x = sel(test)
-        print repr(x)
-
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2, selector = sel)
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", typemap = test_typemap_map, selector = sel)
         pyxser.validate(obj = serialized, enc = "utf-8")
         pyxser.validate_dtd(obj = serialized, enc = "utf-8")
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
 
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 3, selector = sel)
-        pyxser.validate(obj = serialized, enc = "utf-8")
-        pyxser.validate_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
-
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 4, selector = sel)
-        pyxser.validate(obj = serialized, enc = "utf-8")
-        pyxser.validate_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
-
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 5, selector = sel)
-        pyxser.validate(obj = serialized, enc = "utf-8")
-        pyxser.validate_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
-
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0, selector = sel)
-        pyxser.validate(obj = serialized, enc = "utf-8")
-        pyxser.validate_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
-
-        pyxser.xmlcleanup()
-
-    except Exception, e:
-        print "-" * 60
-        print e
-        traceback.print_exc(file=sys.stdout)
-        print "-" * 60
-
-def test_normal_c14n(test):
-    try:
         serialized = pyxser.serialize_c14n(obj = test, depth = 0, com = 0)
         pyxser.validate_c14n(obj = serialized, enc = "utf-8")
         pyxser.validate_c14n_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
-        repr(unserialized)
 
-        serialized = pyxser.serialize_c14n_strict(obj = test, depth = 0, com = 0)
-        pyxser.validate_c14n(obj = serialized, enc = "utf-8")
-
-        pyxser.xmlcleanup()
-
-    except Exception, e:
-        print "-" * 60
-        traceback.print_exc(file=sys.stdout)
-        print "-" * 60
-
-def test_unicode(test):
-    try:
-        serialized = pyxser.u_serialize(obj = test, enc = "utf-8", depth = 2)
+        serialized = pyxser.u_serialize(obj = test, enc = "utf-8", typemap = test_typemap_map, selector = sel)
         pyxser.u_validate(obj = serialized, enc = "utf-8")
         pyxser.u_validate_dtd(obj = serialized, enc = "utf-8")
         unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
-        repr(unserialized)
 
-        serialized = pyxser.u_serialize(obj = test, enc = "utf-8", depth = 3)
-        pyxser.u_validate(obj = serialized, enc = "utf-8")
-        pyxser.u_validate_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
-        repr(unserialized)
-
-        serialized = pyxser.u_serialize(obj = test, enc = "utf-8", depth = 4)
-        pyxser.u_validate(obj = serialized, enc = "utf-8")
-        pyxser.u_validate_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
-        repr(unserialized)
-
-        serialized = pyxser.u_serialize(obj = test, enc = "utf-8", depth = 5)
-        pyxser.u_validate(obj = serialized, enc = "utf-8")
-        pyxser.u_validate_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
-        repr(unserialized)
-
-        serialized = pyxser.u_serialize(obj = test, enc = "utf-8", depth = 0)
-        pyxser.u_validate(obj = serialized, enc = "utf-8")
-        pyxser.u_validate_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
-        repr(unserialized)
-
-        pyxser.xmlcleanup()
-
-    except Exception, e:
-        print "-" * 60
-        traceback.print_exc(file=sys.stdout)
-        print "-" * 60
-
-def test_unicode_c14n(test):
-    try:
         serialized = pyxser.u_serialize_c14n(obj = test, depth = 0, com = 0)
         pyxser.u_validate_c14n(obj = serialized, enc = "utf-8")
         pyxser.u_validate_c14n_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
-        repr(unserialized)
 
-        serialized = pyxser.u_serialize_c14n_strict(obj = test, depth = 0, com = 0)
-        pyxser.u_validate_c14n(obj = serialized, enc = "utf-8")
-
+        pyxser.getdtd()
+        pyxser.getdtd_c14n()
         pyxser.xmlcleanup()
 
     except Exception, e:
@@ -211,30 +88,6 @@ def test_unicode_c14n(test):
         traceback.print_exc(file=sys.stdout)
         print "-" * 60
 
-def test_typemap(test):
-    try:
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2, typemap = test_typemap_map)
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
-
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 3, typemap = test_typemap_map)
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
-
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 4, typemap = test_typemap_map)
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
-
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 5, typemap = test_typemap_map)
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
-
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0, typemap = test_typemap_map)
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
-
-        pyxser.xmlcleanup()
-
-    except Exception, e:
-        print "-" * 60
-        print e
-        traceback.print_exc(file=sys.stdout)
-        print "-" * 60
 
 
 if __name__ == "__main__":
@@ -273,18 +126,12 @@ if __name__ == "__main__":
 
     try:
         crawl = 0
-        while crawl <= 1000:
-            test_normal(test)
-            test_normal_c14n(test)
-            test_unicode(test)
-            test_unicode_c14n(test)
-            test_typemap(test)
-            pyxser.getdtd()
-            pyxser.getdtd_c14n()
-            pyxser.xmlcleanup()
+        while crawl < 1000:
+            test_all(test)
             if (crawl % 1000) == 0:
                 print "cicle: ", crawl
             crawl += 1
+
     except Exception, e:
         print "-" * 60
         traceback.print_exc(file=sys.stdout)

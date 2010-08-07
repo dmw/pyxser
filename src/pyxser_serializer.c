@@ -271,17 +271,7 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
                                                  o, *docptr);
     }
 
-    if (txtNode != (xmlNodePtr)NULL) {
-        args->o = &item;
-        txtNode = pyxser_TypeMapSearchAndGet(args, txtNode);
-        currentNode = *currentNodeOld;
-        args->o = oold;
-        args->item = oold;
-        if (txtNode != (xmlNodePtr)NULL) {
-            xmlAddChild(currentNode, txtNode);
-            return txtNode;
-        }
-    } else {
+    if (txtNode == (xmlNodePtr)NULL) {
         cs = serxConcreteTypes[c];
         while (cs.available == 1) {
             if (cs.check(item) != 1) {
@@ -339,8 +329,18 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
 
         (*depthcnt)--;
         c = 0;
+        return newSerializedNode;
     }
-	return newSerializedNode;
+
+    args->o = &item;
+    txtNode = pyxser_TypeMapSearchAndGet(args, txtNode);
+    currentNode = *currentNodeOld;
+    args->o = oold;
+    args->item = oold;
+    if (txtNode != (xmlNodePtr)NULL) {
+        xmlAddChild(currentNode, txtNode);
+        return txtNode;
+    }
 }
 
 int
@@ -422,6 +422,10 @@ pyxser_RunDeserializationMachine(xmlNodePtr ron,
     if (PYTHON_IS_NONE(*current)) {
         return;
     }
+    if (ron == (xmlNodePtr)NULL) {
+        return;
+    }
+
     tvalc = pyxser_ExtractPropertyName(pyxser_xml_attr_type,
                                        ron);
     tval = PyString_FromString(tvalc);
@@ -442,8 +446,7 @@ pyxser_RunDeserializationMachine(xmlNodePtr ron,
             return;
         }
     }
-    while (machine[c].available == 1
-           && ron != (xmlNodePtr)NULL) {
+    while (machine[c].available == 1) {
         if ((machine[c].check(ron)) != 1) {
             c++;
             continue;
@@ -451,7 +454,7 @@ pyxser_RunDeserializationMachine(xmlNodePtr ron,
         unser = machine[c].deserializer(obj);
         if (PYTHON_IS_NONE(unser)) {
             c++;
-            continue;
+            break;
         }
         attr_name = pyxser_ExtractPropertyName(
             pyxser_xml_attr_name,
@@ -735,30 +738,6 @@ pyxser_SearchModuleType(PyObject *mod, const char *name)
 			}
 			listIterator++;
 		}
-    }
-    if (found == 1) {
-        PyErr_Clear();
-        Py_XDECREF(objKeys);
-        Py_XDECREF(dict);
-        return item;
-    }
-    dict = PyObject_GetAttrString(mod, module_builtins);
-    objKeys = PyDict_Keys(dict);
-    if (PYTHON_IS_NOT_NONE(objKeys)
-        && (long)(PyList_Size((PyObject *)objKeys)) > 0
-        && PYTHON_IS_NOT_NONE(dict)) {
-        listIterator = 0;
-        listSize = (long)(PyList_Size((PyObject *)objKeys));
-        while (listIterator < listSize) {
-            currentKey = PyList_GetItem(objKeys, listIterator);
-            keyName = PyString_AS_STRING(currentKey);
-            if ((strncmp(keyName, name, strlen(keyName))) == 0) {
-                item = PyDict_GetItem(dict, currentKey);
-                found = 1;
-                break;
-            }
-            listIterator++;
-        }
     }
     PyErr_Clear();
     Py_XDECREF(objKeys);
