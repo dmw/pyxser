@@ -63,6 +63,7 @@ static const char type_set[] = "set";
 static const char type_sequence[] = "list";
 static const char type_main[] = "__main__";
 static const char type_builtin[] = "__builtin__";
+static const char schema_encoding[] = "utf-8";
 
 xmlDtdPtr pyxser_dtd_object = (xmlDtdPtr)NULL;
 xmlDtdPtr pyxser_dtd_c14n_object = (xmlDtdPtr)NULL;
@@ -1208,53 +1209,8 @@ pyxser_GetPyxserDTDC14N()
 }
 
 xmlSchemaPtr
-pyxser_GetPyxserXSD()
-{
-    xmlSchemaParserCtxtPtr
-        pyxser_xsd_parser_object = (xmlSchemaParserCtxtPtr)NULL;
-    xmlSchemaPtr
-        pyxser_xsd_object = (xmlSchemaPtr)NULL;
-    xmlDocPtr
-        pyxser_xsd_doc = (xmlDocPtr)NULL;
-    if (pyxser_xsd_doc == (xmlDocPtr)NULL) {
-        pyxser_xsd_doc = (xmlDocPtr)xmlParseFile(pyxser_xml_xsd_location);
-    }
-	if (pyxser_xsd_parser_object == (xmlSchemaParserCtxtPtr)NULL) {
-		pyxser_xsd_parser_object = xmlSchemaNewDocParserCtxt(pyxser_xsd_doc);
-        xmlSchemaSetParserErrors(pyxser_xsd_parser_object,
-                                 (xmlSchemaValidityErrorFunc) fprintf,
-                                 (xmlSchemaValidityWarningFunc) fprintf,
-                                 stderr);
-	}
-    if (pyxser_xsd_object == (xmlSchemaPtr)NULL) {
-        pyxser_xsd_object = xmlSchemaParse(pyxser_xsd_parser_object);
-    }
-	return pyxser_xsd_object;
-}
-
-xmlSchemaPtr
 pyxser_GetPyxserXSDC14N()
 {
-    xmlDocPtr
-        pyxser_xsd_c14n_doc = (xmlDocPtr)NULL;
-    xmlSchemaPtr
-        pyxser_xsd_c14n_object = (xmlSchemaPtr)NULL;
-    xmlSchemaParserCtxtPtr
-        pyxser_xsd_parser_c14n_object = (xmlSchemaParserCtxtPtr)NULL;
-    if (pyxser_xsd_c14n_doc == (xmlDocPtr)NULL) {
-        pyxser_xsd_c14n_doc = (xmlDocPtr)xmlParseFile(pyxser_xml_xsd_c14n_location);
-    }
-	if (pyxser_xsd_parser_c14n_object == (xmlSchemaParserCtxtPtr)NULL) {
-		pyxser_xsd_parser_c14n_object = xmlSchemaNewDocParserCtxt(pyxser_xsd_c14n_doc);
-        xmlSchemaSetParserErrors(pyxser_xsd_parser_c14n_object,
-                                 (xmlSchemaValidityErrorFunc) fprintf,
-                                 (xmlSchemaValidityWarningFunc) fprintf,
-                                 stderr);
-	}
-    if (pyxser_xsd_c14n_object == (xmlSchemaPtr)NULL) {
-        pyxser_xsd_c14n_object = xmlSchemaParse(pyxser_xsd_parser_c14n_object);
-    }
-	return pyxser_xsd_c14n_object;
 }
 
 void
@@ -1320,89 +1276,109 @@ pyxser_ValidateDocumentC14N(xmlDocPtr doc)
 int
 pyxser_ValidateDocumentXSD(xmlDocPtr doc)
 {
-    /* remember scheme? software configuration management? xD */
-    xmlSchemaParserCtxtPtr pyxser_xsd_parser_object = (xmlSchemaParserCtxtPtr)NULL;
-    xmlSchemaPtr pyxser_xsd_object = (xmlSchemaPtr)NULL;
-    xmlDocPtr pyxser_xsd_doc = (xmlDocPtr)NULL;
     xmlSchemaPtr scm = (xmlSchemaPtr)NULL;
     xmlSchemaValidCtxtPtr ctx = (xmlSchemaValidCtxtPtr)NULL;
+    xmlDocPtr pyxser_xsd_doc = (xmlDocPtr)NULL;
+    xmlSchemaParserCtxtPtr pyxser_xsd_parser_object = (xmlSchemaParserCtxtPtr)NULL;
+    xmlSchemaPtr pyxser_xsd_object = (xmlSchemaPtr)NULL;
     int ctrl = 0;
-
-    pyxser_xsd_doc = (xmlDocPtr)xmlParseFile(pyxser_xml_xsd_location);
-    pyxser_xsd_parser_object = xmlSchemaNewDocParserCtxt(pyxser_xsd_doc);
-    xmlSchemaSetParserErrors(pyxser_xsd_parser_object,
-                             (xmlSchemaValidityErrorFunc) px_printf,
-                             (xmlSchemaValidityWarningFunc) px_printf,
-                             stderr);
-    pyxser_xsd_object = xmlSchemaParse(pyxser_xsd_parser_object);
+    if (pyxser_xsd_doc == (xmlDocPtr)NULL) {
+        pyxser_xsd_doc = (xmlDocPtr)xmlReadMemory(pyxser_xsd_body,
+                                                  strlen(pyxser_xsd_body),
+                                                  NULL,
+                                                  schema_encoding,
+                                                  XML_PARSE_RECOVER);
+    }
+	if (pyxser_xsd_parser_object == (xmlSchemaParserCtxtPtr)NULL) {
+		pyxser_xsd_parser_object = xmlSchemaNewDocParserCtxt(pyxser_xsd_doc);
+        xmlSchemaSetParserErrors(pyxser_xsd_parser_object,
+                                 (xmlSchemaValidityErrorFunc) fprintf,
+                                 (xmlSchemaValidityWarningFunc) fprintf,
+                                 stderr);
+	}
+    if (pyxser_xsd_object == (xmlSchemaPtr)NULL) {
+        pyxser_xsd_object = xmlSchemaParse(pyxser_xsd_parser_object);
+    }
     scm = pyxser_xsd_object;
     if (scm != NULL && doc != NULL) {
         ctx = xmlSchemaNewValidCtxt(scm);
         if (ctx != (xmlSchemaValidCtxtPtr)NULL) {
             xmlSchemaSetValidOptions(ctx, 0);
             xmlSchemaSetValidErrors(ctx,
-                                    (xmlSchemaValidityErrorFunc) px_printf,
-                                    (xmlSchemaValidityWarningFunc) px_printf,
+                                    (xmlSchemaValidityErrorFunc) fprintf,
+                                    (xmlSchemaValidityWarningFunc) fprintf,
                                     stderr);
             ctrl = xmlSchemaValidateDoc(ctx, doc);
             if (ctrl == 0) {
-                xmlFreeDoc(pyxser_xsd_doc);
-                xmlSchemaFreeParserCtxt(pyxser_xsd_parser_object);
-                xmlSchemaFree(pyxser_xsd_object);
-                xmlSchemaFreeValidCtxt(ctx);
-                return 1;
+                ctrl = 1;
+            } else {
+                ctrl = 0;
             }
-            xmlFreeDoc(pyxser_xsd_doc);
-            xmlSchemaFreeParserCtxt(pyxser_xsd_parser_object);
-            xmlSchemaFree(pyxser_xsd_object);
             xmlSchemaFreeValidCtxt(ctx);
-            return 0;
         }
+        xmlSchemaFree(pyxser_xsd_object);
     }
-    return 0;
+    if (pyxser_xsd_parser_object != NULL) {
+        xmlSchemaFreeParserCtxt(pyxser_xsd_parser_object);
+    }
+    if (pyxser_xsd_doc != NULL) {
+        xmlFreeDoc(pyxser_xsd_doc);
+    }
+    return ctrl;
 }
 
 int
 pyxser_ValidateDocumentXSDC14N(xmlDocPtr doc)
 {
-    xmlDocPtr pyxser_xsd_c14n_doc = (xmlDocPtr)NULL;
-    xmlSchemaPtr pyxser_xsd_c14n_object = (xmlSchemaPtr)NULL;
-    xmlSchemaParserCtxtPtr pyxser_xsd_parser_c14n_object = (xmlSchemaParserCtxtPtr)NULL;
     xmlSchemaPtr scm;
     xmlSchemaValidCtxtPtr ctx = (xmlSchemaValidCtxtPtr)NULL;
+    xmlDocPtr pyxser_xsd_c14n_doc = (xmlDocPtr)NULL;
+    xmlSchemaParserCtxtPtr pyxser_xsd_parser_c14n_object = (xmlSchemaParserCtxtPtr)NULL;
+    xmlSchemaPtr pyxser_xsd_c14n_object = (xmlSchemaPtr)NULL;
     int ctrl = 0;
-    pyxser_xsd_c14n_doc = (xmlDocPtr)xmlParseFile(pyxser_xml_xsd_c14n_location);
-    pyxser_xsd_parser_c14n_object = xmlSchemaNewDocParserCtxt(pyxser_xsd_c14n_doc);
-    xmlSchemaSetParserErrors(pyxser_xsd_parser_c14n_object,
-                             (xmlSchemaValidityErrorFunc) px_printf,
-                             (xmlSchemaValidityWarningFunc) px_printf,
-                             stderr);
-    pyxser_xsd_c14n_object = xmlSchemaParse(pyxser_xsd_parser_c14n_object);
+    if (pyxser_xsd_c14n_doc == (xmlDocPtr)NULL) {
+        pyxser_xsd_c14n_doc = (xmlDocPtr)xmlReadMemory(pyxser_xsd_body,
+                                                       strlen(pyxser_xsd_body),
+                                                       NULL,
+                                                       schema_encoding,
+                                                       XML_PARSE_RECOVER);
+    }
+	if (pyxser_xsd_parser_c14n_object == (xmlSchemaParserCtxtPtr)NULL) {
+		pyxser_xsd_parser_c14n_object = xmlSchemaNewDocParserCtxt(pyxser_xsd_c14n_doc);
+        xmlSchemaSetParserErrors(pyxser_xsd_parser_c14n_object,
+                                 (xmlSchemaValidityErrorFunc) fprintf,
+                                 (xmlSchemaValidityWarningFunc) fprintf,
+                                 stderr);
+	}
+    if (pyxser_xsd_c14n_object == (xmlSchemaPtr)NULL) {
+        pyxser_xsd_c14n_object = xmlSchemaParse(pyxser_xsd_parser_c14n_object);
+    }
     scm = pyxser_xsd_c14n_object;
     if (scm != NULL && doc != NULL) {
         ctx = xmlSchemaNewValidCtxt(scm);
         if (ctx != (xmlSchemaValidCtxtPtr)NULL) {
             xmlSchemaSetValidOptions(ctx, 0);
             xmlSchemaSetValidErrors(ctx,
-                                    (xmlSchemaValidityErrorFunc) px_printf,
-                                    (xmlSchemaValidityWarningFunc) px_printf,
+                                    (xmlSchemaValidityErrorFunc) fprintf,
+                                    (xmlSchemaValidityWarningFunc) fprintf,
                                     stderr);
             ctrl = xmlSchemaValidateDoc(ctx, doc);
             if (ctrl == 0) {
-                xmlFreeDoc(pyxser_xsd_c14n_doc);
-                xmlSchemaFreeParserCtxt(pyxser_xsd_parser_c14n_object);
-                xmlSchemaFree(pyxser_xsd_c14n_object);
-                xmlSchemaFreeValidCtxt(ctx);
-                return 1;
+                ctrl = 1;
+            } else {
+                ctrl = 0;
             }
-            xmlFreeDoc(pyxser_xsd_c14n_doc);
-            xmlSchemaFreeParserCtxt(pyxser_xsd_parser_c14n_object);
-            xmlSchemaFree(pyxser_xsd_c14n_object);
             xmlSchemaFreeValidCtxt(ctx);
-            return 0;
         }
+        xmlSchemaFree(pyxser_xsd_c14n_object);
     }
-    return 0;
+    if (pyxser_xsd_parser_c14n_object != NULL) {
+        xmlSchemaFreeParserCtxt(pyxser_xsd_parser_c14n_object);
+    }
+    if (pyxser_xsd_c14n_doc != NULL) {
+        xmlFreeDoc(pyxser_xsd_c14n_doc);
+    }
+    return ctrl;
 }
 
 int

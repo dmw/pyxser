@@ -1218,6 +1218,7 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
     obj.depth = py_depth;
     obj.depthcnt = 0;
     obj.typemap = typemap;
+
     res = pyxser_UnserializeXml(&obj);
 
     if (res == NULL) {
@@ -1310,8 +1311,8 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
     obj.depth = py_depth;
     obj.depthcnt = 0;
     obj.typemap = typemap;
-
     res = pyxser_UnserializeXml(&obj);
+
     if (res == NULL) {
         Py_XDECREF(input);
         PyErr_SetString(PyExc_ValueError, msg_non_object);

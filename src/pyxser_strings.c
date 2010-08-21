@@ -85,8 +85,6 @@ pyxser_SerializeUnicode(PyxSerializationArgsPtr args)
     unic = PyUnicode_Encode(PyUnicode_AS_UNICODE(o),
                             PyUnicode_GET_DATA_SIZE(o), enc,
                             pyxser_xml_encoding_mode);
-    data_size = PyString_Size(unic);
-
     if (PYTHON_IS_NONE(unic)) {
         PYXSER_FREE_OBJECT(className);
         PYXSER_FREE_OBJECT(classPtr);
@@ -111,7 +109,8 @@ pyxser_SerializeUnicode(PyxSerializationArgsPtr args)
                                   BAD_CAST name);
         }
         memset(sz_attr, 0, 30);
-        sprintf(sz_attr, "%ld", (long)data_size);
+        data_size = strlen(sptr);
+        sprintf(sz_attr, "%d", data_size);
         typeAttr = xmlNewProp(nen,
                               BAD_CAST pyxser_xml_attr_size,
                               BAD_CAST sz_attr);
@@ -243,8 +242,8 @@ pyxunser_SerializeUnicode(PyxSerDeserializationArgsPtr obj)
 	xmlChar *propSize = (xmlChar *)NULL;
 	PyObject *unic = NULL;
 	PyObject *res = NULL;
+    PyObject *str = NULL;
 	Py_ssize_t tsz = 0;
-    char *enc = obj->encoding;
 
     if (node == (xmlNodePtr)NULL) {
         return res;
@@ -259,11 +258,11 @@ pyxunser_SerializeUnicode(PyxSerDeserializationArgsPtr obj)
          ron = ron->next) {
         tsz = (Py_ssize_t)strtol((const char *)propSize,
                                  (char **)NULL, 10);
-        if (ron->type == XML_TEXT_NODE) {
-            unic = PyUnicode_Decode((char *)ron->content,
-                                    tsz,
-                                    enc,
-                                    pyxser_xml_encoding_mode);
+
+        if (ron->type == XML_TEXT_NODE
+            && ron->content != BAD_CAST NULL) {
+            str = PyString_FromString((const char *)ron->content);
+            unic = PyUnicode_FromObject(str);
             res = unic;
             break;
         }
