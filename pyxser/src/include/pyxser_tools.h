@@ -41,6 +41,8 @@ extern "C" {
 
     extern const PythonTypeSerialize serxConcreteTypes[];
     extern const PythonTypeDeserialize unserxConcreteTypes[];
+    extern const char pyxser_xsd_c14n_body[];
+    extern const char pyxser_xsd_body[];
     extern xmlDtdPtr pyxser_dtd_object;
     extern xmlDtdPtr pyxser_dtd_c14n_object;
 

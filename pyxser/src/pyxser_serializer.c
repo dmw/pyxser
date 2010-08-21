@@ -341,6 +341,7 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
         xmlAddChild(currentNode, txtNode);
         return txtNode;
     }
+    return currentNode;
 }
 
 int
@@ -610,11 +611,6 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
     validity = pyxser_ValidateDocumentXSD(*docptr);
 
     if (validity != 1) {
-		PyErr_SetString(PyExc_ValueError, "Invalid XML");
-        return NULL;
-    }
-
-    if (*docptr == (xmlDocPtr)NULL) {
 		PyErr_SetString(PyExc_ValueError, "Invalid XML");
         return NULL;
     }
