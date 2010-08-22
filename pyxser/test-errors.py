@@ -89,6 +89,26 @@ if __name__ == "__main__":
         print "-" * 60
 
     try:
+        print "-" * 60
+        serialized = pyxser.serialize(obj = test, enc = "ascii", depth = 2)
+        print serialized
+        print "-" * 60
+        unserialized = pyxser.unserialize(obj = serialized, enc = "ascii")
+        print unserialized
+    except Exception, e:
+        print "-" * 60
+        traceback.print_exc(file=sys.stdout)
+        print "-" * 60
+
+    try:
+        serialized = pyxser.serialize(obj = test, enc = "latin-1", depth = 2)
+        unserialized = pyxser.unserialize(obj = serialized, enc = "latin-1")
+    except Exception, e:
+        print "-" * 60
+        traceback.print_exc(file=sys.stdout)
+        print "-" * 60
+
+    try:
         pyxser.xmlcleanup();
     except Exception, e:
         print "-" * 60

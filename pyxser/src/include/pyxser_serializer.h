@@ -55,6 +55,7 @@ extern "C" {
 
     PyObject *pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj);
 
+    int pyxser_ModuleBuiltins(PyObject *o);
 
 #ifdef __cplusplus
 };

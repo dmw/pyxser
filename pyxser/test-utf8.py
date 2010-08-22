@@ -110,7 +110,7 @@ def test_normal(test):
               pyxser.validate(obj = serialized, enc = "utf-8"), \
               pyxser.validate_dtd(obj = serialized, enc = "utf-8")
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
-        print "Unserialized Object (d.0):\n" + repr(unserialized) + "\n\n"
+        print "Unserialized Object (d.6):\n" + repr(unserialized) + "\n\n"
 
         pyxser.xmlcleanup()
 
