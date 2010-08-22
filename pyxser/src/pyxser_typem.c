@@ -39,6 +39,8 @@ static const char Id[] = "$Id$";
 #include "include/pyxser_tools.h"
 #include "include/pyxser.h"
 
+static const char pyxser_attr_call[] = "__call__";
+
 
 xmlNodePtr
 pyxser_TypeMapSearchAndGetNode(PyObject *tmap, PyObject *tval,
@@ -62,13 +64,28 @@ pyxser_TypeMapSearchAndGetNode(PyObject *tmap, PyObject *tval,
     if (doc == (xmlDocPtr)NULL) {
         return txtNode;
     }
+    if ((PyDict_CheckExact(tmap)) == 0) {
+        return txtNode;
+    }
+    if ((PyString_CheckExact(tval)) == 0) {
+        return txtNode;
+    }
     tmapc = PyString_AS_STRING(tval);
+    if (tmapc == (char *)NULL) {
+        return (xmlNodePtr)NULL;
+    }
     cb = PyDict_GetItem(tmap, tval);
-    PyErr_Clear();
     if (PYTHON_IS_NONE(cb)) {
+        PyErr_Clear();
         return (xmlNodePtr)NULL;
     }
     args = Py_BuildValue("(O)", targ);
+    if ((PyObject_HasAttrString(cb, pyxser_attr_call)) == 0) {
+        PYXSER_FREE_OBJECT(cb);
+        PYXSER_FREE_OBJECT(args);
+        PyErr_Clear();
+        return (xmlNodePtr)NULL;
+    }
     res = PyObject_CallObject(cb, args);
     if (PYTHON_IS_NONE(res)) {
         return (xmlNodePtr)NULL;
@@ -167,10 +184,21 @@ pyxunser_TypeMapSearchAndGet(PyObject *tmap, PyObject *tval,
     if (PYTHON_IS_NONE(tval)) {
         return (PyObject *)NULL;
     }
+    if ((PyString_CheckExact(tval)) == 0) {
+        return (PyObject *)NULL;
+    }
+    if ((PyDict_CheckExact(tmap)) == 0) {
+        return (PyObject *)NULL;
+    }
     tmapc = PyString_AS_STRING(tval);
     cb = PyDict_GetItem(tmap, tval);
-    PyErr_Clear();
     if (PYTHON_IS_NONE(cb)) {
+        PyErr_Clear();
+        return (PyObject *)NULL;
+    }
+    if ((PyObject_HasAttrString(cb, pyxser_attr_call)) == 0) {
+        PyErr_Clear();
+        PYXSER_FREE_OBJECT(cb);
         return (PyObject *)NULL;
     }
     if (node == (xmlNodePtr)NULL) {
