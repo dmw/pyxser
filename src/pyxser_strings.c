@@ -99,7 +99,19 @@ pyxser_SerializeUnicode(PyxSerializationArgsPtr args)
                             pyxser_GetDefaultNs(),
                             BAD_CAST pyxser_xml_attr_item,
                             NULL);
+        if (nen == (xmlNodePtr)NULL) {
+            PYXSER_FREE_OBJECT(unic);
+            PYXSER_FREE_OBJECT(className);
+            PYXSER_FREE_OBJECT(classPtr);
+            return nen;
+        }
         ntxt = xmlNewDocText(doc, BAD_CAST sptr);
+        if (ntxt == (xmlNodePtr)NULL) {
+            PYXSER_FREE_OBJECT(unic);
+            PYXSER_FREE_OBJECT(className);
+            PYXSER_FREE_OBJECT(classPtr);
+            return nen;
+        }
         typeAttr = xmlNewProp(nen,
                               BAD_CAST pyxser_xml_attr_type,
                               BAD_CAST nptr);
@@ -175,7 +187,17 @@ pyxser_SerializeString(PyxSerializationArgsPtr args)
                             pyxser_GetDefaultNs(),
                             BAD_CAST pyxser_xml_attr_item,
                             NULL);
+        if (nen == (xmlNodePtr)NULL) {
+            PYXSER_FREE_OBJECT(className);
+            PYXSER_FREE_OBJECT(classPtr);
+            return nen;
+        }
         ntxt = xmlNewDocText(doc, BAD_CAST sptr);
+        if (ntxt == (xmlNodePtr)NULL) {
+            PYXSER_FREE_OBJECT(className);
+            PYXSER_FREE_OBJECT(classPtr);
+            return nen;
+        }
         typeAttr = xmlNewProp(nen,
                               BAD_CAST pyxser_xml_attr_type,
                               BAD_CAST nptr);

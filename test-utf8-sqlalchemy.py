@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#
+# -*- coding: utf-8; -*-
 #
 
 
@@ -37,9 +37,9 @@ def main():
     ed_user.fullname = 'Ed Jones'
     ed_user.password = 'password'
     ed_user.name = 'ed'
-    serialized = pyxser.serialize(obj = ed_user, enc = 'utf-8', selector = bi_selector, depth = 2)
+    serialized = pyxser.serialize(obj = ed_user, enc = 'ascii')
     print serialized
-    ed_unser = pyxser.unserialize(obj = serialized, enc = "utf-8")
+    ed_unser = pyxser.unserialize(obj = serialized, enc = "ascii")
     print repr(ed_unser)
     print repr(ed_unser.get_set())
 

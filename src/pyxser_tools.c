@@ -376,11 +376,12 @@ pyxser_PyListContains(PyListObject *lst, PyObject *o)
 	PyObject *iterLst = (PyObject *)NULL;
 	PyObject *item = (PyObject *)NULL;
 
-	if (PYTHON_IS_NONE(lst)
-        || PYTHON_IS_NONE(o)
-        || !pyxserList_CheckExact((PyObject *)lst)) {
+	if (PYTHON_IS_NONE(lst) || PYTHON_IS_NONE(o)) {
 		return PYXSER_INVALID_ARGUMENT;
 	}
+    if (!pyxserList_CheckExact((PyObject *)lst)) {
+		return PYXSER_INVALID_ARGUMENT;
+    }
 	iterLst = PyObject_GetIter((PyObject *)lst);
 	if (PYTHON_IS_NONE(iterLst)) {
 		return PYXSER_NOT_FOUND;
@@ -491,7 +492,7 @@ pyxserBuffer_Check(PyObject *o)
 int
 pyxserTuple_Check(PyObject *o)
 {
-	return PyTuple_Check(o);
+	return PyTuple_CheckExact(o);
 }
 
 int
@@ -504,7 +505,7 @@ pyxserTuple_CheckExact(PyObject *o)
 int
 pyxserList_Check(PyObject *o)
 {
-	return PyList_Check(o);
+	return PyList_CheckExact(o);
 }
 
 int
@@ -516,7 +517,7 @@ pyxserList_CheckExact(PyObject *o)
 /* dictionaries */
 int pyxserDict_Check(PyObject *o)
 {
-	return PyDict_Check(o);
+	return PyDict_CheckExact(o);
 }
 
 int
@@ -602,7 +603,7 @@ pyxserDate_CheckExact(PyObject *o)
 int
 pyxserAnySet_Check(PyObject *o)
 {
-	return PyAnySet_Check(o);
+	return PyAnySet_CheckExact(o);
 }
 
 int
