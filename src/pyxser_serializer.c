@@ -34,17 +34,28 @@ static const char Id[] = "$Id$";
 
 static const char type_main[] = "__main__";
 static const char module_builtins[] = "__builtins__";
+static const char is_callable[] = "__call__";
 
-#define PYXSER_GET_ATTR_NAME(currentKey, enc, unic, args)               \
+#define PYXSER_GET_ATTR_NAME(currentKey, enc, unic, args, sz)           \
     unic = (PyObject *)NULL;                                            \
-    if (pyxserUnicode_Check(currentKey) == 1) {                         \
-        unic = PyUnicode_Encode(PyUnicode_AS_UNICODE(currentKey),       \
-                                PyUnicode_GET_DATA_SIZE(currentKey),    \
-                                enc, pyxser_xml_encoding_mode);         \
-        args->name = PyString_AS_STRING(unic);                          \
+    if (currentKey == (PyObject *)NULL) {                               \
+        args->name = (char *)NULL;                                      \
     } else {                                                            \
-        args->name = PyString_AS_STRING(currentKey);                    \
-        unic = (PyObject *)NULL;                                        \
+        if (pyxserUnicode_Check(currentKey) == 1) {                     \
+            sz = PyUnicode_GET_DATA_SIZE(currentKey);                   \
+            unic = PyUnicode_FromObject(currentKey);                    \
+            PyErr_Clear();                                              \
+            if (unic != (PyObject *)NULL) {                             \
+                unic = PyUnicode_Encode((const Py_UNICODE *)unic, sz,   \
+                                        enc, pyxser_xml_encoding_mode); \
+            }                                                           \
+            PyErr_Clear();                                              \
+            if (unic != (PyObject *)NULL) {                             \
+                args->name = PyString_AS_STRING(unic);                  \
+            }                                                           \
+        } else {                                                        \
+            args->name = PyString_AS_STRING(currentKey);                \
+        }                                                               \
     }
 
 inline void
@@ -245,6 +256,7 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
     PyObject *currentKey = *args->ck;
     PyObject *className;
     PyObject *unic;
+    int sz;
 
     xmlNodePtr txtNode = (xmlNodePtr)NULL;
     xmlDocPtr *docptr = args->docptr;
@@ -264,6 +276,10 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
     char *enc = args->enc;
 	int c = 0;
 
+    if (args == NULL) {
+        return NULL;
+    }
+
     if (PYTHON_IS_NOT_NONE(args->typemap)) {
         className = PyObject_GetAttrString(o, pyxser_attr_class);
         className = PyObject_GetAttrString(className, pyxser_attr_name);
@@ -279,7 +295,9 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
                 cs = serxConcreteTypes[++c];
                 continue;
             }
-            PYXSER_GET_ATTR_NAME(currentKey, enc, unic, args);
+            if (PYTHON_IS_NOT_NONE(currentKey)) {
+                PYXSER_GET_ATTR_NAME(currentKey, enc, unic, args, sz);
+            }
             args->o = &item;
             unic = (PyObject *)NULL;
             newSerializedNode = cs.serializer(args);
@@ -301,6 +319,9 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
         if (pyxser_ModuleBuiltins(item) == 1) {
             return newSerializedNode;
         }
+        if (pyxser_IsCallable(item) == 1) {
+            return newSerializedNode;
+        }
         objnam = pyxser_GetClassName(item);
         csn = xmlNewDocNode(*docptr,
                             pyxser_GetDefaultNs(),
@@ -311,7 +332,7 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
                                 BAD_CAST pyxser_xml_attr_type,
                                 BAD_CAST objnam);
         if (PYTHON_IS_NOT_NONE(currentKey)) {
-            PYXSER_GET_ATTR_NAME(currentKey, enc, unic, args);
+            PYXSER_GET_ATTR_NAME(currentKey, enc, unic, args, sz);
             pxsnam = xmlNewProp(csn,
                                 BAD_CAST pyxser_xml_attr_name,
                                 BAD_CAST args->name);
@@ -356,6 +377,22 @@ pyxser_ModuleNotMain(const char *mod)
 		return 0;
 	}
 	return 1;
+}
+
+int
+pyxser_IsCallable(PyObject *o)
+{
+    int ctrl = 0;
+	char *cn = (char *)NULL;
+	PyObject *klass = Py_None;
+	PyObject *mname = Py_None;
+	if (PYTHON_IS_NONE(o)) {
+		return 0;
+	}
+	if ((PyObject_HasAttrString(o, is_callable)) != 0) {
+        return 1;
+    }
+    return 0;
 }
 
 int

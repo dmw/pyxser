@@ -45,6 +45,8 @@ extern "C" {
     extern const char pyxser_xsd_body[];
     extern xmlDtdPtr pyxser_dtd_object;
     extern xmlDtdPtr pyxser_dtd_c14n_object;
+    extern xmlDocPtr pyxser_xsd_doc;
+    extern xmlDocPtr pyxser_xsd_c14n_doc;
 
     char *pyxser_GetClassName(PyObject *obj);
 

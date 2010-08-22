@@ -1934,6 +1934,12 @@ pyxser_unregister(void)
     xmlFreeDtd(pyxser_dtd_c14n_object);
     pyxser_dtd_c14n_object = (xmlDtdPtr)NULL;
 
+    xmlFreeDoc(pyxser_xsd_doc);
+    pyxser_xsd_doc = (xmlDocPtr)NULL;
+
+    xmlFreeDoc(pyxser_xsd_c14n_doc);
+    pyxser_xsd_c14n_doc = (xmlDocPtr)NULL;
+
     xmlCleanupEncodingAliases();
 
     xmlCleanupParser();

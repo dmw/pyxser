@@ -8,12 +8,8 @@ import sys
 import traceback
 import testpkg.sample as s
 import inspect
-from sqlalchemy import *
-from sqlalchemy.orm import *
-from sqlalchemy.ext.declarative import *
-from sqlalchemy.orm.state import *
-from sqlalchemy.orm.attributes import *
-from sqlalchemy.orm.properties import *
+import sqlalchemy
+import sqlalchemy.orm
 
 def bi_converter(o):
     return str("");
@@ -29,17 +25,17 @@ def bi_selector(o):
     return r
 
 def main():
-    engine = create_engine('sqlite:///:memory:', echo=True)
-    metadata = MetaData()
+    engine = sqlalchemy.create_engine('sqlite:///:memory:', echo=True)
+    metadata = sqlalchemy.MetaData()
     metadata.create_all(engine)
-    session = sessionmaker(bind=engine)
+    session = sqlalchemy.orm.sessionmaker(bind=engine)
     ed_user = s.User()
     ed_user.fullname = 'Ed Jones'
     ed_user.password = 'password'
     ed_user.name = 'ed'
-    serialized = pyxser.serialize(obj = ed_user, enc = 'ascii')
+    serialized = pyxser.serialize(obj = ed_user, enc = 'iso-8859-1', depth = 100)
     print serialized
-    ed_unser = pyxser.unserialize(obj = serialized, enc = "ascii")
+    ed_unser = pyxser.unserialize(obj = serialized, enc = "iso-8859-1")
     print repr(ed_unser)
     print repr(ed_unser.get_set())
 

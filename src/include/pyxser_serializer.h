@@ -57,6 +57,8 @@ extern "C" {
 
     int pyxser_ModuleBuiltins(PyObject *o);
 
+    int pyxser_IsCallable(PyObject *o);
+
 #ifdef __cplusplus
 };
 #endif /* !__cplusplus */

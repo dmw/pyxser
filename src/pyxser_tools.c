@@ -34,6 +34,8 @@ static const char Id[] = "$Id$";
 static xmlNsPtr pyxser_default_ns;
 static xmlNsPtr pyxser_xsi_ns;
 static xmlNsPtr pyxser_xsd_ns;
+xmlDocPtr pyxser_xsd_doc = (xmlDocPtr)NULL;
+xmlDocPtr pyxser_xsd_c14n_doc = (xmlDocPtr)NULL;
 
 void pyxser_CreateDocument(xmlDocPtr doc, xmlDocPtr *docptr,
                            xmlNodePtr *rootNode,
@@ -1279,7 +1281,6 @@ pyxser_ValidateDocumentXSD(xmlDocPtr doc)
 {
     xmlSchemaPtr scm = (xmlSchemaPtr)NULL;
     xmlSchemaValidCtxtPtr ctx = (xmlSchemaValidCtxtPtr)NULL;
-    xmlDocPtr pyxser_xsd_doc = (xmlDocPtr)NULL;
     xmlSchemaParserCtxtPtr pyxser_xsd_parser_object = (xmlSchemaParserCtxtPtr)NULL;
     xmlSchemaPtr pyxser_xsd_object = (xmlSchemaPtr)NULL;
     int ctrl = 0;
@@ -1322,9 +1323,6 @@ pyxser_ValidateDocumentXSD(xmlDocPtr doc)
     if (pyxser_xsd_parser_object != NULL) {
         xmlSchemaFreeParserCtxt(pyxser_xsd_parser_object);
     }
-    if (pyxser_xsd_doc != NULL) {
-        xmlFreeDoc(pyxser_xsd_doc);
-    }
     return ctrl;
 }
 
@@ -1333,7 +1331,6 @@ pyxser_ValidateDocumentXSDC14N(xmlDocPtr doc)
 {
     xmlSchemaPtr scm;
     xmlSchemaValidCtxtPtr ctx = (xmlSchemaValidCtxtPtr)NULL;
-    xmlDocPtr pyxser_xsd_c14n_doc = (xmlDocPtr)NULL;
     xmlSchemaParserCtxtPtr pyxser_xsd_parser_c14n_object = (xmlSchemaParserCtxtPtr)NULL;
     xmlSchemaPtr pyxser_xsd_c14n_object = (xmlSchemaPtr)NULL;
     int ctrl = 0;
@@ -1375,9 +1372,6 @@ pyxser_ValidateDocumentXSDC14N(xmlDocPtr doc)
     }
     if (pyxser_xsd_parser_c14n_object != NULL) {
         xmlSchemaFreeParserCtxt(pyxser_xsd_parser_c14n_object);
-    }
-    if (pyxser_xsd_c14n_doc != NULL) {
-        xmlFreeDoc(pyxser_xsd_c14n_doc);
     }
     return ctrl;
 }
