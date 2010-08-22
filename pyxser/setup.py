@@ -16,7 +16,12 @@ from distutils.command.install import INSTALL_SCHEMES
 
 vi = sys.version_info
 
-if not (vi[0] == 2 and (vi[1] == 4 or vi[1] == 5 or vi[1] == 6)):
+if not (vi[0] == 2 \
+        and (vi[1] == 4 \
+             or vi[1] == 5 \
+             or vi[1] == 6 \
+             or vi[1] == 7 \
+             or vi[1] == 8)):
     print "Unsupported Python version"
     sys.exit()
 
