@@ -56,7 +56,6 @@ pyxser_SerializeUnicode(PyxSerializationArgsPtr args)
 	PyObject *classPtr = (PyObject *)NULL;
 	PyObject *className = (PyObject *)NULL;
 	PyObject *unic = (PyObject *)NULL;
-    Py_UNICODE *ub = (Py_UNICODE *)NULL;
 
 	size_t data_size = 0;
 	char *sptr = (char *)NULL;
