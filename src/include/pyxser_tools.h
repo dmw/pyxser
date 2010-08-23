@@ -124,7 +124,7 @@ extern "C" {
     int pyxserString_Check(PyObject *o);
     int pyxserString_CheckExact(PyObject *o);
     int pyxserUnicode_Check(PyObject *o);
-    int pyxserUnicodeExact_CheckExact(PyObject *o);
+    int pyxserUnicode_CheckExact(PyObject *o);
     int pyxserBuffer_Check(PyObject *o);
 
 /* tuples */

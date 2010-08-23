@@ -83,7 +83,7 @@ const PythonTypeSerialize serxConcreteTypes[] = {
 	/* Strings */
 	{1, pyxserString_Check, pyxser_SerializeString},
 	{1, pyxserString_CheckExact, pyxser_SerializeExactString},
-	{1, pyxserUnicodeExact_CheckExact, pyxser_SerializeExactUnicode},
+	{1, pyxserUnicode_CheckExact, pyxser_SerializeExactUnicode},
 	{1, pyxserUnicode_Check, pyxser_SerializeUnicode},
 	/* {1, pyxserBuffer_Check, pyxser_SerializeBuffer}, */
 	/* Tuples */
@@ -479,7 +479,7 @@ pyxserUnicode_Check(PyObject *o)
 }
 
 int
-pyxserUnicodeExact_CheckExact(PyObject *o)
+pyxserUnicode_CheckExact(PyObject *o)
 {
 	return PyUnicode_CheckExact(o);
 }
@@ -1078,6 +1078,9 @@ pyxser_SearchModule(const char *name)
 	PyObject *dictKeys = (PyObject *)NULL;
 	int counter = 0;
 	long tupleSize = 0;
+    if (name == (const char *)NULL) {
+		return (PyObject *)NULL;
+    }
 	if (PYTHON_IS_NONE(dictMod)) {
 		return (PyObject *)NULL;
 	}
@@ -1106,6 +1109,10 @@ pyxser_SearchTypesInModules(const char *n_module,
 {
     PyObject *cacheMod;
     PyObject *chkMod;
+    if (n_module == (const char *)NULL
+        || n_type == (const char *)NULL) {
+        return NULL;
+    }
     if ((pyxser_ModuleNotMain(n_module)) == 0) {
         return NULL;
     }

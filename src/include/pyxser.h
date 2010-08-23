@@ -58,6 +58,26 @@ extern "C" {
         o = NULL;                               \
     }                                           \
 
+#define PYXSER_GET_ATTR_NAME(currentKey, enc, unic, args, sz)           \
+    unic = (PyObject *)NULL;                                            \
+    args->name = (char *)NULL;                                          \
+    if (PYTHON_IS_NOT_NONE(currentKey)                                  \
+        && (pyxserUnicode_CheckExact(currentKey)) == 1) {               \
+        sz = PyUnicode_GET_SIZE(currentKey);                            \
+        ub = PyUnicode_AS_UNICODE(currentKey);                          \
+        unic = PyUnicode_Encode(ub, sz, enc,                            \
+                                pyxser_xml_encoding_mode);              \
+        if (unic != (PyObject *)NULL) {                                 \
+            args->name = PyString_AS_STRING(unic);                      \
+        } else {                                                        \
+            PyErr_Clear();                                              \
+            args->name = (char *)NULL;                                  \
+        }                                                               \
+    }                                                                   \
+    if (PYTHON_IS_NOT_NONE(currentKey)                                  \
+        && (pyxserString_CheckExact(currentKey)) == 1) {                \
+        args->name = PyString_AS_STRING(currentKey);                    \
+    }
 
 /* lol code xD */
 #define PYTHON_HAZ_KLASS(o)                     \

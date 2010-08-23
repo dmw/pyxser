@@ -36,32 +36,6 @@ static const char type_main[] = "__main__";
 static const char module_builtins[] = "__builtins__";
 static const char is_callable[] = "__call__";
 
-#define PYXSER_GET_ATTR_NAME(currentKey, enc, unic, args, sz)           \
-    unic = (PyObject *)NULL;                                            \
-    args->name = (char *)NULL;                                          \
-    if (PYTHON_IS_NOT_NONE(currentKey)                                  \
-        && (pyxserUnicode_Check(currentKey)) == 1) {                    \
-        unic = PyUnicode_FromEncodedObject(currentKey, enc,             \
-                                           pyxser_xml_encoding_mode);   \
-        if (unic == (PyObject *)NULL) {                                 \
-            PyErr_Clear();                                              \
-            sz = PyUnicode_GET_DATA_SIZE(currentKey);                   \
-            unic = PyUnicode_AS_UNICODE(currentKey);                    \
-            unic = PyUnicode_Encode((const Py_UNICODE *)unic, sz,       \
-                                    enc, pyxser_xml_encoding_mode);     \
-        }                                                               \
-        if (unic != (PyObject *)NULL) {                                 \
-            args->name = PyString_AS_STRING(unic);                      \
-        } else {                                                        \
-            PyErr_Clear();                                              \
-            args->name = (char *)NULL;                                  \
-        }                                                               \
-    }                                                                   \
-    if (PYTHON_IS_NOT_NONE(currentKey)                                  \
-        && (pyxserString_Check(currentKey)) == 1) {                     \
-        args->name = PyString_AS_STRING(currentKey);                    \
-    }
-
 inline void
 pyxser_SetupXmlRootElement(xmlNodePtr *rootNode, const char *objnam)
 {
@@ -119,14 +93,13 @@ pyxser_SerializeXml(PyxSerializationArgsPtr args)
     xmlNodePtr *currentNode = args->currentNode;
     xmlNodePtr *currentNodeOld = args->currentNode;
 
-    PyListObject *dupSrcItems = *args->dupSrcItems;
     PyObject *sel = *args->selector;
     PyObject *arglist = (PyObject *)NULL;
     const char *enc = args->enc;
     int *depth = args->depth;
     int *depthcnt = args->depthcnt;
 
-	PyListObject *dupItems = dupSrcItems;
+	PyListObject *dupItems;
 	PyObject *lstItems = (PyObject *)NULL;
 	PyObject *item = (PyObject *)o;
 	PyObject *itemOld = (PyObject *)NULL;
@@ -141,9 +114,20 @@ pyxser_SerializeXml(PyxSerializationArgsPtr args)
 	long listIterator = 0;
 	long listSize = 0;
 
+    if (args == NULL) {
+        return (xmlNodePtr)NULL;
+    }
+
+    if (args->dupSrcItems != NULL
+        && *args->dupSrcItems != (PyListObject *)NULL) {
+		dupItems = *args->dupSrcItems;
+    }
+
 	if (PYTHON_IS_NONE(dupItems)) {
 		dupItems = (PyListObject *)PyList_New(0);
+        args->dupSrcItems = &dupItems;
 	}
+
 	if (PYTHON_IS_NONE(o)) {
 		return (xmlNodePtr)NULL;
 	}
@@ -260,6 +244,7 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
     PyObject *currentKey = *args->ck;
     PyObject *className;
     PyObject *unic;
+    Py_UNICODE *ub;
     int sz;
 
     xmlNodePtr txtNode = (xmlNodePtr)NULL;
@@ -377,6 +362,9 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
 int
 pyxser_ModuleNotMain(const char *mod)
 {
+    if (mod == (char *)NULL) {
+        return 1;
+    }
 	if (strncmp(type_main, mod, strlen(type_main)) == 0) {
 		return 0;
 	}

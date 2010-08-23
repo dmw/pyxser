@@ -56,6 +56,7 @@ pyxser_SerializeUnicode(PyxSerializationArgsPtr args)
 	PyObject *classPtr = (PyObject *)NULL;
 	PyObject *className = (PyObject *)NULL;
 	PyObject *unic = (PyObject *)NULL;
+    Py_UNICODE *ub = (Py_UNICODE *)NULL;
 
 	size_t data_size = 0;
 	char *sptr = (char *)NULL;
@@ -83,9 +84,16 @@ pyxser_SerializeUnicode(PyxSerializationArgsPtr args)
     }
 
     unic = PyUnicode_Encode(PyUnicode_AS_UNICODE(o),
-                            PyUnicode_GET_DATA_SIZE(o), enc,
+                            PyUnicode_GET_SIZE(o), enc,
                             pyxser_xml_encoding_mode);
     if (PYTHON_IS_NONE(unic)) {
+        PyErr_Clear();
+        unic = PyUnicode_FromEncodedObject(o, enc,
+                                           pyxser_xml_encoding_mode);
+    }
+
+    if (PYTHON_IS_NONE(unic)) {
+        PyErr_Clear();
         PYXSER_FREE_OBJECT(className);
         PYXSER_FREE_OBJECT(classPtr);
         return (xmlNodePtr)NULL;
