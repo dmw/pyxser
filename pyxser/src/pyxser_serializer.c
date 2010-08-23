@@ -38,27 +38,28 @@ static const char is_callable[] = "__call__";
 
 #define PYXSER_GET_ATTR_NAME(currentKey, enc, unic, args, sz)           \
     unic = (PyObject *)NULL;                                            \
-    if (currentKey == (PyObject *)NULL) {                               \
-        args->name = (char *)NULL;                                      \
-    } else {                                                            \
-        if (pyxserUnicode_Check(currentKey) == 1) {                     \
+    args->name = (char *)NULL;                                          \
+    if (PYTHON_IS_NOT_NONE(currentKey)                                  \
+        && (pyxserUnicode_Check(currentKey)) == 1) {                    \
+        unic = PyUnicode_FromEncodedObject(currentKey, enc,             \
+                                           pyxser_xml_encoding_mode);   \
+        if (unic == (PyObject *)NULL) {                                 \
+            PyErr_Clear();                                              \
             sz = PyUnicode_GET_DATA_SIZE(currentKey);                   \
-            unic = PyUnicode_FromObject(currentKey);                    \
-            if (unic == (PyObject *)NULL) {                             \
-                unic = PyUnicode_AS_UNICODE(currentKey);                \
-            }                                                           \
-            PyErr_Clear();                                              \
-            if (unic != (PyObject *)NULL) {                             \
-                unic = PyUnicode_Encode((const Py_UNICODE *)unic, sz,   \
-                                        enc, pyxser_xml_encoding_mode); \
-            }                                                           \
-            PyErr_Clear();                                              \
-            if (unic != (PyObject *)NULL) {                             \
-                args->name = PyString_AS_STRING(unic);                  \
-            }                                                           \
-        } else {                                                        \
-            args->name = PyString_AS_STRING(currentKey);                \
+            unic = PyUnicode_AS_UNICODE(currentKey);                    \
+            unic = PyUnicode_Encode((const Py_UNICODE *)unic, sz,       \
+                                    enc, pyxser_xml_encoding_mode);     \
         }                                                               \
+        if (unic != (PyObject *)NULL) {                                 \
+            args->name = PyString_AS_STRING(unic);                      \
+        } else {                                                        \
+            PyErr_Clear();                                              \
+            args->name = (char *)NULL;                                  \
+        }                                                               \
+    }                                                                   \
+    if (PYTHON_IS_NOT_NONE(currentKey)                                  \
+        && (pyxserString_Check(currentKey)) == 1) {                     \
+        args->name = PyString_AS_STRING(currentKey);                    \
     }
 
 inline void
