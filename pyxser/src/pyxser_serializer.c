@@ -44,6 +44,9 @@ static const char is_callable[] = "__call__";
         if (pyxserUnicode_Check(currentKey) == 1) {                     \
             sz = PyUnicode_GET_DATA_SIZE(currentKey);                   \
             unic = PyUnicode_FromObject(currentKey);                    \
+            if (unic == (PyObject *)NULL) {                             \
+                unic = PyUnicode_AS_UNICODE(currentKey);                \
+            }                                                           \
             PyErr_Clear();                                              \
             if (unic != (PyObject *)NULL) {                             \
                 unic = PyUnicode_Encode((const Py_UNICODE *)unic, sz,   \
