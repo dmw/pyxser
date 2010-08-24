@@ -52,6 +52,12 @@ pyxser_TypeMapSearchAndGetNode(PyObject *tmap, PyObject *tval,
     PyObject *res = (PyObject *)NULL;
     char *tmapc = (char *)NULL;
     char *resc = (char *)NULL;
+    if (tmap == NULL
+        || tval == NULL
+        || targ == NULL
+        || doc == NULL) {
+        return txtNode;
+    }
     if (PYTHON_IS_NONE(tmap)) {
         return txtNode;
     }
