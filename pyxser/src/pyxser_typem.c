@@ -64,10 +64,10 @@ pyxser_TypeMapSearchAndGetNode(PyObject *tmap, PyObject *tval,
     if (doc == (xmlDocPtr)NULL) {
         return txtNode;
     }
-    if ((PyDict_CheckExact(tmap)) == 0) {
+    if ((PyDict_Check(tmap)) == 0) {
         return txtNode;
     }
-    if ((PyString_CheckExact(tval)) == 0) {
+    if ((PyString_Check(tval)) == 0) {
         return txtNode;
     }
     tmapc = PyString_AS_STRING(tval);
@@ -184,10 +184,10 @@ pyxunser_TypeMapSearchAndGet(PyObject *tmap, PyObject *tval,
     if (PYTHON_IS_NONE(tval)) {
         return (PyObject *)NULL;
     }
-    if ((PyString_CheckExact(tval)) == 0) {
+    if ((PyString_Check(tval)) == 0) {
         return (PyObject *)NULL;
     }
-    if ((PyDict_CheckExact(tmap)) == 0) {
+    if ((PyDict_Check(tmap)) == 0) {
         return (PyObject *)NULL;
     }
     tmapc = PyString_AS_STRING(tval);
