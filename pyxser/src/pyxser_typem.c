@@ -222,6 +222,7 @@ pyxunser_TypeMapSearchAndGet(PyObject *tmap, PyObject *tval,
         stype = PyString_FromString((char *)ron->content);
         PyErr_Clear();
         if (PYTHON_IS_NONE(stype)) {
+            Py_XDECREF(stype);
             return (PyObject *)NULL;
         }
         args = Py_BuildValue("(O)", stype);

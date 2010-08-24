@@ -243,6 +243,7 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
     PyObject **oold = args->o;
     PyObject *currentKey = *args->ck;
     PyObject *className;
+    PyObject *classObject;
     PyObject *unic;
     Py_UNICODE *ub;
     int sz;
@@ -269,11 +270,16 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
     }
 
     if (PYTHON_IS_NOT_NONE(args->typemap)) {
-        className = PyObject_GetAttrString(o, pyxser_attr_class);
-        className = PyObject_GetAttrString(className, pyxser_attr_name);
-
-        txtNode = pyxser_TypeMapSearchAndGetNode(args->typemap, className,
-                                                 o, *docptr);
+        classObject = PyObject_GetAttrString(o, pyxser_attr_class);
+        if (PYTHON_IS_NOT_NONE(classObject)) {
+            className = PyObject_GetAttrString(classObject, pyxser_attr_name);
+            if (PYTHON_IS_NOT_NONE(className)) {
+                txtNode = pyxser_TypeMapSearchAndGetNode(args->typemap, className,
+                                                         o, *docptr);
+                Py_XDECREF(className);
+            }
+            Py_XDECREF(classObject);
+        }
     }
 
     if (txtNode == (xmlNodePtr)NULL) {
