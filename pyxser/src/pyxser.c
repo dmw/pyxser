@@ -100,7 +100,7 @@ const char pyxser_xml_attr_xml_xsi[] = "xmlns:xsi";
 const char pyxser_xml_attr_xml_xloc[] = "xmlns:schemaLocation";
 
 const char pyxser_xml_version[] = "1.0";
-const char pyxser_ext_version[] = "1.4.4r";
+const char pyxser_ext_version[] = "1.4.8r";
 const char pyxser_ext_author[] = "Daniel Molina Wegener <dmw@coder.cl>";
 const char pyxser_ext_site[] = "http://coder.cl/products/pyxser/";
 
@@ -172,12 +172,9 @@ static const char pyxser_module_doc[] = \
     "based serialization. The serialization model is written under\n"
     "a XML Schema definition and Document Type Definition (DTD).\n"
     "\n"
-    "It has one known bug, it can not serialize and deserialize\n"
-    "objects which his declaration class resides inside the __main__\n"
-    "module.\n"
     "pyxser supports any Python supported encoding. So, if you plan\n"
     "to serialize old charsets like iso-8859-1, you must not pass\n"
-    "utf-8 string to the serializer, instead you must create a type\n"
+    "unicode strings to the serializer, instead you must create a type\n"
     "map which converts utf-8 strings to encoded iso-8859-1 strings\n"
     "using { 'unicode': to_encoded_latin1 }, with to_encoded_latin1\n"
     "as a function executing unicode.encode('iso-8859-1')\n"
@@ -194,6 +191,21 @@ static const char pyxser_module_doc[] = \
     "* You can download the C14N compatible XML Schema from the\n"
     "following URL:\n"
     "\thttp://projects.coder.cl/pyxser/dtd/pyxser-1.0-c14n.xsd\n"
+    "\n\n"
+    "_pyxser selectors_ are made to select which members of python\n"
+    "objects are being serialized, so you create a function which\n"
+    "receives a Python object, and it must return dictionary of\n"
+    "{ 'attribute': value, 'attr2': value } which will be serialized\n"
+    "by pyxser and you can include many attributes as you want\n"
+    "\n"
+    "_pyxser type maps_ are made to specify a serializer on pyxser\n"
+    "so you an create custom serialization for certain types on\n"
+    "your application, for example if you want to serialize a file\n"
+    "as Base 64 encoded string, you must create a function which\n"
+    "receives the file object and returns the Base 64 encoded\n"
+    "string, and the put that key/value pair on a dictionary and\n"
+    "pass that dictionary with { 'file': to_base64_function } as\n"
+    "pyxser type map, and you can include many types as you want.\n"
     "\n\n";
 
 static const char serialize_documentation[] = \
