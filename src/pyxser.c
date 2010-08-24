@@ -100,7 +100,7 @@ const char pyxser_xml_attr_xml_xsi[] = "xmlns:xsi";
 const char pyxser_xml_attr_xml_xloc[] = "xmlns:schemaLocation";
 
 const char pyxser_xml_version[] = "1.0";
-const char pyxser_ext_version[] = "1.4.8r";
+const char pyxser_ext_version[] = "1.5r";
 const char pyxser_ext_author[] = "Daniel Molina Wegener <dmw@coder.cl>";
 const char pyxser_ext_site[] = "http://coder.cl/products/pyxser/";
 
@@ -1322,8 +1322,6 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
     }
 
-    Py_XINCREF(unic);
-
     obj.doc = &unic;
     obj.current = &current;
     obj.tree = &tree;
@@ -1439,8 +1437,6 @@ u_pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
     }
-
-    Py_XINCREF(unic);
 
     data_size = PyUnicode_GET_DATA_SIZE(unic);
     if (PYTHON_IS_NONE(unic)) {
@@ -1674,8 +1670,6 @@ u_pyxvalidatec14ndtd(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
     }
-
-    Py_XINCREF(unic);
 
     data_size = PyUnicode_GET_DATA_SIZE(unic);
     docstr = PyString_AS_STRING(unic);
