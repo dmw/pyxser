@@ -124,7 +124,6 @@ pyxser_RunSerializationCol(PyxSerializationArgsPtr args)
 
 	xmlNodePtr newSerNode = (xmlNodePtr)NULL;
 	xmlAttrPtr pyxserType = (xmlAttrPtr)NULL;
-	xmlAttrPtr nameAttr = (xmlAttrPtr)NULL;
 	PythonTypeSerialize currentSerialization;
 	char *objectName = (char *)NULL;
 	char *typeName = (char *)NULL;

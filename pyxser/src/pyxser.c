@@ -972,6 +972,7 @@ u_pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
     sargs.depth = &py_depth;
     sargs.depthcnt = &py_depth_cnt;
     sargs.selector = &selector;
+    sargs.typemap = typemap;
 
 	serXml = pyxser_SerializeXml(&sargs);
 
