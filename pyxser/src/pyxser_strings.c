@@ -83,7 +83,8 @@ pyxser_SerializeUnicode(PyxSerializationArgsPtr args)
     }
 
     unic = PyUnicode_Encode(PyUnicode_AS_UNICODE(o),
-                            PyUnicode_GET_SIZE(o), enc,
+                            PyUnicode_GET_SIZE(o),
+                            pyxser_xml_encoding,
                             pyxser_xml_encoding_mode);
     if (PYTHON_IS_NONE(unic)) {
         PyErr_Clear();
@@ -292,6 +293,7 @@ pyxunser_SerializeUnicode(PyxSerDeserializationArgsPtr obj)
             && ron->content != BAD_CAST NULL) {
             str = PyString_FromString((const char *)ron->content);
             unic = PyUnicode_FromObject(str);
+            Py_XDECREF(str);
             res = unic;
             break;
         }

@@ -40,12 +40,6 @@
    fun:Py_ADDRESS_IN_RANGE
 }
 
-{
-   ADDRESS_IN_RANGE/Invalid read of size 1
-   Memcheck:Addr1
-   fun:PyUnicodeUCS4_Encode
-}
-
 #
 # Leaks (including possible leaks)
 #    Hmmm, I wonder if this masks some real leaks.  I think it does.
@@ -130,41 +124,41 @@
    fun:_dl_allocate_tls
 }
 
-{
-   ADDRESS_IN_RANGE/Invalid read of size 4
-   Memcheck:Addr4
-   fun:PyObject_Free
-}
+###{
+###   ADDRESS_IN_RANGE/Invalid read of size 4
+###   Memcheck:Addr4
+###   fun:PyObject_Free
+###}
+###
+###{
+###   ADDRESS_IN_RANGE/Invalid read of size 4
+###   Memcheck:Value4
+###   fun:PyObject_Free
+###}
+###
+###{
+###   ADDRESS_IN_RANGE/Conditional jump or move depends on uninitialised value
+###   Memcheck:Cond
+###   fun:PyObject_Free
+###}
 
-{
-   ADDRESS_IN_RANGE/Invalid read of size 4
-   Memcheck:Value4
-   fun:PyObject_Free
-}
-
-{
-   ADDRESS_IN_RANGE/Conditional jump or move depends on uninitialised value
-   Memcheck:Cond
-   fun:PyObject_Free
-}
-
-{
-   ADDRESS_IN_RANGE/Invalid read of size 4
-   Memcheck:Addr4
-   fun:PyObject_Realloc
-}
-
-{
-   ADDRESS_IN_RANGE/Invalid read of size 4
-   Memcheck:Value4
-   fun:PyObject_Realloc
-}
-
-{
-   ADDRESS_IN_RANGE/Conditional jump or move depends on uninitialised value
-   Memcheck:Cond
-   fun:PyObject_Realloc
-}
+###{
+###   ADDRESS_IN_RANGE/Invalid read of size 4
+###   Memcheck:Addr4
+###   fun:PyObject_Realloc
+###}
+###
+###{
+###   ADDRESS_IN_RANGE/Invalid read of size 4
+###   Memcheck:Value4
+###   fun:PyObject_Realloc
+###}
+###
+###{
+###   ADDRESS_IN_RANGE/Conditional jump or move depends on uninitialised value
+###   Memcheck:Cond
+###   fun:PyObject_Realloc
+###}
 
 ###
 ### All the suppressions below are for errors that occur within libraries

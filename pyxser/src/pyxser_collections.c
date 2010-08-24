@@ -135,7 +135,6 @@ pyxser_RunSerializationCol(PyxSerializationArgsPtr args)
     PyObject **oold = args->o;
     PyObject *currentKey = *args->ck;
     PyObject *unic = (PyObject *)NULL;
-    char *enc = args->enc;
     PyListObject *dupItems;
     xmlDocPtr *docPtr = args->docptr;
     int *depthcnt = args->depthcnt;
@@ -219,6 +218,7 @@ pyxser_RunSerializationCol(PyxSerializationArgsPtr args)
         args->rootNode = &csn;
         args->currentNode = &csn;
         newSerNode = pyxser_SerializeXml(args);
+        PYXSER_FREE_OBJECT(unic);
         args->o = oold;
         args->item = oold;
         args->currentNode = currentNodeOld;
@@ -701,6 +701,7 @@ pyxunser_SerializeList(PyxSerDeserializationArgsPtr obj)
             PYXSER_XMLFREE(n_id);
             PYXSER_XMLFREE(n_ref);
             PyList_Append(list, unser);
+            Py_XDECREF(unser);
             continue;
         }
 
@@ -714,8 +715,8 @@ pyxunser_SerializeList(PyxSerDeserializationArgsPtr obj)
                 Py_XDECREF(ndict);
                 if (PYTHON_IS_NOT_NONE(unser)) {
                     PyList_Append(list, unser);
-                    pyxser_AddAvailableObject((PyObject *)*dups, (char *)n_id, unser);
                     Py_XDECREF(unser);
+                    pyxser_AddAvailableObject((PyObject *)*dups, (char *)n_id, unser);
                     cacheCurrent = *(obj->current);
                     cacheCurrentNode = ron;
                     *(obj->current) = unser;
@@ -734,8 +735,8 @@ pyxunser_SerializeList(PyxSerDeserializationArgsPtr obj)
                 Py_XDECREF(ndict);
                 if (PYTHON_IS_NOT_NONE(unser)) {
                     PyList_Append(list, unser);
-                    pyxser_AddAvailableObject((PyObject *)*dups, (char *)n_id, unser);
                     Py_XDECREF(unser);
+                    pyxser_AddAvailableObject((PyObject *)*dups, (char *)n_id, unser);
                     cacheCurrent = *(obj->current);
                     cacheCurrentNode = ron;
                     *(obj->current) = unser;

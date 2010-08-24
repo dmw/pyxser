@@ -114,6 +114,10 @@ const char pyxser_xml_dtd_c14n_location[] = PYXSER_DTD_C14N_FILE;
 const char pyxser_xml_xsd_location[] = PYXSER_XSD_FILE;
 const char pyxser_xml_xsd_c14n_location[] = PYXSER_XSD_C14N_FILE;
 
+extern xmlNsPtr pyxser_default_ns;
+extern xmlNsPtr pyxser_xsi_ns;
+extern xmlNsPtr pyxser_xsd_ns;
+
 static PyObject *pyxserxml(PyObject *self, PyObject *args, PyObject *keywds);
 static PyObject *pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds);
 static PyObject *pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds);
@@ -577,14 +581,6 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
     }
 
-    if (PYTHON_IS_NOT_NONE(typemap)) {
-        Py_XINCREF(typemap);
-    }
-
-    if (PYTHON_IS_NOT_NONE(selector)) {
-        Py_XINCREF(selector);
-    }
-
 	dupItems = (PyListObject *)PyList_New(0);
     Py_XINCREF(input);
 
@@ -603,14 +599,6 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 
     Py_XDECREF(input);
     Py_XDECREF(dupItems);
-
-    if (PYTHON_IS_NOT_NONE(typemap)) {
-        Py_XDECREF(typemap);
-    }
-
-    if (PYTHON_IS_NOT_NONE(selector)) {
-        Py_XDECREF(selector);
-    }
 
     if (docXml == (xmlDocPtr)NULL) {
         PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -699,14 +687,6 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 	dupItems = (PyListObject *)PyList_New(0);
     Py_XINCREF(input);
 
-    if (PYTHON_IS_NOT_NONE(typemap)) {
-        Py_XINCREF(typemap);
-    }
-
-    if (PYTHON_IS_NOT_NONE(selector)) {
-        Py_XINCREF(selector);
-    }
-
     sargs.o = &input;
     sargs.item = &input;
     sargs.docptr = &docXml;
@@ -723,14 +703,6 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 
     Py_XDECREF(input);
     Py_XDECREF(dupItems);
-
-    if (PYTHON_IS_NOT_NONE(typemap)) {
-        Py_XDECREF(typemap);
-    }
-
-    if (PYTHON_IS_NOT_NONE(selector)) {
-        Py_XDECREF(selector);
-    }
 
     if (docXml == (xmlDocPtr)NULL) {
         PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -767,6 +739,7 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
         PyErr_Clear();
         return res;
     } else {
+        xmlFree(docPtr);
         xmlFreeDoc(docXml);
         PyErr_SetString(PyExc_ValueError, msg_non_object);
         return NULL;
@@ -825,14 +798,6 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 	dupItems = (PyListObject *)PyList_New(0);
     Py_XINCREF(input);
 
-    if (PYTHON_IS_NOT_NONE(typemap)) {
-        Py_XINCREF(typemap);
-    }
-
-    if (PYTHON_IS_NOT_NONE(selector)) {
-        Py_XINCREF(selector);
-    }
-
     sargs.o = &input;
     sargs.docptr = &docXml;
     sargs.rootNode = &rootNode;
@@ -846,16 +811,8 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 
 	serXml = pyxser_SerializeXml(&sargs);
 
-    Py_XINCREF(input);
+    Py_XDECREF(input);
     Py_XDECREF(dupItems);
-
-    if (PYTHON_IS_NOT_NONE(typemap)) {
-        Py_XDECREF(typemap);
-    }
-
-    if (PYTHON_IS_NOT_NONE(selector)) {
-        Py_XDECREF(selector);
-    }
 
     if (docXml == (xmlDocPtr)NULL) {
         PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -953,14 +910,6 @@ u_pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 
 	dupItems = (PyListObject *)PyList_New(0);
 
-    if (PYTHON_IS_NOT_NONE(typemap)) {
-        Py_XINCREF(typemap);
-    }
-
-    if (PYTHON_IS_NOT_NONE(selector)) {
-        Py_XINCREF(selector);
-    }
-
     Py_XINCREF(input);
 
     sargs.o = &input;
@@ -978,14 +927,6 @@ u_pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 
     Py_XDECREF(input);
     Py_XDECREF(dupItems);
-
-    if (PYTHON_IS_NOT_NONE(typemap)) {
-        Py_XDECREF(typemap);
-    }
-
-    if (PYTHON_IS_NOT_NONE(selector)) {
-        Py_XDECREF(selector);
-    }
 
     if (docXml == (xmlDocPtr)NULL) {
         PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -1075,14 +1016,6 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 	dupItems = (PyListObject *)PyList_New(0);
     Py_XINCREF(input);
 
-    if (PYTHON_IS_NOT_NONE(typemap)) {
-        Py_XINCREF(typemap);
-    }
-
-    if (PYTHON_IS_NOT_NONE(selector)) {
-        Py_XINCREF(selector);
-    }
-
     sargs.o = &input;
     sargs.docptr = &docXml;
     sargs.rootNode = &rootNode;
@@ -1098,14 +1031,6 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 
     Py_XDECREF(input);
     Py_XDECREF(dupItems);
-
-    if (PYTHON_IS_NOT_NONE(typemap)) {
-        Py_XDECREF(typemap);
-    }
-
-    if (PYTHON_IS_NOT_NONE(selector)) {
-        Py_XDECREF(selector);
-    }
 
     if (docXml == (xmlDocPtr)NULL) {
         PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -1197,15 +1122,8 @@ u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
     }
 
 	dupItems = (PyListObject *)PyList_New(0);
+
     Py_XINCREF(input);
-
-    if (PYTHON_IS_NOT_NONE(typemap)) {
-        Py_XINCREF(typemap);
-    }
-
-    if (PYTHON_IS_NOT_NONE(selector)) {
-        Py_XINCREF(selector);
-    }
 
     sargs.o = &input;
     sargs.docptr = &docXml;
@@ -1219,16 +1137,9 @@ u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
     sargs.typemap = typemap;
 
 	serXml = pyxser_SerializeXml(&sargs);
+
     Py_XDECREF(input);
     Py_XDECREF(dupItems);
-
-    if (PYTHON_IS_NOT_NONE(typemap)) {
-        Py_XDECREF(typemap);
-    }
-
-    if (PYTHON_IS_NOT_NONE(selector)) {
-        Py_XDECREF(selector);
-    }
 
     if (docXml == (xmlDocPtr)NULL) {
         PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -1323,10 +1234,6 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 
     Py_XINCREF(input);
 
-    if (PYTHON_IS_NOT_NONE(typemap)) {
-        Py_XINCREF(typemap);
-    }
-
     obj.doc = &input;
     obj.current = &current;
     obj.tree = &tree;
@@ -1342,17 +1249,14 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 
     res = pyxser_UnserializeXml(&obj);
 
-    if (PYTHON_IS_NOT_NONE(typemap)) {
-        Py_XDECREF(typemap);
-    }
+    Py_XDECREF(input);
+    Py_XDECREF(dupItems);
 
     if (res == NULL) {
-        Py_XDECREF(input);
         PyErr_SetString(PyExc_ValueError, msg_non_object);
         return NULL;
     }
 
-    Py_XDECREF(input);
     return res;
 }
 
@@ -1411,18 +1315,14 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 
     unic = PyUnicode_AsEncodedString(input, (char *)py_enc,
                                      pyxser_xml_encoding_mode);
-    Py_XDECREF(input);
 
     if (PYTHON_IS_NONE(unic)) {
+        Py_XDECREF(input);
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
     }
 
-    if (PYTHON_IS_NONE(unic)) {
-        Py_XDECREF(input);
-        PyErr_SetString(PyExc_ValueError, msg_non_object);
-        return res;
-    }
+    Py_XINCREF(unic);
 
     obj.doc = &unic;
     obj.current = &current;
@@ -1438,13 +1338,15 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
     obj.typemap = typemap;
     res = pyxser_UnserializeXml(&obj);
 
+    Py_XDECREF(input);
+    Py_XDECREF(unic);
+    Py_XDECREF(dupItems);
+
     if (res == NULL) {
-        Py_XDECREF(input);
         PyErr_SetString(PyExc_ValueError, msg_non_object);
         return NULL;
     }
-    Py_XDECREF(unic);
-    PyErr_Clear();
+
     return res;
 }
 
@@ -1533,16 +1435,16 @@ u_pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 
     unic = PyUnicode_AsEncodedString(input, (char *)py_enc,
                                      pyxser_xml_encoding_mode);
-    Py_XDECREF(input);
-
     if (PYTHON_IS_NONE(unic)) {
-        Py_XDECREF(input);
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
     }
 
+    Py_XINCREF(unic);
+
     data_size = PyUnicode_GET_DATA_SIZE(unic);
     if (PYTHON_IS_NONE(unic)) {
+        Py_XDECREF(input);
         PyErr_SetString(PyExc_ValueError, msg_non_xml);
         return NULL;
     }
@@ -1550,16 +1452,20 @@ u_pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
     docstr = PyString_AS_STRING(unic);
     docPtr = xmlReadMemory(docstr, data_size, NULL,
                            (const char *)py_enc, parseopts);
-    Py_XDECREF(unic);
+
     if (docPtr != (xmlDocPtr)NULL) {
         if ((pyxser_ValidateDocumentXSD(docPtr)) == 1) {
             res = Py_True;
         }
         xmlFreeDoc(docPtr);
     } else {
+        Py_XDECREF(unic);
+        Py_XDECREF(input);
         PyErr_SetString(PyExc_ValueError, msg_non_xml);
         return NULL;
     }
+    Py_XDECREF(unic);
+    Py_XDECREF(input);
     PyErr_Clear();
     Py_XINCREF(res);
     return res;
@@ -1576,7 +1482,7 @@ u_pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
 	char *docstr = (char *)NULL;
     int parseopts = XML_PARSE_RECOVER;
 
-    static char *kwlist[] = {"obj", "enc", NULL};
+    static char *kwlist[] = { "obj", "enc", NULL };
     char *py_enc = (char *)NULL;
     char *in_enc = (char *)NULL;
 
@@ -1612,7 +1518,6 @@ u_pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
     Py_XDECREF(input);
 
     if (PYTHON_IS_NONE(unic)) {
-        Py_XDECREF(input);
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
     }
@@ -1626,16 +1531,17 @@ u_pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
     docstr = PyString_AS_STRING(unic);
     docPtr = xmlReadMemory(docstr, data_size, NULL,
                            (const char *)py_enc, parseopts);
-    Py_XDECREF(unic);
     if (docPtr != (xmlDocPtr)NULL) {
         if ((pyxser_ValidateDocumentXSDC14N(docPtr)) == 1) {
             res = Py_True;
         }
         xmlFreeDoc(docPtr);
     } else {
+        Py_XDECREF(unic);
         PyErr_SetString(PyExc_ValueError, msg_non_xml);
         return NULL;
     }
+    Py_XDECREF(unic);
     PyErr_Clear();
     Py_XINCREF(res);
     return res;
@@ -1701,18 +1607,19 @@ u_pyxvalidatedtd(PyObject *self, PyObject *args, PyObject *keywds)
     docstr = PyString_AS_STRING(unic);
     docPtr = xmlReadMemory(docstr, data_size, NULL,
                            (const char *)py_enc, parseopts);
-    Py_XDECREF(unic);
     if (docPtr != (xmlDocPtr)NULL) {
         if ((pyxser_ValidateDocument(docPtr)) == 1) {
             res = Py_True;
         }
         xmlFreeDoc(docPtr);
     } else {
+        Py_XDECREF(unic);
         PyErr_SetString(PyExc_ValueError, msg_non_xml);
         return NULL;
     }
-    PyErr_Clear();
+    Py_XDECREF(unic);
     Py_XINCREF(res);
+    PyErr_Clear();
     return res;
 }
 
@@ -1756,36 +1663,38 @@ u_pyxvalidatec14ndtd(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
     }
 
-    Py_INCREF(input);
+    Py_XINCREF(input);
 
-    unic = PyUnicode_AsEncodedString(input, (char *)py_enc,
-                                     pyxser_xml_encoding_mode);
-    Py_XDECREF(input);
-
+    unic = PyUnicode_Encode(PyUnicode_AS_UNICODE(input),
+                            PyUnicode_GET_SIZE(input),
+                            (char *)py_enc,
+                            pyxser_xml_encoding_mode);
     if (PYTHON_IS_NONE(unic)) {
         Py_XDECREF(input);
 		PyErr_SetString(PyExc_ValueError, msg_non_object);
 		return NULL;
     }
 
+    Py_XINCREF(unic);
+
     data_size = PyUnicode_GET_DATA_SIZE(unic);
-    if (PYTHON_IS_NONE(unic)) {
-        PyErr_SetString(PyExc_ValueError, msg_non_xml);
-        return NULL;
-    }
     docstr = PyString_AS_STRING(unic);
     docPtr = xmlReadMemory(docstr, data_size, NULL,
                            (const char *)py_enc, parseopts);
-    Py_XDECREF(unic);
+
     if (docPtr != (xmlDocPtr)NULL) {
         if ((pyxser_ValidateDocumentC14N(docPtr)) == 1) {
             res = Py_True;
         }
         xmlFreeDoc(docPtr);
     } else {
+        Py_XDECREF(unic);
+        Py_XDECREF(input);
         PyErr_SetString(PyExc_ValueError, msg_non_xml);
         return NULL;
     }
+    Py_XDECREF(unic);
+    Py_XDECREF(input);
     PyErr_Clear();
     Py_XINCREF(res);
     return res;
@@ -1834,17 +1743,18 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
     docstr = PyString_AS_STRING(input);
     docPtr = xmlReadMemory(docstr, PyString_GET_SIZE(input),
                            NULL, (const char *)py_enc, parseopts);
-    Py_XDECREF(input);
     if (docPtr != (xmlDocPtr)NULL) {
         if ((pyxser_ValidateDocumentXSD(docPtr)) == 1) {
             res = Py_True;
         }
         xmlFreeDoc(docPtr);
     } else {
+        Py_XDECREF(input);
         PyErr_SetString(PyExc_ValueError, msg_non_xml);
         return NULL;
     }
     PyErr_Clear();
+    Py_XDECREF(input);
     Py_XINCREF(res);
     return res;
 }
@@ -1887,24 +1797,24 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
     }
 
-    Py_INCREF(input);
+    Py_XINCREF(input);
 
     docstr = PyString_AS_STRING(input);
     docPtr = xmlReadMemory(docstr, PyString_GET_SIZE(input), NULL,
                            (const char *)py_enc, parseopts);
-    Py_XDECREF(input);
-
     if (docPtr != (xmlDocPtr)NULL) {
         if ((pyxser_ValidateDocumentXSDC14N(docPtr)) == 1) {
             res = Py_True;
         }
         xmlFreeDoc(docPtr);
     } else {
+        Py_XDECREF(input);
         PyErr_SetString(PyExc_ValueError, msg_non_xml);
         return NULL;
     }
     PyErr_Clear();
     Py_XINCREF(res);
+    Py_XDECREF(input);
     return res;
 }
 
@@ -1951,17 +1861,18 @@ pyxvalidatedtd(PyObject *self, PyObject *args, PyObject *keywds)
     docstr = PyString_AS_STRING(input);
     docPtr = xmlReadMemory(docstr, PyString_GET_SIZE(input),
                            NULL, (const char *)py_enc, parseopts);
-    Py_XDECREF(input);
     if (docPtr != (xmlDocPtr)NULL) {
         if ((pyxser_ValidateDocumentXSD(docPtr)) == 1) {
             res = Py_True;
         }
         xmlFreeDoc(docPtr);
     } else {
+        Py_XDECREF(input);
         PyErr_SetString(PyExc_ValueError, msg_non_xml);
         return NULL;
     }
     PyErr_Clear();
+    Py_XDECREF(input);
     Py_XINCREF(res);
     return res;
 }
@@ -2004,30 +1915,33 @@ pyxvalidatec14ndtd(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
     }
 
-    Py_INCREF(input);
+    Py_XINCREF(input);
 
     docstr = PyString_AS_STRING(input);
     docPtr = xmlReadMemory(docstr, PyString_GET_SIZE(input), NULL,
                            (const char *)py_enc, parseopts);
-    Py_XDECREF(input);
-
     if (docPtr != (xmlDocPtr)NULL) {
         if ((pyxser_ValidateDocumentXSDC14N(docPtr)) == 1) {
             res = Py_True;
         }
         xmlFreeDoc(docPtr);
     } else {
+        Py_XDECREF(input);
         PyErr_SetString(PyExc_ValueError, msg_non_xml);
         return NULL;
     }
-    PyErr_Clear();
+    Py_XDECREF(input);
     Py_XINCREF(res);
+    PyErr_Clear();
     return res;
 }
 
 static PyObject *
 xmlcleanup(PyObject *self, PyObject *args)
 {
+    xmlFreeNs(pyxser_default_ns);
+    pyxser_default_ns = NULL;
+
     xmlFreeDtd(pyxser_dtd_object);
     pyxser_dtd_object = NULL;
 
@@ -2064,6 +1978,9 @@ pyxser_unregister(void)
 
     xmlFreeDoc(pyxser_xsd_c14n_doc);
     pyxser_xsd_c14n_doc = (xmlDocPtr)NULL;
+
+    xmlFreeNs(pyxser_default_ns);
+    pyxser_default_ns = NULL;
 
     xmlCleanupEncodingAliases();
 
