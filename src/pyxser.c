@@ -577,6 +577,14 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
     }
 
+    if (PYTHON_IS_NOT_NONE(typemap)) {
+        Py_XINCREF(typemap);
+    }
+
+    if (PYTHON_IS_NOT_NONE(selector)) {
+        Py_XINCREF(selector);
+    }
+
 	dupItems = (PyListObject *)PyList_New(0);
     Py_XINCREF(input);
 
@@ -595,6 +603,14 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 
     Py_XDECREF(input);
     Py_XDECREF(dupItems);
+
+    if (PYTHON_IS_NOT_NONE(typemap)) {
+        Py_XDECREF(typemap);
+    }
+
+    if (PYTHON_IS_NOT_NONE(selector)) {
+        Py_XDECREF(selector);
+    }
 
     if (docXml == (xmlDocPtr)NULL) {
         PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -683,6 +699,14 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 	dupItems = (PyListObject *)PyList_New(0);
     Py_XINCREF(input);
 
+    if (PYTHON_IS_NOT_NONE(typemap)) {
+        Py_XINCREF(typemap);
+    }
+
+    if (PYTHON_IS_NOT_NONE(selector)) {
+        Py_XINCREF(selector);
+    }
+
     sargs.o = &input;
     sargs.item = &input;
     sargs.docptr = &docXml;
@@ -699,6 +723,14 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 
     Py_XDECREF(input);
     Py_XDECREF(dupItems);
+
+    if (PYTHON_IS_NOT_NONE(typemap)) {
+        Py_XDECREF(typemap);
+    }
+
+    if (PYTHON_IS_NOT_NONE(selector)) {
+        Py_XDECREF(selector);
+    }
 
     if (docXml == (xmlDocPtr)NULL) {
         PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -793,6 +825,14 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 	dupItems = (PyListObject *)PyList_New(0);
     Py_XINCREF(input);
 
+    if (PYTHON_IS_NOT_NONE(typemap)) {
+        Py_XINCREF(typemap);
+    }
+
+    if (PYTHON_IS_NOT_NONE(selector)) {
+        Py_XINCREF(selector);
+    }
+
     sargs.o = &input;
     sargs.docptr = &docXml;
     sargs.rootNode = &rootNode;
@@ -808,6 +848,14 @@ pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 
     Py_XINCREF(input);
     Py_XDECREF(dupItems);
+
+    if (PYTHON_IS_NOT_NONE(typemap)) {
+        Py_XDECREF(typemap);
+    }
+
+    if (PYTHON_IS_NOT_NONE(selector)) {
+        Py_XDECREF(selector);
+    }
 
     if (docXml == (xmlDocPtr)NULL) {
         PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -904,6 +952,15 @@ u_pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
     }
 
 	dupItems = (PyListObject *)PyList_New(0);
+
+    if (PYTHON_IS_NOT_NONE(typemap)) {
+        Py_XINCREF(typemap);
+    }
+
+    if (PYTHON_IS_NOT_NONE(selector)) {
+        Py_XINCREF(selector);
+    }
+
     Py_XINCREF(input);
 
     sargs.o = &input;
@@ -920,6 +977,14 @@ u_pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 
     Py_XDECREF(input);
     Py_XDECREF(dupItems);
+
+    if (PYTHON_IS_NOT_NONE(typemap)) {
+        Py_XDECREF(typemap);
+    }
+
+    if (PYTHON_IS_NOT_NONE(selector)) {
+        Py_XDECREF(selector);
+    }
 
     if (docXml == (xmlDocPtr)NULL) {
         PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -1009,6 +1074,14 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 	dupItems = (PyListObject *)PyList_New(0);
     Py_XINCREF(input);
 
+    if (PYTHON_IS_NOT_NONE(typemap)) {
+        Py_XINCREF(typemap);
+    }
+
+    if (PYTHON_IS_NOT_NONE(selector)) {
+        Py_XINCREF(selector);
+    }
+
     sargs.o = &input;
     sargs.docptr = &docXml;
     sargs.rootNode = &rootNode;
@@ -1024,6 +1097,14 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
 
     Py_XDECREF(input);
     Py_XDECREF(dupItems);
+
+    if (PYTHON_IS_NOT_NONE(typemap)) {
+        Py_XDECREF(typemap);
+    }
+
+    if (PYTHON_IS_NOT_NONE(selector)) {
+        Py_XDECREF(selector);
+    }
 
     if (docXml == (xmlDocPtr)NULL) {
         PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -1117,6 +1198,14 @@ u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 	dupItems = (PyListObject *)PyList_New(0);
     Py_XINCREF(input);
 
+    if (PYTHON_IS_NOT_NONE(typemap)) {
+        Py_XINCREF(typemap);
+    }
+
+    if (PYTHON_IS_NOT_NONE(selector)) {
+        Py_XINCREF(selector);
+    }
+
     sargs.o = &input;
     sargs.docptr = &docXml;
     sargs.rootNode = &rootNode;
@@ -1131,6 +1220,14 @@ u_pyxserxmlc14nstrict(PyObject *self, PyObject *args, PyObject *keywds)
 	serXml = pyxser_SerializeXml(&sargs);
     Py_XDECREF(input);
     Py_XDECREF(dupItems);
+
+    if (PYTHON_IS_NOT_NONE(typemap)) {
+        Py_XDECREF(typemap);
+    }
+
+    if (PYTHON_IS_NOT_NONE(selector)) {
+        Py_XDECREF(selector);
+    }
 
     if (docXml == (xmlDocPtr)NULL) {
         PyErr_SetString(PyExc_ValueError, msg_non_object);
@@ -1224,6 +1321,11 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
     }
 
     Py_XINCREF(input);
+
+    if (PYTHON_IS_NOT_NONE(typemap)) {
+        Py_XINCREF(typemap);
+    }
+
     obj.doc = &input;
     obj.current = &current;
     obj.tree = &tree;
@@ -1238,6 +1340,10 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
     obj.typemap = typemap;
 
     res = pyxser_UnserializeXml(&obj);
+
+    if (PYTHON_IS_NOT_NONE(typemap)) {
+        Py_XDECREF(typemap);
+    }
 
     if (res == NULL) {
         Py_XDECREF(input);
