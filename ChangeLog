@@ -1,3 +1,38 @@
+2010-08-24 22:15  damowe
+
+	* setup.py, src/include/pyxser.h, src/pyxser.c,
+	  src/pyxser_serializer.c, src/pyxser_typem.c,
+	  test/test-utf8-leak.py: * test/test-utf8-leak.py: removed repr()
+	  lines from tests.
+	  * setup.py: changed version and site url.
+	  * src/include/pyxser.h: changed version.
+	  * src/pyxser_serializer.c: removed memory leak.
+	  * src/pyxser_typem.c: removed memory leak.
+	  * src/pyxser.c: removed memory leak.
+
+2010-08-24 20:29  damowe
+
+	* ChangeLog, build-debug.sh, build-normal.sh, src/include/pyxser.h,
+	  src/pyxser.c, src/pyxser_collections.c, src/pyxser_serializer.c,
+	  src/pyxser_strings.c, src/pyxser_tools.c, test/test-ascii.py,
+	  test/test-utf16.py, test/test-utf8-leak.py, test/test-utf8.py,
+	  valgrind-python.supp: * added test/test-utf8-leak.py,
+	  test/test-utf16.py test/test-utf8.py,
+	  test/test-ascii.py
+	  * updated ChangeLog
+	  * src/include/pyxser.h: added PYXSER_INCREF and PYXSER_DECREF
+	  macros.
+	  changed default xml encoding to utf-8.
+	  * src/pyxser_strings.c: changed default xml encoding to utf-8.
+	  * src/pyxser_serializer.c: removed unused variables and added
+	  error
+	  cleaning.
+	  * src/pyxser_collections.c: added decrefs on lists.
+	  * src/pyxser.c: added decrefs on arguments.
+	  * src/pyxser_tools.c: declared namespaces as globals.
+	  * enhanced build scripts.
+	  * renewed valgring suppressor.
+
 2010-08-24 03:54  damowe
 
 	* src/pyxser.c, src/pyxser_collections.c: *
