@@ -1,3 +1,186 @@
+2010-08-24 03:54  damowe
+
+	* src/pyxser.c, src/pyxser_collections.c: *
+	  src/pyxser_collections.c: removed unused variable.
+	  * src/pyxser.c: added more checks and reference increments.
+
+2010-08-24 03:49  damowe
+
+	* src/pyxser_typem.c: * src/pyxser_typem.c: added NULL check, seems
+	  that
+	  Mac OS optimizations are ignoring the PYTHON_IS_NONE
+	  macro.
+
+2010-08-24 03:41  damowe
+
+	* src/pyxser.c: * src/pyxser.c: added the proper Py_XINCREF and
+	  Py_XDECREF for certain arguments.
+
+2010-08-24 03:26  damowe
+
+	* src/pyxser_typem.c: * src/pyxser_typem.c: changed
+	  PyDict_CheckExact by
+	  PyDict_Check and PyString_CheckExact by PyString_Check.
+
+2010-08-24 01:42  damowe
+
+	* build-debug.sh, build-normal.sh, src/pyxser.c: * src/pyxser.c:
+	  renewed documentation.
+	  * build-debug.sh: renewed build script.
+	  * build-normal.sh: renewed build script.
+
+2010-08-24 01:24  damowe
+
+	* test, test-ascii.py, test-errors.py, test-latin1.py,
+	  test-simple.py, test-utf8-leak.py, test-utf8-memory.py,
+	  test-utf8-profiling.py, test-utf8-sqlalchemy.py, test-utf8.py,
+	  test/test-ascii.py, test/test-errors.py, test/test-latin1.py,
+	  test/test-simple.py, test/test-utf8-leak.py,
+	  test/test-utf8-memory.py, test/test-utf8-profiling.py,
+	  test/test-utf8-sqlalchemy.py, test/test-utf8.py, test/testpkg,
+	  test/testpkg/__init__.pyc, test/testpkg/sample.pyc, testpkg: *
+	  created test folder and moved all tests to
+	  that folder.
+
+2010-08-23 15:26  damowe
+
+	* src/pyxser.c, src/pyxser_strings.c, test-utf8-memory.py: *
+	  src/pyxser_strings.c: removed unused ub local variable.
+	  * src/pyxser.c: updated documentation.
+	  * test-utf8-memory.py: added memory testing with guppy.
+
+2010-08-23 15:00  damowe
+
+	* src/include/pyxser.h, src/include/pyxser_tools.h,
+	  src/pyxser_collections.c, src/pyxser_serializer.c,
+	  src/pyxser_strings.c, src/pyxser_tools.c, test-ascii.py,
+	  test-latin1.py: * src/include/pyxser.h: moved the
+	  PYXSER_GET_ATTR_NAME macro
+	  to this header.
+	  * src/include/pyxser_tools.h: renamed pyxserUnicode_CheckExact.
+	  * src/pyxser_strings.c: src/pyxser_strings.c added fallbacks
+	  for unicode string conversion.
+	  * src/pyxser_serializer.c: removed the PYXSER_GET_ATTR_NAME
+	  macro from this file. added checks for duplicate items list
+	  and null pointer checks.
+	  * src/pyxser_collections.c: added the usage of the
+	  PYXSER_GET_ATTR_NAME
+	  macro and checks for null pointers.
+	  * src/pyxser_tools.c: renamed pyxserUnicode_CheckExact on the
+	  serialization state machine and added checks for null pointers.
+	  * test-ascii.py: added ascii encoding test.
+	  * test-latin1.py: added iso-8859-1 encoding test.
+
+2010-08-23 03:48  damowe
+
+	* src/pyxser_serializer.c: * src/pyxser_serializer.c: restructured
+	  the
+	  PYXSER_GET_ATTR_NAME macro.
+
+2010-08-23 02:52  damowe
+
+	* src/pyxser_serializer.c: * src/pyxser_serializer.c: added (again)
+	  PyUnicode_AS_UNICODE as an alternate encoding
+	  method on the PYXSER_GET_ATTR_NAME macro.
+
+2010-08-22 22:10  damowe
+
+	* src/pyxser.c, src/pyxser_collections.c, src/pyxser_file.c,
+	  src/pyxser_numbers.c, src/pyxser_serializer.c,
+	  src/pyxser_strings.c, src/pyxser_tools.c, src/pyxser_typem.c,
+	  src/pyxser_xsd.c: * made cosmetic changes to all files and
+	  reasigned
+	  SVN keywords.
+
+2010-08-22 22:07  damowe
+
+	* setup.py, src/include/pyxser_serializer.h,
+	  src/include/pyxser_tools.h, src/pyxser.c,
+	  src/pyxser_serializer.c, src/pyxser_tools.c,
+	  test-utf8-sqlalchemy.py, test-utf8.py: * setup.py: included
+	  python 2.7
+	  * src/include/pyxser_tools.h: added external reference for
+	  XML Schema pointers.
+	  * src/include/pyxser_serializer.h: added IsCallable method.
+	  * src/pyxser_serializer.c: added strict checks to the macro
+	  PYXSER_GET_ATTR_NAME.
+	  * src/pyxser.c: added free XSD pointer instructions.
+	  * src/pyxser_tools.c: removed local references to XSD pointers.
+	  * test-utf8.py: restored guppy references for memory profiling.
+	  * test-utf8-sqlalchemy.py: applied patch from Vardan, with a
+	  good SQL Alchemy references.
+
+2010-08-22 17:59  damowe
+
+	* setup.py, src/include/pyxser_serializer.h,
+	  src/pyxser_collections.c, src/pyxser_serializer.c,
+	  src/pyxser_strings.c, src/pyxser_tools.c, test-errors.py,
+	  test-utf8-sqlalchemy.py, test-utf8.py: * test-errors.py: added
+	  latin1 and ascii codecs to test
+	  different encodings rather than utf-8.
+	  * src/include/pyxser_serializer.h: added pyxser_ModuleBuiltins
+	  check.
+	  * src/pyxser_strings.c: added strict checks on string
+	  serialization process.
+	  * src/pyxser_serializer.c:
+	  - added pyxser_ModuleBuiltins().
+	  - added checks for builtin modules, now are not being serialized,
+	  this was causing some segfaults with certain serializations.
+	  - added continuation on checks after non responsive serialization
+	  state machine match.
+	  * src/pyxser_collections.c: added checks for duplicate items
+	  pointer
+	  and was refactored the serialization algorithm, the new order of
+	  serialization logic allows more deep serializations on certain
+	  objects such as SQLAlchemy objects.
+	  * src/pyxser_tools.c: added strict checks for types.
+	  * setup.py: modified version for the next release: 1.4.8r
+	  * test-utf8-sqlalchemy.py: added tests for ascii codec.
+	  * test-utf8.py: changed serialization id on deserialization test.
+
+2010-08-22 02:07  damowe
+
+	* src/pyxser_typem.c: * src/pyxser_typem.c: added strict checks for
+	  user
+	  defined serialization routines and type conversion
+	  routines.
+
+2010-08-21 21:18  damowe
+
+	* setup.py, src/cscope.out, src/include/pyxser_tools.h,
+	  src/pyxser.c, src/pyxser_serializer.c, src/pyxser_strings.c,
+	  src/pyxser_tools.c, src/pyxser_xsd.c, test-utf8.py: *
+	  src/cscope.out: removed, it's not in use.
+	  * src/include/pyxser_tools.h: added references
+	  to the XSD/DTD embeded files.
+	  * src/pyxser_strings.c: added Python custom
+	  string conversions for unicode strings.
+	  * src/pyxser_serializer.c: added flow control
+	  for XML parsing errors.
+	  * src/pyxser_xsd.c: XSD/DTD embeded files.
+	  * src/pyxser.c: removed an empty line.
+	  * src/pyxser_tools.c: added XSD/DTD reading
+	  from memory instead from hard disc.
+	  * test-utf8.py: commented guppy imports/calls.
+
+2010-08-07 19:24  damowe
+
+	* src/pyxser_serializer.c, src/pyxser_tools.c, test-utf8-leak.py,
+	  test-utf8-profiling.py, test-utf8.py, valgrind-python.supp: *
+	  test-utf8-profiling.py: changed profiling script to
+	  execute each function 1000 times.
+	  * src/pyxser_serializer.c: reduced nested statements and
+	  object hashing algorithm.
+	  * src/pyxser_tools.c: reduced nested statements and
+	  object hashing algorithm.
+	  * valgrind-python.supp: added suppressions for unicode
+	  conversion functions (seems that valigrind is notifying
+	  about false positives).
+
+2010-08-03 13:42  damowe
+
+	* ChangeLog: * modified ChangeLog
+
 2010-08-03 13:38  damowe
 
 	* ChangeLog, src/pyxser_collections.c, src/pyxser_serializer.c,

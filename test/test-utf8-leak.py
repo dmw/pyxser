@@ -239,7 +239,7 @@ def test_typemap(test):
         print "-" * 60
 
 
-if __name__ == "__main__":
+def main():
     another = testpkg.sample.TestAnotherObject()
     another.first_element = 123
     another.second_element = 456
@@ -283,6 +283,8 @@ if __name__ == "__main__":
             test_typemap(test)
             pyxser.getdtd()
             pyxser.getdtd_c14n()
+            pyxser.getxsd()
+            pyxser.getxsd_c14n()
             pyxser.xmlcleanup()
             if (crawl % 1000) == 0:
                 print "cicle: ", crawl
@@ -291,3 +293,6 @@ if __name__ == "__main__":
         print "-" * 60
         traceback.print_exc(file=sys.stdout)
         print "-" * 60
+
+if __name__ == "__main__":
+    main()

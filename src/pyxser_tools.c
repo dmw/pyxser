@@ -31,9 +31,9 @@ static const char Id[] = "$Id$";
 
 #include "include/pyxser.h"
 
-static xmlNsPtr pyxser_default_ns;
-static xmlNsPtr pyxser_xsi_ns;
-static xmlNsPtr pyxser_xsd_ns;
+xmlNsPtr pyxser_default_ns;
+xmlNsPtr pyxser_xsi_ns;
+xmlNsPtr pyxser_xsd_ns;
 xmlDocPtr pyxser_xsd_doc = (xmlDocPtr)NULL;
 xmlDocPtr pyxser_xsd_c14n_doc = (xmlDocPtr)NULL;
 

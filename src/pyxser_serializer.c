@@ -262,7 +262,6 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
 	xmlAttrPtr pxsnam = (xmlAttrPtr)NULL;
 
 	char *objnam = (char *)NULL;
-    char *enc = args->enc;
 	int c = 0;
 
     if (args == NULL) {
@@ -374,10 +373,6 @@ pyxser_ModuleNotMain(const char *mod)
 int
 pyxser_IsCallable(PyObject *o)
 {
-    int ctrl = 0;
-	char *cn = (char *)NULL;
-	PyObject *klass = Py_None;
-	PyObject *mname = Py_None;
 	if (PYTHON_IS_NONE(o)) {
 		return 0;
 	}

@@ -58,6 +58,16 @@ extern "C" {
         o = NULL;                               \
     }                                           \
 
+#define PYXSER_INCREF(o)                        \
+    if (PYTHON_IS_NOT_NONE(o)) {                \
+        Py_XINCREF(o);                          \
+    }
+
+#define PYXSER_DECREF(o)                        \
+    if (PYTHON_IS_NOT_NONE(o)) {                \
+        Py_XDECREF(o);                          \
+    }
+
 #define PYXSER_GET_ATTR_NAME(currentKey, enc, unic, args, sz)           \
     unic = (PyObject *)NULL;                                            \
     args->name = (char *)NULL;                                          \
@@ -65,7 +75,7 @@ extern "C" {
         && (pyxserUnicode_CheckExact(currentKey)) == 1) {               \
         sz = PyUnicode_GET_SIZE(currentKey);                            \
         ub = PyUnicode_AS_UNICODE(currentKey);                          \
-        unic = PyUnicode_Encode(ub, sz, enc,                            \
+        unic = PyUnicode_Encode(ub, sz, pyxser_xml_encoding,            \
                                 pyxser_xml_encoding_mode);              \
         if (unic != (PyObject *)NULL) {                                 \
             args->name = PyString_AS_STRING(unic);                      \
