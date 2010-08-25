@@ -123,17 +123,14 @@ pyxser_SerializeXml(PyxSerializationArgsPtr args)
 		dupItems = *args->dupSrcItems;
     }
 
-	if (PYTHON_IS_NONE(dupItems)) {
-		dupItems = (PyListObject *)PyList_New(0);
-        args->dupSrcItems = &dupItems;
-	}
-
 	if (PYTHON_IS_NONE(o)) {
 		return (xmlNodePtr)NULL;
 	}
+
     if (PyWeakref_CheckRef(o)) {
 		return (xmlNodePtr)NULL;
     }
+
 	if ((pyxser_PyListContains(dupItems, o)) == PYXSER_NOT_FOUND) {
 		PyList_Append((PyObject *)dupItems, o);
 		objnam = pyxser_GetClassName(o);
@@ -204,10 +201,8 @@ pyxser_SerializeXml(PyxSerializationArgsPtr args)
             args->o = &item;
             args->item = &item;
             args->ck = &currentKey;
-            args->dupSrcItems = &dupItems;
             args->rootNode = rootNode;
             args->currentNode = currentNode;
-            args->dupSrcItems = &dupItems;
             itemOld = item;
 
             newSerializedNode = pyxser_RunSerialization(args);

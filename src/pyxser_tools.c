@@ -381,7 +381,7 @@ pyxser_PyListContains(PyListObject *lst, PyObject *o)
 	if (PYTHON_IS_NONE(lst) || PYTHON_IS_NONE(o)) {
 		return PYXSER_INVALID_ARGUMENT;
 	}
-    if (!pyxserList_CheckExact((PyObject *)lst)) {
+    if (!pyxserList_Check((PyObject *)lst)) {
 		return PYXSER_INVALID_ARGUMENT;
     }
 	iterLst = PyObject_GetIter((PyObject *)lst);
@@ -507,7 +507,7 @@ pyxserTuple_CheckExact(PyObject *o)
 int
 pyxserList_Check(PyObject *o)
 {
-	return PyList_CheckExact(o);
+	return PyList_Check(o);
 }
 
 int
