@@ -153,10 +153,10 @@ pyxser_RunSerializationCol(PyxSerializationArgsPtr args)
 
     dupItems = *args->dupSrcItems;
 
-    if (item == (PyObject *)NULL
-        || (PyObject *)dupItems == (PyObject *)NULL) {
+    if (item == (PyObject *)NULL) {
         return NULL;
     }
+
     if ((pyxser_PyListContains(dupItems, item)) == PYXSER_FOUND) {
         typeName = pyxser_GetClassName(item);
         if (typeName != (char *)NULL) {
