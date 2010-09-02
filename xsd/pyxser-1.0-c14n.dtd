@@ -49,7 +49,8 @@
 <!ELEMENT %pyxser.element.object;
           (%pyxser.element.prop;
           | %pyxser.element.collection;
-          | %pyxser.element.object;)* >
+          | %pyxser.element.object;
+	  | PCDATA)* >
 
 <!ATTLIST %pyxser.element.object;
           %pyxser.ns;                   CDATA         #FIXED          'http://projects.coder.cl/pyxser/model/'
