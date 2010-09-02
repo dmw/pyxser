@@ -429,9 +429,15 @@ pyxser_UnserializeElement(PyObject *ct, PyObject **current,
         return (PyObject *)NULL;
     }
 
-    unser = PyObject_CallFunctionObjArgs(ct, NULL);
-    PyErr_Clear();
-    if (PYTHON_IS_NONE(unser)) {
+    if (obj->construct == 1) {
+        unser = PyObject_CallFunctionObjArgs(ct, NULL);
+        PyErr_Clear();
+        if (PYTHON_IS_NONE(unser)) {
+            ndict = PyDict_New();
+            unser = PyInstance_NewRaw(ct, ndict);
+            PyErr_Clear();
+        }
+    } else {
         ndict = PyDict_New();
         unser = PyInstance_NewRaw(ct, ndict);
         PyErr_Clear();
@@ -708,11 +714,19 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
             return NULL;
         }
         if (*tree == (PyObject *)NULL) {
-            *tree = PyObject_CallFunctionObjArgs(ct, NULL);
-            PyErr_Clear();
-            if (PYTHON_IS_NONE(*tree)) {
+            if (obj->construct == 1) {
+                *tree = PyObject_CallFunctionObjArgs(ct, NULL);
+                PyErr_Clear();
+                if (PYTHON_IS_NONE(*tree)) {
+                    ndict = PyDict_New();
+                    *tree = PyInstance_NewRaw(ct, ndict);
+                    Py_XDECREF(ndict);
+                    PyErr_Clear();
+                }
+            } else {
                 ndict = PyDict_New();
                 *tree = PyInstance_NewRaw(ct, ndict);
+                Py_XDECREF(ndict);
                 PyErr_Clear();
             }
             *current = *tree;
@@ -722,7 +736,6 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
             *(obj->current) = cacheCurrent;
             *(obj->currentNode) = cacheCurrentNode;
             obj->tree = tree;
-            Py_XDECREF(ndict);
         }
     } else {
         ct = pyxser_SearchObjectInMain(n_type);
@@ -733,11 +746,19 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
             return NULL;
         }
         if (*tree == (PyObject *)NULL) {
-            *tree = PyObject_CallFunctionObjArgs(ct, NULL);
-            PyErr_Clear();
-            if (PYTHON_IS_NONE(*tree)) {
+            if (obj->construct == 1) {
+                *tree = PyObject_CallFunctionObjArgs(ct, NULL);
+                PyErr_Clear();
+                if (PYTHON_IS_NONE(*tree)) {
+                    ndict = PyDict_New();
+                    *tree = PyInstance_NewRaw(ct, ndict);
+                    Py_XDECREF(ndict);
+                    PyErr_Clear();
+                }
+            } else {
                 ndict = PyDict_New();
                 *tree = PyInstance_NewRaw(ct, ndict);
+                Py_XDECREF(ndict);
                 PyErr_Clear();
             }
             *current = *tree;
@@ -746,7 +767,6 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
             pyxser_UnserializeBlock(obj);
             *(obj->current) = cacheCurrent;
             *(obj->currentNode) = cacheCurrentNode;
-            Py_XDECREF(ndict);
         }
     }
     PYXSER_XMLFREE(n_type);

@@ -332,7 +332,11 @@ static const char deserialize_documentation[] = \
     "                   attribute and the callback is a deserialization\n"
     "                   function which must return the original type as\n"
     "                   result.\n"
-    "                   [optional, default None]\n\n"
+    "                   [optional, default None]\n"
+    "   cinit   ->      if False, the deserialization will no create\n"
+    "                   using their default constructor, instead will\n"
+    "                   create objects using the raw instance, without\n"
+    "                   initialization.\n\n"
 	"Takes an XML string as arguments to deserialize it and be converted\n"
 	"back to it's original Python object. The deserialization algorithm\n"
 	"supports automatic module loading, but searches for them in the module\n"
@@ -1185,6 +1189,7 @@ static PyObject *
 pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 {
 	PyObject *res = Py_None;
+	PyObject *cinit = Py_True;
 	PyObject *input = (PyObject *)NULL;
 	PyObject *tree = (PyObject *)NULL;
 	PyObject *current = (PyObject *)NULL;
@@ -1195,7 +1200,8 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	xmlNodePtr currentNode = (xmlNodePtr)NULL;
 	xmlDocPtr docXml = (xmlDocPtr)NULL;
 
-    static char *kwlist[] = {"obj", "enc", "typemap", NULL};
+    static char *kwlist[] = {"obj", "enc", "typemap",
+                             "cinit", NULL};
     char *py_enc = (char *)NULL;
     char *in_enc = (char *)NULL;
     int py_depth = 0;
@@ -1209,8 +1215,9 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 		return res;
 	}
 
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os|O", kwlist,
-                                     &input, &in_enc, &typemap);
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os|OO",
+                                     kwlist, &input, &in_enc,
+                                     &typemap, &cinit);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_wrong_argument);
@@ -1246,6 +1253,11 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
     obj.depth = py_depth;
     obj.depthcnt = 0;
     obj.typemap = typemap;
+    if (cinit == Py_False) {
+        obj.construct = 0;
+    } else {
+        obj.construct = 1;
+    }
 
     res = pyxser_UnserializeXml(&obj);
 
@@ -1265,6 +1277,7 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 {
 	PyObject *res = Py_None;
 	PyObject *unic = Py_None;
+    PyObject *cinit = Py_True;
 	PyObject *input = (PyObject *)NULL;
 	PyObject *tree = (PyObject *)NULL;
 	PyObject *current = (PyObject *)NULL;
@@ -1275,7 +1288,7 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	xmlNodePtr currentNode = (xmlNodePtr)NULL;
 	xmlDocPtr docXml = (xmlDocPtr)NULL;
 
-    static char *kwlist[] = {"obj", "enc", NULL};
+    static char *kwlist[] = {"obj", "enc", "cinit", NULL};
     char *py_enc = (char *)NULL;
     char *in_enc = (char *)NULL;
     int py_depth = 0;
@@ -1288,8 +1301,9 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 		PyErr_SetString(PyExc_ValueError, msg_non_arguments);
 		return res;
 	}
-	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os|O", kwlist,
-                                     &input, &in_enc, &typemap);
+	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os|OO",
+                                     kwlist, &input, &in_enc,
+                                     &typemap, &cinit);
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_wrong_argument);
@@ -1334,6 +1348,11 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
     obj.depth = py_depth;
     obj.depthcnt = 0;
     obj.typemap = typemap;
+    if (cinit == Py_False) {
+        obj.construct = 0;
+    } else {
+        obj.construct = 1;
+    }
     res = pyxser_UnserializeXml(&obj);
 
     Py_XDECREF(input);
