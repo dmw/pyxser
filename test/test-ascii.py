@@ -238,12 +238,14 @@ def test_unicode(test):
         unserialized = pyxser.u_unserialize(obj = serialized, enc = "ascii")
         print "Unserialized Object (d.5):\n" + repr(unserialized) + "\n\n"
 
-        serialized = pyxser.u_serialize(obj = test, enc = "ascii", depth = 0)
+        serialized = pyxser.u_serialize(obj = test, enc = "ascii", depth = 0,
+                                        cinit = False)
         print "Serilized Object:\n" + serialized.encode("ascii")
         print "Serilized Object Validation:\n", \
               pyxser.u_validate(obj = serialized, enc = "ascii"), \
               pyxser.u_validate_dtd(obj = serialized, enc = "ascii")
-        unserialized = pyxser.u_unserialize(obj = serialized, enc = "ascii")
+        unserialized = pyxser.u_unserialize(obj = serialized, enc = "ascii",
+                                            typemap = {}, cinit = False)
         print "Unserialized Object (d.0):\n" + repr(unserialized) + "\n\n"
 
         pyxser.xmlcleanup()
@@ -321,7 +323,8 @@ def test_typemap(test):
         print "Serilized Object Validation:\n", \
               pyxser.validate(obj = serialized, enc = "ascii"), \
               pyxser.validate_dtd(obj = serialized, enc = "ascii")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "ascii", typemap = test_typemap_map)
+        unserialized = pyxser.unserialize(obj = serialized, enc = "ascii", typemap = test_typemap_map,
+                                          cinit = False)
         print "Unserialized Object (d.0):\n" + repr(unserialized) + "\n\n"
 
         pyxser.xmlcleanup()

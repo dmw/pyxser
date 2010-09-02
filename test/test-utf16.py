@@ -109,7 +109,7 @@ def test_normal(test):
         print "Serilized Object Validation:\n", \
               pyxser.validate(obj = serialized, enc = "utf-16"), \
               pyxser.validate_dtd(obj = serialized, enc = "utf-16")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-16")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-16", cinit = False)
         print "Unserialized Object (d.6):\n" + repr(unserialized) + "\n\n"
 
         pyxser.xmlcleanup()
@@ -165,7 +165,7 @@ def test_selector(test):
         print "Serilized Object Validation:\n", \
               pyxser.validate(obj = serialized, enc = "utf-16"), \
               pyxser.validate_dtd(obj = serialized, enc = "utf-16")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-16")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-16", cinit = False)
         print "Unserialized Object (d.0):\n" + repr(unserialized) + "\n\n"
 
         pyxser.xmlcleanup()
@@ -243,7 +243,7 @@ def test_unicode(test):
         print "Serilized Object Validation:\n", \
               pyxser.u_validate(obj = serialized, enc = "utf-16"), \
               pyxser.u_validate_dtd(obj = serialized, enc = "utf-16")
-        unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-16")
+        unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-16", cinit = False)
         print "Unserialized Object (d.0):\n" + repr(unserialized) + "\n\n"
 
         pyxser.xmlcleanup()

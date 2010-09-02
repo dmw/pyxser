@@ -105,6 +105,7 @@ extern "C" {
         int depth;
         int depthcnt;
         int error;
+        int construct;
         PyObject **doc;
         PyObject **current;
         PyObject **tree;

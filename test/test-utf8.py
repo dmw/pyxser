@@ -108,7 +108,8 @@ def test_normal(test):
         print "Serilized Object Validation:\n", \
               pyxser.validate(obj = serialized, enc = "utf-8"), \
               pyxser.validate_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8",
+                                          cinit = False)
         print "Unserialized Object (d.6):\n" + repr(unserialized) + "\n\n"
 
         pyxser.xmlcleanup()
@@ -156,7 +157,7 @@ def test_selector(test):
         print "Serilized Object Validation:\n", \
               pyxser.validate(obj = serialized, enc = "utf-8"), \
               pyxser.validate_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = {}, cinit = False)
         print "Unserialized Object (d.5):\n" + repr(unserialized) + "\n\n"
 
         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 0, selector = sel)
@@ -242,7 +243,8 @@ def test_unicode(test):
         print "Serilized Object Validation:\n", \
               pyxser.u_validate(obj = serialized, enc = "utf-8"), \
               pyxser.u_validate_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8")
+        unserialized = pyxser.u_unserialize(obj = serialized, enc = "utf-8",
+                                            cinit = False)
         print "Unserialized Object (d.0):\n" + repr(unserialized) + "\n\n"
 
         pyxser.xmlcleanup()
@@ -320,7 +322,8 @@ def test_typemap(test):
         print "Serilized Object Validation:\n", \
               pyxser.validate(obj = serialized, enc = "utf-8"), \
               pyxser.validate_dtd(obj = serialized, enc = "utf-8")
-        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map)
+        unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8", typemap = test_typemap_map,
+                                          cinit = False)
         print "Unserialized Object (d.0):\n" + repr(unserialized) + "\n\n"
 
         pyxser.xmlcleanup()
