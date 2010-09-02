@@ -28,7 +28,7 @@
 	   xmlns="http://projects.coder.cl/pyxser/model/"
 	   elementFormDefault="qualified">
   <xs:element name="obj">
-    <xs:complexType>
+    <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element ref="prop"/>
         <xs:element ref="col"/>

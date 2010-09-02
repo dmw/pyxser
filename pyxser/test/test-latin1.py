@@ -32,7 +32,6 @@ import traceback
 import pyxser
 import testpkg.sample
 import inspect
-from guppy import hpy
 
 def sel_filter(v):
     r = ((not callable(v[1])) and (not v[0].startswith("__")))
@@ -336,7 +335,6 @@ def test_typemap(test):
         print "-" * 60
 
 def main():
-    h = hpy()
 
     another = testpkg.sample.TestAnotherObject()
     another.first_element = 123
@@ -387,9 +385,6 @@ def main():
     print pyxser.getxsd_c14n()
 
     pyxser.xmlcleanup()
-
-    hps = h.heapu()
-    display_heap(hps)
 
 if __name__ == "__main__":
     main()
