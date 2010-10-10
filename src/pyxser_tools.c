@@ -1218,11 +1218,6 @@ pyxser_GetPyxserDTDC14N()
 	return pyxser_dtd_c14n_object;
 }
 
-xmlSchemaPtr
-pyxser_GetPyxserXSDC14N()
-{
-}
-
 void
 pyxser_validity_exception(void *ctx, const char *msg, va_list args)
 {
