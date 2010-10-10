@@ -99,7 +99,7 @@ pyxser_SerializeXml(PyxSerializationArgsPtr args)
     int *depth = args->depth;
     int *depthcnt = args->depthcnt;
 
-	PyListObject *dupItems;
+	PyListObject *dupItems = (PyListObject *)NULL;
 	PyObject *lstItems = (PyObject *)NULL;
 	PyObject *item = (PyObject *)o;
 	PyObject *itemOld = (PyObject *)NULL;
@@ -432,12 +432,8 @@ pyxser_UnserializeElement(PyObject *ct, PyObject **current,
     if (obj->construct == 1) {
         unser = PyObject_CallFunctionObjArgs(ct, NULL);
         PyErr_Clear();
-        if (PYTHON_IS_NONE(unser)) {
-            ndict = PyDict_New();
-            unser = PyInstance_NewRaw(ct, ndict);
-            PyErr_Clear();
-        }
-    } else {
+    }
+    if (PYTHON_IS_NONE(unser)) {
         ndict = PyDict_New();
         unser = PyInstance_NewRaw(ct, ndict);
         PyErr_Clear();
@@ -717,13 +713,8 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
             if (obj->construct == 1) {
                 *tree = PyObject_CallFunctionObjArgs(ct, NULL);
                 PyErr_Clear();
-                if (PYTHON_IS_NONE(*tree)) {
-                    ndict = PyDict_New();
-                    *tree = PyInstance_NewRaw(ct, ndict);
-                    Py_XDECREF(ndict);
-                    PyErr_Clear();
-                }
-            } else {
+            }
+            if (PYTHON_IS_NONE(*tree)) {
                 ndict = PyDict_New();
                 *tree = PyInstance_NewRaw(ct, ndict);
                 Py_XDECREF(ndict);
@@ -749,13 +740,8 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
             if (obj->construct == 1) {
                 *tree = PyObject_CallFunctionObjArgs(ct, NULL);
                 PyErr_Clear();
-                if (PYTHON_IS_NONE(*tree)) {
-                    ndict = PyDict_New();
-                    *tree = PyInstance_NewRaw(ct, ndict);
-                    Py_XDECREF(ndict);
-                    PyErr_Clear();
-                }
-            } else {
+            }
+            if (PYTHON_IS_NONE(*tree)) {
                 ndict = PyDict_New();
                 *tree = PyInstance_NewRaw(ct, ndict);
                 Py_XDECREF(ndict);
