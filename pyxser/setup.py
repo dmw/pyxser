@@ -103,19 +103,20 @@ pyxser_mod = Extension('pyxser',
                        **pyxser_params)
 
 setup (name = 'pyxser',
-       version = '1.5r',
+       version = '1.5.1r',
        description = 'Python XML Serialization Extension',
        author = 'Daniel Molina Wegener',
        author_email = 'dmw@coder.cl',
        url = 'http://coder.cl/products/pyxser/',
-       download_url = 'https://sourceforge.net/projects/pyxser/files/pyxser-1.5r/pyxser-1.5r.tar.gz/download',
+       download_url = 'https://sourceforge.net/projects/pyxser/files/pyxser-1.5.1r/pyxser-1.5.1r.tar.gz/download',
        data_files = [(pyxser_dtd_file_dir, ['xsd/pyxser-1.0.dtd',
                                             'xsd/pyxser-1.0-c14n.dtd',
                                             'xsd/pyxser-1.0.xsd',
                                             'xsd/pyxser-1.0-c14n.xsd'])],
        license = '''GNU LESSER GENERAL PUBLIC LICENSE, Version 3, 29 June 2007''',
        long_description = '''
-       pyxser --- a single xml serialization/deserialization extension for python.
+       Python XML Serialization, serialize and
+       deserialize Python objects to and from XML.
        ''',
        ext_modules = [pyxser_mod])
 
