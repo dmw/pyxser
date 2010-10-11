@@ -155,7 +155,6 @@ extern "C" {
 #include "include/pyxser_numbers.h"
 #include "include/pyxser_strings.h"
 #include "include/pyxser_collections.h"
-#include "include/pyxser_file.h"
 #include "include/pyxser_typem.h"
 
     extern const char msg_non_object[];
