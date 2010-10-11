@@ -165,14 +165,15 @@ pyxser_RunSerializationCol(PyxSerializationArgsPtr args)
 
     if ((pyxser_PyListContains(dupItems, item)) == PYXSER_FOUND) {
         typeName = pyxser_GetClassName(item);
-        if (typeName != (char *)NULL) {
-            newSerNode = xmlNewDocNode(*docPtr, pyxser_GetDefaultNs(),
-                                       BAD_CAST pyxser_xml_element_object,
-                                       NULL);
-            pyxser_AddReference(item, newSerNode);
-            xmlAddChild(newElementNode, newSerNode);
-            return newSerNode;
+        if (typeName == (char *)NULL) {
+            return NULL;
         }
+        newSerNode = xmlNewDocNode(*docPtr, pyxser_GetDefaultNs(),
+                                   BAD_CAST pyxser_xml_element_object,
+                                   NULL);
+        pyxser_AddReference(item, newSerNode);
+        xmlAddChild(newElementNode, newSerNode);
+        return newSerNode;
     } else {
         currentSerialization = serxConcreteTypes[d];
         while (currentSerialization.available == 1) {
