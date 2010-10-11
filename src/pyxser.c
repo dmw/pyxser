@@ -1288,7 +1288,7 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	xmlNodePtr currentNode = (xmlNodePtr)NULL;
 	xmlDocPtr docXml = (xmlDocPtr)NULL;
 
-    static char *kwlist[] = {"obj", "enc", "cinit", NULL};
+    static char *kwlist[] = {"obj", "enc", "typemap", "cinit", NULL};
     char *py_enc = (char *)NULL;
     char *in_enc = (char *)NULL;
     int py_depth = 0;
