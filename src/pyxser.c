@@ -562,7 +562,6 @@ pyxserxml(PyObject *self, PyObject *args, PyObject *keywds)
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os|iOO", kwlist,
                                      &input, &in_enc, &py_depth,
                                      &selector, &typemap);
-
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_wrong_argument);
