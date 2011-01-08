@@ -100,7 +100,7 @@ const char pyxser_xml_attr_xml_xsi[] = "xmlns:xsi";
 const char pyxser_xml_attr_xml_xloc[] = "xmlns:schemaLocation";
 
 const char pyxser_xml_version[] = "1.0";
-const char pyxser_ext_version[] = "1.5.1r";
+const char pyxser_ext_version[] = "1.5.2r";
 const char pyxser_ext_author[] = "Daniel Molina Wegener <dmw@coder.cl>";
 const char pyxser_ext_site[] = "http://coder.cl/products/pyxser/";
 
