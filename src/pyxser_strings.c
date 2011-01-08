@@ -35,9 +35,7 @@ static const char Id[] = "$Id$";
 #include <libxml/tree.h>
 #include "include/pyxser_tools.h"
 
-
 static xmlChar *pyxser_ConvertInput(const char *in, const char *encoding);
-
 
 xmlNodePtr
 pyxser_SerializeUnicode(PyxSerializationArgsPtr args)

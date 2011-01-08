@@ -5,7 +5,7 @@
 ##
 
 import sys
-import commands
+import subprocess
 import distutils.sysconfig
 import distutils.ccompiler
 import distutils.file_util
@@ -16,26 +16,21 @@ from distutils.command.install import INSTALL_SCHEMES
 
 vi = sys.version_info
 
-if not (vi[0] == 2 \
-        and (vi[1] == 4 \
-             or vi[1] == 5 \
-             or vi[1] == 6 \
-             or vi[1] == 7 \
-             or vi[1] == 8)):
-    print "Unsupported Python version"
-    sys.exit()
-
-outversion = commands.getoutput("pkg-config --version")
-if outversion == None or len(outversion) == 0:
-    print "pkg-config not found"
+outversion = subprocess.call("pkg-config --version".split(" "), shell = True)
+if outversion == 0:
+    print("pkg-config not found")
     sys.exit(0)
 
 for scheme in INSTALL_SCHEMES.values():
     scheme['data'] = scheme['purelib']
 
 def pkgconfig(*packages, **kw):
-    flag_map = {'-I': 'include_dirs', '-L': 'library_dirs', '-l': 'libraries'}
-    items = commands.getoutput("pkg-config --silence-errors --libs --cflags %s " % ' '.join(packages))
+    flag_map = { '-I': 'include_dirs', '-L': 'library_dirs', '-l': 'libraries' }
+    cmd_args = ( "env OK=OK pkg-config --silence-errors --libs --cflags %s" % ' '.join(packages) ).split(" ")
+    items = str(subprocess.Popen(cmd_args,
+                                 shell = False,
+                                 stdout = subprocess.PIPE,
+                                 stderr = subprocess.PIPE).communicate()[0])
     if not (len(items) > 0):
         print("Please install the required development packages, read the INSTALLING file")
         sys.exit(0)
