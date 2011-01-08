@@ -155,3 +155,15 @@
 	instance of deserialized objects.
 
 	Thanks to pyxser users for their feedback.
+
+1.5.2r (2011.01.08):
+
+	Daniel Molina Wegener <dmw@coder.cl>
+
+	* Added support for Python 2.4
+	* Replaced the use of the commands package by the
+	subprocess package on the setup script.
+	* On the next release will be added support
+	for Python 3.X ;)
+
+	Thanks to pyxser users for their feedback.
