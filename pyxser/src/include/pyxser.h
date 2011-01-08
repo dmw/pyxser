@@ -68,6 +68,25 @@ extern "C" {
         Py_XDECREF(o);                          \
     }
 
+#ifndef Py_TYPE
+#define Py_TYPE(ob)                             \
+    (((PyObject*)(ob))->ob_type)
+#endif /* Py_TYPE */
+
+#ifndef PyAnySet_CheckExact
+#define PyAnySet_CheckExact(ob)                                         \
+    (Py_TYPE(ob) == &PySet_Type || Py_TYPE(ob) == &PyFrozenSet_Type)
+#endif /* PyAnySet_CheckExact */
+
+/* This was changed according to the PEP0353
+ * http://www.python.org/dev/peps/pep-0353/ on those
+ * Python versions where Py_ssize_t is not present */
+#if PY_VERSION_HEX < 0x02050000 && !defined(PY_SSIZE_T_MIN)
+typedef int Py_ssize_t;
+#define PY_SSIZE_T_MAX INT_MAX
+#define PY_SSIZE_T_MIN INT_MIN
+#endif
+
 #define PYXSER_GET_ATTR_NAME(currentKey, enc, unic, args, sz)           \
     unic = (PyObject *)NULL;                                            \
     args->name = (char *)NULL;                                          \
