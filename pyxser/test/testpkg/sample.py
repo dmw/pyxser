@@ -24,14 +24,14 @@ class TestAnotherObject:
     def __repr__(self):
         return repr(self.__dict__)
 
-class SubNestedChild():
+class SubNestedChild:
     subnested1 = None
     def __init__(self, m1):
         self.subnested1 = m1
     def __repr__(self):
         return "\n\t\t\t-> " + repr(self.__dict__)
 
-class NestedChild():
+class NestedChild:
     nested1 = None
     nested2 = None
     nested3 = None
