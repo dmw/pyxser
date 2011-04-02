@@ -14,6 +14,7 @@ import distutils.command.install
 from distutils.core import setup
 from distutils.core import setup, Extension
 from distutils.command.install import INSTALL_SCHEMES
+from struct import unpack
 
 vi = sys.version_info
 
@@ -29,10 +30,11 @@ for scheme in INSTALL_SCHEMES.values():
 def pkgconfig(*packages, **kw):
     flag_map = { '-I': 'include_dirs', '-L': 'library_dirs', '-l': 'libraries' }
     cmd_args = ( "env OK=OK pkg-config --silence-errors --libs --cflags %s" % ' '.join(packages) ).split(" ")
-    items = str(subprocess.Popen(cmd_args,
-                                 shell = False,
-                                 stdout = subprocess.PIPE,
-                                 stderr = subprocess.PIPE).communicate()[0])
+    items = subprocess.Popen(cmd_args,
+                             shell = False,
+                             stdout = subprocess.PIPE,
+                             stderr = subprocess.PIPE).communicate()[0]
+    items = items.decode("ascii")
     if not (len(items) > 0):
         print("Please install the required development packages, read the INSTALLING file")
         sys.exit(0)
@@ -40,7 +42,9 @@ def pkgconfig(*packages, **kw):
         print("Please install the required development packages, read the INSTALLING file")
         sys.exit(0)
     for token in items.split():
-        kw.setdefault(flag_map.get(token[:2]), []).append(token[2:])
+        token = token.strip("\r\n\t '").replace("\\n", "")
+        if len(token) > 0:
+            kw.setdefault(flag_map.get(token[:2]), []).append(token[2:])
     return kw
 
 if os.name != "nt":
@@ -73,11 +77,11 @@ if not isinstance(pyxser_params, dict):
     print("*** configuration dictionary not created, creating one...")
     pyxser_params = {}
 
-if not pyxser_params.has_key("library_dirs"):
+if not "library_dirs" in pyxser_params:
     print("*** library_dirs reconfigured...")
     pyxser_params["library_dirs"] = []
 
-if not pyxser_params.has_key("include_dirs"):
+if not "include_dirs" in pyxser_params:
     print("*** include_dirs reconfigured...")
     pyxser_params["include_dirs"] = []
 
@@ -95,6 +99,11 @@ pyxser_params["include_dirs"].append("/usr/X11R6/include")
 pyxser_params["include_dirs"].append("/opt/include")
 pyxser_params["include_dirs"].append(".")
 pyxser_params["include_dirs"].append("./src")
+
+if None in pyxser_params:
+    c = pyxser_params[None]
+    pyxser_params['include_dirs'] = c
+    del pyxser_params[None]
 
 if os.name != "nt":
     pyxser_mod = Extension('pyxser',

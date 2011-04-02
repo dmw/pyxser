@@ -487,7 +487,11 @@ pyxserUnicode_CheckExact(PyObject *o)
 int
 pyxserBuffer_Check(PyObject *o)
 {
+#if PY_MAJOR_VERSION < 3
 	return PyBuffer_Check(o);
+#else
+    return 0;
+#endif /* PY_MAJOR_VERSION < 3 */
 }
 
 /* tuples */
@@ -532,12 +536,20 @@ pyxserDict_CheckExact(PyObject *o)
 int
 pyxserFile_Check(PyObject *o)
 {
+#if PY_MAJOR_VERSION < 3
 	return PyFile_Check(o);
+#else
+    return 0;
+#endif /* PY_MAJOR_VERSION < 3 */
 }
 
 int pyxserFile_CheckExact(PyObject *o)
 {
+#if PY_MAJOR_VERSION < 3
 	return PyFile_CheckExact(o);
+#else
+    return 0;
+#endif /* PY_MAJOR_VERSION < 3 */
 }
 
 /* instrospection */

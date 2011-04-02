@@ -125,7 +125,9 @@ extern "C" {
     int pyxserString_CheckExact(PyObject *o);
     int pyxserUnicode_Check(PyObject *o);
     int pyxserUnicode_CheckExact(PyObject *o);
+#if PY_MAJOR_VERSION < 3
     int pyxserBuffer_Check(PyObject *o);
+#endif /* PY_MAJOR_VERSION < 3 */
 
 /* tuples */
     int pyxserTuple_Check(PyObject *o);
@@ -179,7 +181,9 @@ extern "C" {
     int pyxunserString_CheckExact(xmlNodePtr node);
     int pyxunserUnicode_Check(xmlNodePtr node);
     int pyxunserUnicodeExact_CheckExact(xmlNodePtr node);
+#if PY_MAJOR_VERSION < 3
     int pyxunserBuffer_Check(xmlNodePtr node);
+#endif /* PY_MAJOR_VERSION < 3 */
 
 /* tuples */
     int pyxunserTuple_Check(xmlNodePtr node);
