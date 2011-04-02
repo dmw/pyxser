@@ -37,7 +37,7 @@
 extern "C" {
 #endif /* !__cplusplus */
 
-#define PYXSER_VERSION					"1.5.2-r2"
+#define PYXSER_VERSION					"1.6-r1"
 
 #define PYTHON_IS_NOT_NONE(o)                   \
 	(((PyObject *)o != Py_None) &&              \

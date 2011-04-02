@@ -132,12 +132,12 @@ else:
 
 
 setup (name = 'pyxser',
-       version = '1.5.2-r2',
+       version = '1.6-r1',
        description = 'Python XML Serialization Extension',
        author = 'Daniel Molina Wegener',
        author_email = 'dmw@coder.cl',
        url = 'http://coder.cl/products/pyxser/',
-       download_url = 'https://sourceforge.net/projects/pyxser/files/pyxser-1.5.2-r2/pyxser-1.5.2-r2.tar.gz/download',
+       download_url = 'https://sourceforge.net/projects/pyxser/files/pyxser-1.6-r1/pyxser-1.6-r1.tar.gz/download',
        data_files = [(pyxser_dtd_file_dir, ['xsd/pyxser-1.0.dtd',
                                             'xsd/pyxser-1.0-c14n.dtd',
                                             'xsd/pyxser-1.0.xsd',
