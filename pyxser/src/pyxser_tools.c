@@ -1162,7 +1162,11 @@ pyxser_CacheModule(PyObject *d, const char *name)
 	return item;
 }
 
+#if defined(_WIN32) || defined(_WIN64)
+char *
+#else
 inline char *
+#endif /* !_WIN32 && !_WIN64 */
 pyxser_GetObjectIdentifier(xmlNodePtr node)
 {
 	if (node != (xmlNodePtr)NULL) {

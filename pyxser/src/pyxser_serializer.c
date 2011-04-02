@@ -36,7 +36,11 @@ static const char type_main[] = "__main__";
 static const char module_builtins[] = "__builtins__";
 static const char is_callable[] = "__call__";
 
+#if defined(_WIN32) || defined(_WIN64)
+void
+#else
 inline void
+#endif /* !_WIN32 && !_WIN64 */
 pyxser_SetupXmlRootElement(xmlNodePtr *rootNode, const char *objnam)
 {
 	xmlAttrPtr pyxserNsXml = (xmlAttrPtr)NULL;
@@ -413,7 +417,11 @@ pyxser_ModuleBuiltins(PyObject *o)
     return ctrl;
 }
 
+#if defined(_WIN32) || defined(_WIN64)
+PyObject *
+#else
 inline PyObject *
+#endif /* !_WIN32 && !_WIN64 */
 pyxser_UnserializeElement(PyObject *ct, PyObject **current,
                           PyDictObject **dups, PyObject *cacheCurrent,
                           xmlNodePtr cacheCurrentNode, xmlNodePtr ron,
@@ -467,7 +475,11 @@ pyxser_UnserializeElement(PyObject *ct, PyObject **current,
     return unser;
 }
 
+#if defined(_WIN32) || defined(_WIN64)
+void
+#else
 inline void
+#endif /* !_WIN32 && !_WIN64 */
 pyxser_RunDeserializationMachine(xmlNodePtr ron,
                                  PyObject **current,
                                  PyxSerDeserializationArgsPtr obj)
