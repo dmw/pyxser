@@ -89,6 +89,20 @@ typedef int Py_ssize_t;
 #define PY_SSIZE_T_MIN INT_MIN
 #endif
 
+#if PY_MAJOR_VERSION >= 3
+#define PyString_Check                  PyBytes_Check
+#define PyString_CheckExact             PyBytes_CheckExact
+#define PyString_FromString             PyBytes_FromString
+#define PyString_FromStringAndSize      PyBytes_FromStringAndSize
+#define PyString_GET_SIZE               PyBytes_GET_SIZE
+#define PyString_AS_STRING              PyBytes_AS_STRING
+#define PyString_AsString               PyBytes_AsString
+#define PyInt_Check                     PyLong_Check
+#define PyInt_CheckExact                PyLong_CheckExact
+#define PyInt_FromString                PyLong_FromString
+#define PyFloat_FromString(s, n)        PyFloat_FromString(s)
+#endif
+
 #define PYXSER_GET_ATTR_NAME(currentKey, enc, unic, args, sz)           \
     unic = (PyObject *)NULL;                                            \
     args->name = (char *)NULL;                                          \
@@ -239,21 +253,6 @@ typedef int Py_ssize_t;
 #ifdef __cplusplus
 };
 #endif /* !__cplusplus */
-
-#if PY_MAJOR_VERSION >= 3
-#define PyString_Check                  PyBytes_Check
-#define PyString_CheckExact             PyBytes_CheckExact
-#define PyString_FromString             PyBytes_FromString
-#define PyString_FromStringAndSize      PyBytes_FromStringAndSize
-#define PyString_GET_SIZE               PyBytes_GET_SIZE
-#define PyString_AS_STRING              PyBytes_AS_STRING
-#define PyString_AsString               PyBytes_AsString
-#define PyInt_Check                     PyLong_Check
-#define PyInt_CheckExact                PyLong_CheckExact
-#define PyInt_FromString                PyLong_FromString
-#define PyFloat_FromString(s,n)         PyFloat_FromString(s)
-#define PyInstance_NewRaw(t,d)          _PyObject_New(t)
-#endif
 
 #endif /* PYXSER_H */
 /* pyserx.h ends here */

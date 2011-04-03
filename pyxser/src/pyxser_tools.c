@@ -556,7 +556,11 @@ int pyxserFile_CheckExact(PyObject *o)
 int
 pyxserInstance_Check(PyObject *o)
 {
+#if PY_MAJOR_VERSION < 3
 	return PyInstance_Check(o);
+#else
+    return 0;
+#endif /* PY_MAJOR_VERSION < 3 */
 }
 
 int
@@ -642,6 +646,34 @@ int
 pyxserSequence_Check(PyObject *o)
 {
     return PySequence_Check(o);
+}
+
+#if defined(_WIN32) || defined(_WIN64)
+PyObject *
+#else
+inline PyObject *
+#endif
+pyxser_PyInstance_NewRaw(PyObject *class)
+{
+#if PY_MAJOR_VERSION < 3
+	PyObject *unser = (PyObject *)NULL;
+    PyObject *ndict = (PyObject *)NULL;
+    ndict = PyDict_New();
+    unser = PyInstance_NewRaw(class, ndict);
+    if (PYTHON_IS_NONE(unser)) {
+        Py_XDECREF(ndict);
+        return NULL;
+    }
+    Py_XDECREF(ndict);
+    return unser;
+#else /* PY_MAJOR_VERSION >= 3 */
+	PyObject *unser = (PyObject *)NULL;
+    unser = PyType_GenericAlloc(class->ob_type, 1);
+    if (PYTHON_IS_NONE(unser)) {
+        return NULL;
+    }
+    return unser;
+#endif /* PY_MAJOR_VERSION < 3 */
 }
 
 int

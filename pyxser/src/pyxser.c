@@ -499,10 +499,10 @@ static PyMethodDef serxMethods[] = {
 
 #if PY_MAJOR_VERSION >= 3
 
-static struct PyModuleDef pyxser_module = {
+static struct PyModuleDef pyxser_module_def = {
     PyModuleDef_HEAD_INIT,
     "pyxser",
-    NULL,
+    pyxser_module_doc,
     -1,
     serxMethods
 };
@@ -511,7 +511,7 @@ PyMODINIT_FUNC
 PyInit_pyxser(void)
 {
     PyObject *m;
-    m = PyModule_Create(&pyxser_module);
+    m = PyModule_Create(&pyxser_module_def);
     if (m == NULL)
         return NULL;
 	/* init module */
@@ -529,13 +529,10 @@ PyInit_pyxser(void)
     pyxser_site_obj = PyString_FromString(pyxser_ext_site);
     PyModule_AddObject(m, "__site__", pyxser_site_obj);
 
-    /* we add the site */
-    pyxser_doc_obj = PyString_FromString(pyxser_module_doc);
-    PyModule_AddObject(m, "__doc__", pyxser_doc_obj);
-
     LIBXML_TEST_VERSION;
 
     xmlInitParser();
+    return m;
 }
 #endif
 #if PY_MAJOR_VERSION == 2
