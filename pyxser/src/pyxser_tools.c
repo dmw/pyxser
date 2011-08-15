@@ -190,6 +190,7 @@ pyxser_GetClassName(PyObject *obj)
         PyErr_Clear();
         return cn;
     }
+
     cname = PyObject_GetAttrString(klass, pyxser_attr_name);
     if (PYTHON_IS_NONE(cname)) {
         PyErr_Clear();
@@ -215,7 +216,6 @@ pyxser_GetClassName(PyObject *obj)
     }
 
     cn = PyString_AS_STRING(unic);
-    PYXSER_FREE_OBJECT(unic);
 
 #else /* PY_MAJOR_VERSION >= 3 */
 
@@ -232,6 +232,7 @@ pyxser_GetClassName(PyObject *obj)
     PYXSER_FREE_OBJECT(klass);
     PYXSER_FREE_OBJECT(cname);
     PyErr_Clear();
+
     if (strnlen(cn, 128) == 0) {
         return (char *)NULL;
     } else {
@@ -1304,6 +1305,36 @@ pyxser_CacheModule(PyObject *d, const char *name)
 	}
 	return item;
 }
+
+
+PyObject *
+pyxser_GetStringFromUnicode(PyObject *unic)
+{
+    PyObject *enc;
+
+    if (unic == (PyObject *)NULL) {
+        return (PyObject *)NULL;
+    }
+
+    enc = PyUnicode_Encode(PyUnicode_AS_UNICODE(unic),
+                            PyUnicode_GET_SIZE(unic),
+                            pyxser_xml_encoding,
+                            pyxser_xml_encoding_mode);
+    if (PYTHON_IS_NONE(enc)) {
+        PyErr_Clear();
+        enc = PyUnicode_FromEncodedObject(unic, pyxser_xml_encoding,
+                                          pyxser_xml_encoding_mode);
+    }
+
+    if (PYTHON_IS_NONE(enc)) {
+        PyErr_Clear();
+        return (xmlNodePtr)NULL;
+    }
+
+    return enc;
+
+}
+
 
 #if defined(_WIN32) || defined(_WIN64)
 char *

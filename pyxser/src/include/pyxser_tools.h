@@ -108,6 +108,8 @@ extern "C" {
                                   xmlNodePtr node,
                                   xmlNodePtr parent);
 
+    PyObject *pyxser_GetStringFromUnicode(PyObject *unic);
+
     xmlNodePtr pyxser_SerializeWeakref(PyxSerializationArgsPtr args);
 
 /* numbers */

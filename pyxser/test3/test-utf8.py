@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.1
+#!/usr/bin/env python3.2
 # -*- coding: utf-8 -*-
 ##
 ##     Copyright (c) 2009 Daniel Molina Wegener <dmw@coder.cl>
@@ -72,9 +72,9 @@ def test_normal(test):
         print("First Object:\n" + repr(test) + "\n\n")
 
         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 100)
-        print("Serilized Object:\n", serialized)
+        print("Serilized Object:%s\n" % (serialized))
         print("Serilized Object Validation:\n", \
-              pyxser.validate(obj = serialized, enc = "utf-9"), \
+              pyxser.validate(obj = serialized, enc = "utf-8"), \
               pyxser.validate_dtd(obj = serialized, enc = "utf-8"))
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
         print("Unserialized Object (d.2):\n" + repr(unserialized) + "\n\n")
@@ -115,9 +115,8 @@ def test_normal(test):
 
         pyxser.xmlcleanup()
 
-    except e:
+    except Exception:
         print("-" * 60)
-        print(e)
         traceback.print_exc(file=sys.stdout)
         print("-" * 60)
 
@@ -171,9 +170,8 @@ def test_selector(test):
 
         pyxser.xmlcleanup()
 
-    except e:
+    except Exception:
         print("-" * 60)
-        print(e)
         traceback.print_exc(file=sys.stdout)
         print("-" * 60)
 
@@ -197,7 +195,7 @@ def test_normal_c14n(test):
 
         pyxser.xmlcleanup()
 
-    except e:
+    except Exception:
         print("-" * 60)
         traceback.print_exc(file=sys.stdout)
         print("-" * 60)
@@ -250,7 +248,7 @@ def test_unicode(test):
 
         pyxser.xmlcleanup()
 
-    except e:
+    except Exception:
         print("-" * 60)
         traceback.print_exc(file=sys.stdout)
         print("-" * 60)
@@ -275,7 +273,7 @@ def test_unicode_c14n(test):
 
         pyxser.xmlcleanup()
 
-    except e:
+    except Exception:
         print("-" * 60)
         traceback.print_exc(file=sys.stdout)
         print("-" * 60)
@@ -287,7 +285,7 @@ def test_typemap(test):
         print("First Object:\n" + repr(test) + "\n\n")
 
         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2, typemap = test_typemap_map)
-        print("Serilized Object:\n", serialized)
+        print("Serilized Object:%s\n" % (serialized))
         print("Serilized Object Validation:\n", \
               pyxser.validate(obj = serialized, enc = "utf-8"), \
               pyxser.validate_dtd(obj = serialized, enc = "utf-8"))
@@ -329,9 +327,8 @@ def test_typemap(test):
 
         pyxser.xmlcleanup()
 
-    except e:
+    except Exception:
         print("-" * 60)
-        print(e)
         traceback.print_exc(file=sys.stdout)
         print("-" * 60)
 
@@ -374,11 +371,11 @@ def main():
     test.dyn_prop7 = 1000
 
     test_normal(test)
-    test_normal_c14n(test)
-    test_unicode(test)
-    test_unicode_c14n(test)
-    test_typemap(test)
-    test_selector(test)
+    #test_normal_c14n(test)
+    #test_unicode(test)
+    #test_unicode_c14n(test)
+    #test_typemap(test)
+    #test_selector(test)
 
     print(pyxser.getdtd())
     print(pyxser.getdtd_c14n())

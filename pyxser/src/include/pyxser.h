@@ -94,7 +94,7 @@ typedef int Py_ssize_t;
 #define PyString_Check                  PyBytes_Check
 #define PyString_CheckExact             PyBytes_CheckExact
 #define PyString_FromString             PyBytes_FromString
-#define PyString_FromStringAndSize      PyBytes_FromStringAndSize
+#define PyString_FromStringAndSize      PyUnicode_FromStringAndSize
 #define PyString_GET_SIZE               PyBytes_GET_SIZE
 #define PyString_AS_STRING              PyBytes_AS_STRING
 #define PyString_AsString               PyBytes_AsString

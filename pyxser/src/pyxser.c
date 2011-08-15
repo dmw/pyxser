@@ -1473,7 +1473,6 @@ u_pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 	}
 	ok = PyArg_ParseTupleAndKeywords(args, keywds, "Os", kwlist,
                                      &input, &in_enc);
-
 	if (!ok) {
 		/* error! don't have arguments */
 		PyErr_SetString(PyExc_ValueError, msg_wrong_argument);
@@ -1761,7 +1760,9 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 {
 	xmlDocPtr docPtr = (xmlDocPtr)NULL;
 	PyObject *res = Py_False;
+    PyObject *enc = Py_None;
 	PyObject *input = (PyObject *)NULL;
+
 	char *docstr = (char *)NULL;
     int parseopts = XML_PARSE_RECOVER;
 
@@ -1796,9 +1797,17 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
 
     Py_XINCREF(input);
 
+#if PY_MAJOR_VERSION >= 3
+    enc = pyxser_GetStringFromUnicode(input);
+    docstr = PyString_AS_STRING(enc);
+    docPtr = xmlReadMemory(docstr, strlen(docstr),
+                           NULL, (const char *)py_enc, parseopts);
+#else /* PY_MAJOR_VERSION >= 3 */
     docstr = PyString_AS_STRING(input);
     docPtr = xmlReadMemory(docstr, PyString_GET_SIZE(input),
                            NULL, (const char *)py_enc, parseopts);
+#endif /* PY_MAJOR_VERSION >= 3 */
+
     if (docPtr != (xmlDocPtr)NULL) {
         if ((pyxser_ValidateDocumentXSD(docPtr)) == 1) {
             res = Py_True;
@@ -1812,6 +1821,11 @@ pyxvalidate(PyObject *self, PyObject *args, PyObject *keywds)
     PyErr_Clear();
     Py_XDECREF(input);
     Py_XINCREF(res);
+
+#if PY_MAJOR_VERSION >= 3
+    Py_XDECREF(enc);
+#endif /* PY_MAJOR_VERSION >= 3 */
+
     return res;
 }
 
@@ -1821,6 +1835,8 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
 	xmlDocPtr docPtr = (xmlDocPtr)NULL;
 	PyObject *res = Py_False;
 	PyObject *input = (PyObject *)NULL;
+    PyObject *enc = Py_None;
+
 	char *docstr = (char *)NULL;
     int parseopts = XML_PARSE_RECOVER;
 
@@ -1855,9 +1871,17 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
 
     Py_XINCREF(input);
 
+#if PY_MAJOR_VERSION >= 3
+    enc = pyxser_GetStringFromUnicode(input);
+    docstr = PyString_AS_STRING(enc);
+    docPtr = xmlReadMemory(docstr, strlen(docstr),
+                           NULL, (const char *)py_enc, parseopts);
+#else /* PY_MAJOR_VERSION >= 3 */
     docstr = PyString_AS_STRING(input);
-    docPtr = xmlReadMemory(docstr, PyString_GET_SIZE(input), NULL,
-                           (const char *)py_enc, parseopts);
+    docPtr = xmlReadMemory(docstr, PyString_GET_SIZE(input),
+                           NULL, (const char *)py_enc, parseopts);
+#endif /* PY_MAJOR_VERSION >= 3 */
+
     if (docPtr != (xmlDocPtr)NULL) {
         if ((pyxser_ValidateDocumentXSDC14N(docPtr)) == 1) {
             res = Py_True;
@@ -1871,6 +1895,11 @@ pyxvalidatec14n(PyObject *self, PyObject *args, PyObject *keywds)
     PyErr_Clear();
     Py_XINCREF(res);
     Py_XDECREF(input);
+
+#if PY_MAJOR_VERSION >= 3
+    Py_XDECREF(enc);
+#endif /* PY_MAJOR_VERSION >= 3 */
+
     return res;
 }
 
@@ -1879,6 +1908,7 @@ pyxvalidatedtd(PyObject *self, PyObject *args, PyObject *keywds)
 {
 	xmlDocPtr docPtr = (xmlDocPtr)NULL;
 	PyObject *res = Py_False;
+	PyObject *enc = Py_None;
 	PyObject *input = (PyObject *)NULL;
 	char *docstr = (char *)NULL;
     int parseopts = XML_PARSE_RECOVER;
@@ -1912,7 +1942,16 @@ pyxvalidatedtd(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
     }
 
-    Py_XINCREF(input);
+#if PY_MAJOR_VERSION >= 3
+    enc = pyxser_GetStringFromUnicode(input);
+    docstr = PyString_AS_STRING(enc);
+    docPtr = xmlReadMemory(docstr, strlen(docstr),
+                           NULL, (const char *)py_enc, parseopts);
+#else /* PY_MAJOR_VERSION >= 3 */
+    docstr = PyString_AS_STRING(input);
+    docPtr = xmlReadMemory(docstr, PyString_GET_SIZE(input),
+                           NULL, (const char *)py_enc, parseopts);
+#endif /* PY_MAJOR_VERSION >= 3 */
 
     docstr = PyString_AS_STRING(input);
     docPtr = xmlReadMemory(docstr, PyString_GET_SIZE(input),
@@ -1930,6 +1969,11 @@ pyxvalidatedtd(PyObject *self, PyObject *args, PyObject *keywds)
     PyErr_Clear();
     Py_XDECREF(input);
     Py_XINCREF(res);
+
+#if PY_MAJOR_VERSION >= 3
+    Py_XDECREF(enc);
+#endif /* PY_MAJOR_VERSION >= 3 */
+
     return res;
 }
 
@@ -1938,6 +1982,7 @@ pyxvalidatec14ndtd(PyObject *self, PyObject *args, PyObject *keywds)
 {
 	xmlDocPtr docPtr = (xmlDocPtr)NULL;
 	PyObject *res = Py_False;
+	PyObject *enc = Py_None;
 	PyObject *input = (PyObject *)NULL;
 	char *docstr = (char *)NULL;
     int parseopts = XML_PARSE_RECOVER;
@@ -1971,7 +2016,16 @@ pyxvalidatec14ndtd(PyObject *self, PyObject *args, PyObject *keywds)
 		return NULL;
     }
 
-    Py_XINCREF(input);
+#if PY_MAJOR_VERSION >= 3
+    enc = pyxser_GetStringFromUnicode(input);
+    docstr = PyString_AS_STRING(enc);
+    docPtr = xmlReadMemory(docstr, strlen(docstr),
+                           NULL, (const char *)py_enc, parseopts);
+#else /* PY_MAJOR_VERSION >= 3 */
+    docstr = PyString_AS_STRING(input);
+    docPtr = xmlReadMemory(docstr, PyString_GET_SIZE(input),
+                           NULL, (const char *)py_enc, parseopts);
+#endif /* PY_MAJOR_VERSION >= 3 */
 
     docstr = PyString_AS_STRING(input);
     docPtr = xmlReadMemory(docstr, PyString_GET_SIZE(input), NULL,
@@ -1989,6 +2043,11 @@ pyxvalidatec14ndtd(PyObject *self, PyObject *args, PyObject *keywds)
     Py_XDECREF(input);
     Py_XINCREF(res);
     PyErr_Clear();
+
+#if PY_MAJOR_VERSION >= 3
+    Py_XDECREF(enc);
+#endif /* PY_MAJOR_VERSION >= 3 */
+
     return res;
 }
 
