@@ -33,7 +33,13 @@ static const char Id[] = "$Id$";
 #include "include/pyxser.h"
 
 static const char type_main[] = "__main__";
+
+#if PY_MAJOR_VERSION >= 3
+static const char module_builtins[] = "builtins";
+#else /* PY_MAJOR_VERSION >= 3 */
 static const char module_builtins[] = "__builtins__";
+#endif /* PY_MAJOR_VERSION >= 3 */
+
 static const char is_callable[] = "__call__";
 
 #if defined(_WIN32) || defined(_WIN64)
@@ -397,18 +403,7 @@ pyxser_ModuleBuiltins(PyObject *o)
 	if (PYTHON_IS_NONE(o)) {
 		return 1;
 	}
-	klass = PyObject_GetAttrString(o, pyxser_attr_class);
-	if (PYTHON_IS_NONE(klass)) {
-        PyErr_Clear();
-		return 1;
-	}
-	mname = PyObject_GetAttrString(klass, pyxser_attr_module);
-	if (PYTHON_IS_NONE(mname)) {
-        PyErr_Clear();
-        PYXSER_FREE_OBJECT(klass);
-        return 1;
-	}
-	cn = PyString_AS_STRING(mname);
+	cn = pyxser_GetClassName(o);
     if ((strncmp(cn, module_builtins, strlen(module_builtins))) == 0) {
         ctrl = 1;
     }
@@ -448,7 +443,6 @@ pyxser_UnserializeElement(PyObject *ct, PyObject **current,
 
     attr_name = pyxser_ExtractPropertyName(pyxser_xml_attr_name,
                                            ron);
-
     if (PYTHON_IS_NONE(unser)) {
         Py_XDECREF(ndict);
         return (PyObject *)NULL;

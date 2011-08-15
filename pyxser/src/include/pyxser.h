@@ -90,6 +90,7 @@ typedef int Py_ssize_t;
 #endif
 
 #if PY_MAJOR_VERSION >= 3
+
 #define PyString_Check                  PyBytes_Check
 #define PyString_CheckExact             PyBytes_CheckExact
 #define PyString_FromString             PyBytes_FromString
@@ -101,7 +102,24 @@ typedef int Py_ssize_t;
 #define PyInt_CheckExact                PyLong_CheckExact
 #define PyInt_FromString                PyLong_FromString
 #define PyFloat_FromString(s, n)        PyFloat_FromString(s)
-#endif
+
+#define PYXSER_GET_ATTR_NAME(currentKey, enc, unic, args, sz)           \
+    unic = (PyObject *)NULL;                                            \
+    args->name = (char *)NULL;                                          \
+    if (PYTHON_IS_NOT_NONE(currentKey)) {                               \
+        sz = PyUnicode_GET_SIZE(currentKey);                            \
+        ub = PyUnicode_AS_UNICODE(currentKey);                          \
+        unic = PyUnicode_Encode(ub, sz, pyxser_xml_encoding,            \
+                                pyxser_xml_encoding_mode);              \
+        if (PYTHON_IS_NOT_NONE(unic)) {                                 \
+            args->name = PyString_AS_STRING(unic);                      \
+        } else {                                                        \
+            PyErr_Clear();                                              \
+            args->name = (char *)NULL;                                  \
+        }                                                               \
+    }
+
+#else /* PY_MAJOR_VERSION >= 3 */
 
 #define PYXSER_GET_ATTR_NAME(currentKey, enc, unic, args, sz)           \
     unic = (PyObject *)NULL;                                            \
@@ -112,7 +130,7 @@ typedef int Py_ssize_t;
         ub = PyUnicode_AS_UNICODE(currentKey);                          \
         unic = PyUnicode_Encode(ub, sz, pyxser_xml_encoding,            \
                                 pyxser_xml_encoding_mode);              \
-        if (unic != (PyObject *)NULL) {                                 \
+        if (PYTHON_IS_NOT_NONE(unic)) {                                 \
             args->name = PyString_AS_STRING(unic);                      \
         } else {                                                        \
             PyErr_Clear();                                              \
@@ -123,6 +141,8 @@ typedef int Py_ssize_t;
         && (pyxserString_CheckExact(currentKey)) == 1) {                \
         args->name = PyString_AS_STRING(currentKey);                    \
     }
+
+#endif /* PY_MAJOR_VERSION >= 3 */
 
 /* lol code xD */
 #define PYTHON_HAZ_KLASS(o)                     \

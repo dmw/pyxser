@@ -64,7 +64,11 @@ static const char type_dict[] = "dict";
 static const char type_set[] = "set";
 static const char type_sequence[] = "list";
 static const char type_main[] = "__main__";
+#if PY_MAJOR_VERSION >= 3
+static const char type_builtin[] = "builtins";
+#else
 static const char type_builtin[] = "__builtin__";
+#endif /* PY_MAJOR_VERSION >= 3 */
 static const char schema_encoding[] = "utf-8";
 
 xmlDtdPtr pyxser_dtd_object = (xmlDtdPtr)NULL;
@@ -173,6 +177,7 @@ pyxser_GetClassName(PyObject *obj)
 {
 	PyObject *klass = Py_None;
 	PyObject *cname = Py_None;
+    PyObject *unic = (PyObject *)NULL;
 
 	char *cn = (char *)NULL;
 
@@ -191,15 +196,47 @@ pyxser_GetClassName(PyObject *obj)
         Py_DECREF(klass);
         return cn;
     }
+
+#if PY_MAJOR_VERSION >= 3
+
+    unic = PyUnicode_Encode(PyUnicode_AS_UNICODE(cname),
+                            PyUnicode_GET_SIZE(cname),
+                            pyxser_xml_encoding,
+                            pyxser_xml_encoding_mode);
+    if (PYTHON_IS_NONE(unic)) {
+        PyErr_Clear();
+        unic = PyUnicode_FromEncodedObject(cname, pyxser_xml_encoding,
+                                           pyxser_xml_encoding_mode);
+    }
+
+    if (PYTHON_IS_NONE(unic)) {
+        PyErr_Clear();
+        return (char *)NULL;
+    }
+
+    cn = PyString_AS_STRING(unic);
+    PYXSER_FREE_OBJECT(unic);
+
+#else /* PY_MAJOR_VERSION >= 3 */
+
     if (!PyString_Check(cname)) {
         PYXSER_FREE_OBJECT(klass);
         PYXSER_FREE_OBJECT(cname);
+        return cn;
     }
+
     cn = PyString_AS_STRING(cname);
+
+#endif /* PY_MAJOR_VERSION >= 3 */
+
     PYXSER_FREE_OBJECT(klass);
     PYXSER_FREE_OBJECT(cname);
     PyErr_Clear();
-	return cn;
+    if (strnlen(cn, 128) == 0) {
+        return (char *)NULL;
+    } else {
+        return cn;
+    }
 }
 
 
@@ -214,6 +251,9 @@ pyxser_SerializePrimitiveType(PyxSerializationArgsPtr args)
 	PyObject *str = (PyObject *)NULL;
 	PyObject *classPtr = (PyObject *)NULL;
 	PyObject *className = (PyObject *)NULL;
+#if PY_MAJOR_VERSION >= 3
+    PyObject *unic = (PyObject *)NULL;
+#endif /* PY_MAJOR_VERSION >= 3 */
 
 	xmlNodePtr newElementNode = (xmlNodePtr)NULL;
 	xmlNodePtr newTextNode = (xmlNodePtr)NULL;
@@ -222,48 +262,63 @@ pyxser_SerializePrimitiveType(PyxSerializationArgsPtr args)
 
 	char *sptr = (char *)NULL;
 	char *nptr = (char *)NULL;
+
 	if (PYTHON_IS_NONE(o)) {
 		return (xmlNodePtr)NULL;
 	}
+
 	str = PyObject_Str(o);
 	if (PYTHON_IS_NONE(str)) {
 		return (xmlNodePtr)NULL;
 	}
-	sptr = PyString_AS_STRING(str);
-	classPtr = PyObject_GetAttrString(o, pyxser_attr_class);
-	if (PYTHON_IS_NONE(classPtr)
-		|| sptr == (char *)NULL) {
+
+#if PY_MAJOR_VERSION >= 3
+
+    unic = PyUnicode_Encode(PyUnicode_AS_UNICODE(str),
+                            PyUnicode_GET_SIZE(str),
+                            pyxser_xml_encoding,
+                            pyxser_xml_encoding_mode);
+    if (PYTHON_IS_NONE(unic)) {
         PyErr_Clear();
-        PYXSER_FREE_OBJECT(classPtr);
-        PYXSER_FREE_OBJECT(str);
-		return (xmlNodePtr)NULL;
-	}
-	className = PyObject_GetAttrString(classPtr, pyxser_attr_name);
-	if (PYTHON_IS_NONE(className)) {
+        unic = PyUnicode_FromEncodedObject(str, pyxser_xml_encoding,
+                                           pyxser_xml_encoding_mode);
+    }
+
+    if (PYTHON_IS_NONE(unic)) {
         PyErr_Clear();
-        PYXSER_FREE_OBJECT(classPtr);
-        PYXSER_FREE_OBJECT(str);
-		return (xmlNodePtr)NULL;
-	}
-    nptr = PyString_AS_STRING(className);
-    if (sptr != (char *)NULL
-        && nptr != (char *)NULL) {
+        return (xmlNodePtr)NULL;
+    }
+
+    sptr = PyString_AS_STRING(unic);
+    PYXSER_FREE_OBJECT(unic);
+
+#else
+
+    sptr = PyString_AS_STRING(str);
+
+#endif /* PY_MAJOR_VERSION >= 3 */
+
+    if (sptr != (char *)NULL) {
         newElementNode = xmlNewDocNode(doc, pyxser_GetDefaultNs(),
                                        BAD_CAST pyxser_xml_element_prop,
                                        NULL);
         newTextNode = xmlNewDocText(doc, BAD_CAST sptr);
-        typeAttr = xmlNewProp(newElementNode,
-                              BAD_CAST pyxser_xml_attr_type,
-                              BAD_CAST nptr);
         if (name != (char *)NULL) {
             nameAttr = xmlNewProp(newElementNode,
                                   BAD_CAST pyxser_xml_attr_name,
                                   BAD_CAST name);
         }
+        nptr = pyxser_GetClassName(o);
+        if (nptr != (char *)NULL) {
+            typeAttr = xmlNewProp(newElementNode,
+                                  BAD_CAST pyxser_xml_attr_type,
+                                  BAD_CAST nptr);
+        }
         xmlAddChild(newElementNode, newTextNode);
     }
     PYXSER_FREE_OBJECT(className);
     PYXSER_FREE_OBJECT(classPtr);
+    PYXSER_FREE_OBJECT(unic);
     PYXSER_FREE_OBJECT(str);
     PyErr_Clear();
 	return newElementNode;
@@ -319,6 +374,7 @@ pyxser_CheckBuiltInModule(PyObject *o)
 	char *cn = (char *)NULL;
 	PyObject *klass = Py_None;
 	PyObject *mname = Py_None;
+    PyObject *unic = (PyObject *)NULL;
 
 	if (PYTHON_IS_NONE(o)) {
 		return r;
@@ -334,7 +390,27 @@ pyxser_CheckBuiltInModule(PyObject *o)
         PYXSER_FREE_OBJECT(klass);
         return r;
 	}
-	cn = PyString_AS_STRING(mname);
+#if PY_MAJOR_VERSION >= 3
+    unic = PyUnicode_Encode(PyUnicode_AS_UNICODE(mname),
+                            PyUnicode_GET_SIZE(mname),
+                            pyxser_xml_encoding,
+                            pyxser_xml_encoding_mode);
+    if (PYTHON_IS_NONE(unic)) {
+        PyErr_Clear();
+        unic = PyUnicode_FromEncodedObject(mname, pyxser_xml_encoding,
+                                           pyxser_xml_encoding_mode);
+    }
+
+    if (PYTHON_IS_NONE(unic)) {
+        PyErr_Clear();
+        return 1;
+    }
+
+    cn = PyString_AS_STRING(unic);
+    PYXSER_FREE_OBJECT(unic);
+#else
+    cn = PyString_AS_STRING(cname);
+#endif /* PY_MAJOR_VERSION >= 3 */
     r = (!strncmp(cn, type_builtin, strlen(type_builtin)));
     PYXSER_FREE_OBJECT(klass);
     PYXSER_FREE_OBJECT(mname);
@@ -347,7 +423,9 @@ pyxser_AddModuleAttr(PyObject *o, xmlNodePtr currentNode)
 	char *cn = (char *)NULL;
 	PyObject *klass = Py_None;
 	PyObject *mname = Py_None;
+    PyObject *unic = (PyObject *)NULL;
 	xmlAttrPtr moduleAttr = (xmlAttrPtr)NULL;
+
 	if (PYTHON_IS_NONE(o) ||
 		currentNode == (xmlNodePtr)NULL) {
 		return;
@@ -363,7 +441,27 @@ pyxser_AddModuleAttr(PyObject *o, xmlNodePtr currentNode)
         PYXSER_FREE_OBJECT(klass);
         return;
 	}
-	cn = PyString_AS_STRING(mname);
+#if PY_MAJOR_VERSION >= 3
+    unic = PyUnicode_Encode(PyUnicode_AS_UNICODE(mname),
+                            PyUnicode_GET_SIZE(mname),
+                            pyxser_xml_encoding,
+                            pyxser_xml_encoding_mode);
+    if (PYTHON_IS_NONE(unic)) {
+        PyErr_Clear();
+        unic = PyUnicode_FromEncodedObject(mname, pyxser_xml_encoding,
+                                           pyxser_xml_encoding_mode);
+    }
+
+    if (PYTHON_IS_NONE(unic)) {
+        PyErr_Clear();
+        return;
+    }
+
+    cn = PyString_AS_STRING(unic);
+    PYXSER_FREE_OBJECT(unic);
+#else
+    cn = PyString_AS_STRING(mname);
+#endif /* PY_MAJOR_VERSION >= 3 */
 	moduleAttr = xmlNewProp(currentNode,
 							BAD_CAST pyxser_xml_attr_module,
 							BAD_CAST cn);
@@ -648,18 +746,14 @@ pyxserSequence_Check(PyObject *o)
     return PySequence_Check(o);
 }
 
-#if defined(_WIN32) || defined(_WIN64)
 PyObject *
-#else
-inline PyObject *
-#endif
-pyxser_PyInstance_NewRaw(PyObject *class)
+pyxser_PyInstance_NewRaw(PyObject *cls)
 {
 #if PY_MAJOR_VERSION < 3
 	PyObject *unser = (PyObject *)NULL;
     PyObject *ndict = (PyObject *)NULL;
     ndict = PyDict_New();
-    unser = PyInstance_NewRaw(class, ndict);
+    unser = PyInstance_NewRaw(cls, ndict);
     if (PYTHON_IS_NONE(unser)) {
         Py_XDECREF(ndict);
         return NULL;
@@ -667,12 +761,17 @@ pyxser_PyInstance_NewRaw(PyObject *class)
     Py_XDECREF(ndict);
     return unser;
 #else /* PY_MAJOR_VERSION >= 3 */
-	PyObject *unser = (PyObject *)NULL;
-    unser = PyType_GenericAlloc(class->ob_type, 1);
-    if (PYTHON_IS_NONE(unser)) {
+    PyObject *inst;
+    PyObject *dict = PyDict_New();
+    Py_INCREF(dict);
+    inst = _PyObject_GC_New(cls->ob_type);
+    if (inst == NULL) {
+        Py_DECREF(dict);
         return NULL;
     }
-    return unser;
+    Py_INCREF(cls);
+    _PyObject_GC_TRACK(inst);
+    return (PyObject *)inst;
 #endif /* PY_MAJOR_VERSION < 3 */
 }
 

@@ -76,6 +76,7 @@ const char pyxser_attr_name[] = "__name__";
 const char pyxser_attr_all[] = "__all__";
 const char pyxser_version[] = PYXSER_VERSION;
 
+const char pyxser_module_name[] = "pyxser";
 const char pyxser_xml_attr_id[] = "objid";
 const char pyxser_xml_attr_item[] = "prop";
 const char pyxser_xml_attr_module[] = "module";
@@ -501,10 +502,14 @@ static PyMethodDef serxMethods[] = {
 
 static struct PyModuleDef pyxser_module_def = {
     PyModuleDef_HEAD_INIT,
-    "pyxser",
+    pyxser_module_name,
     pyxser_module_doc,
     -1,
-    serxMethods
+    serxMethods,
+    NULL,
+    NULL,
+    NULL,
+    pyxser_unregister
 };
 
 PyMODINIT_FUNC

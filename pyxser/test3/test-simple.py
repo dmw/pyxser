@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3.2
 # -*- coding: utf-8 -*-
 ##
 ##     Copyright (c) 2009 Daniel Molina Wegener <dmw@coder.cl>
@@ -26,61 +26,19 @@
 ##
 
 
-import sys
-import traceback
-
 import pyxser
 import testpkg.sample
 
-def display_heap(hp):
-    print hp
-    c = 10
-    more = hp.more
-    while c <= len(hp):
-        print more
-        more = more.more
-        c += 10
-
-
 if __name__ == "__main__":
     another = testpkg.sample.TestAnotherObject()
-    another.first_element = 123
-    another.second_element = 456
+    another.first_element = '123'
+    another.second_element = '456'
+    another.third_element = ['hola', 'como', 'estas']
+    another.fourth_element = ('hola', 'como', 'estas',)
+    another.fifth_element = {'hola': 'chao', 'hi': 'bye'}
 
-    other = testpkg.sample.TestAnotherObject()
-    other.first_element = complex(5.82, 3.99)
-    other.second_element = "cdf"
+    ser = pyxser.serialize(obj = another, enc = 'utf-8', depth = 100)
+    print(ser)
 
-    thisa = testpkg.sample.TestAnotherObject()
-    thisa.first_element = "xyz"
-    thisa.second_element = complex(7.81, 2.01)
-
-    thisb = testpkg.sample.TestAnotherObject()
-    thisb.first_element = "456"
-    thisb.second_element = "789"
-
-    thisc = testpkg.sample.TestAnotherObject()
-    thisc.first_element = "XXX"
-    thisc.second_element = complex(32.1, 33.1)
-
-    test = testpkg.sample.ParentObject("hola", "chao", 2354345L)
-    test.child("hi", 4.5, 2354)
-    test.nested("holahola", 345, "hola")
-    test.subnested(other)
-    another.dyn_prop1 = thisa
-    test.dyn_prop1 = [u'holá', u'chaó', another]
-    test.dyn_prop2 = (u'hol`', u'sïn', 'trip', other)
-    test.dyn_prop3 = {'saludo1': u'hólà', 'saludo2': u'chäó', 'saludo4': 'goodbye', 'saludo5': thisc}
-    test.dyn_prop4 = u'sómé tèxtè ïñ Unicodè'
-    test.dyn_prop5 = u'Añother Texé Iñ ÜnìcóDËc'
-    test.dyn_prop6 = 1.5
-    test.dyn_prop7 = 1000
-
-    try:
-        pyxser.xmlcleanup();
-
-    except Exception, e:
-        print "-" * 60
-        traceback.print_exc(file=sys.stdout)
-        print "-" * 60
+    pyxser.xmlcleanup()
 

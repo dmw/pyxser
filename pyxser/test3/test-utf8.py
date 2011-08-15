@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3.1
 # -*- coding: utf-8 -*-
 ##
 ##     Copyright (c) 2009 Daniel Molina Wegener <dmw@coder.cl>
@@ -71,13 +71,14 @@ def test_normal(test):
         print("-----8<----------8<----------8<----------8<----------8<----------8<----- test_normal()")
         print("First Object:\n" + repr(test) + "\n\n")
 
-        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 2)
+        serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 100)
         print("Serilized Object:\n", serialized)
         print("Serilized Object Validation:\n", \
               pyxser.validate(obj = serialized, enc = "utf-9"), \
               pyxser.validate_dtd(obj = serialized, enc = "utf-8"))
         unserialized = pyxser.unserialize(obj = serialized, enc = "utf-8")
         print("Unserialized Object (d.2):\n" + repr(unserialized) + "\n\n")
+
 
         serialized = pyxser.serialize(obj = test, enc = "utf-8", depth = 3)
         print("Serilized Object:\n" + serialized)

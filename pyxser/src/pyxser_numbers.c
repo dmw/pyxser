@@ -101,34 +101,21 @@ pyxser_SerializeComplex(PyxSerializationArgsPtr args)
     cx = PyComplex_AsCComplex(o);
     memset((void *)sptr, 0, 128);
     sprintf(sptr, pyxser_complex_format, cx.real, cx.imag);
-	classPtr = PyObject_GetAttrString(o, pyxser_attr_class);
-	if (PYTHON_IS_NONE(classPtr)
-		|| sptr == (char *)NULL) {
-        PyErr_Clear();
-		PYXSER_FREE_OBJECT(classPtr);
-		return (xmlNodePtr)NULL;
-	}
-	className = PyObject_GetAttrString(classPtr, pyxser_attr_name);
-	if (PYTHON_IS_NONE(className)) {
-        PyErr_Clear();
-		PYXSER_FREE_OBJECT(classPtr);
-		PYXSER_FREE_OBJECT(className);
-		return (xmlNodePtr)NULL;
-	}
-    nptr = PyString_AS_STRING(className);
-    if (sptr != (char *)NULL
-        && nptr != (char *)NULL) {
+    if (sptr != (char *)NULL) {
         newElementNode = xmlNewDocNode(doc, pyxser_GetDefaultNs(),
                                        BAD_CAST pyxser_xml_element_prop,
                                        NULL);
         newTextNode = xmlNewDocText(doc, BAD_CAST sptr);
-        typeAttr = xmlNewProp(newElementNode,
-                              BAD_CAST pyxser_xml_attr_type,
-                              BAD_CAST nptr);
         if (name != (char *)NULL) {
             nameAttr = xmlNewProp(newElementNode,
                                   BAD_CAST pyxser_xml_attr_name,
                                   BAD_CAST name);
+        }
+        nptr = pyxser_GetClassName(o);
+        if (nptr != (char *)NULL) {
+            typeAttr = xmlNewProp(newElementNode,
+                                  BAD_CAST pyxser_xml_attr_type,
+                                  BAD_CAST nptr);
         }
         xmlAddChild(newElementNode, newTextNode);
     }

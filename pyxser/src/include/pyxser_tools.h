@@ -219,12 +219,7 @@ extern "C" {
     int pyxunserAnySet_CheckExact(xmlNodePtr node);
     int pyxunserFrozenSet_CheckExact(xmlNodePtr node);
 
-/* instances */
-#if defined(_WIN32) || defined(_WIN64)
     PyObject *pyxser_PyInstance_NewRaw(PyObject *class);
-#else
-    inline PyObject *pyxser_PyInstance_NewRaw(PyObject *class);
-#endif /* defined(_WIN32) || defined(_WIN64) */
 
 #ifdef __cplusplus
 };
