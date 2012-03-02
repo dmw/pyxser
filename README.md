@@ -51,11 +51,65 @@ which is used to link internal nodes in the document tree.
 * C14N based serialization, as optional kind of output.
 * Model based XML serialization, represented on XML Schema and XML DTD.
 
-*** See the INSTALLING file for installing instructions. ***
-*** See the AUTHORS file to get information about the authors ***
+
+You should see the INSTALLING file to see installing instructions.
+Also you can install it using pip:
+
+```shell
+
+pip install pyxser
+pydoc pyxser
+
+```
+
+Or easy_install if you want:
+
+```shell
+
+easy_install pyxser
+pydoc pyxser
+
+```
+
+Once you have installed pyxser, you can start serializing objects
+using code similar to this:
+
+```python
+
+import pyxser as pyx
+
+class TestClass(object):
+    a = None
+    b = None
+    c = None
+
+    def __init__(self, a, b, c):
+        self.a = a
+        self.b = b
+        self.c = c
+
+tst = TestClass("var_a", "var_b", "var_c")
+ser = pyx.serialize(obj=tst, enc="utf-8")
+print(ser)
+
+```
+
+This will give you an output similar to this one:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<pyxs:obj xmlns:pyxs="http://projects.coder.cl/pyxser/model/" version="1.0" type="TestClass" module="__main__" objid="id3074097420">
+  <pyxs:prop type="str" name="a">var_a</pyxs:prop>
+  <pyxs:prop type="str" name="c">var_c</pyxs:prop>
+  <pyxs:prop type="str" name="b">var_b</pyxs:prop>
+</pyxs:obj>
+```
 
 The pyxser web page is:
 http://coder.cl/products/pyxser/
+
+The main author is:
+Daniel Molina Wegener <dmw@coder.cl>
 
 Best regards,
 Daniel Molina Wegener
