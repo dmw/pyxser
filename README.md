@@ -105,11 +105,14 @@ This will give you an output similar to this one:
 </pyxs:obj>
 ```
 
-The pyxser web page is:
-http://coder.cl/products/pyxser/
+Related Webpages
+---
 
-The main author is:
-Daniel Molina Wegener <dmw@coder.cl>
+The pyxser main web page is located here [coder.cl](http://coder.cl/products/pyxser/)
 
-Best regards,
-Daniel Molina Wegener
+
+Authors
+---
+
+* Copyright (c) 2009 [Daniel Molina Wegener](https://github.com/dmw) [coder.cl](http://coder.cl)
+
