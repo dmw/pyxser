@@ -7,7 +7,7 @@ Python object to XML serializer and deserializer. In other words,
 it can convert a Python object into XML and also, convert that XML
 back into the original Python object. It uses a preorder traversal
 tree algorithm over the object tree and the XML tree. The algorithm
-is , and uses some compiler construction techniques as memoization
+is O(n), and uses some compiler construction techniques as memoization
 to create unique instances of each element in the object tree. It
 supports cross referenced and circular referenced object trees, so
 the serializer do not crash with those kinds of objects. Each
