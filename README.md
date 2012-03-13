@@ -1,5 +1,5 @@
 
-pxyser, Python XML Serialization
+pyxser, Python XML Serialization
 ===
 
 The pyxser name stands for Python XML Serialization and is a
