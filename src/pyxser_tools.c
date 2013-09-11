@@ -319,7 +319,10 @@ pyxser_SerializePrimitiveType(PyxSerializationArgsPtr args)
     }
     PYXSER_FREE_OBJECT(className);
     PYXSER_FREE_OBJECT(classPtr);
+#if PY_MAJOR_VERSION >= 3
     PYXSER_FREE_OBJECT(unic);
+#endif /* PY_MAJOR_VERSION >= 3 */
+
     PYXSER_FREE_OBJECT(str);
     PyErr_Clear();
 	return newElementNode;
@@ -410,7 +413,7 @@ pyxser_CheckBuiltInModule(PyObject *o)
     cn = PyString_AS_STRING(unic);
     PYXSER_FREE_OBJECT(unic);
 #else
-    cn = PyString_AS_STRING(cname);
+    cn = PyString_AS_STRING(mname);
 #endif /* PY_MAJOR_VERSION >= 3 */
     r = (!strncmp(cn, type_builtin, strlen(type_builtin)));
     PYXSER_FREE_OBJECT(klass);
@@ -1328,7 +1331,7 @@ pyxser_GetStringFromUnicode(PyObject *unic)
 
     if (PYTHON_IS_NONE(enc)) {
         PyErr_Clear();
-        return (xmlNodePtr)NULL;
+        return (PyObject *)NULL;
     }
 
     return enc;

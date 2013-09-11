@@ -1,5 +1,8 @@
 /pyxser.egg*
-*.py[co]
+*.pyc
+*.pyo
 *~
 #*
+*.so
 
+/build
