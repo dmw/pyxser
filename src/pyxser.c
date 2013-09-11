@@ -776,8 +776,8 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
         PyErr_SetString(PyExc_ValueError, msg_non_object);
         return NULL;
     }
-    ret = xmlBuff->buffer->use;
-    docPtr = BAD_CAST xmlStrndup(xmlBuff->buffer->content, ret);
+        ret = xmlBufUse(xmlBuff->buffer);
+    docPtr = BAD_CAST xmlStrndup(xmlBufContent(xmlBuff->buffer), ret);
     res = PyString_FromStringAndSize((const char *)docPtr, ret);
     xmlOutputBufferClose(xmlBuff);
     if (PYTHON_IS_NOT_NONE(res)) {
@@ -1104,8 +1104,8 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
         PyErr_SetString(PyExc_ValueError, msg_non_object);
         return NULL;
     }
-    ret = xmlBuff->buffer->use;
-    docPtr = BAD_CAST xmlStrndup(xmlBuff->buffer->content, ret);
+    ret = xmlBufUse(xmlBuff->buffer);
+    docPtr = BAD_CAST xmlStrndup(xmlBufContent(xmlBuff->buffer), ret);
     res = PyUnicode_Decode((const char *)docPtr, ret,
                            (char *)pyxser_xml_encoding,
                            pyxser_xml_encoding_mode);
