@@ -11,8 +11,7 @@ import distutils.sysconfig
 import distutils.ccompiler
 import distutils.file_util
 import distutils.command.install
-from distutils.core import setup
-from distutils.core import setup, Extension
+from setuptools import setup, Extension
 from distutils.command.install import INSTALL_SCHEMES
 from struct import unpack
 
