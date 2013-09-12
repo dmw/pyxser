@@ -1308,7 +1308,7 @@ pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
     Py_XDECREF(dupItems);
 
     if (res == NULL) {
-        PyErr_SetString(PyExc_ValueError, msg_non_object);
+        //PyErr_SetString(PyExc_ValueError, msg_non_object);
         return NULL;
     }
 
@@ -1403,7 +1403,7 @@ u_pyxunserxml(PyObject *self, PyObject *args, PyObject *keywds)
     Py_XDECREF(dupItems);
 
     if (res == NULL) {
-        PyErr_SetString(PyExc_ValueError, msg_non_object);
+        // PyErr_SetString(PyExc_ValueError, msg_non_object);
         return NULL;
     }
 

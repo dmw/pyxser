@@ -656,13 +656,13 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
     int validity = 0;
 
 	if (PYTHON_IS_NONE(doc)) {
-		PyErr_SetString(PyExc_ValueError, "Invalid XML");
+		PyErr_SetString(PyExc_ValueError, "Invalid XML: the source object is None");
 		return NULL;
 	}
 
 	strdoc = PyString_AS_STRING(*doc);
 	if (strdoc == (char *)NULL) {
-		PyErr_SetString(PyExc_ValueError, "Invalid XML");
+		PyErr_SetString(PyExc_ValueError, "Invalid XML: the source object is not a str");
 		return NULL;
 	}
 
@@ -670,14 +670,14 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
                             NULL, (const char *)(obj->encoding), parseopts);
 
     if (*docptr == (xmlDocPtr)NULL) {
-		PyErr_SetString(PyExc_ValueError, "Invalid XML");
+		PyErr_SetString(PyExc_ValueError, "Invalid XML: the source object cannot be translated");
         return NULL;
     }
 
     validity = pyxser_ValidateDocumentXSD(*docptr);
 
     if (validity != 1) {
-		PyErr_SetString(PyExc_ValueError, "Invalid XML");
+		PyErr_SetString(PyExc_ValueError, "Invalid XML: the source XML XSD validation failed");
         return NULL;
     }
 
@@ -700,6 +700,7 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
         PYXSER_XMLFREE(n_type);
         PYXSER_XMLFREE(n_module);
         PYXSER_XMLFREE(n_id);
+	    PyErr_SetString(PyExc_ValueError, "Invalid XML: one of type, module or id must present");
         return NULL;
     }
 
@@ -711,6 +712,7 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
             PYXSER_XMLFREE(n_type);
             PYXSER_XMLFREE(n_module);
             PYXSER_XMLFREE(n_id);
+            PyErr_SetString(PyExc_ValueError, "Invalid environment: class is not found within known module set");
             return NULL;
         }
         if (*tree == (PyObject *)NULL) {
@@ -733,6 +735,7 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
     } else {
         ct = pyxser_SearchObjectInMain(n_type);
         if (PYTHON_IS_NONE(ct)) {
+    	    PyErr_SetString(PyExc_ValueError, "Invalid Environment: class or type cannot be found in the main module.");
             PYXSER_XMLFREE(n_type);
             PYXSER_XMLFREE(n_module);
             PYXSER_XMLFREE(n_id);
