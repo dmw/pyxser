@@ -404,8 +404,10 @@ pyxser_ModuleBuiltins(PyObject *o)
 		return 1;
 	}
 	cn = pyxser_GetClassName(o);
-    if ((strncmp(cn, module_builtins, strlen(module_builtins))) == 0) {
-        ctrl = 1;
+    if (cn != (char *) NULL) {
+        if ((strncmp(cn, module_builtins, strlen(module_builtins))) == 0) {
+            ctrl = 1;
+        }
     }
     PYXSER_FREE_OBJECT(klass);
     PYXSER_FREE_OBJECT(mname);

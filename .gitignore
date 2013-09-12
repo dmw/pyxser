@@ -6,3 +6,4 @@
 *.so
 
 /build
+/dist
