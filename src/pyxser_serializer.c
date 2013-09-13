@@ -45,7 +45,7 @@ static const char is_callable[] = "__call__";
 #if defined(_WIN32) || defined(_WIN64)
 void
 #else
-inline void
+INLINE void
 #endif /* !_WIN32 && !_WIN64 */
 pyxser_SetupXmlRootElement(xmlNodePtr *rootNode, const char *objnam)
 {
@@ -321,7 +321,14 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
         if (pyxser_IsCallable(item) == 1) {
             return newSerializedNode;
         }
+
         objnam = pyxser_GetClassName(item);
+        if (objnam == (char *)NULL) {
+#ifdef PYXSER_DEBUG
+            printf("Warning:Ignored internal object of type: %s\n", item->ob_type->tp_name);
+#endif // PYXSER_DEBUG
+            return newSerializedNode;
+        }
         csn = xmlNewDocNode(*docptr,
                             pyxser_GetDefaultNs(),
                             BAD_CAST pyxser_xml_element_object,
@@ -337,6 +344,16 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
                                 BAD_CAST args->name);
             PYXSER_FREE_OBJECT(unic);
         }
+        /* if (objnam) { */
+        /*         printf ("Objnam -> %s\n", objnam); */
+        /* } else { */
+        /*         printf ("Objnam empty\n"); */
+        /* } */
+        /* if (args->name) { */
+        /*         printf ("args->name -> %s\n", args->name); */
+        /* } else { */
+        /*         printf ("args->name empty\n"); */
+        /* } */
         xmlAddChild(currentNode, csn);
         (*depthcnt)++;
 
@@ -417,7 +434,7 @@ pyxser_ModuleBuiltins(PyObject *o)
 #if defined(_WIN32) || defined(_WIN64)
 PyObject *
 #else
-inline PyObject *
+INLINE PyObject *
 #endif /* !_WIN32 && !_WIN64 */
 pyxser_UnserializeElement(PyObject *ct, PyObject **current,
                           PyDictObject **dups, PyObject *cacheCurrent,
@@ -473,7 +490,7 @@ pyxser_UnserializeElement(PyObject *ct, PyObject **current,
 #if defined(_WIN32) || defined(_WIN64)
 void
 #else
-inline void
+INLINE void
 #endif /* !_WIN32 && !_WIN64 */
 pyxser_RunDeserializationMachine(xmlNodePtr ron,
                                  PyObject **current,

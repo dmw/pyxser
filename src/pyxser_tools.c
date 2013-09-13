@@ -1354,7 +1354,7 @@ pyxser_GetStringFromUnicode(PyObject *unic)
 #if defined(_WIN32) || defined(_WIN64)
 char *
 #else
-inline char *
+INLINE char *
 #endif /* !_WIN32 && !_WIN64 */
 pyxser_GetObjectIdentifier(xmlNodePtr node)
 {
