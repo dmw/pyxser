@@ -144,7 +144,6 @@ pyxser_RunSerializationCol(PyxSerializationArgsPtr args)
     PyListObject *dupItems;
     xmlDocPtr *docPtr = args->docptr;
     int *depthcnt = args->depthcnt;
-
     if (args == NULL) {
         return (xmlNodePtr)NULL;
     }
@@ -379,7 +378,7 @@ pyxser_GlobalDictSerialization(PyxSerializationArgsPtr args)
 	long tupleSize = 0;
 	long counter = 0, d = 0;
 	char *nptr = (char *)NULL;
-
+    //TRAP; // FIXME: Make the dict node, then serialize it as a list of 2-tuples.
 	if (PYTHON_IS_NONE(o)) {
 		return (xmlNodePtr)NULL;
 	}
@@ -410,6 +409,7 @@ pyxser_GlobalDictSerialization(PyxSerializationArgsPtr args)
         args->item = &item;
         args->currentNode = &newElementNode;
         args->ck = &currentKey;
+        TRAP;
         newSerNode = pyxser_RunSerializationCol(args);
         args->o = oold;
         args->item = oold;
@@ -848,4 +848,3 @@ pyxunser_SerializeDict(PyxSerDeserializationArgsPtr obj)
 
 
 /* pyserx_collections.c ends here */
-
