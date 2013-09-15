@@ -1,0 +1,9 @@
+/pyxser.egg*
+*.pyc
+*.pyo
+*~
+#*
+*.so
+
+/build
+/dist

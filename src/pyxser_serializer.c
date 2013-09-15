@@ -45,7 +45,7 @@ static const char is_callable[] = "__call__";
 #if defined(_WIN32) || defined(_WIN64)
 void
 #else
-inline void
+INLINE void
 #endif /* !_WIN32 && !_WIN64 */
 pyxser_SetupXmlRootElement(xmlNodePtr *rootNode, const char *objnam)
 {
@@ -321,7 +321,14 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
         if (pyxser_IsCallable(item) == 1) {
             return newSerializedNode;
         }
+
         objnam = pyxser_GetClassName(item);
+        if (objnam == (char *)NULL) {
+#ifdef PYXSER_DEBUG
+            printf("Warning:Ignored internal object of type: %s\n", item->ob_type->tp_name);
+#endif // PYXSER_DEBUG
+            return newSerializedNode;
+        }
         csn = xmlNewDocNode(*docptr,
                             pyxser_GetDefaultNs(),
                             BAD_CAST pyxser_xml_element_object,
@@ -337,6 +344,16 @@ pyxser_RunSerialization(PyxSerializationArgsPtr args)
                                 BAD_CAST args->name);
             PYXSER_FREE_OBJECT(unic);
         }
+        /* if (objnam) { */
+        /*         printf ("Objnam -> %s\n", objnam); */
+        /* } else { */
+        /*         printf ("Objnam empty\n"); */
+        /* } */
+        /* if (args->name) { */
+        /*         printf ("args->name -> %s\n", args->name); */
+        /* } else { */
+        /*         printf ("args->name empty\n"); */
+        /* } */
         xmlAddChild(currentNode, csn);
         (*depthcnt)++;
 
@@ -404,8 +421,10 @@ pyxser_ModuleBuiltins(PyObject *o)
 		return 1;
 	}
 	cn = pyxser_GetClassName(o);
-    if ((strncmp(cn, module_builtins, strlen(module_builtins))) == 0) {
-        ctrl = 1;
+    if (cn != (char *) NULL) {
+        if ((strncmp(cn, module_builtins, strlen(module_builtins))) == 0) {
+            ctrl = 1;
+        }
     }
     PYXSER_FREE_OBJECT(klass);
     PYXSER_FREE_OBJECT(mname);
@@ -415,7 +434,7 @@ pyxser_ModuleBuiltins(PyObject *o)
 #if defined(_WIN32) || defined(_WIN64)
 PyObject *
 #else
-inline PyObject *
+INLINE PyObject *
 #endif /* !_WIN32 && !_WIN64 */
 pyxser_UnserializeElement(PyObject *ct, PyObject **current,
                           PyDictObject **dups, PyObject *cacheCurrent,
@@ -471,7 +490,7 @@ pyxser_UnserializeElement(PyObject *ct, PyObject **current,
 #if defined(_WIN32) || defined(_WIN64)
 void
 #else
-inline void
+INLINE void
 #endif /* !_WIN32 && !_WIN64 */
 pyxser_RunDeserializationMachine(xmlNodePtr ron,
                                  PyObject **current,
@@ -656,13 +675,13 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
     int validity = 0;
 
 	if (PYTHON_IS_NONE(doc)) {
-		PyErr_SetString(PyExc_ValueError, "Invalid XML");
+		PyErr_SetString(PyExc_ValueError, "Invalid XML: the source object is None");
 		return NULL;
 	}
 
 	strdoc = PyString_AS_STRING(*doc);
 	if (strdoc == (char *)NULL) {
-		PyErr_SetString(PyExc_ValueError, "Invalid XML");
+		PyErr_SetString(PyExc_ValueError, "Invalid XML: the source object is not a str");
 		return NULL;
 	}
 
@@ -670,14 +689,14 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
                             NULL, (const char *)(obj->encoding), parseopts);
 
     if (*docptr == (xmlDocPtr)NULL) {
-		PyErr_SetString(PyExc_ValueError, "Invalid XML");
+		PyErr_SetString(PyExc_ValueError, "Invalid XML: the source object cannot be translated");
         return NULL;
     }
 
     validity = pyxser_ValidateDocumentXSD(*docptr);
 
     if (validity != 1) {
-		PyErr_SetString(PyExc_ValueError, "Invalid XML");
+		PyErr_SetString(PyExc_ValueError, "Invalid XML: the source XML XSD validation failed");
         return NULL;
     }
 
@@ -700,6 +719,7 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
         PYXSER_XMLFREE(n_type);
         PYXSER_XMLFREE(n_module);
         PYXSER_XMLFREE(n_id);
+	    PyErr_SetString(PyExc_ValueError, "Invalid XML: one of type, module or id must present");
         return NULL;
     }
 
@@ -711,6 +731,7 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
             PYXSER_XMLFREE(n_type);
             PYXSER_XMLFREE(n_module);
             PYXSER_XMLFREE(n_id);
+            PyErr_SetString(PyExc_ValueError, "Invalid environment: class is not found within known module set");
             return NULL;
         }
         if (*tree == (PyObject *)NULL) {
@@ -733,6 +754,7 @@ pyxser_UnserializeXml(PyxSerDeserializationArgsPtr obj)
     } else {
         ct = pyxser_SearchObjectInMain(n_type);
         if (PYTHON_IS_NONE(ct)) {
+    	    PyErr_SetString(PyExc_ValueError, "Invalid Environment: class or type cannot be found in the main module.");
             PYXSER_XMLFREE(n_type);
             PYXSER_XMLFREE(n_module);
             PYXSER_XMLFREE(n_id);

@@ -33,6 +33,15 @@
 #include <libxml/tree.h>
 #include <libxml/xmlschemas.h>
 
+#ifdef PYXSER_DEBUG
+#include "signal.h"
+#define TRAP raise(SIGTRAP)
+#define INLINE
+#else
+#define INLINE inline
+#define TRAP
+#endif /* !PYXSER_DEBUG */
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* !__cplusplus */

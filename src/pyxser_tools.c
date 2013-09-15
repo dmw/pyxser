@@ -319,7 +319,10 @@ pyxser_SerializePrimitiveType(PyxSerializationArgsPtr args)
     }
     PYXSER_FREE_OBJECT(className);
     PYXSER_FREE_OBJECT(classPtr);
+#if PY_MAJOR_VERSION >= 3
     PYXSER_FREE_OBJECT(unic);
+#endif /* PY_MAJOR_VERSION >= 3 */
+
     PYXSER_FREE_OBJECT(str);
     PyErr_Clear();
 	return newElementNode;
@@ -410,7 +413,7 @@ pyxser_CheckBuiltInModule(PyObject *o)
     cn = PyString_AS_STRING(unic);
     PYXSER_FREE_OBJECT(unic);
 #else
-    cn = PyString_AS_STRING(cname);
+    cn = PyString_AS_STRING(mname);
 #endif /* PY_MAJOR_VERSION >= 3 */
     r = (!strncmp(cn, type_builtin, strlen(type_builtin)));
     PYXSER_FREE_OBJECT(klass);
@@ -1184,6 +1187,8 @@ pyxser_SearchObjectInMain(const char *name)
     char *ck = (char *)NULL;
 	int counter = 0;
 	long tupleSize = 0;
+    int name_len = strlen(name);
+    int ck_len = 0;
 	if (PYTHON_IS_NONE(dictMod)) {
 		return (PyObject *)NULL;
 	}
@@ -1194,11 +1199,13 @@ pyxser_SearchObjectInMain(const char *name)
 	}
 	for (counter = 0; counter < tupleSize; counter++) {
 		currentKey = PyList_GetItem(dictKeys, counter);
+        ck_len = PyString_GET_SIZE(currentKey);
+        if (name_len != ck_len) continue;
         ck = PyString_AS_STRING(currentKey);
         if (ck == (char *)NULL) {
             continue;
         }
-        if ((strncmp(ck, type_main, strlen(type_main))) == 0) {
+        if (strncmp(ck, type_main, name_len) == 0) {
             item = PyDict_GetItem(dictMod, currentKey);
             if (PYTHON_IS_NONE(item)) {
                 continue;
@@ -1222,6 +1229,7 @@ pyxser_SearchModule(const char *name)
 	PyObject *dictKeys = (PyObject *)NULL;
 	int counter = 0;
 	long tupleSize = 0;
+    int name_len = 0, mod_len = 0;
     if (name == (const char *)NULL) {
 		return (PyObject *)NULL;
     }
@@ -1233,11 +1241,14 @@ pyxser_SearchModule(const char *name)
 	if (PYTHON_IS_NONE(dictKeys)) {
 		return (PyObject *)NULL;
 	}
+    name_len = strlen(name);
 	for (counter = 0; counter < tupleSize; counter++) {
 		currentKey = PyList_GetItem(dictKeys, counter);
+        mod_len = PyString_GET_SIZE(currentKey);
+        if (name_len != mod_len) continue;
 		if ((strncmp(PyString_AS_STRING(currentKey),
 					 name,
-					 strlen(type_main))) == 0) {
+					 name_len)) == 0) {
 			item = PyDict_GetItem(dictMod, currentKey);
             break;
 		}
@@ -1283,6 +1294,8 @@ pyxser_CacheModule(PyObject *d, const char *name)
 	PyObject *dictKeys = (PyObject *)NULL;
 	int counter = 0;
 	long tupleSize = 0;
+    int name_len = strlen(name);
+    int ck_len = 0;
 	if (PYTHON_IS_NONE(dictMod)) {
 		return Py_None;
 	}
@@ -1294,9 +1307,11 @@ pyxser_CacheModule(PyObject *d, const char *name)
 		}
 		for (counter = 0; counter < tupleSize; counter++) {
 			currentKey = PyList_GetItem(dictKeys, counter);
+            ck_len = PyString_GET_SIZE(currentKey);
+            if (ck_len != name_len) continue;
 			if ((strncmp(PyString_AS_STRING(currentKey),
 						 name,
-						 strlen(type_main))) == 0) {
+						 name_len)) == 0) {
 				item = PyDict_GetItem(dictMod, currentKey);
                 break;
 			}
@@ -1328,7 +1343,7 @@ pyxser_GetStringFromUnicode(PyObject *unic)
 
     if (PYTHON_IS_NONE(enc)) {
         PyErr_Clear();
-        return (xmlNodePtr)NULL;
+        return (PyObject *)NULL;
     }
 
     return enc;
@@ -1339,7 +1354,7 @@ pyxser_GetStringFromUnicode(PyObject *unic)
 #if defined(_WIN32) || defined(_WIN64)
 char *
 #else
-inline char *
+INLINE char *
 #endif /* !_WIN32 && !_WIN64 */
 pyxser_GetObjectIdentifier(xmlNodePtr node)
 {
