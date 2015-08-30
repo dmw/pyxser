@@ -19,8 +19,8 @@ from struct import unpack
 vi = sys.version_info
 
 if os.name != "nt":
-    outversion = subprocess.call("pkg-config --version".split(" "), shell = True)
-    if outversion == 0:
+    outversion = subprocess.call(["pkg-config", "--version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if outversion != 0:
         print("pkg-config not found")
         sys.exit(0)
 
@@ -29,17 +29,15 @@ for scheme in INSTALL_SCHEMES.values():
 
 def pkgconfig(*packages, **kw):
     flag_map = { '-I': 'include_dirs', '-L': 'library_dirs', '-l': 'libraries' }
-    cmd_args = ( "env OK=OK pkg-config --silence-errors --libs --cflags %s" % ' '.join(packages) ).split(" ")
-    items = subprocess.Popen(cmd_args,
+    cmd_args = ["pkg-config", "--silence-errors", "--libs", "--cflags"]+list(packages)
+    pkg_config_proc = subprocess.Popen(cmd_args,
                              shell = False,
                              stdout = subprocess.PIPE,
-                             stderr = subprocess.PIPE).communicate()[0]
+                             stderr = subprocess.PIPE)
+    items = pkg_config_proc.communicate()[0]
     items = items.decode("ascii")
-    if not (len(items) > 0):
-        print("Please install the required development packages, read the INSTALLING file")
-        sys.exit(0)
-    if items.find("not found") >= 0:
-        print("Please install the required development packages, read the INSTALLING file")
+    if len(items) == 0 or pkg_config_proc.returncode != 0:
+        print("Please install the required development packages, read the INSTALLING file or adjust your PKG_CONFIG_PATH environment variable")
         sys.exit(0)
     for token in items.split():
         token = token.strip("\r\n\t '").replace("\\n", "")

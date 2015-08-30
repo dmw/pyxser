@@ -706,6 +706,7 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
     int py_com = 0;
 	int ok = -1;
     int ret = 0;
+    xmlChar* content;
 
 	if (PYTHON_IS_NONE(args)) {
 		/* error! don't have arguments */
@@ -776,8 +777,14 @@ pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
         PyErr_SetString(PyExc_ValueError, msg_non_object);
         return NULL;
     }
+#ifdef LIBXML_OLD
     ret = xmlBuff->buffer->use;
-    docPtr = BAD_CAST xmlStrndup(xmlBuff->buffer->content, ret);
+    content = xmlBuff->buffer->content;
+#else
+    ret = xmlBufUse(xmlBuff->buffer);
+    content = xmlBufContent(xmlBuff->buffer);
+#endif
+    docPtr = BAD_CAST xmlStrndup(content, ret);
     res = PyString_FromStringAndSize((const char *)docPtr, ret);
     xmlOutputBufferClose(xmlBuff);
     if (PYTHON_IS_NOT_NONE(res)) {
@@ -1035,6 +1042,7 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
     int py_com = 0;
 	int ok = -1;
     int ret = 0;
+    xmlChar content;
 
 	if (PYTHON_IS_NONE(args)) {
 		/* error! don't have arguments */
@@ -1104,8 +1112,14 @@ u_pyxserxmlc14n(PyObject *self, PyObject *args, PyObject *keywds)
         PyErr_SetString(PyExc_ValueError, msg_non_object);
         return NULL;
     }
+#ifdef LIBXML_OLD
     ret = xmlBuff->buffer->use;
-    docPtr = BAD_CAST xmlStrndup(xmlBuff->buffer->content, ret);
+    content = xmlBuff->buffer->content;
+#else
+    ret = xmlBufUse(xmlBuff->buffer);
+    content = xmlBufContent(xmlBuff->buffer);
+#endif
+    docPtr = BAD_CAST xmlStrndup(content, ret);
     res = PyUnicode_Decode((const char *)docPtr, ret,
                            (char *)pyxser_xml_encoding,
                            pyxser_xml_encoding_mode);
