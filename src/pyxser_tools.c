@@ -319,7 +319,9 @@ pyxser_SerializePrimitiveType(PyxSerializationArgsPtr args)
     }
     PYXSER_FREE_OBJECT(className);
     PYXSER_FREE_OBJECT(classPtr);
+#if PY_MAJOR_VERSION >= 3
     PYXSER_FREE_OBJECT(unic);
+#endif
     PYXSER_FREE_OBJECT(str);
     PyErr_Clear();
 	return newElementNode;
