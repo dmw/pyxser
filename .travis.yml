@@ -1,0 +1,7 @@
+language: python
+script:
+# activate as soon as usage of python 2.x clarified (see https://github.com/dmw/pyxser/issues/5)
+# - python setup.py build
+# - sudo python setup.py build
+ - python3 setup.py build
+ - sudo python3 setup.py install
